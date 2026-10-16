@@ -34,6 +34,8 @@ REQUIRED_MODULES = {
     "wuwa_assistant.reminders.background",
 }
 REQUIRED_RUNTIME_FILES = (
+    "legal/DirectML-LICENSE.txt",
+    "onnxruntime/capi/DirectML.dll",
     "rapidocr/models/PP-OCRv6_det_small.onnx",
     "rapidocr/models/ch_ppocr_mobile_v2.0_cls_mobile.onnx",
     "rapidocr/models/PP-OCRv6_rec_small.onnx",

@@ -164,7 +164,7 @@ python -m pip install -e ".[dev]"
 若不啟用 virtual environment，請在每個指令明確使用
 `.\.venv\Scripts\python.exe`。本專案拒絕在 Python 3.13 執行。
 
-核心 OCR 為 RapidOCR 3.9.2 + ONNX Runtime CPU。adapter 只載入 RapidOCR wheel 內的本機模型，模型缺失時會直接失敗，不會在執行期間下載或改用雲端服務。PaddleOCR 只保留為未安裝的 optional A/B 候選。
+核心 OCR 為 RapidOCR 3.9.2 + ONNX Runtime DirectML（Windows GPU，失敗時使用 CPU）。adapter 只載入 RapidOCR wheel 內的本機模型，模型缺失時會直接失敗，不會在執行期間下載或改用雲端服務。PaddleOCR 只保留為未安裝的 optional A/B 候選。
 
 ## 桌面應用程式
 

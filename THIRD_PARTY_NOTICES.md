@@ -18,6 +18,7 @@ Important components:
 | RapidOCR 3.9.2 | Apache-2.0, RapidOCR Authors |
 | Three PaddleOCR-derived ONNX models | Apache-2.0, Baidu / PaddleOCR rights holders; separate [model notice](third_party/PaddleOCR-MODEL-NOTICE.txt) |
 | ONNX Runtime | MIT and Microsoft third-party notices |
+| DirectML.dll 1.15.4 | Microsoft DirectML redistributable terms; [original license](third_party/DirectML-LICENSE.txt), also bundled under `_internal/legal/` |
 | OpenCV | Apache-2.0 plus its bundled third-party notices; unused FFmpeg codec DLLs are excluded |
 | NumPy / bundled numerical libraries | NumPy and its bundled upstream license texts |
 | Shapely / GEOS 3.14.1 | Shapely BSD-3-Clause; bundled dynamic GEOS LGPL-2.1 with matching source archives |

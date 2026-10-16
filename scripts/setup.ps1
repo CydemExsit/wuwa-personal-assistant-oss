@@ -38,6 +38,15 @@ try {
         "-c",
         "import sys; assert sys.version_info[:2] == (3, 12), sys.version"
     )
+    # ORT distributions share the same Python module/DLL paths. Remove all
+    # overlapping variants before upgrading an existing CPU/CUDA environment.
+    $ortConflict = & $venvPython -c "from importlib.metadata import distributions; print(any(d.metadata['Name'].lower() in {'onnxruntime', 'onnxruntime-gpu'} for d in distributions()))"
+    if ($LASTEXITCODE -ne 0) { throw "Cannot inspect installed OCR runtime." }
+    if ($ortConflict -eq "True") {
+        Invoke-CheckedNative $venvPython @(
+            "-m", "pip", "uninstall", "-y", "onnxruntime", "onnxruntime-gpu", "onnxruntime-directml"
+        )
+    }
     Invoke-CheckedNative $venvPython @(
         "-m", "pip", "install", "--require-hashes", "-r", "requirements/windows-py312.lock"
     )

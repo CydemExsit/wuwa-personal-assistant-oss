@@ -59,7 +59,9 @@ def soak(samples: Path, duration: float, output: Path) -> dict:
     def create_model():
         nonlocal model_loads
         model_loads += 1
-        return RapidOcrEngine._create_local_engine()
+        return RapidOcrEngine._create_local_engine(
+            acceleration=os.environ.get("WUWA_OCR_ACCELERATION", "auto")
+        )
 
     engine = RapidOcrEngine(engine_factory=create_model)
     analyzer = LiveEchoRoiAnalyzer(engine)
@@ -251,6 +253,7 @@ def soak(samples: Path, duration: float, output: Path) -> dict:
         "cycles": cycles,
         "idle_cpu_seconds_per_second": idle_cpu,
         "model_loads": model_loads,
+        "execution_providers": engine.execution_providers,
         "saved_results": saved,
         "database_integrity": True,
         "errors": [],

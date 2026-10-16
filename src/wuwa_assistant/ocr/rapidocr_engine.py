@@ -2,9 +2,10 @@
 
 from __future__ import annotations
 
+import logging
 from collections.abc import Callable, Sequence
 from math import ceil, floor, isfinite
-from os import cpu_count
+from os import cpu_count, environ
 from pathlib import Path
 from threading import Lock
 from typing import ClassVar, Protocol, cast
@@ -15,6 +16,20 @@ from wuwa_assistant.models import OcrToken
 
 from .base import OcrBackendError, OcrImage, _validate_image
 from .cache import CacheInfo, ExactOcrCache
+
+logger = logging.getLogger(__name__)
+
+
+def _providers(engine: object) -> tuple[str, ...]:
+    """Report only providers installed on both active OCR model sessions."""
+    result: set[str] | None = None
+    for name in ("text_det", "text_rec"):
+        component = getattr(engine, name, None)
+        session = getattr(getattr(component, "session", None), "session", None)
+        getter = getattr(session, "get_providers", None)
+        current = set(getter()) if callable(getter) else set()
+        result = current if result is None else result & current
+    return tuple(sorted(result or ()))
 
 
 class _RapidBackend(Protocol):
@@ -53,6 +68,16 @@ class _RoiSizedBackend:
     def __init__(self, engine: _ConfiguredRapidBackend) -> None:
         self._engine = engine
         self._lock = Lock()
+        if "DmlExecutionProvider" in self.providers:
+            for name in ("text_det", "text_rec"):
+                component = getattr(engine, name)
+                # Own fallback at the application boundary so both model
+                # sessions switch together and diagnostics remain accurate.
+                component.session.session.disable_fallback()
+
+    @property
+    def providers(self) -> tuple[str, ...]:
+        return _providers(self._engine)
 
     def __call__(
         self,
@@ -98,11 +123,20 @@ class RapidOcrEngine:
     }
 
     def __init__(
-        self, *, engine_factory: _EngineFactory | None = None, cache_entries: int = 64
+        self,
+        *,
+        engine_factory: _EngineFactory | None = None,
+        cache_entries: int = 64,
+        acceleration: str | None = None,
     ) -> None:
+        self._acceleration = acceleration or environ.get("WUWA_OCR_ACCELERATION", "auto")
+        if self._acceleration not in {"auto", "cpu", "directml"}:
+            raise ValueError("OCR acceleration must be auto, cpu or directml")
         self._engine_factory = engine_factory
         self._engine: _RapidBackend | None = None
         self._initialization_lock = Lock()
+        self._inference_lock = Lock()
+        self.fallback_reason: str | None = None
         self._cache = ExactOcrCache(self._recognize, max_entries=cache_entries)
 
     @property
@@ -119,6 +153,10 @@ class RapidOcrEngine:
     def cache_info(self) -> CacheInfo:
         return self._cache.info()
 
+    @property
+    def execution_providers(self) -> tuple[str, ...]:
+        return getattr(self._engine, "providers", ())
+
     def _recognize(self, image: OcrImage, *, detect: bool = True) -> list[OcrToken]:
         """Recognize one ROI and retain uncalibrated backend line confidences.
 
@@ -130,14 +168,29 @@ class RapidOcrEngine:
 
         validated = _validate_image(image)
         contiguous = cast(OcrImage, np.ascontiguousarray(validated))
-        output = self._get_engine()(
-            contiguous,
-            use_det=detect,
-            use_cls=False,
-            use_rec=True,
-            # Keep low-confidence raw candidates. Semantic acceptance belongs to parsers.
-            text_score=0.0,
-        )
+        # DirectML sessions cannot run concurrently. Bound the entire operation,
+        # including a one-time driver-failure fallback, even for offline callers.
+        with self._inference_lock:
+            backend = self._get_engine()
+            try:
+                output = backend(
+                    contiguous, use_det=detect, use_cls=False, use_rec=True, text_score=0.0
+                )
+            except Exception as exc:
+                if (
+                    self._acceleration == "directml"
+                    or "DmlExecutionProvider" not in self.execution_providers
+                ):
+                    raise
+                self.fallback_reason = type(exc).__name__
+                logger.warning(
+                    "GPU OCR failed; using bounded CPU inference (%s)", self.fallback_reason
+                )
+                self._engine = self._create_local_engine(acceleration="cpu")
+                self._cache.clear()
+                output = self._engine(
+                    contiguous, use_det=detect, use_cls=False, use_rec=True, text_score=0.0
+                )
         return self._tokens_from_output(output, contiguous.shape, detect=detect)
 
     def _get_engine(self) -> _RapidBackend:
@@ -147,15 +200,23 @@ class RapidOcrEngine:
 
         with self._initialization_lock:
             if self._engine is None:
-                factory = self._engine_factory or self._create_local_engine
+                factory = self._engine_factory or (
+                    lambda: self._create_local_engine(acceleration=self._acceleration)
+                )
                 self._engine = factory()
             return self._engine
 
     @classmethod
-    def _create_local_engine(cls) -> _RapidBackend:
+    def _create_local_engine(cls, *, acceleration: str = "auto") -> _RapidBackend:
         # Import only on the first OCR request so tests and non-OCR CLI paths stay light.
         import rapidocr
+        from onnxruntime import disable_telemetry_events, get_available_providers
         from rapidocr import RapidOCR
+
+        disable_telemetry_events()
+        use_gpu = acceleration != "cpu" and "DmlExecutionProvider" in get_available_providers()
+        if acceleration == "directml" and not use_gpu:
+            raise OcrBackendError("DirectML was requested but its runtime is unavailable")
 
         package_file = getattr(rapidocr, "__file__", None)
         if not package_file:
@@ -169,8 +230,11 @@ class RapidOcrEngine:
             "EngineConfig.onnxruntime.intra_op_num_threads": min(4, cpu_count() or 1),
             "EngineConfig.onnxruntime.inter_op_num_threads": 1,
             "EngineConfig.onnxruntime.use_cuda": False,
-            "EngineConfig.onnxruntime.use_dml": False,
+            "EngineConfig.onnxruntime.use_dml": use_gpu,
             "EngineConfig.onnxruntime.use_cann": False,
+            # Single-line GPU batches reduce peak allocation and yield the
+            # device between lines; CPU retains the calibrated batch size.
+            "Rec.rec_batch_num": 1 if use_gpu else 6,
         }
         missing: list[Path] = []
         for parameter, filename in cls._MODEL_FILENAMES.items():
@@ -185,7 +249,16 @@ class RapidOcrEngine:
                 "Bundled RapidOCR models are missing; refusing network download: " + rendered
             )
 
-        return _RoiSizedBackend(cast(_ConfiguredRapidBackend, RapidOCR(params=params)))
+        try:
+            backend = _RoiSizedBackend(cast(_ConfiguredRapidBackend, RapidOCR(params=params)))
+            if use_gpu and "DmlExecutionProvider" not in backend.providers:
+                raise OcrBackendError("DirectML did not activate on both OCR models")
+            return backend
+        except Exception:
+            if not use_gpu or acceleration == "directml":
+                raise
+            logger.warning("DirectML initialization unavailable; using CPU OCR")
+            return cls._create_local_engine(acceleration="cpu")
 
     @classmethod
     def _tokens_from_output(

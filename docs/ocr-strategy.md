@@ -41,7 +41,7 @@ class OcrEngine(Protocol):
 
 | 引擎 | PoC 角色 | 優點 | 風險 |
 | --- | --- | --- | --- |
-| RapidOCR 3.9.2 + ONNX Runtime CPU | 預設 | 輕量、離線、Windows/Python 3.12 可用、PP-OCRv6 初測效果良好 | raw confidence 不是校準機率；非內建模型可能觸發下載，因此 adapter 禁止回退 |
+| RapidOCR 3.9.2 + ONNX Runtime DirectML（Windows GPU，失敗時使用 CPU） | 預設 | 輕量、離線、Windows/Python 3.12 可用、PP-OCRv6 初測效果良好 | raw confidence 不是校準機率；非內建模型可能觸發下載，因此 adapter 禁止回退 |
 | PaddleOCR 3.7.0 + ONNX Runtime | optional A/B 與回退 | 官方支援 `chinese_cht`，可交叉驗證難字 | PaddleX 相依較大，3.x API 變動較快，必須隔離在另一個 adapter |
 | 固定字元模板 | 僅數字最後回退 | 完全 deterministic、無額外 runtime | 只適用固定解析度及 `0-9 + . %`，不可用來解析中文 |
 

@@ -213,6 +213,7 @@ def _run_ocr_self_test() -> int:
         print(f"本機 OCR 自我檢查失敗 ({type(exc).__name__})。", file=sys.stderr)
         return 3
     print("本機 OCR 自我檢查通過; 沒有擷取或保存任何畫面。")
+    print("OCR execution providers: " + ", ".join(engine.execution_providers))
     return 0
 
 

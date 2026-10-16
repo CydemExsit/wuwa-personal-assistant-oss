@@ -197,6 +197,7 @@ class LiveRecognitionCoordinator:
         self._confirmation_key: str | None = None
         self._manual_recheck = False
         self._probe_since: float | None = None
+        self._probe_not_before = 0.0
         self._stats = _MutableStats()
 
     @property
@@ -333,6 +334,9 @@ class LiveRecognitionCoordinator:
 
             self._last_source_sequence = packet.sequence
             self._last_captured_at = captured_seconds
+            probe_throttled = (
+                packet.kind is RoiPacketKind.PROBE and captured_seconds < self._probe_not_before
+            )
             recovery_ready = self._observe_recovery_locked(packet, fingerprint, captured_seconds)
             if not self._matches_candidate_locked(fingerprint):
                 self._candidate_fingerprint = fingerprint
@@ -354,7 +358,7 @@ class LiveRecognitionCoordinator:
                     self._candidate_samples >= self._minimum_samples
                     and duration >= self._stable_duration
                 )
-                if not stable:
+                if not stable or probe_throttled:
                     self._stats.unstable_samples += 1
                     disposition = PacketDisposition.OBSERVING
                 elif self._matches_last_scheduled_locked(fingerprint):
@@ -381,6 +385,7 @@ class LiveRecognitionCoordinator:
 
             if (
                 recovery_ready
+                and not probe_throttled
                 and disposition is PacketDisposition.OBSERVING
                 and self._active is None
                 and self._pending is None
@@ -513,6 +518,8 @@ class LiveRecognitionCoordinator:
                         analysis=analysis,
                     )
                     self._stats.results_emitted += 1
+                    if not analysis.relevant:
+                        self._probe_not_before = (self._last_captured_at or 0.0) + 2.0
                     if (
                         not analysis.relevant
                         or analysis.confidence is None
@@ -631,12 +638,14 @@ class LiveRecognitionCoordinator:
         self._candidate_samples = 0
         self._last_source_sequence = None
         self._last_captured_at = None
+        self._probe_not_before = 0.0
         self._last_scheduled_fingerprint = None
         self._latest_scheduled_sequence = None
         self._recheck_cutoff_sequence = -1
         self._reset_recovery_locked()
 
     def _reset_recovery_locked(self) -> None:
+        self._probe_not_before = 0.0
         self._guard = None
         self._guard_since = 0.0
         self._guard_samples = 0

@@ -36,6 +36,7 @@ def collect_notices(root: Path) -> list[tuple[str, str]]:
     add(source_manifest, "SOURCE_MANIFEST.json")
     add(root / "docs/dependency-licensing.md", "DEPENDENCY-LICENSING.md")
     add(root / "third_party/PaddleOCR-MODEL-NOTICE.txt", "PaddleOCR-MODEL-NOTICE.txt")
+    add(root / "third_party/DirectML-LICENSE.txt", "DirectML-LICENSE.txt")
     python_license = Path(sys.base_prefix) / "LICENSE.txt"
     if not python_license.is_file():
         raise RuntimeError("Python runtime license is unavailable")
