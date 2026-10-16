@@ -111,12 +111,3 @@ jobs:
             dist/ci/SHA256SUMS.txt
           if-no-files-found: error
           retention-days: 14
-
-      - name: Preserve existing compiler for isolated installer diagnosis
-        if: failure()
-        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
-        with:
-          name: installer-compiler-diagnostics-${{ github.sha }}
-          path: C:/Program Files (x86)/Inno Setup 6/
-          if-no-files-found: warn
-          retention-days: 1

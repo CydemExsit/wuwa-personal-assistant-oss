@@ -23,7 +23,7 @@ New-Item -ItemType Directory -Force -Path $testRoot | Out-Null
 function Run-Checked([string]$File, [string[]]$Arguments) {
     $process = Start-Process -FilePath $File -ArgumentList $Arguments -WindowStyle Hidden -PassThru
     if (-not $process.WaitForExit(120000)) { throw "Installer test timed out." }
-    if ($process.ExitCode -ne 0) { throw "Installer test failed: exit $($process.ExitCode)" }
+    if ($process.ExitCode -ne 0) { throw "Installer test failed: $(Split-Path $File -Leaf), exit $($process.ExitCode)" }
 }
 $uninstaller = Join-Path $installRoot "unins000.exe"
 $python = Join-Path $repoRoot ".venv\Scripts\python.exe"
@@ -32,20 +32,18 @@ function Assert-Shortcut([string]$Path, [string]$Expected) {
         $names = @(Get-ChildItem -LiteralPath (Split-Path $Path) -ErrorAction SilentlyContinue | Select-Object -ExpandProperty Name)
         throw "Shortcut missing: $(Split-Path $Path -Leaf). Available names: $($names -join ', ')"
     }
-    $shell = New-Object -ComObject WScript.Shell
-    $target = $shell.CreateShortcut($Path).TargetPath
-    if (-not $target) {
-        @{
-            link = [Convert]::ToBase64String([IO.File]::ReadAllBytes($Path))
-            expected = $Expected
-        } | ConvertTo-Json | Set-Content -Encoding UTF8 (Join-Path (Split-Path $Installer) "reports/installer-shortcut-debug.json")
-        throw "Windows shortcut reader returned an empty target; diagnostic preserved."
-    }
-    # Shell links may return an 8.3 alias for the Unicode/space test directory.
-    # Compare Windows file identity, not the spelling of the target path.
+    # WScript's legacy reader can return an empty ANSI target on an English
+    # Windows host for a Unicode installation path. Use the native Shell object.
+    $shell = New-Object -ComObject Shell.Application
+    $folder = $shell.NameSpace((Split-Path $Path))
+    $item = $folder.ParseName((Split-Path $Path -Leaf))
+    $target = $item.GetLink.Path
+    if (-not $target) { throw "Windows Shell could not resolve the shortcut target." }
+    # Compare file identity so valid Windows path aliases remain acceptable.
     & $python -c "import os,sys; assert os.path.samefile(sys.argv[1],sys.argv[2])" $target $Expected
     if ($LASTEXITCODE -ne 0) { throw "Shortcut target is not the installed executable." }
 }
+$uninstalled = $false
 try {
     $installArgs = @("/VERYSILENT", "/SUPPRESSMSGBOXES", "/NORESTART", "/DIR=`"$installRoot`"")
     Run-Checked $Installer $installArgs
@@ -62,16 +60,17 @@ try {
     $link = Join-Path $shortcutRoot "$($edition.name).lnk"
     Assert-Shortcut $link $exe
     Assert-Shortcut $desktopLink $exe
-    Run-Checked $exe @("--smoke-test", "--data-root", "`"$dataRoot`"")
+    Run-Checked $link @("--smoke-test", "--data-root", "`"$dataRoot`"")
     Run-Checked $exe @("--ocr-self-test")
     $before = @(Get-ChildItem -LiteralPath $dataRoot -Recurse -File | Get-FileHash | Select-Object Path,Hash)
     Run-Checked $Installer $installArgs
     $reinstalled = @(Get-ChildItem -LiteralPath $dataRoot -Recurse -File | Get-FileHash | Select-Object Path,Hash)
     if ((ConvertTo-Json $before -Compress) -ne (ConvertTo-Json $reinstalled -Compress)) { throw "Reinstall changed application data." }
-    Run-Checked $exe @("--smoke-test", "--data-root", "`"$dataRoot`"")
+    Run-Checked $desktopLink @("--smoke-test", "--data-root", "`"$dataRoot`"")
     # Snapshot after the application has closed; uninstall alone must change nothing.
     $before = @(Get-ChildItem -LiteralPath $dataRoot -Recurse -File | Get-FileHash | Select-Object Path,Hash)
     Run-Checked $uninstaller @("/VERYSILENT", "/SUPPRESSMSGBOXES", "/NORESTART")
+    $uninstalled = $true
     $after = @(Get-ChildItem -LiteralPath $dataRoot -Recurse -File | Get-FileHash | Select-Object Path,Hash)
     if ((ConvertTo-Json $before -Compress) -ne (ConvertTo-Json $after -Compress)) { throw "Uninstall changed application data." }
     if ((Test-Path -LiteralPath $exe) -or (Test-Path -LiteralPath $link) -or (Test-Path -LiteralPath $desktopLink) -or (Test-Path $registry)) {
@@ -84,7 +83,7 @@ try {
     } | ConvertTo-Json | Set-Content -Encoding UTF8 (Join-Path (Split-Path $Installer) "reports\installer-validation.json")
 }
 finally {
-    if (Test-Path -LiteralPath $uninstaller) {
+    if (-not $uninstalled -and (Test-Path -LiteralPath $uninstaller) -and (Test-Path $registry)) {
         Run-Checked $uninstaller @("/VERYSILENT", "/SUPPRESSMSGBOXES", "/NORESTART")
     }
     # Evidence and isolated data remain in ignored work/, never remove user data.
