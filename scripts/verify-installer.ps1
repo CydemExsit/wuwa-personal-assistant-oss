@@ -24,6 +24,19 @@ function Run-Checked([string]$File, [string[]]$Arguments) {
     if ($process.ExitCode -ne 0) { throw "Installer test failed: exit $($process.ExitCode)" }
 }
 $uninstaller = Join-Path $installRoot "unins000.exe"
+$python = Join-Path $repoRoot ".venv\Scripts\python.exe"
+function Assert-Shortcut([string]$Path, [string]$Expected) {
+    if (-not (Test-Path -LiteralPath $Path)) {
+        $names = @(Get-ChildItem -LiteralPath (Split-Path $Path) -ErrorAction SilentlyContinue | Select-Object -ExpandProperty Name)
+        throw "Shortcut missing: $(Split-Path $Path -Leaf). Available names: $($names -join ', ')"
+    }
+    $shell = New-Object -ComObject WScript.Shell
+    $target = $shell.CreateShortcut($Path).TargetPath
+    # Shell links may return an 8.3 alias for the Unicode/space test directory.
+    # Compare Windows file identity, not the spelling of the target path.
+    & $python -c "import os,sys; assert os.path.samefile(sys.argv[1],sys.argv[2])" $target $Expected
+    if ($LASTEXITCODE -ne 0) { throw "Shortcut target is not the installed executable." }
+}
 try {
     $installArgs = @("/VERYSILENT", "/SUPPRESSMSGBOXES", "/NORESTART", "/DIR=`"$installRoot`"", "/GROUP=$group")
     Run-Checked $Installer $installArgs
@@ -38,13 +51,8 @@ try {
         }
     }
     $link = Join-Path $shortcutRoot "$($edition.name).lnk"
-    $shell = New-Object -ComObject WScript.Shell
-    if (-not (Test-Path -LiteralPath $link) -or $shell.CreateShortcut($link).TargetPath -ne $exe) {
-        throw "Start-menu shortcut does not target the installed application."
-    }
-    if (-not (Test-Path -LiteralPath $desktopLink) -or $shell.CreateShortcut($desktopLink).TargetPath -ne $exe) {
-        throw "Desktop shortcut does not target the installed application."
-    }
+    Assert-Shortcut $link $exe
+    Assert-Shortcut $desktopLink $exe
     Run-Checked $exe @("--smoke-test", "--data-root", "`"$dataRoot`"")
     Run-Checked $exe @("--ocr-self-test")
     $before = @(Get-ChildItem -LiteralPath $dataRoot -Recurse -File | Get-FileHash | Select-Object Path,Hash)

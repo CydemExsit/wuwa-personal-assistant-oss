@@ -57,7 +57,6 @@ jobs:
         run: python -m pip_audit --requirement requirements/windows-py312.lock --no-deps --disable-pip --format json --output work/dependency-vulnerabilities.json
 
   windows-package:
-    needs: [quality, security]
     runs-on: windows-latest
     timeout-minutes: 30
     env:

@@ -85,6 +85,6 @@ and backups, and single/dual-monitor modes. Game UI support is Traditional Chine
 at1080p/1440p in a borderless full-monitor window. The passive panel is a separate
 application window: no game injection, hooks, input automation, memory access,
 telemetry or screenshot uploads. Game artwork and private samples are excluded.
-See the PowerShell setup above, [contributing](CONTRIBUTING.md), [security](SECURITY.md)
+See the installer link above, [contributing](CONTRIBUTING.md), [security](SECURITY.md)
 and the [MIT license](LICENSE). This is an early public project; external adoption
 has not been established.
