@@ -29,7 +29,7 @@ RestartApplications=no
 WizardStyle=modern
 
 [Languages]
-Name: "chinesetraditional"; MessagesFile: "compiler:Languages\ChineseTraditional.isl"
+Name: "chinesetraditional"; MessagesFile: "ChineseTraditional.isl"
 
 [Files]
 Source: "{#SourcePath}\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
