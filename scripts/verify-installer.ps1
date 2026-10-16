@@ -34,6 +34,13 @@ function Assert-Shortcut([string]$Path, [string]$Expected) {
     }
     $shell = New-Object -ComObject WScript.Shell
     $target = $shell.CreateShortcut($Path).TargetPath
+    if (-not $target) {
+        @{
+            link = [Convert]::ToBase64String([IO.File]::ReadAllBytes($Path))
+            expected = $Expected
+        } | ConvertTo-Json | Set-Content -Encoding UTF8 (Join-Path (Split-Path $Installer) "reports/installer-shortcut-debug.json")
+        throw "Windows shortcut reader returned an empty target; diagnostic preserved."
+    }
     # Shell links may return an 8.3 alias for the Unicode/space test directory.
     # Compare Windows file identity, not the spelling of the target path.
     & $python -c "import os,sys; assert os.path.samefile(sys.argv[1],sys.argv[2])" $target $Expected
