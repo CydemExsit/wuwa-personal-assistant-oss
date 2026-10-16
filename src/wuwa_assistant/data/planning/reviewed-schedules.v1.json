@@ -1,0 +1,82 @@
+{
+  "schema_version": 1,
+  "reviewed_on": "2026-10-09",
+  "official_article": "https://wutheringwaves.kurogames.com/zh-tw/main/news/detail/5516",
+  "evidence": [
+    {
+      "url": "https://hw-media-cdn-mingchao.kurogame.com/object/1790179200000/a7b0q73eapzs0b6cfd-1790253187975.jpg",
+      "sha256": "26c8a56569c45eeaf989ae993b0962ece39bf045f0e467c461191d2570b78684"
+    },
+    {
+      "url": "https://hw-media-cdn-mingchao.kurogame.com/object/1790524800000/ygwc0mkwehqxep53xj-1790568105233.jpg",
+      "sha256": "676e735eda49ceaf71a7badccf2180483f00f07194957fb4f3ea425f591e0b94"
+    }
+  ],
+  "note": "人工核對官方 3.7 圖片公告。每日雙倍次數未明示, 保留未知。後續同期間文字公告優先。",
+  "schedules": [
+    {
+      "title": "余心所向九死未悔",
+      "kind": "gacha",
+      "starts_at": "2026-10-22T10:00:00+08:00",
+      "ends_at": "2026-11-11T11:59:00+08:00",
+      "five_star_characters": [
+        "鎖暝"
+      ],
+      "four_star_characters": [
+        "燈燈",
+        "丹瑾",
+        "熾霞"
+      ]
+    },
+    {
+      "title": "顯影於明日",
+      "kind": "gacha",
+      "starts_at": "2026-10-22T10:00:00+08:00",
+      "ends_at": "2026-11-11T11:59:00+08:00",
+      "five_star_characters": [
+        "洛瑟菈"
+      ],
+      "four_star_characters": [
+        "燈燈",
+        "丹瑾",
+        "熾霞"
+      ]
+    },
+    {
+      "title": "非定義光譜",
+      "kind": "gacha",
+      "starts_at": "2026-10-22T10:00:00+08:00",
+      "ends_at": "2026-11-11T11:59:00+08:00",
+      "five_star_characters": [
+        "琳奈"
+      ],
+      "four_star_characters": [
+        "燈燈",
+        "丹瑾",
+        "熾霞"
+      ]
+    },
+    {
+      "title": "回音盈域",
+      "kind": "event",
+      "starts_at": "2026-10-15T04:00:00+08:00",
+      "ends_at": "2026-10-22T03:59:00+08:00",
+      "bonus_kind": "mixed",
+      "bonus_scopes": [
+        "simulation",
+        "forgery"
+      ]
+    },
+    {
+      "title": "聲弦滌蕩",
+      "kind": "event",
+      "starts_at": "2026-11-04T04:00:00+08:00",
+      "ends_at": "2026-11-11T03:59:00+08:00",
+      "bonus_kind": "tacet",
+      "bonus_scopes": [
+        "tacet"
+      ]
+    }
+  ],
+  "name_confirmation": "https://wutheringwaves.kurogames.com/zh-tw/main/news/detail/5562"
+}

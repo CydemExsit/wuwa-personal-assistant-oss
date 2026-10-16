@@ -1,0 +1,261 @@
+{
+  "baseline_commit": "8fda87cef5431599dfdfb2af1667c39fc73da434",
+  "stats": [
+    [
+      "暴擊",
+      7.5,
+      "%"
+    ],
+    [
+      "攻擊",
+      10.1,
+      "%"
+    ],
+    [
+      "共鳴效率",
+      10.0,
+      "%"
+    ],
+    [
+      "暴擊傷害",
+      15.0,
+      "%"
+    ],
+    [
+      "攻擊",
+      40,
+      ""
+    ]
+  ],
+  "target": 80.0,
+  "cases": {
+    "generic_dps_v1/+5": {
+      "assumptions_version": "echo-rolls-2026.09-official-v2",
+      "remaining_slots": 4,
+      "outcome_count": 1397760,
+      "minimum_score": 26.26,
+      "maximum_score": 97.19,
+      "expected_score": 62.65,
+      "probabilities": {
+        "usable": 0.839821,
+        "passing": 0.423221,
+        "perfect": 0.044493,
+        "exceptional": 0.001003
+      },
+      "total_probability": 1.0,
+      "requires_manual_confirmation": false,
+      "notes": [
+        "官方調諧公示: 13 種副詞條等機率且不重複; 數值按公示機率, 僅正規化四位小數的捨入誤差。連續調諧依公示條件分布推算; 不包含定向重構。",
+        "逐一枚舉未出現詞條組合與每個版本化 Roll 值"
+      ],
+      "improvement_target": 80.0,
+      "improvement_probability": 0.093198,
+      "expected_positive_gain": 0.5031
+    },
+    "generic_dps_v1/+10": {
+      "assumptions_version": "echo-rolls-2026.09-official-v2",
+      "remaining_slots": 3,
+      "outcome_count": 62592,
+      "minimum_score": 47.96,
+      "maximum_score": 96.25,
+      "expected_score": 72.71,
+      "probabilities": {
+        "usable": 0.981832,
+        "passing": 0.740425,
+        "perfect": 0.141629,
+        "exceptional": 0.005564
+      },
+      "total_probability": 1.0,
+      "requires_manual_confirmation": false,
+      "notes": [
+        "官方調諧公示: 13 種副詞條等機率且不重複; 數值按公示機率, 僅正規化四位小數的捨入誤差。連續調諧依公示條件分布推算; 不包含定向重構。",
+        "逐一枚舉未出現詞條組合與每個版本化 Roll 值"
+      ],
+      "improvement_target": 80.0,
+      "improvement_probability": 0.257729,
+      "expected_positive_gain": 1.5878
+    },
+    "generic_dps_v1/+15": {
+      "assumptions_version": "echo-rolls-2026.09-official-v2",
+      "remaining_slots": 2,
+      "outcome_count": 2320,
+      "minimum_score": 60.92,
+      "maximum_score": 95.33,
+      "expected_score": 76.84,
+      "probabilities": {
+        "usable": 1.0,
+        "passing": 0.866667,
+        "perfect": 0.216761,
+        "exceptional": 0.009709
+      },
+      "total_probability": 1.0,
+      "requires_manual_confirmation": false,
+      "notes": [
+        "官方調諧公示: 13 種副詞條等機率且不重複; 數值按公示機率, 僅正規化四位小數的捨入誤差。連續調諧依公示條件分布推算; 不包含定向重構。",
+        "逐一枚舉未出現詞條組合與每個版本化 Roll 值"
+      ],
+      "improvement_target": 80.0,
+      "improvement_probability": 0.355613,
+      "expected_positive_gain": 2.3696
+    },
+    "generic_dps_v1/+20": {
+      "assumptions_version": "echo-rolls-2026.09-official-v2",
+      "remaining_slots": 1,
+      "outcome_count": 64,
+      "minimum_score": 82.19,
+      "maximum_score": 92.51,
+      "expected_score": 87.27,
+      "probabilities": {
+        "usable": 1.0,
+        "passing": 1.0,
+        "perfect": 0.555556,
+        "exceptional": 0.0
+      },
+      "total_probability": 1.0,
+      "requires_manual_confirmation": false,
+      "notes": [
+        "官方調諧公示: 13 種副詞條等機率且不重複; 數值按公示機率, 僅正規化四位小數的捨入誤差。連續調諧依公示條件分布推算; 不包含定向重構。",
+        "逐一枚舉未出現詞條組合與每個版本化 Roll 值"
+      ],
+      "improvement_target": 80.0,
+      "improvement_probability": 1.0,
+      "expected_positive_gain": 7.2701
+    },
+    "generic_dps_v1/+25": {
+      "assumptions_version": "echo-rolls-2026.09-official-v2",
+      "remaining_slots": 0,
+      "outcome_count": 1,
+      "minimum_score": 87.83,
+      "maximum_score": 87.83,
+      "expected_score": 87.83,
+      "probabilities": {
+        "usable": 1.0,
+        "passing": 1.0,
+        "perfect": 1.0,
+        "exceptional": 0.0
+      },
+      "total_probability": 1.0,
+      "requires_manual_confirmation": false,
+      "notes": [
+        "官方調諧公示: 13 種副詞條等機率且不重複; 數值按公示機率, 僅正規化四位小數的捨入誤差。連續調諧依公示條件分布推算; 不包含定向重構。"
+      ],
+      "improvement_target": 80.0,
+      "improvement_probability": 1.0,
+      "expected_positive_gain": 7.83
+    },
+    "generic_dps_legacy/+5": {
+      "assumptions_version": "echo-rolls-2026.08-v1",
+      "remaining_slots": 4,
+      "outcome_count": 1397760,
+      "minimum_score": 20.68,
+      "maximum_score": 91.8,
+      "expected_score": 50.85,
+      "probabilities": {
+        "usable": 0.516141,
+        "passing": 0.108038,
+        "perfect": 0.00081,
+        "exceptional": 0.0
+      },
+      "total_probability": 1.0,
+      "requires_manual_confirmation": false,
+      "notes": [
+        "No official occurrence rates are asserted. Eligible unrolled stats are equally likely without replacement and each listed roll value is equally likely.",
+        "逐一枚舉未出現詞條組合與每個版本化 Roll 值"
+      ],
+      "improvement_target": 80.0,
+      "improvement_probability": 0.004767,
+      "expected_positive_gain": 0.0133
+    },
+    "generic_dps_legacy/+10": {
+      "assumptions_version": "echo-rolls-2026.08-v1",
+      "remaining_slots": 3,
+      "outcome_count": 62592,
+      "minimum_score": 37.76,
+      "maximum_score": 89.08,
+      "expected_score": 58.54,
+      "probabilities": {
+        "usable": 0.803208,
+        "passing": 0.241536,
+        "perfect": 0.002604,
+        "exceptional": 0.0
+      },
+      "total_probability": 1.0,
+      "requires_manual_confirmation": false,
+      "notes": [
+        "No official occurrence rates are asserted. Eligible unrolled stats are equally likely without replacement and each listed roll value is equally likely.",
+        "逐一枚舉未出現詞條組合與每個版本化 Roll 值"
+      ],
+      "improvement_target": 80.0,
+      "improvement_probability": 0.018277,
+      "expected_positive_gain": 0.0494
+    },
+    "generic_dps_legacy/+15": {
+      "assumptions_version": "echo-rolls-2026.08-v1",
+      "remaining_slots": 2,
+      "outcome_count": 2320,
+      "minimum_score": 47.96,
+      "maximum_score": 86.38,
+      "expected_score": 61.55,
+      "probabilities": {
+        "usable": 0.878819,
+        "passing": 0.311458,
+        "perfect": 0.002778,
+        "exceptional": 0.0
+      },
+      "total_probability": 1.0,
+      "requires_manual_confirmation": false,
+      "notes": [
+        "No official occurrence rates are asserted. Eligible unrolled stats are equally likely without replacement and each listed roll value is equally likely.",
+        "逐一枚舉未出現詞條組合與每個版本化 Roll 值"
+      ],
+      "improvement_target": 80.0,
+      "improvement_probability": 0.027778,
+      "expected_positive_gain": 0.0693
+    },
+    "generic_dps_legacy/+20": {
+      "assumptions_version": "echo-rolls-2026.08-v1",
+      "remaining_slots": 1,
+      "outcome_count": 64,
+      "minimum_score": 64.71,
+      "maximum_score": 78.18,
+      "expected_score": 70.12,
+      "probabilities": {
+        "usable": 1.0,
+        "passing": 0.875,
+        "perfect": 0.0,
+        "exceptional": 0.0
+      },
+      "total_probability": 1.0,
+      "requires_manual_confirmation": false,
+      "notes": [
+        "No official occurrence rates are asserted. Eligible unrolled stats are equally likely without replacement and each listed roll value is equally likely.",
+        "逐一枚舉未出現詞條組合與每個版本化 Roll 值"
+      ],
+      "improvement_target": 80.0,
+      "improvement_probability": 0.0,
+      "expected_positive_gain": 0.0
+    },
+    "generic_dps_legacy/+25": {
+      "assumptions_version": "echo-rolls-2026.08-v1",
+      "remaining_slots": 0,
+      "outcome_count": 1,
+      "minimum_score": 69.15,
+      "maximum_score": 69.15,
+      "expected_score": 69.15,
+      "probabilities": {
+        "usable": 1.0,
+        "passing": 1.0,
+        "perfect": 0.0,
+        "exceptional": 0.0
+      },
+      "total_probability": 1.0,
+      "requires_manual_confirmation": false,
+      "notes": [
+        "No official occurrence rates are asserted. Eligible unrolled stats are equally likely without replacement and each listed roll value is equally likely."
+      ],
+      "improvement_target": 80.0,
+      "improvement_probability": 0.0,
+      "expected_positive_gain": 0.0
+    }
+  }
+}

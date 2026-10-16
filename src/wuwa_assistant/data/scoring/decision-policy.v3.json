@@ -1,0 +1,26 @@
+{
+  "schema_version": 3,
+  "data_version": "upgrade-decision-policy-2026.09-v3",
+  "provenance": {
+    "status": "project_default",
+    "source": "Wuwa Personal Assistant v1.0.12 resource-aware decisions",
+    "is_official": false,
+    "notes": "Project risk thresholds, not official optimization. Use actual probability of improving the selected baseline; charge only future gross costs, never sunk costs. Level-start cost is an upper bound when within-level progress is unknown."
+  },
+  "decision_levels": [5, 10, 15, 20, 25],
+  "base_continue_chance": {"5": 0.08, "10": 0.10, "15": 0.16, "20": 0.23},
+  "adjustments": {
+    "embryo_supply_abundant": 0.12,
+    "embryo_supply_scarce": -0.04,
+    "breadth_first_gap": -0.08,
+    "character_already_qualified": 0.12,
+    "many_candidates_at_least": 8,
+    "many_candidates": 0.05,
+    "few_candidates_at_most": 1,
+    "few_candidates": -0.04,
+    "current_score_at_least_usable": -0.04
+  },
+  "cost_reference_experience": 63500,
+  "cost_chance_penalty": 0.12,
+  "continue_chance_clamp": {"minimum": 0.02, "maximum": 0.75}
+}

@@ -1,0 +1,12 @@
+name: Feature request / 功能建議
+description: 說明使用情境與想解決的問題
+body:
+  - type: textarea
+    id: need
+    attributes:
+      label: 問題、目前做法與建議結果
+    validations:
+      required: true
+  - type: markdown
+    attributes:
+      value: "遵守本機／被動界線；遊戲自動操作、注入、讀記憶體、畫面上傳等不在範圍內。勿附私人資料。"

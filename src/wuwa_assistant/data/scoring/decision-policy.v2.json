@@ -1,0 +1,32 @@
+{
+  "schema_version": 2,
+  "data_version": "upgrade-decision-policy-2026.08-v2",
+  "provenance": {
+    "status": "project_default",
+    "source": "Wuwa Personal Assistant V1.0.4 calibrated defaults",
+    "is_official": false,
+    "notes": "These thresholds are explainable project defaults, not official game probabilities or rules. They remain replaceable by reviewed data and user preferences."
+  },
+  "decision_levels": [5, 10, 15, 20, 25],
+  "base_continue_chance": {
+    "5": 0.08,
+    "10": 0.10,
+    "15": 0.16,
+    "20": 0.23
+  },
+  "adjustments": {
+    "embryo_supply_abundant": 0.12,
+    "embryo_supply_scarce": -0.04,
+    "breadth_first_gap": -0.08,
+    "character_already_qualified": 0.12,
+    "many_candidates_at_least": 8,
+    "many_candidates": 0.05,
+    "few_candidates_at_most": 1,
+    "few_candidates": -0.04,
+    "current_score_at_least_usable": -0.04
+  },
+  "continue_chance_clamp": {
+    "minimum": 0.02,
+    "maximum": 0.75
+  }
+}

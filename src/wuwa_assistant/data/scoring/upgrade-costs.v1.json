@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "data_version": "echo-upgrade-costs-2026.09-v1",
+  "rarity": 5,
+  "retrieved_on": "2026-09-24",
+  "source_status": "community_cross_checked",
+  "is_official": false,
+  "sources": [
+    {
+      "title": "鳴潮 Wiki: 音骸の強化",
+      "url": "https://wikiwiki.jp/w-w/%E9%9F%B3%E9%AA%B8#strengthen",
+      "status": "community_wiki",
+      "retrieval": "Live page: cumulative level table, EXP/shell ratio and tuning material costs."
+    },
+    {
+      "title": "巴哈姆特: 聲骸等級經驗需求",
+      "url": "https://forum.gamer.com.tw/Co.php?bsn=74934&sn=40854",
+      "status": "community_original_table",
+      "retrieval": "Search-index full table cross-check; direct fetch unavailable."
+    },
+    {
+      "title": "Wuthering Waves Wiki: Echo/Leveling",
+      "url": "https://wutheringwaves.fandom.com/wiki/Echo/Leveling",
+      "status": "community_wiki",
+      "retrieval": "Search-index full table and tuning-cost cross-check; direct fetch unavailable."
+    }
+  ],
+  "cumulative_exp_by_level": [
+    0, 400, 1000, 1900, 3000, 4400, 6100, 8100, 10500,
+    13300, 16500, 20100, 24200, 28800, 33900, 39600,
+    46000, 53100, 60900, 69600, 79100, 89600, 101100,
+    113700, 127500, 142600
+  ],
+  "experience_per_shell_credit": 10,
+  "tuners_per_substat": 10,
+  "shell_credits_per_substat": 2000,
+  "assumptions": [
+    "五星聲骸; 每五級解鎖一個可調諧位置。",
+    "按顯示等級內尚未累積經驗計算, 是所需經驗上限; 實際已有經驗可減少投入。",
+    "貝幣包含強化經驗及下一條調諧, 材料取整另計。",
+    "列出新增投入, 不抵扣既有投入或未執行的回收。",
+    "成本來自社群整理並交叉核對; 官方機率揭露未提供此成本表。"
+  ]
+}

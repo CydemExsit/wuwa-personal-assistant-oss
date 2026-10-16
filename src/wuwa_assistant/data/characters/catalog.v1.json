@@ -1,0 +1,516 @@
+{
+  "schema_version": 1,
+  "catalog_version": "2026.10.04-v3",
+  "as_of_date": "2026-10-04",
+  "locale": "zh-TW",
+  "source_status": "mixed_official_and_public_name_index",
+  "disclaimer": "此目錄只協助建立本機角色清單，不代表帳號擁有、角色強度、Tier 或目前卡池。只有來源可直接確認的欄位才有值。",
+  "sources": [
+    {
+      "title": "《鳴潮》繁體中文官方網站",
+      "url": "https://wutheringwaves.kurogames.com/zh-tw/",
+      "kind": "official",
+      "status": "current_character_fields_cross_checked",
+      "accessed_at": "2026-08-08"
+    },
+    {
+      "title": "KOCA 鳴潮公開角色選擇器",
+      "url": "https://koca.shop/zh-TW/planets/wuthering_waves",
+      "kind": "third_party_public_index",
+      "status": "names_only_cross_check",
+      "accessed_at": "2026-08-08"
+    },
+    {
+      "title": "繁體中文官方角色頁（新增／核對19位已提供推薦角色）",
+      "url": "https://wutheringwaves.kurogames.com/zh-tw/main",
+      "kind": "official",
+      "status": "trained_roster_names_and_elements_cross_checked",
+      "accessed_at": "2026-09-28"
+    },
+    {
+      "title": "繁體中文官方角色頁與官方攻略平台：心",
+      "url": "https://mcguide.kurogames.com/zh-Hant/?role_id=1311&strategy_id=11096",
+      "kind": "official",
+      "status": "hsin_name_element_rarity_and_weapon_type_cross_checked",
+      "accessed_at": "2026-10-04"
+    }
+  ],
+  "entries": [
+    {
+      "id": "rover-male",
+      "name": "漂泊者（男）",
+      "element": null,
+      "weapon_type": null,
+      "rarity": null,
+      "source_status": "public_name_index"
+    },
+    {
+      "id": "rover-female",
+      "name": "漂泊者（女）",
+      "element": null,
+      "weapon_type": null,
+      "rarity": null,
+      "source_status": "public_name_index"
+    },
+    {
+      "id": "abu",
+      "name": "阿布",
+      "element": null,
+      "weapon_type": null,
+      "rarity": null,
+      "source_status": "public_name_index"
+    },
+    {
+      "id": "suisui",
+      "name": "穗穗",
+      "element": "冷凝",
+      "weapon_type": null,
+      "rarity": null,
+      "source_status": "official_current_character",
+      "verified_on": "2026-09-28"
+    },
+    {
+      "id": "yangyang-xuanling",
+      "name": "秧秧·玄翎",
+      "element": "湮滅",
+      "weapon_type": "迅刀",
+      "rarity": null,
+      "source_status": "official_current_character",
+      "verified_on": "2026-09-28"
+    },
+    {
+      "id": "luosela",
+      "name": "洛瑟菈",
+      "element": "冷凝",
+      "weapon_type": null,
+      "rarity": null,
+      "source_status": "official_current_character",
+      "verified_on": "2026-09-28"
+    },
+    {
+      "id": "daniya",
+      "name": "達妮婭",
+      "element": "熱熔",
+      "weapon_type": null,
+      "rarity": null,
+      "source_status": "official_current_character",
+      "verified_on": "2026-09-28"
+    },
+    {
+      "id": "feixue",
+      "name": "緋雪",
+      "element": "冷凝",
+      "weapon_type": null,
+      "rarity": null,
+      "source_status": "official_current_character",
+      "verified_on": "2026-09-28"
+    },
+    {
+      "id": "xigelika",
+      "name": "西格莉卡",
+      "element": null,
+      "weapon_type": null,
+      "rarity": null,
+      "source_status": "public_name_index"
+    },
+    {
+      "id": "luhesi",
+      "name": "陸·赫斯",
+      "element": null,
+      "weapon_type": null,
+      "rarity": null,
+      "source_status": "public_name_index"
+    },
+    {
+      "id": "aimisi",
+      "name": "愛彌斯",
+      "element": "熱熔",
+      "weapon_type": null,
+      "rarity": null,
+      "source_status": "official_current_character",
+      "verified_on": "2026-09-28"
+    },
+    {
+      "id": "moning",
+      "name": "莫寧",
+      "element": "熱熔",
+      "weapon_type": null,
+      "rarity": null,
+      "source_status": "official_current_character",
+      "verified_on": "2026-09-28"
+    },
+    {
+      "id": "linnai",
+      "name": "琳奈",
+      "element": "衍射",
+      "weapon_type": null,
+      "rarity": null,
+      "source_status": "official_current_character",
+      "verified_on": "2026-09-28"
+    },
+    {
+      "id": "qianxiao",
+      "name": "千咲",
+      "element": "湮滅",
+      "weapon_type": null,
+      "rarity": null,
+      "source_status": "official_current_character",
+      "verified_on": "2026-09-28"
+    },
+    {
+      "id": "qiuyuan",
+      "name": "仇遠",
+      "element": null,
+      "weapon_type": null,
+      "rarity": null,
+      "source_status": "public_name_index"
+    },
+    {
+      "id": "jiabeilina",
+      "name": "嘉貝莉娜",
+      "element": "熱熔",
+      "weapon_type": null,
+      "rarity": null,
+      "source_status": "official_current_character",
+      "verified_on": "2026-09-28"
+    },
+    {
+      "id": "iuno",
+      "name": "尤諾",
+      "element": null,
+      "weapon_type": null,
+      "rarity": null,
+      "source_status": "public_name_index"
+    },
+    {
+      "id": "augusta",
+      "name": "奧古斯塔",
+      "element": null,
+      "weapon_type": null,
+      "rarity": null,
+      "source_status": "public_name_index"
+    },
+    {
+      "id": "fuluoluo",
+      "name": "弗洛洛",
+      "element": null,
+      "weapon_type": null,
+      "rarity": null,
+      "source_status": "public_name_index"
+    },
+    {
+      "id": "lupa",
+      "name": "露帕",
+      "element": "熱熔",
+      "weapon_type": null,
+      "rarity": null,
+      "source_status": "official_current_character",
+      "verified_on": "2026-09-28"
+    },
+    {
+      "id": "katixiya",
+      "name": "卡提希婭",
+      "element": "氣動",
+      "weapon_type": null,
+      "rarity": null,
+      "source_status": "official_current_character",
+      "verified_on": "2026-09-28"
+    },
+    {
+      "id": "xiakong",
+      "name": "夏空",
+      "element": null,
+      "weapon_type": null,
+      "rarity": null,
+      "source_status": "public_name_index"
+    },
+    {
+      "id": "zanni",
+      "name": "贊妮",
+      "element": null,
+      "weapon_type": null,
+      "rarity": null,
+      "source_status": "public_name_index"
+    },
+    {
+      "id": "kantelaila",
+      "name": "坎特蕾拉",
+      "element": null,
+      "weapon_type": null,
+      "rarity": null,
+      "source_status": "public_name_index"
+    },
+    {
+      "id": "bulante",
+      "name": "布蘭特",
+      "element": null,
+      "weapon_type": null,
+      "rarity": null,
+      "source_status": "public_name_index"
+    },
+    {
+      "id": "feibi",
+      "name": "菲比",
+      "element": null,
+      "weapon_type": null,
+      "rarity": null,
+      "source_status": "public_name_index"
+    },
+    {
+      "id": "luokeke",
+      "name": "洛可可",
+      "element": null,
+      "weapon_type": null,
+      "rarity": null,
+      "source_status": "public_name_index"
+    },
+    {
+      "id": "kelaita",
+      "name": "珂萊塔",
+      "element": "冷凝",
+      "weapon_type": null,
+      "rarity": null,
+      "source_status": "official_current_character",
+      "verified_on": "2026-09-28"
+    },
+    {
+      "id": "chun",
+      "name": "椿",
+      "element": null,
+      "weapon_type": null,
+      "rarity": null,
+      "source_status": "public_name_index"
+    },
+    {
+      "id": "shorekeeper",
+      "name": "守岸人",
+      "element": "衍射",
+      "weapon_type": null,
+      "rarity": null,
+      "source_status": "official_current_character",
+      "verified_on": "2026-09-28"
+    },
+    {
+      "id": "xiangliyao",
+      "name": "相里要",
+      "element": null,
+      "weapon_type": null,
+      "rarity": null,
+      "source_status": "public_name_index"
+    },
+    {
+      "id": "zhezhi",
+      "name": "折枝",
+      "element": "冷凝",
+      "weapon_type": null,
+      "rarity": null,
+      "source_status": "official_current_character",
+      "verified_on": "2026-09-28"
+    },
+    {
+      "id": "changli",
+      "name": "長離",
+      "element": null,
+      "weapon_type": null,
+      "rarity": null,
+      "source_status": "public_name_index"
+    },
+    {
+      "id": "jinshi",
+      "name": "今汐",
+      "element": null,
+      "weapon_type": null,
+      "rarity": null,
+      "source_status": "public_name_index"
+    },
+    {
+      "id": "yinlin",
+      "name": "吟霖",
+      "element": null,
+      "weapon_type": null,
+      "rarity": null,
+      "source_status": "public_name_index"
+    },
+    {
+      "id": "jiyan",
+      "name": "忌炎",
+      "element": null,
+      "weapon_type": null,
+      "rarity": null,
+      "source_status": "public_name_index"
+    },
+    {
+      "id": "calcharo",
+      "name": "卡卡羅",
+      "element": null,
+      "weapon_type": null,
+      "rarity": null,
+      "source_status": "public_name_index"
+    },
+    {
+      "id": "lingyang",
+      "name": "凌陽",
+      "element": null,
+      "weapon_type": null,
+      "rarity": null,
+      "source_status": "public_name_index"
+    },
+    {
+      "id": "jianxin",
+      "name": "鑒心",
+      "element": null,
+      "weapon_type": null,
+      "rarity": null,
+      "source_status": "public_name_index"
+    },
+    {
+      "id": "verina",
+      "name": "維里奈",
+      "element": "衍射",
+      "weapon_type": null,
+      "rarity": null,
+      "source_status": "official_current_character",
+      "verified_on": "2026-09-28"
+    },
+    {
+      "id": "encore",
+      "name": "安可",
+      "element": null,
+      "weapon_type": null,
+      "rarity": null,
+      "source_status": "public_name_index"
+    },
+    {
+      "id": "buling",
+      "name": "卜靈",
+      "element": null,
+      "weapon_type": null,
+      "rarity": null,
+      "source_status": "public_name_index"
+    },
+    {
+      "id": "dengdeng",
+      "name": "燈燈",
+      "element": null,
+      "weapon_type": null,
+      "rarity": null,
+      "source_status": "public_name_index"
+    },
+    {
+      "id": "youhu",
+      "name": "釉瑚",
+      "element": null,
+      "weapon_type": null,
+      "rarity": null,
+      "source_status": "public_name_index"
+    },
+    {
+      "id": "yuanwu",
+      "name": "淵武",
+      "element": null,
+      "weapon_type": null,
+      "rarity": null,
+      "source_status": "public_name_index"
+    },
+    {
+      "id": "danjin",
+      "name": "丹瑾",
+      "element": null,
+      "weapon_type": null,
+      "rarity": null,
+      "source_status": "public_name_index"
+    },
+    {
+      "id": "sanhua",
+      "name": "散華",
+      "element": null,
+      "weapon_type": null,
+      "rarity": null,
+      "source_status": "public_name_index"
+    },
+    {
+      "id": "mortefi",
+      "name": "莫特斐",
+      "element": null,
+      "weapon_type": null,
+      "rarity": null,
+      "source_status": "public_name_index"
+    },
+    {
+      "id": "taoqi",
+      "name": "桃祈",
+      "element": null,
+      "weapon_type": null,
+      "rarity": null,
+      "source_status": "public_name_index"
+    },
+    {
+      "id": "aalto",
+      "name": "秋水",
+      "element": null,
+      "weapon_type": null,
+      "rarity": null,
+      "source_status": "public_name_index"
+    },
+    {
+      "id": "baizhi",
+      "name": "白芷",
+      "element": null,
+      "weapon_type": null,
+      "rarity": null,
+      "source_status": "public_name_index"
+    },
+    {
+      "id": "yangyang",
+      "name": "秧秧",
+      "element": null,
+      "weapon_type": null,
+      "rarity": null,
+      "source_status": "public_name_index"
+    },
+    {
+      "id": "chixia",
+      "name": "熾霞",
+      "element": null,
+      "weapon_type": null,
+      "rarity": null,
+      "source_status": "public_name_index"
+    },
+    {
+      "id": "rebecca",
+      "name": "蕾貝卡",
+      "element": "導電",
+      "weapon_type": "佩槍",
+      "rarity": null,
+      "source_status": "official_current_character",
+      "verified_on": "2026-09-28"
+    },
+    {
+      "id": "lucy",
+      "name": "露西",
+      "element": "衍射",
+      "weapon_type": null,
+      "rarity": null,
+      "source_status": "official_current_character",
+      "verified_on": "2026-09-28"
+    },
+    {
+      "id": "qingxiao",
+      "name": "清宵",
+      "element": "氣動",
+      "weapon_type": null,
+      "rarity": null,
+      "source_status": "official_current_character",
+      "verified_on": "2026-09-28"
+    },
+    {
+      "id": "hsin",
+      "name": "心",
+      "element": "導電",
+      "weapon_type": "音感儀",
+      "rarity": 5,
+      "source_status": "official_current_character",
+      "verified_on": "2026-10-04"
+    }
+  ]
+}

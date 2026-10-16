@@ -1,0 +1,627 @@
+{
+  "schema_version": 1,
+  "game_version": "3.7.8",
+  "client_version": "3.7.0",
+  "source_revision": "9218d612ad815e398e064e577e42aaf878899968",
+  "retrieved_on": "2026-10-09",
+  "source_field_count": 21,
+  "coverage_note": "已核對國際服 3.7.8 靜態資料全部 21 個無音區的雙套裝; 查核日 2026-10-09。來源為公開社群擷取的正式版遊戲資料, 並非官方掉率承諾。僅比較 COST 1/3 的套裝需求, 不推估掉率、詞條或保證提升; 個人解鎖進度請在遊戲內確認。未列入無音區的套裝另提示來源待確認。",
+  "source_type": "community_extracted_release_game_data",
+  "source_tables": [
+    {
+      "name": "readme",
+      "path": "README.md",
+      "sha256": "53118accbecc7809107aca5642164bb6a79f35f31bad8bd81071bffd49d7b06f",
+      "bytes": 142,
+      "url": "https://raw.githubusercontent.com/Arikatsu/WutheringWaves_Data/9218d612ad815e398e064e577e42aaf878899968/README.md"
+    },
+    {
+      "name": "fields",
+      "path": "BinData/adventure_detect/silentareadetection.json",
+      "sha256": "5d77273a84ebe4315d5eeb5d0cd99034c5e5d3a78c0df6c1a86247487868398d",
+      "bytes": 209641,
+      "url": "https://raw.githubusercontent.com/Arikatsu/WutheringWaves_Data/9218d612ad815e398e064e577e42aaf878899968/BinData/adventure_detect/silentareadetection.json"
+    },
+    {
+      "name": "sets",
+      "path": "BinData/phantom/phantomfettergroup.json",
+      "sha256": "6f779524f03e87826261cbb7d561c95fa4605b22d98c824cc116a68b834fcba8",
+      "bytes": 23511,
+      "url": "https://raw.githubusercontent.com/Arikatsu/WutheringWaves_Data/9218d612ad815e398e064e577e42aaf878899968/BinData/phantom/phantomfettergroup.json"
+    },
+    {
+      "name": "tabs",
+      "path": "BinData/adventure_detect/detectiontabtype.json",
+      "sha256": "20ce352991dc2bf0a56e51e5ac5ad1bc86bafdf857c4c05d5c56e04fb4c19e6b",
+      "bytes": 2299,
+      "url": "https://raw.githubusercontent.com/Arikatsu/WutheringWaves_Data/9218d612ad815e398e064e577e42aaf878899968/BinData/adventure_detect/detectiontabtype.json"
+    },
+    {
+      "name": "text",
+      "path": "Textmaps/zh-Hant/multi_text/MultiText.json",
+      "sha256": "7b097ea0a2b5b3080ad13a013b9e2343d9acfe05c29103ffb9df50292f0699ed",
+      "bytes": 49133616,
+      "url": "https://raw.githubusercontent.com/Arikatsu/WutheringWaves_Data/9218d612ad815e398e064e577e42aaf878899968/Textmaps/zh-Hant/multi_text/MultiText.json"
+    },
+    {
+      "name": "text1",
+      "path": "Textmaps/zh-Hant/multi_text_1sthalf/MultiText.json",
+      "sha256": "ae1c30d7b638f818ea58ed88fb7182771df8e534c26b4c7f1d99ff3ce73b631e",
+      "bytes": 314655,
+      "url": "https://raw.githubusercontent.com/Arikatsu/WutheringWaves_Data/9218d612ad815e398e064e577e42aaf878899968/Textmaps/zh-Hant/multi_text_1sthalf/MultiText.json"
+    },
+    {
+      "name": "text2",
+      "path": "Textmaps/zh-Hant/multi_text_2ndhalf/MultiText.json",
+      "sha256": "7ac970473547ecd3f366c184f30df456aa661d40265d57e31ec22218fd7b097b",
+      "bytes": 102991,
+      "url": "https://raw.githubusercontent.com/Arikatsu/WutheringWaves_Data/9218d612ad815e398e064e577e42aaf878899968/Textmaps/zh-Hant/multi_text_2ndhalf/MultiText.json"
+    }
+  ],
+  "fields": [
+    {
+      "field_id": "30010001",
+      "name": "中曲臺地無音區",
+      "name_key": "MapMark_5001_MarkTitle",
+      "region": "瑝瓏·今州",
+      "set_names": [
+        "隱世回光",
+        "不絕餘音"
+      ],
+      "set_ids": [
+        7,
+        9
+      ],
+      "map_id": 8,
+      "mark_id": 5001,
+      "source_url": "https://github.com/Arikatsu/WutheringWaves_Data/blob/9218d612ad815e398e064e577e42aaf878899968/BinData/adventure_detect/silentareadetection.json",
+      "verified": true,
+      "available_from": null
+    },
+    {
+      "field_id": "30010009",
+      "name": "荒石高地無音區Ⅰ",
+      "name_key": "MapMark_5002_MarkTitle",
+      "region": "瑝瓏·今州",
+      "set_names": [
+        "凝夜白霜",
+        "嘯谷長風"
+      ],
+      "set_ids": [
+        1,
+        4
+      ],
+      "map_id": 8,
+      "mark_id": 5002,
+      "source_url": "https://github.com/Arikatsu/WutheringWaves_Data/blob/9218d612ad815e398e064e577e42aaf878899968/BinData/adventure_detect/silentareadetection.json",
+      "verified": true,
+      "available_from": null
+    },
+    {
+      "field_id": "30010010",
+      "name": "虎口山脈無音區",
+      "name_key": "MapMark_5003_MarkTitle",
+      "region": "瑝瓏·今州",
+      "set_names": [
+        "凝夜白霜",
+        "徹空冥雷"
+      ],
+      "set_ids": [
+        1,
+        3
+      ],
+      "map_id": 8,
+      "mark_id": 5003,
+      "source_url": "https://github.com/Arikatsu/WutheringWaves_Data/blob/9218d612ad815e398e064e577e42aaf878899968/BinData/adventure_detect/silentareadetection.json",
+      "verified": true,
+      "available_from": null
+    },
+    {
+      "field_id": "30010011",
+      "name": "怨鳥澤無音區",
+      "name_key": "MapMark_5004_MarkTitle",
+      "region": "瑝瓏·今州",
+      "set_names": [
+        "浮星祛暗",
+        "不絕餘音"
+      ],
+      "set_ids": [
+        5,
+        9
+      ],
+      "map_id": 8,
+      "mark_id": 5004,
+      "source_url": "https://github.com/Arikatsu/WutheringWaves_Data/blob/9218d612ad815e398e064e577e42aaf878899968/BinData/adventure_detect/silentareadetection.json",
+      "verified": true,
+      "available_from": null
+    },
+    {
+      "field_id": "30010012",
+      "name": "歸墟港市無音區",
+      "name_key": "MapMark_5005_MarkTitle",
+      "region": "瑝瓏·今州",
+      "set_names": [
+        "熔山裂谷",
+        "隱世回光"
+      ],
+      "set_ids": [
+        2,
+        7
+      ],
+      "map_id": 8,
+      "mark_id": 5005,
+      "source_url": "https://github.com/Arikatsu/WutheringWaves_Data/blob/9218d612ad815e398e064e577e42aaf878899968/BinData/adventure_detect/silentareadetection.json",
+      "verified": true,
+      "available_from": null
+    },
+    {
+      "field_id": "30010013",
+      "name": "荒石高地無音區Ⅱ",
+      "name_key": "MapMark_5006_MarkTitle",
+      "region": "瑝瓏·今州",
+      "set_names": [
+        "熔山裂谷",
+        "徹空冥雷"
+      ],
+      "set_ids": [
+        2,
+        3
+      ],
+      "map_id": 8,
+      "mark_id": 5006,
+      "source_url": "https://github.com/Arikatsu/WutheringWaves_Data/blob/9218d612ad815e398e064e577e42aaf878899968/BinData/adventure_detect/silentareadetection.json",
+      "verified": true,
+      "available_from": null
+    },
+    {
+      "field_id": "30010016",
+      "name": "無光之森無音區",
+      "name_key": "MapMark_5007_MarkTitle",
+      "region": "瑝瓏·今州",
+      "set_names": [
+        "沉日劫明",
+        "輕雲出月"
+      ],
+      "set_ids": [
+        6,
+        8
+      ],
+      "map_id": 8,
+      "mark_id": 5007,
+      "source_url": "https://github.com/Arikatsu/WutheringWaves_Data/blob/9218d612ad815e398e064e577e42aaf878899968/BinData/adventure_detect/silentareadetection.json",
+      "verified": true,
+      "available_from": null
+    },
+    {
+      "field_id": "30010017",
+      "name": "槲生半島無音區",
+      "name_key": "MapMark_5008_MarkTitle",
+      "region": "黎那汐塔",
+      "set_names": [
+        "凌冽決斷之心",
+        "此間永駐之光"
+      ],
+      "set_ids": [
+        10,
+        11
+      ],
+      "map_id": 8,
+      "mark_id": 5008,
+      "source_url": "https://github.com/Arikatsu/WutheringWaves_Data/blob/9218d612ad815e398e064e577e42aaf878899968/BinData/adventure_detect/silentareadetection.json",
+      "verified": true,
+      "available_from": null
+    },
+    {
+      "field_id": "30010018",
+      "name": "悲嘆墓島無音區",
+      "name_key": "MapMark_5009_MarkTitle",
+      "region": "黎那汐塔",
+      "set_names": [
+        "幽夜隱匿之帷",
+        "高天共奏之曲"
+      ],
+      "set_ids": [
+        12,
+        13
+      ],
+      "map_id": 8,
+      "mark_id": 5009,
+      "source_url": "https://github.com/Arikatsu/WutheringWaves_Data/blob/9218d612ad815e398e064e577e42aaf878899968/BinData/adventure_detect/silentareadetection.json",
+      "verified": true,
+      "available_from": null
+    },
+    {
+      "field_id": "30010019",
+      "name": "黎喬利群島無音區",
+      "name_key": "MapMark_5010_MarkTitle",
+      "region": "黎那汐塔",
+      "set_names": [
+        "此間永駐之光",
+        "無懼浪濤之勇"
+      ],
+      "set_ids": [
+        11,
+        14
+      ],
+      "map_id": 8,
+      "mark_id": 5010,
+      "source_url": "https://github.com/Arikatsu/WutheringWaves_Data/blob/9218d612ad815e398e064e577e42aaf878899968/BinData/adventure_detect/silentareadetection.json",
+      "verified": true,
+      "available_from": null
+    },
+    {
+      "field_id": "30010020",
+      "name": "貝奧海域無音區",
+      "name_key": "MapMark_5011_MarkTitle",
+      "region": "黎那汐塔",
+      "set_names": [
+        "流雲逝盡之空",
+        "幽夜隱匿之帷"
+      ],
+      "set_ids": [
+        16,
+        12
+      ],
+      "map_id": 8,
+      "mark_id": 5011,
+      "source_url": "https://github.com/Arikatsu/WutheringWaves_Data/blob/9218d612ad815e398e064e577e42aaf878899968/BinData/adventure_detect/silentareadetection.json",
+      "verified": true,
+      "available_from": null
+    },
+    {
+      "field_id": "30010021",
+      "name": "哀慟谷無音區",
+      "name_key": "MapMark_5012_MarkTitle",
+      "region": "黎那汐塔",
+      "set_names": [
+        "願戴榮光之旅",
+        "奔狼燎原之焰"
+      ],
+      "set_ids": [
+        17,
+        18
+      ],
+      "map_id": 8,
+      "mark_id": 5012,
+      "source_url": "https://github.com/Arikatsu/WutheringWaves_Data/blob/9218d612ad815e398e064e577e42aaf878899968/BinData/adventure_detect/silentareadetection.json",
+      "verified": true,
+      "available_from": null
+    },
+    {
+      "field_id": "30010022",
+      "name": "陷足流川無音區",
+      "name_key": "MapMark_5013_MarkTitle",
+      "region": "索拉里斯之極·拉海洛",
+      "set_names": [
+        "星構尋輝之環",
+        "流金溯真之式"
+      ],
+      "set_ids": [
+        25,
+        26
+      ],
+      "map_id": 906,
+      "mark_id": 5013,
+      "source_url": "https://github.com/Arikatsu/WutheringWaves_Data/blob/9218d612ad815e398e064e577e42aaf878899968/BinData/adventure_detect/silentareadetection.json",
+      "verified": true,
+      "available_from": null
+    },
+    {
+      "field_id": "30010023",
+      "name": "隱喙深腹無音區",
+      "name_key": "MapMark_5014_MarkTitle",
+      "region": "索拉里斯之極·拉海洛",
+      "set_names": [
+        "逆光躍彩之約",
+        "流金溯真之式"
+      ],
+      "set_ids": [
+        24,
+        26
+      ],
+      "map_id": 906,
+      "mark_id": 5014,
+      "source_url": "https://github.com/Arikatsu/WutheringWaves_Data/blob/9218d612ad815e398e064e577e42aaf878899968/BinData/adventure_detect/silentareadetection.json",
+      "verified": true,
+      "available_from": null
+    },
+    {
+      "field_id": "30010024",
+      "name": "加拉爾冠階無音區",
+      "name_key": "MapMark_5015_MarkTitle",
+      "region": "索拉里斯之極·拉海洛",
+      "set_names": [
+        "長路啟航之星",
+        "斑駁粉飾之沫"
+      ],
+      "set_ids": [
+        27,
+        28
+      ],
+      "map_id": 8,
+      "mark_id": 5015,
+      "source_url": "https://github.com/Arikatsu/WutheringWaves_Data/blob/9218d612ad815e398e064e577e42aaf878899968/BinData/adventure_detect/silentareadetection.json",
+      "verified": true,
+      "available_from": null
+    },
+    {
+      "field_id": "30010025",
+      "name": "冰原運輸港無音區",
+      "name_key": "MapMark_5016_MarkTitle",
+      "region": "索拉里斯之極·拉海洛",
+      "set_names": [
+        "長路啟航之星",
+        "聽喚語義之願"
+      ],
+      "set_ids": [
+        27,
+        29
+      ],
+      "map_id": 8,
+      "mark_id": 5016,
+      "source_url": "https://github.com/Arikatsu/WutheringWaves_Data/blob/9218d612ad815e398e064e577e42aaf878899968/BinData/adventure_detect/silentareadetection.json",
+      "verified": true,
+      "available_from": null
+    },
+    {
+      "field_id": "30010026",
+      "name": "落日堤嶼無音區",
+      "name_key": "MapMark_5017_MarkTitle",
+      "region": "索拉里斯之極·拉海洛",
+      "set_names": [
+        "雪落無聲之願",
+        "剪心輯夢之影"
+      ],
+      "set_ids": [
+        30,
+        31
+      ],
+      "map_id": 909,
+      "mark_id": 5017,
+      "source_url": "https://github.com/Arikatsu/WutheringWaves_Data/blob/9218d612ad815e398e064e577e42aaf878899968/BinData/adventure_detect/silentareadetection.json",
+      "verified": true,
+      "available_from": null
+    },
+    {
+      "field_id": "30010027",
+      "name": "玄幽東嶽無音區",
+      "name_key": "MapMark_5018_MarkTitle",
+      "region": "瑝瓏·夢州",
+      "set_names": [
+        "羽落空塵之歌",
+        "清邪蕩煞之心"
+      ],
+      "set_ids": [
+        33,
+        34
+      ],
+      "map_id": 8,
+      "mark_id": 5018,
+      "source_url": "https://github.com/Arikatsu/WutheringWaves_Data/blob/9218d612ad815e398e064e577e42aaf878899968/BinData/adventure_detect/silentareadetection.json",
+      "verified": true,
+      "available_from": null
+    },
+    {
+      "field_id": "30010028",
+      "name": "方擎西峰無音區",
+      "name_key": "MapMark_5019_MarkTitle",
+      "region": "瑝瓏·夢州",
+      "set_names": [
+        "羽落空塵之歌",
+        "冥途夜行之燈"
+      ],
+      "set_ids": [
+        33,
+        35
+      ],
+      "map_id": 8,
+      "mark_id": 5019,
+      "source_url": "https://github.com/Arikatsu/WutheringWaves_Data/blob/9218d612ad815e398e064e577e42aaf878899968/BinData/adventure_detect/silentareadetection.json",
+      "verified": true,
+      "available_from": null
+    },
+    {
+      "field_id": "30010029",
+      "name": "燼心域無音區",
+      "name_key": "MapMark_5020_MarkTitle",
+      "region": "瑝瓏·夢州",
+      "set_names": [
+        "銜夢照世之心",
+        "鏡影流電之瞬"
+      ],
+      "set_ids": [
+        36,
+        37
+      ],
+      "map_id": 912,
+      "mark_id": 5020,
+      "source_url": "https://github.com/Arikatsu/WutheringWaves_Data/blob/9218d612ad815e398e064e577e42aaf878899968/BinData/adventure_detect/silentareadetection.json",
+      "verified": true,
+      "available_from": null
+    },
+    {
+      "field_id": "30010030",
+      "name": "沉心域無音區",
+      "name_key": "MapMark_5200_MarkTitle",
+      "region": "瑝瓏·夢州",
+      "set_names": [
+        "銜夢照世之心",
+        "茜染懷想之花"
+      ],
+      "set_ids": [
+        36,
+        38
+      ],
+      "map_id": 912,
+      "mark_id": 5200,
+      "source_url": "https://github.com/Arikatsu/WutheringWaves_Data/blob/9218d612ad815e398e064e577e42aaf878899968/BinData/adventure_detect/silentareadetection.json",
+      "verified": true,
+      "available_from": null
+    }
+  ],
+  "set_registry": [
+    {
+      "id": 1,
+      "name": "凝夜白霜"
+    },
+    {
+      "id": 2,
+      "name": "熔山裂谷"
+    },
+    {
+      "id": 3,
+      "name": "徹空冥雷"
+    },
+    {
+      "id": 4,
+      "name": "嘯谷長風"
+    },
+    {
+      "id": 5,
+      "name": "浮星祛暗"
+    },
+    {
+      "id": 6,
+      "name": "沉日劫明"
+    },
+    {
+      "id": 7,
+      "name": "隱世回光"
+    },
+    {
+      "id": 8,
+      "name": "輕雲出月"
+    },
+    {
+      "id": 9,
+      "name": "不絕餘音"
+    },
+    {
+      "id": 10,
+      "name": "凌冽決斷之心"
+    },
+    {
+      "id": 11,
+      "name": "此間永駐之光"
+    },
+    {
+      "id": 12,
+      "name": "幽夜隱匿之帷"
+    },
+    {
+      "id": 13,
+      "name": "高天共奏之曲"
+    },
+    {
+      "id": 14,
+      "name": "無懼浪濤之勇"
+    },
+    {
+      "id": 16,
+      "name": "流雲逝盡之空"
+    },
+    {
+      "id": 17,
+      "name": "願戴榮光之旅"
+    },
+    {
+      "id": 18,
+      "name": "奔狼燎原之焰"
+    },
+    {
+      "id": 19,
+      "name": "失序彼岸之夢"
+    },
+    {
+      "id": 20,
+      "name": "榮鬥鑄鋒之冠"
+    },
+    {
+      "id": 21,
+      "name": "息界同調之律"
+    },
+    {
+      "id": 22,
+      "name": "焚羽獵魔之影"
+    },
+    {
+      "id": 23,
+      "name": "命理崩毀之弦"
+    },
+    {
+      "id": 24,
+      "name": "逆光躍彩之約"
+    },
+    {
+      "id": 25,
+      "name": "星構尋輝之環"
+    },
+    {
+      "id": 26,
+      "name": "流金溯真之式"
+    },
+    {
+      "id": 27,
+      "name": "長路啟航之星"
+    },
+    {
+      "id": 28,
+      "name": "斑駁粉飾之沫"
+    },
+    {
+      "id": 29,
+      "name": "聽喚語義之願"
+    },
+    {
+      "id": 30,
+      "name": "雪落無聲之願"
+    },
+    {
+      "id": 31,
+      "name": "剪心輯夢之影"
+    },
+    {
+      "id": 32,
+      "name": "碎夢亡鬼之魘"
+    },
+    {
+      "id": 33,
+      "name": "羽落空塵之歌"
+    },
+    {
+      "id": 34,
+      "name": "清邪蕩煞之心"
+    },
+    {
+      "id": 35,
+      "name": "冥途夜行之燈"
+    },
+    {
+      "id": 36,
+      "name": "銜夢照世之心"
+    },
+    {
+      "id": 37,
+      "name": "鏡影流電之瞬"
+    },
+    {
+      "id": 38,
+      "name": "茜染懷想之花"
+    }
+  ],
+  "aliases": {
+    "命理崩毁之弦": "命理崩毀之弦",
+    "幽夜隱跡": "幽夜隱匿之帷",
+    "幽夜隐匿之帷": "幽夜隱匿之帷",
+    "碎夢亡鬼之魔": "碎夢亡鬼之魘",
+    "衔梦照世之心": "銜夢照世之心"
+  },
+  "non_tacet_sets": [
+    "失序彼岸之夢",
+    "榮鬥鑄鋒之冠",
+    "息界同調之律",
+    "焚羽獵魔之影",
+    "命理崩毀之弦",
+    "碎夢亡鬼之魘"
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "version": "6.11.1",
+  "source_bundle": "ThirdPartySources-Qt6.11.1.zip",
+  "components": [
+    {
+      "repository": "qt/qtbase",
+      "commit": "59c81a3c2247b821b9b84b4eb8d939b77e07e276",
+      "sha256": "7341ef4547f3b80cad69c155992f97b07a73d5b1b165528e5b3500b9edb84774"
+    },
+    {
+      "repository": "qt/qtsvg",
+      "commit": "2596f43da2dc72d2afecc084355b0f5f87922a6c",
+      "sha256": "daada4ac5c351d167ac556be18dda5d4192bbe923f5244545ee5635719fcb6b6"
+    },
+    {
+      "repository": "qt/qtimageformats",
+      "commit": "77f35e5694885844c3eb3a737769b5ed290b8ccc",
+      "sha256": "eafe337c27bec155e7937f99fc619d379fd61e205223d9b724a30e7a2715a049"
+    },
+    {
+      "repository": "qt/qttranslations",
+      "commit": "79c1b1aad54292fcc595b49f90c9ecd8f43bfa90",
+      "sha256": "4c402215b8ebf5e57e7449b4a0286f2917669be16ec4ce53968a76b23adb7535"
+    },
+    {
+      "repository": "pyside/pyside-setup",
+      "commit": "73fb12a067c2e8f7a464a310aaee2860fa2b64d2",
+      "sha256": "f0fb48c878195575705813be2a2f82f670b5a375a63c940ac0f300d799e93d9b"
+    }
+  ]
+}

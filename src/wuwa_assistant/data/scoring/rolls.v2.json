@@ -1,0 +1,295 @@
+{
+  "schema_version": 1,
+  "data_version": "echo-rolls-2026.09-official-v2",
+  "provenance": {
+    "status": "official_disclosure",
+    "source": "https://sdk-global.kurogames.com/pro/agreement/common/language_ko/product_info",
+    "is_official": true,
+    "notes": "Official Korean tuning disclosure, pages 3-10, retrieved 2026-09-23. Values/probabilities are official; score weights, roll credit and reference quantile remain project choices."
+  },
+  "probability_model": {
+    "status": "official_disclosure",
+    "name": "uniform_without_replacement_types_disclosed_conditional_values",
+    "is_official": true,
+    "notes": "官方調諧公示: 13 種副詞條等機率且不重複; 數值按公示機率, 僅正規化四位小數的捨入誤差。連續調諧依公示條件分布推算; 不包含定向重構。"
+  },
+  "minimum_roll_credit": 0.55,
+  "tiers": [
+    {
+      "key": "low",
+      "label_zh_tw": "低 Roll",
+      "minimum_ratio": 0.0,
+      "maximum_ratio": 0.249999
+    },
+    {
+      "key": "medium",
+      "label_zh_tw": "中 Roll",
+      "minimum_ratio": 0.25,
+      "maximum_ratio": 0.549999
+    },
+    {
+      "key": "high",
+      "label_zh_tw": "高 Roll",
+      "minimum_ratio": 0.55,
+      "maximum_ratio": 0.849999
+    },
+    {
+      "key": "top",
+      "label_zh_tw": "頂 Roll",
+      "minimum_ratio": 0.85,
+      "maximum_ratio": 1.0
+    }
+  ],
+  "roll_values": {
+    "crit_rate": [
+      6.3,
+      6.9,
+      7.5,
+      8.1,
+      8.7,
+      9.3,
+      9.9,
+      10.5
+    ],
+    "crit_damage": [
+      12.6,
+      13.8,
+      15.0,
+      16.2,
+      17.4,
+      18.6,
+      19.8,
+      21.0
+    ],
+    "attack_pct": [
+      6.4,
+      7.1,
+      7.9,
+      8.6,
+      9.4,
+      10.1,
+      10.9,
+      11.6
+    ],
+    "flat_attack": [
+      30,
+      40,
+      50,
+      60
+    ],
+    "hp_pct": [
+      6.4,
+      7.1,
+      7.9,
+      8.6,
+      9.4,
+      10.1,
+      10.9,
+      11.6
+    ],
+    "flat_hp": [
+      320,
+      360,
+      390,
+      430,
+      470,
+      510,
+      540,
+      580
+    ],
+    "defense_pct": [
+      8.1,
+      9.0,
+      10.0,
+      10.9,
+      11.8,
+      12.8,
+      13.8,
+      14.7
+    ],
+    "flat_defense": [
+      40,
+      50,
+      60,
+      70
+    ],
+    "energy_regen": [
+      6.8,
+      7.6,
+      8.4,
+      9.2,
+      10.0,
+      10.8,
+      11.6,
+      12.4
+    ],
+    "basic_attack_damage": [
+      6.4,
+      7.1,
+      7.9,
+      8.6,
+      9.4,
+      10.1,
+      10.9,
+      11.6
+    ],
+    "heavy_attack_damage": [
+      6.4,
+      7.1,
+      7.9,
+      8.6,
+      9.4,
+      10.1,
+      10.9,
+      11.6
+    ],
+    "resonance_skill_damage": [
+      6.4,
+      7.1,
+      7.9,
+      8.6,
+      9.4,
+      10.1,
+      10.9,
+      11.6
+    ],
+    "resonance_liberation_damage": [
+      6.4,
+      7.1,
+      7.9,
+      8.6,
+      9.4,
+      10.1,
+      10.9,
+      11.6
+    ]
+  },
+  "reference_quantile": 0.99,
+  "reference_notes": "Project calibration: 90 points at the 99th percentile of random fully tuned five-substat weighted points; 90-100 interpolates from P99 to theoretical ideal. Not a percentile rating, official formula, or damage simulation. Legacy user profiles retain v1.",
+  "source_pdf": "https://sdk-prod-cdn-aws.kurogame-service.com/pro/agreement/common/language_ko/product_info.pdf",
+  "source_pdf_sha256": "d5b77d4789e4975164ea4e05737d9b7a64a1de48160aa67c0c87a594f6945bf1",
+  "roll_probability_percent": {
+    "crit_rate": [
+      23.3333,
+      23.3333,
+      23.3333,
+      8,
+      8,
+      8,
+      3,
+      3
+    ],
+    "crit_damage": [
+      23.3333,
+      23.3333,
+      23.3333,
+      8,
+      8,
+      8,
+      3,
+      3
+    ],
+    "attack_pct": [
+      6.7961,
+      7.767,
+      20.3883,
+      24.2718,
+      17.4757,
+      14.5631,
+      5.8252,
+      2.9126
+    ],
+    "flat_attack": [
+      6.7961,
+      52.4272,
+      37.8641,
+      2.9126
+    ],
+    "hp_pct": [
+      6.7961,
+      7.767,
+      20.3883,
+      24.2718,
+      17.4757,
+      14.5631,
+      5.8252,
+      2.9126
+    ],
+    "flat_hp": [
+      6.7961,
+      7.767,
+      20.3883,
+      24.2718,
+      17.4757,
+      14.5631,
+      5.8252,
+      2.9126
+    ],
+    "defense_pct": [
+      6.7961,
+      7.767,
+      20.3883,
+      24.2718,
+      17.4757,
+      14.5631,
+      5.8252,
+      2.9126
+    ],
+    "flat_defense": [
+      14.5631,
+      44.6602,
+      32.0388,
+      8.7379
+    ],
+    "energy_regen": [
+      6.7961,
+      7.767,
+      20.3883,
+      24.2718,
+      17.4757,
+      14.5631,
+      5.8252,
+      2.9126
+    ],
+    "basic_attack_damage": [
+      6.7961,
+      7.767,
+      20.3883,
+      24.2718,
+      17.4757,
+      14.5631,
+      5.8252,
+      2.9126
+    ],
+    "heavy_attack_damage": [
+      6.7961,
+      7.767,
+      20.3883,
+      24.2718,
+      17.4757,
+      14.5631,
+      5.8252,
+      2.9126
+    ],
+    "resonance_skill_damage": [
+      6.7961,
+      7.767,
+      20.3883,
+      24.2718,
+      17.4757,
+      14.5631,
+      5.8252,
+      2.9126
+    ],
+    "resonance_liberation_damage": [
+      6.7961,
+      7.767,
+      20.3883,
+      24.2718,
+      17.4757,
+      14.5631,
+      5.8252,
+      2.9126
+    ]
+  }
+}

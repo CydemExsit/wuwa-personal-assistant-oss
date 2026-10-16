@@ -1,0 +1,81 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "wuwa-personal-assistant-display"
+version = "1.1.1"
+description = "Unofficial offline Wuthering Waves desktop assistant with local OCR and Echo scoring"
+readme = "README.md"
+requires-python = ">=3.12,<3.13"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [{ name = "CydemExsit" }]
+
+dependencies = [
+  "alembic>=1.14,<2",
+  "mss>=10,<11",
+  "numpy>=2.0,<3",
+  "opencv-python>=4.10,<5",
+  "onnxruntime==1.28.0",
+  "platformdirs>=4.3,<5",
+  # Qt 6.12.0 crashes during native widget teardown on Windows; keep the verified runtime.
+  "PySide6==6.11.1",
+  "rapidocr==3.9.2",
+  "SQLAlchemy>=2.0,<3",
+  "tzdata>=2025.2,<2027",
+]
+
+[project.optional-dependencies]
+dev = [
+  "mypy>=1.15,<2",
+  "pytest>=8,<10",
+  "pytest-cov>=5,<8",
+  "pytest-qt>=4.4,<5",
+  "ruff>=0.12,<1",
+]
+packaging = [
+  "pyinstaller>=6.21,<7",
+]
+ocr-paddle = [
+  "paddleocr==3.7.0",
+]
+
+[project.urls]
+Repository = "https://github.com/CydemExsit/wuwa-personal-assistant-oss"
+Issues = "https://github.com/CydemExsit/wuwa-personal-assistant-oss/issues"
+
+[project.scripts]
+wuwa-display-assistant = "wuwa_assistant.cli.main:main"
+wuwa-display-assistant-gui = "wuwa_assistant.app.main:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+"wuwa_assistant.data.characters" = ["*.json", "portraits/*.json"]
+"wuwa_assistant.data.scoring" = ["*.json"]
+"wuwa_assistant.data.planning" = ["*.json"]
+"wuwa_assistant.storage.migrations" = ["versions/*.py"]
+"wuwa_assistant.ui.styles" = ["*.qss", "*.svg", "*.ico"]
+
+[tool.pytest.ini_options]
+addopts = "-q"
+pythonpath = ["src"]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM", "RUF"]
+
+[tool.mypy]
+python_version = "3.12"
+check_untyped_defs = true
+disallow_untyped_defs = true
+ignore_missing_imports = true
+no_implicit_optional = true
+warn_redundant_casts = true
+warn_unused_ignores = true

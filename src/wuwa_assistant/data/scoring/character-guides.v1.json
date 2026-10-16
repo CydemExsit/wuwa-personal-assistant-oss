@@ -1,0 +1,3062 @@
+{
+  "schema_version": 1,
+  "data_version": "character-guides-2026.10.08-v7",
+  "retrieved_on": "2026-09-28",
+  "weight_policy": "guide-and-game-reference-priority-tiers-v3",
+  "tier_weights": [
+    1.0,
+    0.8,
+    0.6,
+    0.4,
+    0.25,
+    0.15
+  ],
+  "unlisted_weight": 0.0,
+  "energy_after_target_weight": 0.1,
+  "guides": [
+    {
+      "role_id": "1209",
+      "name": "莫寧",
+      "aliases": [
+        "Mornye",
+        "莫宁",
+        "莫寧"
+      ],
+      "role": "防禦治療／偏諧輔助",
+      "priority_tiers": [
+        [
+          "energy_regen"
+        ],
+        [
+          "defense_pct"
+        ],
+        [
+          "resonance_liberation_damage",
+          "crit_damage"
+        ],
+        [
+          "crit_rate"
+        ],
+        [
+          "flat_defense"
+        ]
+      ],
+      "energy_target": 260,
+      "main_stats": "4C 防禦%（遊戲常用）或治療加成（攻略備選）；3C 共鳴效率；1C 防禦%",
+      "sets": "星構尋輝之環；隱世回光可過渡",
+      "caveat": "偏諧隊伍參考；治療、生存與隊伍增益不等於個人輸出分。",
+      "sources": [
+        {
+          "url": "https://mcguide.kurogames.com/zh-Hans/?role_id=1209&strategy_id=10164",
+          "author": "小羊早睡不遭罪",
+          "title": "启动临界协议！偏谐体系三号位莫宁角色攻略",
+          "updated_on": null,
+          "response_sha256": "5bd93c64d2d3690c95dc254f2cb3e74f096273f08b5ba4fad14e0cc651fabbd1",
+          "retrieved_on": "2026-09-27"
+        },
+        {
+          "url": "https://mcguide.kurogames.com/zh-Hans/?role_id=1209&strategy_id=10162",
+          "author": "silly沐",
+          "title": "莫宁快速上手小技巧——silly沐",
+          "updated_on": null,
+          "response_sha256": "7778c9a20c4dd1f85c10af7d547401133d5253e9c849365e0703220b18c8be91",
+          "retrieved_on": "2026-09-27"
+        }
+      ],
+      "profile_version": 4,
+      "equipment_reference": {
+        "element": "熱熔",
+        "allowed_sets": [
+          "星構尋輝之環",
+          "隱世回光"
+        ],
+        "main_stats_by_cost": {
+          "4": [
+            "defense_pct",
+            "healing_bonus"
+          ],
+          "3": [
+            "energy_regen"
+          ],
+          "1": [
+            "defense_pct"
+          ]
+        },
+        "variants": [
+          {
+            "kind": "main",
+            "sets": [
+              "星構尋輝之環"
+            ],
+            "pieces_required": 5,
+            "main_stats": [
+              {
+                "cost": 4,
+                "stat": "defense_pct"
+              },
+              {
+                "cost": 3,
+                "stat": "energy_regen"
+              },
+              {
+                "cost": 3,
+                "stat": "energy_regen"
+              },
+              {
+                "cost": 1,
+                "stat": "defense_pct"
+              },
+              {
+                "cost": 1,
+                "stat": "defense_pct"
+              }
+            ]
+          },
+          {
+            "kind": "spare",
+            "sets": [
+              "隱世回光"
+            ],
+            "pieces_required": 5,
+            "main_stats": [
+              {
+                "cost": 4,
+                "stat": "defense_pct"
+              },
+              {
+                "cost": 3,
+                "stat": "energy_regen"
+              },
+              {
+                "cost": 3,
+                "stat": "energy_regen"
+              },
+              {
+                "cost": 1,
+                "stat": "defense_pct"
+              },
+              {
+                "cost": 1,
+                "stat": "defense_pct"
+              }
+            ]
+          }
+        ],
+        "verified_on": "2026-09-27",
+        "snapshot_sha256": "5bd93c64d2d3690c95dc254f2cb3e74f096273f08b5ba4fad14e0cc651fabbd1",
+        "source_url": "https://mcguide.kurogames.com/zh-Hans/?role_id=1209&strategy_id=10164"
+      },
+      "usage_reference": {
+        "source": "使用者提供的遊戲內聲骸推薦截圖",
+        "provided_on": "2026-09-27",
+        "screenshot_index": 6,
+        "substats_percent": {
+          "energy_regen": 70.6,
+          "defense_pct": 53.5,
+          "crit_damage": 48.3,
+          "resonance_liberation_damage": 42.8,
+          "crit_rate": 42.4
+        },
+        "main_stats_percent": {
+          "4": {
+            "defense_pct": 58.6
+          },
+          "3": {
+            "energy_regen": 86.7
+          },
+          "1": {
+            "defense_pct": 98.5
+          }
+        },
+        "main_echo_percent": {
+          "爐芯機骸": 99.4
+        },
+        "set_icons": [
+          {
+            "label": "星構尋輝之環 5件",
+            "percent": 99.6
+          }
+        ],
+        "notes": "只收錄截圖可見的使用率；樣本量、統計期間、武器與共鳴鏈分布未知。套裝圖示已對照官方攻略平台的圖示與名稱；同COST比例不代表兩個3C必須相同。",
+        "set_icon_verification": {
+          "verified_on": "2026-09-28",
+          "method": "官方攻略平台圖示、套裝名稱與件數逐項人工對照；使用率仍來自使用者截圖。",
+          "primary_icon": {
+            "id": "25",
+            "name": "星构寻辉之环",
+            "url": "https://guide-res.aki-game.com/introduction/material/10e7cc57d5973e4cf6ae03bde40173be/a969aaab995e4aaddbfe5fc3781fa63b.png",
+            "source": "1413.json",
+            "response_sha256": "0c2b13f8fdcb2a441ab1ae86549c3b0effe94a53fb58ede9af7dfdb5fbda98cc"
+          }
+        }
+      },
+      "weight_rationale": "改為效率1、防禦0.8、解放與暴傷0.6、暴擊0.4、固定防禦0.25。提高防禦以反映治療與支援定位，保留攻略重視的解放，補上另一作者與遊戲推薦都列出的暴擊；此分數不估算全隊輔助收益。",
+      "retrieved_on": "2026-09-27"
+    },
+    {
+      "role_id": "1108",
+      "name": "緋雪",
+      "aliases": [
+        "Hiyuki",
+        "绯雪",
+        "緋雪"
+      ],
+      "role": "冷凝輸出／解放、霜漸",
+      "priority_tiers": [
+        [
+          "crit_rate",
+          "crit_damage"
+        ],
+        [
+          "attack_pct"
+        ],
+        [
+          "resonance_liberation_damage",
+          "energy_regen"
+        ]
+      ],
+      "energy_target": 120,
+      "main_stats": "4C 暴傷或暴擊；3C 冷凝傷害（遊戲常用），攻略亦列冷凝＋攻擊%；1C 攻擊%",
+      "sets": "雪落無聲之願",
+      "caveat": "另一篇攻略將解放傷害排在攻擊前；隊伍、武器與手法可改變取捨。",
+      "sources": [
+        {
+          "url": "https://mcguide.kurogames.com/zh-Hans/?role_id=1108&strategy_id=10177",
+          "author": "巡游天国FM",
+          "title": "绯雪简易玩法+养成攻略【巡游天国FM】",
+          "updated_on": null,
+          "response_sha256": "e6615781b8b6166c5ba6cdaa8431153706040a72eeae8799f6b0fbfca728777e",
+          "retrieved_on": "2026-09-27"
+        },
+        {
+          "url": "https://mcguide.kurogames.com/zh-Hans/?role_id=1108&strategy_id=10180",
+          "author": "清晨不易",
+          "title": "绯雪全方位角色攻略与机制深度解析",
+          "updated_on": null,
+          "response_sha256": "861478ca7e22673a00e37bfbd19292fd4c2716a2f33a8bac2861f5b84e0571bc",
+          "retrieved_on": "2026-09-27"
+        }
+      ],
+      "profile_version": 4,
+      "equipment_reference": {
+        "element": "冷凝",
+        "allowed_sets": [
+          "雪落無聲之願"
+        ],
+        "main_stats_by_cost": {
+          "4": [
+            "crit_damage",
+            "crit_rate"
+          ],
+          "3": [
+            "glacio_damage",
+            "attack_pct"
+          ],
+          "1": [
+            "attack_pct"
+          ]
+        },
+        "variants": [
+          {
+            "kind": "main",
+            "sets": [
+              "雪落無聲之願"
+            ],
+            "pieces_required": 5,
+            "main_stats": [
+              {
+                "cost": 4,
+                "stat": "crit_damage"
+              },
+              {
+                "cost": 3,
+                "stat": "glacio_damage"
+              },
+              {
+                "cost": 3,
+                "stat": "glacio_damage"
+              },
+              {
+                "cost": 1,
+                "stat": "attack_pct"
+              },
+              {
+                "cost": 1,
+                "stat": "attack_pct"
+              }
+            ]
+          },
+          {
+            "kind": "spare",
+            "sets": [
+              "雪落無聲之願"
+            ],
+            "pieces_required": 5,
+            "main_stats": [
+              {
+                "cost": 4,
+                "stat": "crit_damage"
+              },
+              {
+                "cost": 3,
+                "stat": "attack_pct"
+              },
+              {
+                "cost": 3,
+                "stat": "glacio_damage"
+              },
+              {
+                "cost": 1,
+                "stat": "attack_pct"
+              },
+              {
+                "cost": 1,
+                "stat": "attack_pct"
+              }
+            ]
+          }
+        ],
+        "verified_on": "2026-09-27",
+        "snapshot_sha256": "e6615781b8b6166c5ba6cdaa8431153706040a72eeae8799f6b0fbfca728777e",
+        "source_url": "https://mcguide.kurogames.com/zh-Hans/?role_id=1108&strategy_id=10177"
+      },
+      "usage_reference": {
+        "source": "使用者提供的遊戲內聲骸推薦截圖",
+        "provided_on": "2026-09-27",
+        "screenshot_index": 5,
+        "substats_percent": {
+          "crit_rate": 83.0,
+          "crit_damage": 82.6,
+          "attack_pct": 47.1,
+          "energy_regen": 47.1,
+          "resonance_liberation_damage": 45.7
+        },
+        "main_stats_percent": {
+          "4": {
+            "crit_damage": 83.3
+          },
+          "3": {
+            "glacio_damage": 83.0
+          },
+          "1": {
+            "attack_pct": 98.8
+          }
+        },
+        "main_echo_percent": {
+          "共鳴迴響·鳴式·虛造神型": 99.9
+        },
+        "set_icons": [
+          {
+            "label": "雪落無聲之願 5件",
+            "percent": 99.7
+          }
+        ],
+        "notes": "只收錄截圖可見的使用率；樣本量、統計期間、武器與共鳴鏈分布未知。套裝圖示已對照官方攻略平台的圖示與名稱；同COST比例不代表兩個3C必須相同。",
+        "set_icon_verification": {
+          "verified_on": "2026-09-28",
+          "method": "官方攻略平台圖示、套裝名稱與件數逐項人工對照；使用率仍來自使用者截圖。",
+          "primary_icon": {
+            "id": "30",
+            "name": "雪落无声之愿",
+            "url": "https://guide-res.aki-game.com/introduction/material/31333166139db3e3f97c4ce3a64a2e54/19ee203f0229aae4b91567bff25442e5.png",
+            "source": "1109.json",
+            "response_sha256": "f7db0e460f08af3dfd125177b2fd34631305f585da7dd73eaed5296c2880279d"
+          }
+        }
+      },
+      "weight_rationale": "保留雙暴1、攻擊0.8、解放與效率0.6。兩篇攻略對攻擊與解放順序有分歧；使用率中的攻擊與效率同為47.1%，不等於兩者每點收益相同。",
+      "retrieved_on": "2026-09-27"
+    },
+    {
+      "role_id": "1109",
+      "name": "洛瑟菈",
+      "aliases": [
+        "Lucilla",
+        "洛瑟菈",
+        "洛瑟菈"
+      ],
+      "role": "霜漸或聲骸輔助／普攻輸出",
+      "priority_tiers": [
+        [
+          "crit_rate",
+          "crit_damage"
+        ],
+        [
+          "attack_pct"
+        ],
+        [
+          "basic_attack_damage"
+        ]
+      ],
+      "energy_target": null,
+      "main_stats": "雙暴／冷凝傷害／攻擊",
+      "sets": "雪落無聲之願",
+      "caveat": "普攻權重對應霜漸模態直傷；聲骸模態及輔助收益不在此模型。解放由回路解鎖，攻略不推薦堆共鳴效率。",
+      "sources": [
+        {
+          "url": "https://mcguide.kurogames.com/zh-Hans/?role_id=1109&strategy_id=10195",
+          "author": "巡游天国FM",
+          "title": "洛瑟菈简易玩法+养成攻略【巡游天国FM】",
+          "updated_on": null,
+          "response_sha256": "e0ba8dc74e1bc83fbe234dd34bde6cfaaf5d356189b53b2c0a6f1c9f19465370",
+          "retrieved_on": "2026-09-27"
+        },
+        {
+          "url": "https://mcguide.kurogames.com/zh-Hans/?role_id=1109&strategy_id=10198",
+          "author": "一戈",
+          "title": "霜渐声骸大辅【洛瑟菈】手法，配队，养成全方位攻略",
+          "updated_on": null,
+          "response_sha256": "fe67777ee3c715ed0a5acf3d0f6d982de2843d8c234dba39c7288c32c260ab03",
+          "retrieved_on": "2026-09-27"
+        }
+      ],
+      "profile_version": 4,
+      "equipment_reference": {
+        "element": "冷凝",
+        "allowed_sets": [
+          "雪落無聲之願",
+          "輕雲出月"
+        ],
+        "main_stats_by_cost": {
+          "3": [
+            "glacio_damage"
+          ],
+          "4": [
+            "crit_damage"
+          ],
+          "1": [
+            "attack_pct"
+          ]
+        },
+        "variants": [
+          {
+            "kind": "main",
+            "sets": [
+              "雪落無聲之願"
+            ],
+            "pieces_required": 5,
+            "main_stats": [
+              {
+                "cost": 3,
+                "stat": "glacio_damage"
+              },
+              {
+                "cost": 4,
+                "stat": "crit_damage"
+              },
+              {
+                "cost": 3,
+                "stat": "glacio_damage"
+              },
+              {
+                "cost": 1,
+                "stat": "attack_pct"
+              },
+              {
+                "cost": 1,
+                "stat": "attack_pct"
+              }
+            ]
+          },
+          {
+            "kind": "spare",
+            "sets": [
+              "輕雲出月"
+            ],
+            "pieces_required": 5,
+            "main_stats": [
+              {
+                "cost": 4,
+                "stat": "crit_damage"
+              },
+              {
+                "cost": 3,
+                "stat": "glacio_damage"
+              },
+              {
+                "cost": 3,
+                "stat": "glacio_damage"
+              },
+              {
+                "cost": 1,
+                "stat": "attack_pct"
+              },
+              {
+                "cost": 1,
+                "stat": "attack_pct"
+              }
+            ]
+          }
+        ],
+        "verified_on": "2026-09-27",
+        "snapshot_sha256": "e0ba8dc74e1bc83fbe234dd34bde6cfaaf5d356189b53b2c0a6f1c9f19465370",
+        "source_url": "https://mcguide.kurogames.com/zh-Hans/?role_id=1109&strategy_id=10195"
+      },
+      "usage_reference": {
+        "source": "使用者提供的遊戲內聲骸推薦截圖",
+        "provided_on": "2026-09-27",
+        "screenshot_index": 1,
+        "substats_percent": {
+          "crit_rate": 78.1,
+          "crit_damage": 75.9,
+          "attack_pct": 43.8,
+          "basic_attack_damage": 42.9
+        },
+        "main_stats_percent": {
+          "4": {
+            "crit_damage": 61.1
+          },
+          "3": {
+            "glacio_damage": 88.1
+          },
+          "1": {
+            "attack_pct": 99.1
+          }
+        },
+        "main_echo_percent": {
+          "格洛獁圖": 80.0,
+          "共鳴迴響·鳴式·虛造神型": 19.1
+        },
+        "set_icons": [
+          {
+            "label": "雪落無聲之願 5件",
+            "percent": 94.8
+          }
+        ],
+        "notes": "只收錄截圖可見的使用率；樣本量、統計期間、武器與共鳴鏈分布未知。套裝圖示已對照官方攻略平台的圖示與名稱；同COST比例不代表兩個3C必須相同。 圖片底部之外的其他副詞條未知。",
+        "set_icon_verification": {
+          "verified_on": "2026-09-28",
+          "method": "官方攻略平台圖示、套裝名稱與件數逐項人工對照；使用率仍來自使用者截圖。",
+          "primary_icon": {
+            "id": "30",
+            "name": "雪落无声之愿",
+            "url": "https://guide-res.aki-game.com/introduction/material/31333166139db3e3f97c4ce3a64a2e54/19ee203f0229aae4b91567bff25442e5.png",
+            "source": "1109.json",
+            "response_sha256": "f7db0e460f08af3dfd125177b2fd34631305f585da7dd73eaed5296c2880279d"
+          }
+        }
+      },
+      "weight_rationale": "保留雙暴1、攻擊0.8、普攻0.6；遊戲使用率與兩篇攻略方向一致。普攻權重以霜漸模態直傷為參考，聲骸模態另有機制；解放由回路解鎖，不因其他角色重視效率就添加充能權重。",
+      "retrieved_on": "2026-09-27"
+    },
+    {
+      "role_id": "1110",
+      "name": "穗穗",
+      "aliases": [
+        "Suisui",
+        "穗穗",
+        "穗穗"
+      ],
+      "role": "生命治療／效應輔助",
+      "priority_tiers": [
+        [
+          "energy_regen"
+        ],
+        [
+          "hp_pct"
+        ],
+        [
+          "crit_damage"
+        ],
+        [
+          "crit_rate"
+        ],
+        [
+          "flat_hp"
+        ]
+      ],
+      "energy_target": 260,
+      "main_stats": "4C 治療加成；3C 共鳴效率；1C 生命%。遊戲使用率56.2%／94.1%／98.0%；效率先滿足循環。",
+      "sets": "羽落空塵之歌；隱世回光可過渡",
+      "caveat": "生命治療／輔助參考；兩篇攻略列260%效率，仍依隊伍與循環調整。遊戲使用率與來源分歧已分列，未把雙暴當作治療增幅。",
+      "sources": [
+        {
+          "url": "https://mcguide.kurogames.com/zh-Hans/?role_id=1110&strategy_id=10213",
+          "author": "巡游天国FM",
+          "title": "穗穗简易玩法＋养成攻略【巡游天国FM】",
+          "updated_on": null,
+          "response_sha256": "38cfeab9a204a71b1fe5edf9f04d2d30e35ea902a329c735f20fd7371353e7f2",
+          "retrieved_on": "2026-09-27"
+        },
+        {
+          "url": "https://mcguide.kurogames.com/zh-Hans/?role_id=1110&strategy_id=10215",
+          "author": "是立恒啊",
+          "title": "上善若水 穗穗角色攻略",
+          "updated_on": null,
+          "response_sha256": "da640b599ae5dc632a1feae1672e56974e0c58b3edcdb03a2ccd7840bd5e39b3",
+          "retrieved_on": "2026-09-27"
+        }
+      ],
+      "profile_version": 4,
+      "equipment_reference": {
+        "element": "冷凝",
+        "allowed_sets": [
+          "羽落空塵之歌",
+          "隱世回光"
+        ],
+        "main_stats_by_cost": {
+          "3": [
+            "energy_regen"
+          ],
+          "4": [
+            "healing_bonus"
+          ],
+          "1": [
+            "hp_pct"
+          ]
+        },
+        "variants": [
+          {
+            "kind": "main",
+            "sets": [
+              "羽落空塵之歌"
+            ],
+            "pieces_required": 5,
+            "main_stats": [
+              {
+                "cost": 3,
+                "stat": "energy_regen"
+              },
+              {
+                "cost": 4,
+                "stat": "healing_bonus"
+              },
+              {
+                "cost": 3,
+                "stat": "energy_regen"
+              },
+              {
+                "cost": 1,
+                "stat": "hp_pct"
+              },
+              {
+                "cost": 1,
+                "stat": "hp_pct"
+              }
+            ]
+          },
+          {
+            "kind": "spare",
+            "sets": [
+              "隱世回光"
+            ],
+            "pieces_required": 5,
+            "main_stats": [
+              {
+                "cost": 4,
+                "stat": "healing_bonus"
+              },
+              {
+                "cost": 3,
+                "stat": "energy_regen"
+              },
+              {
+                "cost": 3,
+                "stat": "energy_regen"
+              },
+              {
+                "cost": 1,
+                "stat": "hp_pct"
+              },
+              {
+                "cost": 1,
+                "stat": "hp_pct"
+              }
+            ]
+          }
+        ],
+        "verified_on": "2026-09-27",
+        "snapshot_sha256": "38cfeab9a204a71b1fe5edf9f04d2d30e35ea902a329c735f20fd7371353e7f2",
+        "source_url": "https://mcguide.kurogames.com/zh-Hans/?role_id=1110&strategy_id=10213"
+      },
+      "usage_reference": {
+        "source": "使用者提供的遊戲內聲骸推薦截圖",
+        "provided_on": "2026-09-27",
+        "screenshot_index": 3,
+        "substats_percent": {
+          "energy_regen": 71.2,
+          "hp_pct": 50.5,
+          "crit_damage": 48.1,
+          "crit_rate": 41.4,
+          "flat_hp": 37.8
+        },
+        "main_stats_percent": {
+          "4": {
+            "healing_bonus": 56.2
+          },
+          "3": {
+            "energy_regen": 94.1
+          },
+          "1": {
+            "hp_pct": 98.0
+          }
+        },
+        "main_echo_percent": {
+          "封庭械囿": 78.5,
+          "千傀重樓": 21.0
+        },
+        "set_icons": [
+          {
+            "label": "羽落空塵之歌 5件",
+            "percent": 99.3
+          }
+        ],
+        "notes": "只收錄截圖可見的使用率；樣本量、統計期間、武器與共鳴鏈分布未知。套裝圖示已對照官方攻略平台的圖示與名稱；同COST比例不代表兩個3C必須相同。 暴擊41.4%、固定生命37.8%由使用者補充被截掉的部分；本次已可見4C治療56.2%與1C生命98.0%。",
+        "set_icon_verification": {
+          "verified_on": "2026-09-28",
+          "method": "官方攻略平台圖示、套裝名稱與件數逐項人工對照；使用率仍來自使用者截圖。",
+          "primary_icon": {
+            "id": "33",
+            "name": "羽落空尘之歌",
+            "url": "https://guide-res.aki-game.com/introduction/material/69e2b6508604133e640da4e8a69ea4a1/9c86482e30a12260a6d0bbbcb91e82ad.png",
+            "source": "1610.json",
+            "response_sha256": "a2990b4628f668b7dce2799a911985f48a4d6585e3b234bcea18f7c6633252db"
+          }
+        }
+      },
+      "weight_rationale": "保留效率1、生命0.8、暴傷0.6、暴擊0.4、固定生命0.25，先滿足循環與生命治療。另一攻略將雙暴約列同級；0.6／0.4為工具優先級，不是治療或傷害的效益比。",
+      "retrieved_on": "2026-09-27"
+    },
+    {
+      "role_id": "1210",
+      "name": "愛彌斯",
+      "aliases": [
+        "Aemeath",
+        "爱弥斯",
+        "愛彌斯"
+      ],
+      "role": "熱熔輸出／解放",
+      "priority_tiers": [
+        [
+          "crit_rate",
+          "crit_damage"
+        ],
+        [
+          "attack_pct",
+          "energy_regen"
+        ],
+        [
+          "resonance_liberation_damage"
+        ],
+        [
+          "flat_attack"
+        ]
+      ],
+      "energy_target": 116,
+      "main_stats": "4C 暴傷；3C 熱熔傷害（遊戲常用），攻略亦採熱熔＋攻擊%；1C 攻擊%",
+      "sets": "長路啟航之星",
+      "caveat": "此來源面板參考 116%；另一作者建議 120%。依武器、隊伍與循環調整。",
+      "sources": [
+        {
+          "url": "https://mcguide.kurogames.com/zh-Hans/?role_id=1210&strategy_id=10204",
+          "author": "FireMage丶",
+          "title": "【自无垠处归航之星】爱弥斯角色养成、配队、操作手法综合攻略",
+          "updated_on": null,
+          "response_sha256": "2926e6f6ae45901a6eca4056cc43706daca96a182fe67f5a4dac48f2fd2a0ccd",
+          "retrieved_on": "2026-09-27"
+        },
+        {
+          "url": "https://mcguide.kurogames.com/zh-Hans/?role_id=1210&strategy_id=10166",
+          "author": "巡游天国FM",
+          "title": "爱弥斯简易玩法+养成攻略【巡游天国FM】",
+          "updated_on": null,
+          "response_sha256": "a595e0d35708992ee17b1497d33a6d1a3a2002596fcdcec4ce84f5e0eb20701d",
+          "retrieved_on": "2026-09-27"
+        }
+      ],
+      "profile_version": 4,
+      "equipment_reference": {
+        "element": "熱熔",
+        "allowed_sets": [
+          "長路啟航之星"
+        ],
+        "main_stats_by_cost": {
+          "4": [
+            "crit_damage"
+          ],
+          "3": [
+            "fusion_damage",
+            "attack_pct"
+          ],
+          "1": [
+            "attack_pct"
+          ]
+        },
+        "variants": [
+          {
+            "kind": "main",
+            "sets": [
+              "長路啟航之星"
+            ],
+            "pieces_required": 5,
+            "main_stats": [
+              {
+                "cost": 4,
+                "stat": "crit_damage"
+              },
+              {
+                "cost": 3,
+                "stat": "fusion_damage"
+              },
+              {
+                "cost": 3,
+                "stat": "attack_pct"
+              },
+              {
+                "cost": 1,
+                "stat": "attack_pct"
+              },
+              {
+                "cost": 1,
+                "stat": "attack_pct"
+              }
+            ]
+          },
+          {
+            "kind": "spare",
+            "sets": [
+              "長路啟航之星"
+            ],
+            "pieces_required": 5,
+            "main_stats": [
+              {
+                "cost": 4,
+                "stat": "crit_damage"
+              },
+              {
+                "cost": 3,
+                "stat": "fusion_damage"
+              },
+              {
+                "cost": 3,
+                "stat": "fusion_damage"
+              },
+              {
+                "cost": 1,
+                "stat": "attack_pct"
+              },
+              {
+                "cost": 1,
+                "stat": "attack_pct"
+              }
+            ]
+          }
+        ],
+        "verified_on": "2026-09-27",
+        "snapshot_sha256": "2926e6f6ae45901a6eca4056cc43706daca96a182fe67f5a4dac48f2fd2a0ccd",
+        "source_url": "https://mcguide.kurogames.com/zh-Hans/?role_id=1210&strategy_id=10204"
+      },
+      "usage_reference": {
+        "source": "使用者提供的遊戲內聲骸推薦截圖",
+        "provided_on": "2026-09-27",
+        "screenshot_index": 7,
+        "substats_percent": {
+          "crit_rate": 84.4,
+          "crit_damage": 84.0,
+          "energy_regen": 49.8,
+          "attack_pct": 48.4,
+          "resonance_liberation_damage": 46.1
+        },
+        "main_stats_percent": {
+          "4": {
+            "crit_damage": 86.4
+          },
+          "3": {
+            "fusion_damage": 77.7
+          },
+          "1": {
+            "attack_pct": 99.2
+          }
+        },
+        "main_echo_percent": {
+          "辛吉勒姆": 99.9
+        },
+        "set_icons": [
+          {
+            "label": "長路啟航之星 5件",
+            "percent": 99.7
+          }
+        ],
+        "notes": "只收錄截圖可見的使用率；樣本量、統計期間、武器與共鳴鏈分布未知。套裝圖示已對照官方攻略平台的圖示與名稱；同COST比例不代表兩個3C必須相同。",
+        "set_icon_verification": {
+          "verified_on": "2026-09-28",
+          "method": "官方攻略平台圖示、套裝名稱與件數逐項人工對照；使用率仍來自使用者截圖。",
+          "primary_icon": {
+            "id": "27",
+            "name": "长路启航之星",
+            "url": "https://guide-res.aki-game.com/introduction/material/6685d4094acdb93fcd6a7a19179641a5/fff5c6cf4ca1543a72b64bf5dff0d8ef.png",
+            "source": "1211.json",
+            "response_sha256": "b6116af67abbf8937683c16cc3bda535710e24ae2b29be7d4c01964fd804325c"
+          }
+        }
+      },
+      "weight_rationale": "雙暴1、攻擊與未達需求的效率0.8、解放0.6、固定攻擊保留0.25。效率從0.4提高至0.8，綜合遊戲高使用率與攻略循環需求；不是依49.8%換算的傷害倍率，達標後仍按面板情境降低額外效率權重。",
+      "tier_weights": [
+        1.0,
+        0.8,
+        0.6,
+        0.25
+      ],
+      "retrieved_on": "2026-09-27"
+    },
+    {
+      "role_id": "1211",
+      "name": "達妮婭",
+      "aliases": [
+        "Denia",
+        "达妮娅",
+        "達妮婭"
+      ],
+      "role": "聚爆／集諧輔助輸出",
+      "priority_tiers": [
+        [
+          "crit_rate",
+          "crit_damage"
+        ],
+        [
+          "energy_regen"
+        ],
+        [
+          "attack_pct"
+        ],
+        [
+          "resonance_liberation_damage"
+        ],
+        [
+          "flat_attack"
+        ]
+      ],
+      "energy_target": 115,
+      "main_stats": "雙暴／熱熔傷害／攻擊",
+      "sets": "斑駁粉飾之沫",
+      "caveat": "115% 是所選攻略的循環參考；另一作者用 130%，並非所有隊伍的硬門檻。",
+      "sources": [
+        {
+          "url": "https://mcguide.kurogames.com/zh-Hans/?role_id=1211&strategy_id=10182",
+          "author": "巡游天国FM",
+          "title": "达妮娅简易玩法+养成攻略【巡游天国FM】",
+          "updated_on": null,
+          "response_sha256": "ca2e12399ae40eb2287380312ecdd49705527daa45cc93884ba0f4d69fdbb3ff",
+          "retrieved_on": "2026-09-27"
+        },
+        {
+          "url": "https://mcguide.kurogames.com/zh-Hans/?role_id=1211&strategy_id=10184",
+          "author": "结星",
+          "title": "达妮娅 角色手法 配装 配队 共鸣链全方面攻略",
+          "updated_on": null,
+          "response_sha256": "4cbd865351a63df977a8ba98f0d41edebf50436238ab27c915cf60b1953bbd5f",
+          "retrieved_on": "2026-09-27"
+        }
+      ],
+      "profile_version": 4,
+      "equipment_reference": {
+        "element": "熱熔",
+        "allowed_sets": [
+          "斑駁粉飾之沫",
+          "剪心輯夢之影"
+        ],
+        "main_stats_by_cost": {
+          "4": [
+            "crit_damage"
+          ],
+          "3": [
+            "fusion_damage"
+          ],
+          "1": [
+            "attack_pct"
+          ]
+        },
+        "variants": [
+          {
+            "kind": "main",
+            "sets": [
+              "斑駁粉飾之沫"
+            ],
+            "pieces_required": 5,
+            "main_stats": [
+              {
+                "cost": 4,
+                "stat": "crit_damage"
+              },
+              {
+                "cost": 3,
+                "stat": "fusion_damage"
+              },
+              {
+                "cost": 3,
+                "stat": "fusion_damage"
+              },
+              {
+                "cost": 1,
+                "stat": "attack_pct"
+              },
+              {
+                "cost": 1,
+                "stat": "attack_pct"
+              }
+            ]
+          },
+          {
+            "kind": "spare",
+            "sets": [
+              "剪心輯夢之影"
+            ],
+            "pieces_required": 5,
+            "main_stats": [
+              {
+                "cost": 3,
+                "stat": "fusion_damage"
+              },
+              {
+                "cost": 4,
+                "stat": "crit_damage"
+              },
+              {
+                "cost": 3,
+                "stat": "fusion_damage"
+              },
+              {
+                "cost": 1,
+                "stat": "attack_pct"
+              },
+              {
+                "cost": 1,
+                "stat": "attack_pct"
+              }
+            ]
+          }
+        ],
+        "verified_on": "2026-09-27",
+        "snapshot_sha256": "ca2e12399ae40eb2287380312ecdd49705527daa45cc93884ba0f4d69fdbb3ff",
+        "source_url": "https://mcguide.kurogames.com/zh-Hans/?role_id=1211&strategy_id=10182"
+      },
+      "usage_reference": {
+        "source": "使用者提供的遊戲內聲骸推薦截圖",
+        "provided_on": "2026-09-27",
+        "screenshot_index": 8,
+        "substats_percent": {
+          "crit_rate": 76.1,
+          "crit_damage": 73.6,
+          "energy_regen": 51.3,
+          "attack_pct": 44.1,
+          "resonance_liberation_damage": 42.7
+        },
+        "main_stats_percent": {
+          "4": {
+            "crit_damage": 64.5
+          },
+          "3": {
+            "fusion_damage": 86.5
+          },
+          "1": {
+            "attack_pct": 99.0
+          }
+        },
+        "main_echo_percent": {
+          "共鳴迴響·達妮婭": 97.6
+        },
+        "set_icons": [
+          {
+            "label": "斑駁粉飾之沫 5件",
+            "percent": 69.9
+          },
+          {
+            "label": "剪心輯夢之影 5件",
+            "percent": 27.3
+          }
+        ],
+        "notes": "只收錄截圖可見的使用率；樣本量、統計期間、武器與共鳴鏈分布未知。套裝圖示已對照官方攻略平台的圖示與名稱；同COST比例不代表兩個3C必須相同。",
+        "set_icon_verification": {
+          "verified_on": "2026-09-28",
+          "method": "官方攻略平台圖示、套裝名稱與件數逐項人工對照；使用率仍來自使用者截圖。",
+          "primary_icon": {
+            "id": "28",
+            "name": "斑驳粉饰之沫",
+            "url": "https://guide-res.aki-game.com/introduction/material/6685d4094acdb93fcd6a7a19179641a5/b9153260449b3690d1c2c5963a8cd00f.png",
+            "source": "1211.json",
+            "response_sha256": "b6116af67abbf8937683c16cc3bda535710e24ae2b29be7d4c01964fd804325c"
+          }
+        }
+      },
+      "weight_rationale": "保留雙暴1、效率0.8、攻擊0.6、解放0.4、固定攻擊0.25。遊戲推薦與主攻略一致；另一作者採更高效率與不同解放順位，可依配隊自訂。兩種套裝是各自五件方案，不能任意混成完整套裝。",
+      "retrieved_on": "2026-09-27"
+    },
+    {
+      "role_id": "1413",
+      "name": "清宵",
+      "aliases": [
+        "Qingxiao",
+        "清宵",
+        "清宵"
+      ],
+      "role": "氣動主輸出／集諧",
+      "priority_tiers": [
+        [
+          "crit_rate",
+          "crit_damage"
+        ],
+        [
+          "attack_pct"
+        ],
+        [
+          "energy_regen"
+        ],
+        [
+          "flat_attack"
+        ],
+        [
+          "heavy_attack_damage"
+        ],
+        [
+          "basic_attack_damage",
+          "resonance_liberation_damage"
+        ]
+      ],
+      "energy_target": 120,
+      "main_stats": "4C 暴傷或暴擊；3C 氣動傷害（遊戲常用），攻略亦採攻擊%或氣動＋攻擊%；1C 攻擊%",
+      "sets": "清邪蕩煞之心",
+      "caveat": "混合傷害。另一作者採 119% 共鳴效率；不是只計重擊詞條。",
+      "sources": [
+        {
+          "url": "https://mcguide.kurogames.com/zh-Hans/?role_id=1413&strategy_id=10219",
+          "author": "巡游天国FM",
+          "title": "清宵简易玩法+养成攻略【巡游天国FM】",
+          "updated_on": null,
+          "response_sha256": "c9c7c9130c3381fc299bdbcb1406361e49d179d082afe9868b5a5bb50f7f0a32",
+          "retrieved_on": "2026-09-27"
+        },
+        {
+          "url": "https://mcguide.kurogames.com/zh-Hans/?role_id=1413&strategy_id=10222",
+          "author": "长风ei",
+          "title": "清宵剑仙-外冷内齁：详细毕业攻略",
+          "updated_on": null,
+          "response_sha256": "58f91840aabf5f15b2b86f0150c82b9e012540fc0d729c22417b8880fa56c1f5",
+          "retrieved_on": "2026-09-27"
+        }
+      ],
+      "profile_version": 4,
+      "equipment_reference": {
+        "element": "氣動",
+        "allowed_sets": [
+          "清邪蕩煞之心"
+        ],
+        "main_stats_by_cost": {
+          "4": [
+            "crit_damage",
+            "crit_rate"
+          ],
+          "3": [
+            "attack_pct",
+            "aero_damage"
+          ],
+          "1": [
+            "attack_pct"
+          ]
+        },
+        "variants": [
+          {
+            "kind": "main",
+            "sets": [
+              "清邪蕩煞之心"
+            ],
+            "pieces_required": 5,
+            "main_stats": [
+              {
+                "cost": 4,
+                "stat": "crit_damage"
+              },
+              {
+                "cost": 3,
+                "stat": "attack_pct"
+              },
+              {
+                "cost": 3,
+                "stat": "attack_pct"
+              },
+              {
+                "cost": 1,
+                "stat": "attack_pct"
+              },
+              {
+                "cost": 1,
+                "stat": "attack_pct"
+              }
+            ]
+          },
+          {
+            "kind": "spare",
+            "sets": [
+              "清邪蕩煞之心"
+            ],
+            "pieces_required": 5,
+            "main_stats": [
+              {
+                "cost": 4,
+                "stat": "crit_damage"
+              },
+              {
+                "cost": 3,
+                "stat": "attack_pct"
+              },
+              {
+                "cost": 3,
+                "stat": "aero_damage"
+              },
+              {
+                "cost": 1,
+                "stat": "attack_pct"
+              },
+              {
+                "cost": 1,
+                "stat": "attack_pct"
+              }
+            ]
+          }
+        ],
+        "verified_on": "2026-09-27",
+        "snapshot_sha256": "c9c7c9130c3381fc299bdbcb1406361e49d179d082afe9868b5a5bb50f7f0a32",
+        "source_url": "https://mcguide.kurogames.com/zh-Hans/?role_id=1413&strategy_id=10219"
+      },
+      "usage_reference": {
+        "source": "使用者提供的遊戲內聲骸推薦截圖",
+        "provided_on": "2026-09-27",
+        "screenshot_index": 4,
+        "substats_percent": {
+          "crit_rate": 81.3,
+          "crit_damage": 80.1,
+          "attack_pct": 46.2,
+          "energy_regen": 46.0,
+          "resonance_liberation_damage": 35.9
+        },
+        "main_stats_percent": {
+          "4": {
+            "crit_damage": 68.1
+          },
+          "3": {
+            "aero_damage": 69.4
+          },
+          "1": {
+            "attack_pct": 99.4
+          }
+        },
+        "main_echo_percent": {
+          "天傀劫煞": 98.4
+        },
+        "set_icons": [
+          {
+            "label": "清邪蕩煞之心 5件",
+            "percent": 99.8
+          }
+        ],
+        "notes": "只收錄截圖可見的使用率；樣本量、統計期間、武器與共鳴鏈分布未知。套裝圖示已對照官方攻略平台的圖示與名稱；同COST比例不代表兩個3C必須相同。",
+        "set_icon_verification": {
+          "verified_on": "2026-09-28",
+          "method": "官方攻略平台圖示、套裝名稱與件數逐項人工對照；使用率仍來自使用者截圖。",
+          "primary_icon": {
+            "id": "34",
+            "name": "清邪荡煞之心",
+            "url": "https://guide-res.aki-game.com/introduction/material/69e2b6508604133e640da4e8a69ea4a1/0a15afc49252258b6e7c0821c3499d3d.png",
+            "source": "1413.json",
+            "response_sha256": "0c2b13f8fdcb2a441ab1ae86549c3b0effe94a53fb58ede9af7dfdb5fbda98cc"
+          }
+        }
+      },
+      "weight_rationale": "保留攻略的混合傷害權重。截圖僅列部分熱門詞條；沒有顯示固定攻擊或重擊不表示它們無效，不能只依人氣把解放改成主要傷害類型。3C氣動是遊戲熱門選擇，攻擊仍是攻略可用替代。",
+      "retrieved_on": "2026-09-27"
+    },
+    {
+      "role_id": "1610",
+      "name": "秧秧·玄翎",
+      "aliases": [
+        "Yangyang: Xuanling",
+        "秧秧·玄翎",
+        "秧秧·玄翎"
+      ],
+      "role": "湮滅主輸出／重擊、虛湮",
+      "priority_tiers": [
+        [
+          "crit_rate",
+          "crit_damage"
+        ],
+        [
+          "attack_pct"
+        ],
+        [
+          "heavy_attack_damage"
+        ],
+        [
+          "energy_regen"
+        ],
+        [
+          "flat_attack"
+        ]
+      ],
+      "energy_target": 115,
+      "main_stats": "4C 暴傷；3C 湮滅傷害（遊戲常用，攻略有雙湮滅及湮滅＋攻擊%）；1C 攻擊%",
+      "sets": "羽落空塵之歌",
+      "caveat": "角色自帶條件暴傷，實戰雙暴比例需看武器、共鳴鏈與增益；此分數不模擬這些條件。 兩位作者效率參考115%／115–120%；4C選擇亦受專武與實戰雙暴影響。",
+      "sources": [
+        {
+          "url": "https://mcguide.kurogames.com/zh-Hans/?role_id=1610&strategy_id=10210",
+          "author": "FireMage丶",
+          "title": "【牵翎祈万声】秧秧·玄翎养成、配队、操作手法综合攻略",
+          "updated_on": null,
+          "response_sha256": "a2990b4628f668b7dce2799a911985f48a4d6585e3b234bcea18f7c6633252db",
+          "retrieved_on": "2026-09-27"
+        },
+        {
+          "url": "https://mcguide.kurogames.com/zh-Hans/?role_id=1610&strategy_id=10199",
+          "author": "巡游天国FM",
+          "title": "“秧秧·玄翎”简易玩法+养成攻略【巡游天国FM】",
+          "updated_on": null,
+          "response_sha256": "6c26d4ed16cc75ab07346f9f11860f57dbecb051dd0621002205d98262d49fcc",
+          "retrieved_on": "2026-09-27"
+        }
+      ],
+      "profile_version": 4,
+      "equipment_reference": {
+        "element": "湮滅",
+        "allowed_sets": [
+          "羽落空塵之歌"
+        ],
+        "main_stats_by_cost": {
+          "4": [
+            "crit_damage"
+          ],
+          "3": [
+            "havoc_damage",
+            "attack_pct"
+          ],
+          "1": [
+            "attack_pct"
+          ]
+        },
+        "variants": [
+          {
+            "kind": "main",
+            "sets": [
+              "羽落空塵之歌"
+            ],
+            "pieces_required": 5,
+            "main_stats": [
+              {
+                "cost": 4,
+                "stat": "crit_damage"
+              },
+              {
+                "cost": 3,
+                "stat": "havoc_damage"
+              },
+              {
+                "cost": 3,
+                "stat": "attack_pct"
+              },
+              {
+                "cost": 1,
+                "stat": "attack_pct"
+              },
+              {
+                "cost": 1,
+                "stat": "attack_pct"
+              }
+            ]
+          },
+          {
+            "kind": "spare",
+            "sets": [
+              "羽落空塵之歌"
+            ],
+            "pieces_required": 5,
+            "main_stats": [
+              {
+                "cost": 4,
+                "stat": "crit_damage"
+              },
+              {
+                "cost": 3,
+                "stat": "havoc_damage"
+              },
+              {
+                "cost": 3,
+                "stat": "havoc_damage"
+              },
+              {
+                "cost": 1,
+                "stat": "attack_pct"
+              },
+              {
+                "cost": 1,
+                "stat": "attack_pct"
+              }
+            ]
+          }
+        ],
+        "verified_on": "2026-09-27",
+        "snapshot_sha256": "a2990b4628f668b7dce2799a911985f48a4d6585e3b234bcea18f7c6633252db",
+        "source_url": "https://mcguide.kurogames.com/zh-Hans/?role_id=1610&strategy_id=10210"
+      },
+      "usage_reference": {
+        "source": "使用者提供的遊戲內聲骸推薦截圖",
+        "provided_on": "2026-09-27",
+        "screenshot_index": 2,
+        "substats_percent": {
+          "crit_rate": 81.6,
+          "crit_damage": 80.5,
+          "attack_pct": 45.9,
+          "heavy_attack_damage": 44.3,
+          "energy_regen": 43.1
+        },
+        "main_stats_percent": {
+          "4": {
+            "crit_damage": 83.8
+          },
+          "3": {
+            "havoc_damage": 89.8
+          },
+          "1": {
+            "attack_pct": 99.3
+          }
+        },
+        "main_echo_percent": {
+          "千傀重樓": 99.9
+        },
+        "set_icons": [
+          {
+            "label": "羽落空塵之歌 5件",
+            "percent": 99.7
+          }
+        ],
+        "notes": "只收錄截圖可見的使用率；樣本量、統計期間、武器與共鳴鏈分布未知。套裝圖示已對照官方攻略平台的圖示與名稱；同COST比例不代表兩個3C必須相同。",
+        "set_icon_verification": {
+          "verified_on": "2026-09-28",
+          "method": "官方攻略平台圖示、套裝名稱與件數逐項人工對照；使用率仍來自使用者截圖。",
+          "primary_icon": {
+            "id": "33",
+            "name": "羽落空尘之歌",
+            "url": "https://guide-res.aki-game.com/introduction/material/69e2b6508604133e640da4e8a69ea4a1/9c86482e30a12260a6d0bbbcb91e82ad.png",
+            "source": "1610.json",
+            "response_sha256": "a2990b4628f668b7dce2799a911985f48a4d6585e3b234bcea18f7c6633252db"
+          }
+        }
+      },
+      "weight_rationale": "保留雙暴1、攻擊0.8、重擊0.6、效率0.4及固定攻擊0.25。重擊／虛湮定位與遊戲推薦一致；雙暴使用率接近，維持同級，不將人氣差異當作精確收益差。",
+      "retrieved_on": "2026-09-27"
+    },
+    {
+      "role_id": "1508",
+      "name": "千咲",
+      "aliases": [
+        "Chisa",
+        "朽葉千咲",
+        "朽叶千咲"
+      ],
+      "role": "湮滅副輸出／效應輔助、生存治療",
+      "priority_tiers": [
+        [
+          "crit_rate",
+          "crit_damage"
+        ],
+        [
+          "attack_pct",
+          "energy_regen"
+        ],
+        [
+          "resonance_liberation_damage"
+        ]
+      ],
+      "energy_target": 120,
+      "main_stats": "4C 暴傷；3C 湮滅傷害；1C 攻擊%。43311；44111 是攻略的二鏈起備選，非通用預設。",
+      "sets": "命理崩毀之弦3件＋沉日劫明2件，或命理崩毀之弦3件＋幽夜隱匿之帷2件",
+      "caveat": "副輸出與生存輔助參考，分數不代表治療、護盾或全隊效應收益。兩位作者效率參考120%／115%，依隊伍與循環調整。雙暴同級；未達需求的效率與攻擊同級是工具折衷。",
+      "sources": [
+        {
+          "url": "https://mcguide.kurogames.com/zh-Hans/?role_id=1508&strategy_id=10154",
+          "author": "一戈",
+          "title": "黑长直JK校园白月光【朽叶千咲】玩法，配队，养成 全方位攻略",
+          "updated_on": null,
+          "response_sha256": "34e3358b52e5612254e19634098e826b3fbc6fb516e5a16f378a03a20725d69a",
+          "retrieved_on": "2026-09-27"
+        },
+        {
+          "url": "https://mcguide.kurogames.com/zh-Hans/?role_id=1508&strategy_id=10152",
+          "author": "是衿衿鸭",
+          "title": "【衿衿严选】0.6180339887/以昙切分割万物——千咲",
+          "updated_on": null,
+          "response_sha256": "8fb3effbcadf7522ee30b8c402c1e726b0273d6bcdb964a2bd3441c9fb5affa4",
+          "retrieved_on": "2026-09-27"
+        }
+      ],
+      "profile_version": 4,
+      "equipment_reference": {
+        "element": "湮滅",
+        "allowed_sets": [
+          "命理崩毀之弦",
+          "沉日劫明",
+          "幽夜隱匿之帷"
+        ],
+        "set_combinations": [
+          {
+            "命理崩毀之弦": 3,
+            "沉日劫明": 2
+          },
+          {
+            "命理崩毀之弦": 3,
+            "幽夜隱匿之帷": 2
+          }
+        ],
+        "set_aliases": {
+          "命理崩毁之弦": "命理崩毀之弦",
+          "幽夜隱跡": "幽夜隱匿之帷",
+          "幽夜隐匿之帷": "幽夜隱匿之帷"
+        },
+        "main_stats_by_cost": {
+          "4": [
+            "crit_damage"
+          ],
+          "3": [
+            "havoc_damage"
+          ],
+          "1": [
+            "attack_pct"
+          ]
+        },
+        "verified_on": "2026-09-27",
+        "source_url": "https://mcguide.kurogames.com/zh-Hans/?role_id=1508&strategy_id=10154",
+        "snapshot_sha256": "34e3358b52e5612254e19634098e826b3fbc6fb516e5a16f378a03a20725d69a"
+      },
+      "usage_reference": {
+        "source": "使用者提供的遊戲內聲骸推薦截圖",
+        "provided_on": "2026-09-27",
+        "screenshot_index": 9,
+        "substats_percent": {
+          "crit_damage": 77.8,
+          "crit_rate": 76.9,
+          "energy_regen": 53.3,
+          "attack_pct": 44.4,
+          "resonance_liberation_damage": 43.1
+        },
+        "main_stats_percent": {
+          "4": {
+            "crit_damage": 71.8
+          },
+          "3": {
+            "havoc_damage": 83.6
+          },
+          "1": {
+            "attack_pct": 99.1
+          }
+        },
+        "main_echo_percent": {
+          "共鳴迴響·鳴式·利維亞坦": 96.6
+        },
+        "set_icons": [
+          {
+            "label": "命理崩毀之弦 3件＋沉日劫明 2件",
+            "percent": 60.1
+          },
+          {
+            "label": "命理崩毀之弦 3件＋幽夜隱匿之帷 2件",
+            "percent": 29.1
+          }
+        ],
+        "notes": "只收錄截圖可見的使用率；樣本量、統計期間、武器與共鳴鏈分布未知。套裝圖示已對照官方攻略平台的圖示與名稱；同COST比例不代表兩個3C必須相同。幽夜圖示已對照官方平台12號套裝，修正舊版簡稱為幽夜隱匿之帷；舊名稱相容保留。",
+        "set_icon_verification": {
+          "verified_on": "2026-09-28",
+          "method": "官方攻略平台圖示、套裝名稱與件數逐項人工對照；使用率仍來自使用者截圖。",
+          "primary_icon": {
+            "id": "23",
+            "name": "命理崩毁之弦",
+            "url": "https://guide-res.aki-game.com/introduction/material/2bf51842b0399bc1f9b1da0c7dd9c575/7ae5e99a8c2f19cd25f44313293553aa.png",
+            "source": "1610.json",
+            "response_sha256": "a2990b4628f668b7dce2799a911985f48a4d6585e3b234bcea18f7c6633252db"
+          }
+        }
+      },
+      "weight_rationale": "新增雙暴1、攻擊與未達需求的效率0.8、解放0.6。攻略確認湮滅副輸出兼效應／生存輔助，遊戲推薦補充循環需求；數字為工具折衷。配裝必須命理3件搭配沉日2件或幽夜2件，不能只看單件套裝名稱。",
+      "retrieved_on": "2026-09-27"
+    },
+    {
+      "role_id": "1509",
+      "name": "琳奈",
+      "aliases": [
+        "Lynae"
+      ],
+      "role": "普攻副輸出／延奏與偏諧輔助",
+      "priority_tiers": [
+        [
+          "crit_rate",
+          "crit_damage"
+        ],
+        [
+          "attack_pct",
+          "energy_regen"
+        ],
+        [
+          "basic_attack_damage"
+        ]
+      ],
+      "energy_target": 125,
+      "main_stats": "4C 暴擊傷害；3C 衍射傷害加成；1C 攻擊%",
+      "sets": "逆光躍彩之約5件",
+      "caveat": "兩位作者普攻與攻擊的順位不同；取雙暴優先、攻擊與未達循環的效率次之。125%為攻略參考，按隊伍調整。",
+      "sources": [
+        {
+          "url": "https://mcguide.kurogames.com/zh-Hans/?role_id=1509&strategy_id=10158",
+          "author": "silly沐",
+          "title": "琳奈快速上手小技巧",
+          "updated_on": null,
+          "response_sha256": "0eefeb73e187dfe41e3e4985f478df2bb31b0dfdd9c3e0a5af82ce3df85ddcb0",
+          "retrieved_on": "2026-09-28"
+        },
+        {
+          "url": "https://mcguide.kurogames.com/zh-Hans/?role_id=1509&strategy_id=10203",
+          "author": "是立恒啊",
+          "title": "流光溢彩 琳奈角色攻略",
+          "updated_on": null,
+          "response_sha256": "75677448cf660d95b2f5bf01cb28cc2664550c3a31ce18526b91bcf7a3803158",
+          "retrieved_on": "2026-09-28"
+        }
+      ],
+      "profile_version": 4,
+      "retrieved_on": "2026-09-28",
+      "weight_rationale": "雙暴1、攻擊與未達需求效率0.8、普攻0.6。遊戲使用率支持循環需求；不把延奏給隊友的解放增益誤當自身解放詞條優先。",
+      "equipment_reference": {
+        "element": "衍射",
+        "allowed_sets": [
+          "逆光躍彩之約"
+        ],
+        "set_combinations": [
+          {
+            "逆光躍彩之約": 5
+          }
+        ],
+        "main_stats_by_cost": {
+          "4": [
+            "crit_damage"
+          ],
+          "3": [
+            "spectro_damage"
+          ],
+          "1": [
+            "attack_pct"
+          ]
+        },
+        "verified_on": "2026-09-28",
+        "source_url": "https://mcguide.kurogames.com/zh-Hans/?role_id=1509&strategy_id=10158",
+        "snapshot_sha256": "0eefeb73e187dfe41e3e4985f478df2bb31b0dfdd9c3e0a5af82ce3df85ddcb0"
+      },
+      "usage_reference": {
+        "source": "使用者提供的遊戲內聲骸推薦截圖",
+        "provided_on": "2026-09-28",
+        "screenshot_index": 1,
+        "reference_kind": "usage",
+        "substats_percent": {
+          "crit_rate": 75.3,
+          "crit_damage": 72.8,
+          "energy_regen": 52.4,
+          "attack_pct": 43,
+          "basic_attack_damage": 40.6
+        },
+        "main_stats_percent": {
+          "4": {
+            "crit_damage": 60.1
+          },
+          "3": {
+            "spectro_damage": 87.9
+          },
+          "1": {
+            "attack_pct": 98.8
+          }
+        },
+        "main_echo_percent": {
+          "海維夏": 99.9
+        },
+        "set_icons": [
+          {
+            "label": "逆光躍彩之約 5件",
+            "percent": 97.7
+          }
+        ],
+        "notes": "只收錄截圖可見項目；樣本量、統計期間、武器與共鳴鏈分布未知。套裝圖示已對照官方平台圖示與名稱。"
+      }
+    },
+    {
+      "role_id": "1511",
+      "name": "露西",
+      "aliases": [
+        "Lucy"
+      ],
+      "role": "重擊輸出／駭破體系",
+      "priority_tiers": [
+        [
+          "crit_rate",
+          "crit_damage"
+        ],
+        [
+          "attack_pct"
+        ],
+        [
+          "heavy_attack_damage",
+          "energy_regen"
+        ]
+      ],
+      "energy_target": 120,
+      "main_stats": "4C 暴擊；3C 衍射傷害加成/攻擊%；1C 攻擊%",
+      "sets": "碎夢亡鬼之魘1件＋不絕餘音2件＋浮星祛暗2件",
+      "caveat": "這張是遊戲內預設推薦，沒有玩家使用率。官方平台兩位作者均給120%效率參考；1件聯動套裝搭配兩組2件套，不能當五件同套。",
+      "sources": [
+        {
+          "url": "https://mcguide.kurogames.com/zh-Hans/?role_id=1511&strategy_id=10188",
+          "author": "巡游天国FM",
+          "title": "露西简易玩法+养成攻略【巡游天国FM】",
+          "updated_on": null,
+          "response_sha256": "ad787895e1d75a903f617b6ca4b4767781df173f230fbed98d95b019cfa633f1",
+          "retrieved_on": "2026-09-28"
+        },
+        {
+          "url": "https://mcguide.kurogames.com/zh-Hans/?role_id=1511&strategy_id=10189",
+          "author": "一戈",
+          "title": "夜之城黑客【露西】手法，配队，养成全方位攻略",
+          "updated_on": null,
+          "response_sha256": "101cd8556abd7f40126be343ae6d9dfb55fbafac6aea29285ad8ee3ad9bc43d8",
+          "retrieved_on": "2026-09-28"
+        }
+      ],
+      "profile_version": 4,
+      "retrieved_on": "2026-09-28",
+      "weight_rationale": "雙暴1、攻擊0.8、重擊及未達需求效率0.6；數字按攻略與循環需求折衷。預設清單的排列不轉成百分比。",
+      "equipment_reference": {
+        "element": "衍射",
+        "allowed_sets": [
+          "碎夢亡鬼之魘",
+          "不絕餘音",
+          "浮星祛暗"
+        ],
+        "set_combinations": [
+          {
+            "碎夢亡鬼之魘": 1,
+            "不絕餘音": 2,
+            "浮星祛暗": 2
+          }
+        ],
+        "set_aliases": {
+          "碎夢亡鬼之魔": "碎夢亡鬼之魘"
+        },
+        "main_stats_by_cost": {
+          "4": [
+            "crit_rate"
+          ],
+          "3": [
+            "spectro_damage",
+            "attack_pct"
+          ],
+          "1": [
+            "attack_pct"
+          ]
+        },
+        "verified_on": "2026-09-28",
+        "source_url": "https://mcguide.kurogames.com/zh-Hans/?role_id=1511&strategy_id=10188",
+        "snapshot_sha256": "ad787895e1d75a903f617b6ca4b4767781df173f230fbed98d95b019cfa633f1"
+      },
+      "usage_reference": {
+        "source": "使用者提供的遊戲內聲骸推薦截圖",
+        "provided_on": "2026-09-28",
+        "screenshot_index": 2,
+        "reference_kind": "preset",
+        "substats_percent": {
+          "crit_rate": null,
+          "crit_damage": null,
+          "attack_pct": null,
+          "energy_regen": null,
+          "heavy_attack_damage": null
+        },
+        "main_stats_percent": {
+          "4": {
+            "crit_rate": null
+          },
+          "3": {
+            "spectro_damage": null
+          },
+          "1": {
+            "attack_pct": null
+          }
+        },
+        "main_echo_percent": {
+          "共鳴迴響·夢魘亞當·碎骨": null
+        },
+        "set_icons": [
+          {
+            "label": "碎夢亡鬼之魘 1件＋不絕餘音 2件＋浮星祛暗 2件",
+            "percent": null
+          }
+        ],
+        "notes": "遊戲內預設推薦，未提供使用率。單件「碎夢亡鬼之魘」已由攻略內文與官方套裝圖示交叉確認；API配裝欄位缺項不代表不需要它。"
+      }
+    },
+    {
+      "role_id": "1308",
+      "name": "蕾貝卡",
+      "aliases": [
+        "Rebecca",
+        "麗貝卡",
+        "丽贝卡"
+      ],
+      "role": "普攻輸出／駭破與延奏輔助",
+      "priority_tiers": [
+        [
+          "crit_rate",
+          "crit_damage"
+        ],
+        [
+          "energy_regen",
+          "attack_pct"
+        ],
+        [
+          "basic_attack_damage"
+        ],
+        [
+          "flat_attack"
+        ]
+      ],
+      "energy_target": 120,
+      "main_stats": "4C 暴擊/暴擊傷害；3C 導電傷害加成；1C 攻擊%",
+      "sets": "碎夢亡鬼之魘1件＋不絕餘音2件＋徹空冥雷2件",
+      "caveat": "這張是預設推薦，沒有使用率。兩位作者效率120%／130%，預設採120%並可自行調整。開大後主輸出按普攻傷害分類，不能看到開大就提高解放詞條。",
+      "sources": [
+        {
+          "url": "https://mcguide.kurogames.com/zh-Hans/?role_id=1308&strategy_id=10187",
+          "author": "巡游天国FM",
+          "title": "丽贝卡简易玩法+养成攻略【巡游天国FM】",
+          "updated_on": null,
+          "response_sha256": "3549112924d4f6659b0c5216a1a196259065b7106596a0f8f20ac56184b23917",
+          "retrieved_on": "2026-09-28"
+        },
+        {
+          "url": "https://mcguide.kurogames.com/zh-Hans/?role_id=1308&strategy_id=10190",
+          "author": "一戈",
+          "title": "夜之城边缘行者【丽贝卡】手法，配队，养成全方位攻略",
+          "updated_on": null,
+          "response_sha256": "74138c29f1e5cb7df3141285cc770fd03179cd1f1343b7d0335e570f81cd4063",
+          "retrieved_on": "2026-09-28"
+        }
+      ],
+      "profile_version": 4,
+      "retrieved_on": "2026-09-28",
+      "weight_rationale": "雙暴1、未達需求效率與攻擊0.8、普攻0.6、固定攻擊0.4。機制與作者說明優先於招式名稱。",
+      "equipment_reference": {
+        "element": "導電",
+        "allowed_sets": [
+          "碎夢亡鬼之魘",
+          "不絕餘音",
+          "徹空冥雷"
+        ],
+        "set_combinations": [
+          {
+            "碎夢亡鬼之魘": 1,
+            "不絕餘音": 2,
+            "徹空冥雷": 2
+          }
+        ],
+        "set_aliases": {
+          "碎夢亡鬼之魔": "碎夢亡鬼之魘"
+        },
+        "main_stats_by_cost": {
+          "4": [
+            "crit_rate",
+            "crit_damage"
+          ],
+          "3": [
+            "electro_damage"
+          ],
+          "1": [
+            "attack_pct"
+          ]
+        },
+        "verified_on": "2026-09-28",
+        "source_url": "https://mcguide.kurogames.com/zh-Hans/?role_id=1308&strategy_id=10187",
+        "snapshot_sha256": "3549112924d4f6659b0c5216a1a196259065b7106596a0f8f20ac56184b23917"
+      },
+      "usage_reference": {
+        "source": "使用者提供的遊戲內聲骸推薦截圖",
+        "provided_on": "2026-09-28",
+        "screenshot_index": 3,
+        "reference_kind": "preset",
+        "substats_percent": {
+          "crit_rate": null,
+          "crit_damage": null,
+          "attack_pct": null,
+          "energy_regen": null,
+          "basic_attack_damage": null
+        },
+        "main_stats_percent": {
+          "4": {
+            "crit_rate": null
+          },
+          "3": {
+            "electro_damage": null
+          },
+          "1": {
+            "attack_pct": null
+          }
+        },
+        "main_echo_percent": {
+          "共鳴迴響·夢魘亞當·碎骨": null
+        },
+        "set_icons": [
+          {
+            "label": "碎夢亡鬼之魘 1件＋不絕餘音 2件＋徹空冥雷 2件",
+            "percent": null
+          }
+        ],
+        "notes": "遊戲內預設推薦，未提供使用率。單件「碎夢亡鬼之魘」已由攻略內文與官方套裝圖示交叉確認；API配裝欄位缺項不代表不需要它。"
+      }
+    },
+    {
+      "role_id": "1208",
+      "name": "嘉貝莉娜",
+      "aliases": [
+        "Galbrena",
+        "嘉贝莉娜"
+      ],
+      "role": "聲骸技能／重擊輸出",
+      "priority_tiers": [
+        [
+          "crit_rate",
+          "crit_damage"
+        ],
+        [
+          "attack_pct"
+        ],
+        [
+          "heavy_attack_damage",
+          "energy_regen"
+        ]
+      ],
+      "energy_target": 120,
+      "main_stats": "4C 暴擊；3C 熱熔傷害加成；1C 攻擊%",
+      "sets": "焚羽獵魔之影3件＋奔狼燎原之焰2件 或 焚羽獵魔之影3件＋熔山裂谷2件",
+      "caveat": "首位3C蝕脊龍；傷害分類依配隊在聲骸技能與重擊間改變，重擊詞條不代表整套輸出增幅。效率120%採一戈循環參考。",
+      "sources": [
+        {
+          "url": "https://mcguide.kurogames.com/zh-Hans/?role_id=1208&strategy_id=10140",
+          "author": "问号七月三",
+          "title": "嘉贝莉娜 新手养成攻略",
+          "updated_on": null,
+          "response_sha256": "b34a9c5d2dae5a401e4f7d00390e6fc8f487c9363717cbd4e7f92269791bb311",
+          "retrieved_on": "2026-09-28"
+        },
+        {
+          "url": "https://mcguide.kurogames.com/zh-Hans/?role_id=1208&strategy_id=10142",
+          "author": "一戈",
+          "title": "从黑潮囚徒到猎魔先锋【嘉贝莉娜】玩法，配队，养成 全方位攻略",
+          "updated_on": null,
+          "response_sha256": "bee33cdf4590491910217576c4ff2a7aae8c556d08310bcb651abeb3a84514ba",
+          "retrieved_on": "2026-09-28"
+        }
+      ],
+      "profile_version": 4,
+      "retrieved_on": "2026-09-28",
+      "weight_rationale": "雙暴1、攻擊0.8、重擊及未達需求效率0.6；保留3+2兩種完整搭配。截圖截掉的第五項重擊43.2%由使用者補充。",
+      "equipment_reference": {
+        "element": "熱熔",
+        "allowed_sets": [
+          "焚羽獵魔之影",
+          "奔狼燎原之焰",
+          "熔山裂谷"
+        ],
+        "set_combinations": [
+          {
+            "焚羽獵魔之影": 3,
+            "奔狼燎原之焰": 2
+          },
+          {
+            "焚羽獵魔之影": 3,
+            "熔山裂谷": 2
+          }
+        ],
+        "main_stats_by_cost": {
+          "4": [
+            "crit_rate"
+          ],
+          "3": [
+            "fusion_damage"
+          ],
+          "1": [
+            "attack_pct"
+          ]
+        },
+        "verified_on": "2026-09-28",
+        "source_url": "https://mcguide.kurogames.com/zh-Hans/?role_id=1208&strategy_id=10140",
+        "snapshot_sha256": "b34a9c5d2dae5a401e4f7d00390e6fc8f487c9363717cbd4e7f92269791bb311"
+      },
+      "usage_reference": {
+        "source": "使用者提供的遊戲內聲骸推薦截圖",
+        "provided_on": "2026-09-28",
+        "screenshot_index": 4,
+        "reference_kind": "usage",
+        "substats_percent": {
+          "crit_rate": 84.3,
+          "crit_damage": 79.6,
+          "energy_regen": 45.5,
+          "attack_pct": 44.2,
+          "heavy_attack_damage": 43.2
+        },
+        "main_stats_percent": {
+          "4": {
+            "crit_rate": 88.3
+          },
+          "3": {
+            "fusion_damage": 94.5
+          },
+          "1": {
+            "attack_pct": 99.3
+          }
+        },
+        "main_echo_percent": {
+          "蝕脊龍（奔狼燎原之焰）": 65.8,
+          "蝕脊龍（焚羽獵魔之影）": 25.8
+        },
+        "set_icons": [
+          {
+            "label": "焚羽獵魔之影 3件＋奔狼燎原之焰 2件",
+            "percent": 71.9
+          },
+          {
+            "label": "焚羽獵魔之影 3件＋熔山裂谷 2件",
+            "percent": 24.9
+          }
+        ],
+        "notes": "只收錄截圖可見項目；樣本量、統計期間、武器與共鳴鏈分布未知。套裝圖示已對照官方平台圖示與名稱。第五項重擊43.2%由使用者補充；兩個蝕脊龍分屬不同套裝。"
+      }
+    },
+    {
+      "role_id": "1207",
+      "name": "露帕",
+      "aliases": [
+        "Lupa"
+      ],
+      "role": "熱熔隊輔助／解放副輸出",
+      "priority_tiers": [
+        [
+          "crit_rate",
+          "crit_damage"
+        ],
+        [
+          "attack_pct",
+          "energy_regen"
+        ],
+        [
+          "resonance_liberation_damage"
+        ],
+        [
+          "flat_attack"
+        ]
+      ],
+      "energy_target": 120,
+      "main_stats": "4C 暴擊；3C 熱熔傷害加成/攻擊%；1C 攻擊%",
+      "sets": "奔狼燎原之焰5件",
+      "caveat": "攻略區分三火隊110%+與雙火隊120%+效率；預設120%，已確認三火循環可自行設110%。輔助增益與個人副詞條分數分開看。",
+      "sources": [
+        {
+          "url": "https://mcguide.kurogames.com/zh-Hans/?role_id=1207&strategy_id=10090",
+          "author": "结星&丸子",
+          "title": "别帕！5分钟全方位理解露帕！",
+          "updated_on": null,
+          "response_sha256": "e4dafc0f69cf8cc2c3e797acdac595daf24fcb8edb552a4cc3bcceb7e925eda5",
+          "retrieved_on": "2026-09-28"
+        },
+        {
+          "url": "https://mcguide.kurogames.com/zh-Hans/?role_id=1207&strategy_id=10087",
+          "author": "jokinglife",
+          "title": "【入门】露帕角色攻略",
+          "updated_on": null,
+          "response_sha256": "b8e5ec40d54cf43ef69d83538bea548ac83e6ccfe765caa4cdf3cace7866b69a",
+          "retrieved_on": "2026-09-28"
+        }
+      ],
+      "profile_version": 4,
+      "retrieved_on": "2026-09-28",
+      "weight_rationale": "雙暴1、攻擊與未達需求效率0.8、解放0.6、固定攻擊0.4。使用率支持補循環但不直接換成權重。",
+      "equipment_reference": {
+        "element": "熱熔",
+        "allowed_sets": [
+          "奔狼燎原之焰"
+        ],
+        "set_combinations": [
+          {
+            "奔狼燎原之焰": 5
+          }
+        ],
+        "main_stats_by_cost": {
+          "4": [
+            "crit_rate"
+          ],
+          "3": [
+            "fusion_damage",
+            "attack_pct"
+          ],
+          "1": [
+            "attack_pct"
+          ]
+        },
+        "verified_on": "2026-09-28",
+        "source_url": "https://mcguide.kurogames.com/zh-Hans/?role_id=1207&strategy_id=10090",
+        "snapshot_sha256": "e4dafc0f69cf8cc2c3e797acdac595daf24fcb8edb552a4cc3bcceb7e925eda5"
+      },
+      "usage_reference": {
+        "source": "使用者提供的遊戲內聲骸推薦截圖",
+        "provided_on": "2026-09-28",
+        "screenshot_index": 5,
+        "reference_kind": "usage",
+        "substats_percent": {
+          "crit_rate": 81.4,
+          "crit_damage": 77,
+          "energy_regen": 46.9,
+          "attack_pct": 42.4,
+          "resonance_liberation_damage": 42
+        },
+        "main_stats_percent": {
+          "4": {
+            "crit_rate": 87.6
+          },
+          "3": {
+            "fusion_damage": 85.3
+          },
+          "1": {
+            "attack_pct": 99.3
+          }
+        },
+        "main_echo_percent": {
+          "榮耀獅像": 99.9
+        },
+        "set_icons": [
+          {
+            "label": "奔狼燎原之焰 5件",
+            "percent": 99.7
+          }
+        ],
+        "notes": "只收錄截圖可見項目；樣本量、統計期間、武器與共鳴鏈分布未知。套裝圖示已對照官方平台圖示與名稱。"
+      }
+    },
+    {
+      "role_id": "1409",
+      "name": "卡提希婭",
+      "aliases": [
+        "Cartethyia",
+        "卡提希娅"
+      ],
+      "role": "生命倍率主輸出／風蝕",
+      "priority_tiers": [
+        [
+          "crit_rate",
+          "crit_damage"
+        ],
+        [
+          "hp_pct"
+        ],
+        [
+          "energy_regen",
+          "basic_attack_damage",
+          "flat_hp"
+        ],
+        [
+          "resonance_liberation_damage"
+        ]
+      ],
+      "energy_target": 120,
+      "main_stats": "4C 暴擊/暴擊傷害；3C 氣動傷害加成；1C 生命%",
+      "sets": "願戴榮光之旅5件",
+      "caveat": "生命倍率角色；攻略採44111，截圖亦提供3C氣動推薦，兩者保留。底部44111是當下裝備，不能推定唯一搭配。效率120%採結星與丸子參考。",
+      "sources": [
+        {
+          "url": "https://mcguide.kurogames.com/zh-Hans/?role_id=1409&strategy_id=10069",
+          "author": "结星&丸子",
+          "title": "卡提希娅培养攻略",
+          "updated_on": null,
+          "response_sha256": "ecc49b19e6190a49cced701ffad0160c2cfba617d30a9aea4b46407ba886208f",
+          "retrieved_on": "2026-09-28"
+        },
+        {
+          "url": "https://mcguide.kurogames.com/zh-Hans/?role_id=1409&strategy_id=10088",
+          "author": "一戈",
+          "title": "卡提希娅的大毕业面板解析及手法配队",
+          "updated_on": null,
+          "response_sha256": "67b44a8296e0e2527f5c756ebf36532970ba1c9d7be7af8e94e474923f377608",
+          "retrieved_on": "2026-09-28"
+        }
+      ],
+      "profile_version": 4,
+      "retrieved_on": "2026-09-28",
+      "weight_rationale": "雙暴1、生命%0.8、未達需求效率／普攻／固定生命0.6、解放0.4。作者對固定生命與傷害加成順位不同，採同級折衷；攻擊不沿用攻擊型主C權重。",
+      "equipment_reference": {
+        "element": "氣動",
+        "allowed_sets": [
+          "願戴榮光之旅"
+        ],
+        "set_combinations": [
+          {
+            "願戴榮光之旅": 5
+          }
+        ],
+        "main_stats_by_cost": {
+          "4": [
+            "crit_rate",
+            "crit_damage"
+          ],
+          "3": [
+            "aero_damage"
+          ],
+          "1": [
+            "hp_pct"
+          ]
+        },
+        "verified_on": "2026-09-28",
+        "source_url": "https://mcguide.kurogames.com/zh-Hans/?role_id=1409&strategy_id=10069",
+        "snapshot_sha256": "ecc49b19e6190a49cced701ffad0160c2cfba617d30a9aea4b46407ba886208f"
+      },
+      "usage_reference": {
+        "source": "使用者提供的遊戲內聲骸推薦截圖",
+        "provided_on": "2026-09-28",
+        "screenshot_index": 6,
+        "reference_kind": "usage",
+        "substats_percent": {
+          "crit_rate": 80.8,
+          "crit_damage": 79.5,
+          "hp_pct": 48.7,
+          "energy_regen": 43,
+          "basic_attack_damage": 40.6
+        },
+        "main_stats_percent": {
+          "4": {
+            "crit_rate": 52.9
+          },
+          "3": {
+            "aero_damage": 66.9
+          },
+          "1": {
+            "hp_pct": 97.7
+          }
+        },
+        "main_echo_percent": {
+          "共鳴迴響·芙露德莉斯": 98
+        },
+        "set_icons": [
+          {
+            "label": "願戴榮光之旅 5件",
+            "percent": 99.4
+          }
+        ],
+        "notes": "只收錄截圖可見項目；樣本量、統計期間、武器與共鳴鏈分布未知。套裝圖示已對照官方平台圖示與名稱。"
+      }
+    },
+    {
+      "role_id": "1107",
+      "name": "珂萊塔",
+      "aliases": [
+        "Carlotta",
+        "珂莱塔"
+      ],
+      "role": "共鳴技能主輸出",
+      "priority_tiers": [
+        [
+          "crit_rate",
+          "crit_damage"
+        ],
+        [
+          "attack_pct"
+        ],
+        [
+          "resonance_skill_damage",
+          "energy_regen"
+        ],
+        [
+          "flat_attack"
+        ]
+      ],
+      "energy_target": 130,
+      "main_stats": "4C 暴擊/暴擊傷害；3C 冷凝傷害加成/攻擊%；1C 攻擊%",
+      "sets": "凌冽決斷之心5件",
+      "caveat": "主要輸出按共鳴技能分類。作者循環效率參考120%／130%，預設130%，依隊伍調整；3C攻擊是攻略備選，截圖未提供其使用率。",
+      "sources": [
+        {
+          "url": "https://mcguide.kurogames.com/zh-Hans/?role_id=1107&strategy_id=10071",
+          "author": "结星&丸子",
+          "title": "白毛富婆-珂莱塔养成攻略",
+          "updated_on": null,
+          "response_sha256": "b3dce8062f4529da516a321bf08d711b82699de509196cea7b4299efd0074501",
+          "retrieved_on": "2026-09-28"
+        },
+        {
+          "url": "https://mcguide.kurogames.com/zh-Hans/?role_id=1107&strategy_id=10101",
+          "author": "一戈",
+          "title": "三分钟让你爱上莫塔里新任家主——珂莱塔",
+          "updated_on": null,
+          "response_sha256": "856942b54616f52228fe7445350d5a3a839e076cfc4e74e9ef805d414d117bba",
+          "retrieved_on": "2026-09-28"
+        }
+      ],
+      "profile_version": 4,
+      "retrieved_on": "2026-09-28",
+      "weight_rationale": "雙暴1、攻擊0.8、技能及未達需求效率0.6、固定攻擊0.4。技能使用率略高於攻擊不足以證明單條精確收益反超，保留攻略分級。",
+      "equipment_reference": {
+        "element": "冷凝",
+        "allowed_sets": [
+          "凌冽決斷之心"
+        ],
+        "set_combinations": [
+          {
+            "凌冽決斷之心": 5
+          }
+        ],
+        "main_stats_by_cost": {
+          "4": [
+            "crit_rate",
+            "crit_damage"
+          ],
+          "3": [
+            "glacio_damage",
+            "attack_pct"
+          ],
+          "1": [
+            "attack_pct"
+          ]
+        },
+        "verified_on": "2026-09-28",
+        "source_url": "https://mcguide.kurogames.com/zh-Hans/?role_id=1107&strategy_id=10071",
+        "snapshot_sha256": "b3dce8062f4529da516a321bf08d711b82699de509196cea7b4299efd0074501"
+      },
+      "usage_reference": {
+        "source": "使用者提供的遊戲內聲骸推薦截圖",
+        "provided_on": "2026-09-28",
+        "screenshot_index": 7,
+        "reference_kind": "usage",
+        "substats_percent": {
+          "crit_rate": 84.3,
+          "crit_damage": 79.2,
+          "resonance_skill_damage": 42.5,
+          "attack_pct": 42.3,
+          "energy_regen": 41.5
+        },
+        "main_stats_percent": {
+          "4": {
+            "crit_rate": 84.7
+          },
+          "3": {
+            "glacio_damage": 87.2
+          },
+          "1": {
+            "attack_pct": 98.8
+          }
+        },
+        "main_echo_percent": {
+          "異構武裝": 99.2
+        },
+        "set_icons": [
+          {
+            "label": "凌冽決斷之心 5件",
+            "percent": 99.6
+          }
+        ],
+        "notes": "只收錄截圖可見項目；樣本量、統計期間、武器與共鳴鏈分布未知。套裝圖示已對照官方平台圖示與名稱。"
+      }
+    },
+    {
+      "role_id": "1505",
+      "name": "守岸人",
+      "aliases": [
+        "Shorekeeper"
+      ],
+      "role": "生命治療／雙暴輔助",
+      "priority_tiers": [
+        [
+          "energy_regen"
+        ],
+        [
+          "hp_pct",
+          "crit_damage"
+        ],
+        [
+          "resonance_liberation_damage"
+        ],
+        [
+          "flat_hp"
+        ],
+        [
+          "crit_rate"
+        ]
+      ],
+      "energy_target": 230,
+      "main_stats": "4C 治療效果加成/暴擊傷害；3C 共鳴效率/生命%/衍射傷害加成；1C 生命%",
+      "sets": "隱世回光5件",
+      "caveat": "洞悉必定暴擊且視為共鳴解放傷害，暴擊只給其他招式少量參考分。星域增益以戰鬥中250%效率吃滿；面板230%僅適用可補足20%的天賦／聲骸條件，否則請把目標改為實際所需（例如250%）。",
+      "sources": [
+        {
+          "url": "https://mcguide.kurogames.com/zh-Hans/?role_id=1505&strategy_id=10075",
+          "author": "结星&丸子",
+          "title": "唯一限5奶妈守岸人养成攻略",
+          "updated_on": null,
+          "response_sha256": "d6527670c6eb2e6db3d50fc7ceb301371b8507ac823c5728b9c19cae1131a6be",
+          "retrieved_on": "2026-09-28"
+        },
+        {
+          "url": "https://mcguide.kurogames.com/zh-Hant/?role_id=1505&strategy_id=11010",
+          "author": "WW Echoes",
+          "title": "【入門】守岸人一站式養成攻略|配裝&共鳴鏈&配隊推薦",
+          "updated_on": null,
+          "response_sha256": "3e4baa09920dbefeedcf126afce93af3440eacc7e772c640089f269b6b5316b7",
+          "retrieved_on": "2026-09-28"
+        }
+      ],
+      "profile_version": 4,
+      "retrieved_on": "2026-09-28",
+      "weight_rationale": "效率1、生命%與暴傷0.8、解放0.6、固定生命0.4、暴擊0.25。兼顧治療與洞悉；暴擊人氣40.9%不會變成和暴傷一樣的收益。",
+      "equipment_reference": {
+        "element": "衍射",
+        "allowed_sets": [
+          "隱世回光"
+        ],
+        "set_combinations": [
+          {
+            "隱世回光": 5
+          }
+        ],
+        "main_stats_by_cost": {
+          "4": [
+            "healing_bonus",
+            "crit_damage"
+          ],
+          "3": [
+            "energy_regen",
+            "hp_pct",
+            "spectro_damage"
+          ],
+          "1": [
+            "hp_pct"
+          ]
+        },
+        "verified_on": "2026-09-28",
+        "source_url": "https://mcguide.kurogames.com/zh-Hans/?role_id=1505&strategy_id=10075",
+        "snapshot_sha256": "d6527670c6eb2e6db3d50fc7ceb301371b8507ac823c5728b9c19cae1131a6be"
+      },
+      "usage_reference": {
+        "source": "使用者提供的遊戲內聲骸推薦截圖",
+        "provided_on": "2026-09-28",
+        "screenshot_index": 8,
+        "reference_kind": "usage",
+        "substats_percent": {
+          "energy_regen": 64.3,
+          "crit_damage": 47.5,
+          "hp_pct": 46.7,
+          "crit_rate": 40.9,
+          "flat_hp": 39.5
+        },
+        "main_stats_percent": {
+          "4": {
+            "healing_bonus": 48.6
+          },
+          "3": {
+            "energy_regen": 85.9
+          },
+          "1": {
+            "hp_pct": 92.6
+          }
+        },
+        "main_echo_percent": {
+          "無歸的謬誤": 94.9
+        },
+        "set_icons": [
+          {
+            "label": "隱世回光 5件",
+            "percent": 99.4
+          }
+        ],
+        "notes": "只收錄截圖可見項目；樣本量、統計期間、武器與共鳴鏈分布未知。套裝圖示已對照官方平台圖示與名稱。"
+      }
+    },
+    {
+      "role_id": "1105",
+      "name": "折枝",
+      "aliases": [
+        "Zhezhi"
+      ],
+      "role": "普攻協同副輸出／冷凝技能輔助",
+      "priority_tiers": [
+        [
+          "crit_rate",
+          "crit_damage"
+        ],
+        [
+          "energy_regen",
+          "attack_pct"
+        ],
+        [
+          "basic_attack_damage"
+        ]
+      ],
+      "energy_target": 130,
+      "main_stats": "4C 暴擊/暴擊傷害；3C 冷凝傷害加成/共鳴效率/攻擊%；1C 攻擊%",
+      "sets": "高天共奏之曲5件 或 輕雲出月5件",
+      "caveat": "截圖只顯示4C主詞條；3C與1C方向取自攻略，不補使用率。高天偏自身輸出，輕雲偏隊伍增益；個人副詞條分數不能直接比較全隊收益。效率作者130%／140%。",
+      "sources": [
+        {
+          "url": "https://mcguide.kurogames.com/zh-Hant/?role_id=1105&strategy_id=11015",
+          "author": "Kin",
+          "title": "【折枝】冷凝最強專輔！如何更快循環？武器、聲骸、手法、技能加點一次看懂！",
+          "updated_on": null,
+          "response_sha256": "498935d8050d112153d7702750080643d0a8a33a021f74ce0169e0688c880e71",
+          "retrieved_on": "2026-09-28"
+        },
+        {
+          "url": "https://mcguide.kurogames.com/zh-Hans/?role_id=1105&strategy_id=11024",
+          "author": "一戈",
+          "title": "一条攻略让你的【折枝】成为协同大辅",
+          "updated_on": null,
+          "response_sha256": "8e97865d24705ecb9f9abab7017bdc65c8eae706ffe38cd329553b3179e016f2",
+          "retrieved_on": "2026-09-28"
+        }
+      ],
+      "profile_version": 4,
+      "retrieved_on": "2026-09-28",
+      "weight_rationale": "雙暴1、未達需求效率與攻擊0.8、普攻0.6。協同傷害按普攻分類，套裝用途與單件分數分開。",
+      "equipment_reference": {
+        "element": "冷凝",
+        "allowed_sets": [
+          "高天共奏之曲",
+          "輕雲出月"
+        ],
+        "set_combinations": [
+          {
+            "高天共奏之曲": 5
+          },
+          {
+            "輕雲出月": 5
+          }
+        ],
+        "main_stats_by_cost": {
+          "4": [
+            "crit_rate",
+            "crit_damage"
+          ],
+          "3": [
+            "glacio_damage",
+            "energy_regen",
+            "attack_pct"
+          ],
+          "1": [
+            "attack_pct"
+          ]
+        },
+        "verified_on": "2026-09-28",
+        "source_url": "https://mcguide.kurogames.com/zh-Hant/?role_id=1105&strategy_id=11015",
+        "snapshot_sha256": "498935d8050d112153d7702750080643d0a8a33a021f74ce0169e0688c880e71"
+      },
+      "usage_reference": {
+        "source": "使用者提供的遊戲內聲骸推薦截圖",
+        "provided_on": "2026-09-28",
+        "screenshot_index": 9,
+        "reference_kind": "usage",
+        "substats_percent": {
+          "crit_rate": 70.9,
+          "crit_damage": 65.4,
+          "energy_regen": 45.6,
+          "attack_pct": 39.7,
+          "basic_attack_damage": 38.8
+        },
+        "main_stats_percent": {
+          "4": {
+            "crit_rate": 77.1,
+            "crit_damage": 21.3
+          }
+        },
+        "main_echo_percent": {
+          "赫卡忒": 75.9,
+          "夢魘·輝螢軍勢": 23.2
+        },
+        "set_icons": [
+          {
+            "label": "高天共奏之曲 5件",
+            "percent": 58.5
+          },
+          {
+            "label": "輕雲出月 5件",
+            "percent": 34.3
+          }
+        ],
+        "notes": "只收錄截圖可見項目；樣本量、統計期間、武器與共鳴鏈分布未知。套裝圖示已對照官方平台圖示與名稱。截圖未顯示3C與1C主詞條，使用率保持缺項。"
+      }
+    },
+    {
+      "role_id": "1503",
+      "name": "維里奈",
+      "aliases": [
+        "Verina",
+        "维里奈"
+      ],
+      "role": "攻擊倍率治療／快速協奏輔助",
+      "priority_tiers": [
+        [
+          "energy_regen"
+        ],
+        [
+          "attack_pct"
+        ],
+        [
+          "flat_attack"
+        ],
+        [
+          "crit_rate",
+          "crit_damage"
+        ],
+        [
+          "hp_pct"
+        ]
+      ],
+      "energy_target": 230,
+      "main_stats": "4C 治療效果加成；3C 共鳴效率/攻擊%；1C 攻擊%",
+      "sets": "隱世回光5件",
+      "caveat": "攻擊倍率治療，生命僅作自身生存參考。效率採小沐230%；另一作者快速輪轉要求250%+、2鏈可降230%，依實際武器、共鳴鏈與循環調整。",
+      "sources": [
+        {
+          "url": "https://mcguide.kurogames.com/zh-Hans/?role_id=1503&strategy_id=10053",
+          "author": "小沐Xmu",
+          "title": "【入门】维里奈角色攻略",
+          "updated_on": null,
+          "response_sha256": "21e9dc9f8b95439d36df5c727e743b1ff1ab4d11728adbd6df8357b70939613e",
+          "retrieved_on": "2026-09-28"
+        },
+        {
+          "url": "https://mcguide.kurogames.com/zh-Hans/?role_id=1503&strategy_id=10077",
+          "author": "结星&丸子",
+          "title": "维里奈 角色手法 配装 配队 共鸣链全方面攻略",
+          "updated_on": null,
+          "response_sha256": "7084ae80240633ef53c340e47a694238b41cda96d9abb8cc9498890cd0dded1c",
+          "retrieved_on": "2026-09-28"
+        }
+      ],
+      "profile_version": 4,
+      "retrieved_on": "2026-09-28",
+      "weight_rationale": "效率1、攻擊%0.8、固定攻擊0.6、雙暴0.4、生命%0.25。雙暴只反映次要傷害，不影響治療；第五項固定攻擊39.2%由使用者補充。",
+      "equipment_reference": {
+        "element": "衍射",
+        "allowed_sets": [
+          "隱世回光"
+        ],
+        "set_combinations": [
+          {
+            "隱世回光": 5
+          }
+        ],
+        "main_stats_by_cost": {
+          "4": [
+            "healing_bonus"
+          ],
+          "3": [
+            "energy_regen",
+            "attack_pct"
+          ],
+          "1": [
+            "attack_pct"
+          ]
+        },
+        "verified_on": "2026-09-28",
+        "source_url": "https://mcguide.kurogames.com/zh-Hans/?role_id=1503&strategy_id=10053",
+        "snapshot_sha256": "21e9dc9f8b95439d36df5c727e743b1ff1ab4d11728adbd6df8357b70939613e"
+      },
+      "usage_reference": {
+        "source": "使用者提供的遊戲內聲骸推薦截圖",
+        "provided_on": "2026-09-28",
+        "screenshot_index": 10,
+        "reference_kind": "usage",
+        "substats_percent": {
+          "energy_regen": 50.8,
+          "attack_pct": 44,
+          "crit_rate": 41,
+          "crit_damage": 40.4,
+          "flat_attack": 39.2
+        },
+        "main_stats_percent": {
+          "4": {
+            "healing_bonus": 82.8
+          },
+          "3": {
+            "energy_regen": 76.8
+          },
+          "1": {
+            "attack_pct": 86.1
+          }
+        },
+        "main_echo_percent": {
+          "鳴鐘之龜": 64.7,
+          "無歸的謬誤": 34.9
+        },
+        "set_icons": [
+          {
+            "label": "隱世回光 5件",
+            "percent": 97.3
+          }
+        ],
+        "notes": "只收錄截圖可見項目；樣本量、統計期間、武器與共鳴鏈分布未知。套裝圖示已對照官方平台圖示與名稱。第五項固定攻擊39.2%由使用者補充。"
+      }
+    },
+    {
+      "role_id": "1311",
+      "name": "心",
+      "aliases": [
+        "Hsin"
+      ],
+      "role": "同奏／電磁導電輸出",
+      "priority_tiers": [
+        [
+          "crit_rate",
+          "crit_damage"
+        ],
+        [
+          "attack_pct"
+        ],
+        [
+          "resonance_skill_damage"
+        ],
+        [
+          "energy_regen"
+        ],
+        [
+          "flat_attack"
+        ]
+      ],
+      "energy_target": 120,
+      "main_stats": "4C 暴擊（遊戲預設）／暴擊傷害（攻略備選）；3C 導電傷害加成／攻擊%；1C 攻擊%",
+      "sets": "銜夢照世之心5件",
+      "caveat": "同奏與電磁模態皆以共鳴技能傷害為主要配裝方向；兩篇攻略採共鳴效率120%參考，實際需求依隊伍循環調整。套裝提供暴擊，4C暴擊／暴傷須依完整面板選擇，單顆評分不推測暴擊溢出。",
+      "sources": [
+        {
+          "url": "https://mcguide.kurogames.com/zh-Hans/?role_id=1311&strategy_id=10228",
+          "author": "巡游天国FM",
+          "title": "“心”简易玩法+养成攻略【巡游天国FM】",
+          "updated_on": null,
+          "response_sha256": "e998593b03b077897d9709f4e1dad754f205b4c8ee3d30332cb93733958a9d17",
+          "retrieved_on": "2026-10-04"
+        },
+        {
+          "url": "https://mcguide.kurogames.com/zh-Hant/?role_id=1311&strategy_id=11096",
+          "author": "Kin",
+          "title": "【心】雙模態兩種不同連招輕鬆看懂！聲骸有什麼要注意？配隊該如何搭配？",
+          "updated_on": null,
+          "response_sha256": "8f7d728879f4a05564f2ab63a3e4e88ca02f1d3c2be31c88f3e4e8bb897528f3",
+          "retrieved_on": "2026-10-04"
+        }
+      ],
+      "profile_version": 4,
+      "retrieved_on": "2026-10-04",
+      "weight_rationale": "雙暴1、攻擊%0.8、技能傷害0.6、未達循環需求的效率0.4、固定攻擊0.25。依兩位作者的技能分類與優先序給定工具權重；截圖僅為預設推薦，不以排序捏造使用率或傷害係數。",
+      "equipment_reference": {
+        "element": "導電",
+        "allowed_sets": [
+          "銜夢照世之心"
+        ],
+        "set_combinations": [
+          {
+            "銜夢照世之心": 5
+          }
+        ],
+        "set_aliases": {
+          "衔梦照世之心": "銜夢照世之心"
+        },
+        "main_stats_by_cost": {
+          "4": [
+            "crit_rate",
+            "crit_damage"
+          ],
+          "3": [
+            "electro_damage",
+            "attack_pct"
+          ],
+          "1": [
+            "attack_pct"
+          ]
+        },
+        "verified_on": "2026-10-04",
+        "source_url": "https://mcguide.kurogames.com/zh-Hant/?role_id=1311&strategy_id=11096",
+        "snapshot_sha256": "8f7d728879f4a05564f2ab63a3e4e88ca02f1d3c2be31c88f3e4e8bb897528f3"
+      },
+      "usage_reference": {
+        "source": "使用者提供的遊戲內聲骸預設推薦截圖",
+        "provided_on": "2026-10-03",
+        "screenshot_index": 3,
+        "reference_kind": "preset",
+        "substats_percent": {
+          "crit_rate": null,
+          "crit_damage": null,
+          "attack_pct": null,
+          "energy_regen": null,
+          "resonance_skill_damage": null
+        },
+        "main_stats_percent": {
+          "4": {
+            "crit_rate": null
+          },
+          "3": {
+            "electro_damage": null
+          },
+          "1": {
+            "attack_pct": null
+          }
+        },
+        "main_echo_percent": {
+          "共鳴迴響·天演溯心": null
+        },
+        "set_icons": [
+          {
+            "label": "銜夢照世之心 5件",
+            "percent": null
+          }
+        ],
+        "notes": "截圖為預設推薦，沒有使用率。頂部紫色套裝圖示已與官方攻略平台36號套裝核對；攻略額外提供4C暴傷及3C攻擊備選，不冒充截圖內容。",
+        "set_icon_verification": {
+          "verified_on": "2026-10-04",
+          "method": "官方攻略平台圖示、繁中名稱與5件效果逐項人工對照。",
+          "primary_icon": {
+            "id": "36",
+            "name": "銜夢照世之心",
+            "url": "https://guide-res.aki-game.com/introduction/material/30580a7ee894ca6362b35b4548e40ef3/bf3f4bcaaae68f8f30591b653e55e5c4.png",
+            "response_sha256": "8f7d728879f4a05564f2ab63a3e4e88ca02f1d3c2be31c88f3e4e8bb897528f3",
+            "sha256": "12003da4e2cb1637fca7acca53b2cca5a160d48a12d810beadc6a8576e9b2b4f"
+          }
+        }
+      }
+    }
+  ],
+  "set_icon_sources": [
+    {
+      "id": "18",
+      "name": "奔狼燎原之焰",
+      "url": "https://guide-res.aki-game.com/introduction/material/9c5099ff94792222da26953554e0862f/88399fdcf82e54c15ebbaabe86ff3e5e.png",
+      "response_sha256": "bee33cdf4590491910217576c4ff2a7aae8c556d08310bcb651abeb3a84514ba",
+      "icon_sha256": "fe3b70203c6861460b6410921af0a3740f487ab68d1abfd7b390a89d977c6dce",
+      "verified_on": "2026-09-28"
+    },
+    {
+      "id": "8",
+      "name": "轻云出月",
+      "url": "https://guide-res.aki-game.com/introduction/material/4ca54c6b2bb585f0ddd52dcb618033da/602e8f042f463dc47ebfdf6a94ed5a6d.png",
+      "response_sha256": "0c2b13f8fdcb2a441ab1ae86549c3b0effe94a53fb58ede9af7dfdb5fbda98cc",
+      "icon_sha256": "b6e5a9379b57bf5168f7f7d9fbab8527c96baee4fe254e5ee876aebf462f65ac",
+      "verified_on": "2026-09-28"
+    },
+    {
+      "id": "14",
+      "name": "无惧浪涛之勇",
+      "url": "https://guide-res.aki-game.com/introduction/material/4ca54c6b2bb585f0ddd52dcb618033da/7b6fbd4c592d356e087a0f1053751007.png",
+      "response_sha256": "e4dafc0f69cf8cc2c3e797acdac595daf24fcb8edb552a4cc3bcceb7e925eda5",
+      "icon_sha256": "6ab7bb036835d445989c512fa36702f72d4e6a5eb36def95b60ab8762d03476e",
+      "verified_on": "2026-09-28"
+    },
+    {
+      "id": "2",
+      "name": "熔山裂谷",
+      "url": "https://guide-res.aki-game.com/introduction/material/4ca54c6b2bb585f0ddd52dcb618033da/fb5c81ed3a220004b71069645f112867.png",
+      "response_sha256": "bee33cdf4590491910217576c4ff2a7aae8c556d08310bcb651abeb3a84514ba",
+      "icon_sha256": "c748cfbf1824d6df2577a66c5b25988ba18b46d9a7277ac87e3bc0af75532a0c",
+      "verified_on": "2026-09-28"
+    },
+    {
+      "id": "22",
+      "name": "焚羽猎魔之影",
+      "url": "https://guide-res.aki-game.com/introduction/material/0c5d8289dacfcbda2de70c45f8737c97/75c168b671d4ce827fca23907d85f114.png",
+      "response_sha256": "bee33cdf4590491910217576c4ff2a7aae8c556d08310bcb651abeb3a84514ba",
+      "icon_sha256": "e945f37f16ca2f7e59c852d56e81472c3aa56b54bae143bdd5090f27c049b464",
+      "verified_on": "2026-09-28"
+    },
+    {
+      "id": "7",
+      "name": "隐世回光",
+      "url": "https://guide-res.aki-game.com/introduction/material/4ca54c6b2bb585f0ddd52dcb618033da/9eb9cd58b9ea5e04c890326b5c1f471f.png",
+      "response_sha256": "5bd93c64d2d3690c95dc254f2cb3e74f096273f08b5ba4fad14e0cc651fabbd1",
+      "icon_sha256": "88ff404b8ed9ee3ec54899e17e2ca920731701eafede1729a79c53674f661bc4",
+      "verified_on": "2026-09-28"
+    },
+    {
+      "id": "21",
+      "name": "息界同调之律",
+      "url": "https://guide-res.aki-game.com/introduction/material/c99f4b00c593b075039b980e35af5ffc/7134f8f5aced525d1c11d229063305e7.png",
+      "response_sha256": "bee33cdf4590491910217576c4ff2a7aae8c556d08310bcb651abeb3a84514ba",
+      "icon_sha256": "4c78ea0d2bcffd3f02dd8eebd2990fbe540bbf49a0def25ee583159eda41a992",
+      "verified_on": "2026-09-28"
+    },
+    {
+      "id": "3",
+      "name": "彻空冥雷",
+      "url": "https://guide-res.aki-game.com/introduction/material/4ca54c6b2bb585f0ddd52dcb618033da/10fb15c77258a991b0028080a64fb42d.png",
+      "response_sha256": "4a3da9e633534b8a3a56cfd3ff07506471ca054cd79f7d9482a44974510fa4d9",
+      "icon_sha256": "6232c8102c37b76571061e971fa315036a0f6ad62f2dbd10ac1e390b432c5b16",
+      "verified_on": "2026-09-28"
+    },
+    {
+      "id": "9",
+      "name": "不绝余音",
+      "url": "https://guide-res.aki-game.com/introduction/material/4ca54c6b2bb585f0ddd52dcb618033da/7afbb1602613ec52b265d7a54ad27330.png",
+      "response_sha256": "101cd8556abd7f40126be343ae6d9dfb55fbafac6aea29285ad8ee3ad9bc43d8",
+      "icon_sha256": "5936d38382ba96be836385fc8e056e11ec79e61306a3a0f86b6e6a2efb8f21cf",
+      "verified_on": "2026-09-28"
+    },
+    {
+      "id": "32",
+      "name": "碎梦亡鬼之魇",
+      "url": "https://guide-res.aki-game.com/introduction/material/850df5b56a8e323fb0b02c4a0669e482/161306a460d101b0e63b350f68673d25.png",
+      "response_sha256": "3b0b059ba72a7e0a30cdea12acd57372b148bbe6edf1206c0dd25b7c4902a0ea",
+      "icon_sha256": "2ae9639b39c2ed29fe6fade8d2377bc90e532b8d9bd32f5399d28e0d42c80b03",
+      "verified_on": "2026-09-28"
+    },
+    {
+      "id": "25",
+      "name": "星构寻辉之环",
+      "url": "https://guide-res.aki-game.com/introduction/material/10e7cc57d5973e4cf6ae03bde40173be/a969aaab995e4aaddbfe5fc3781fa63b.png",
+      "response_sha256": "0c2b13f8fdcb2a441ab1ae86549c3b0effe94a53fb58ede9af7dfdb5fbda98cc",
+      "icon_sha256": "325836dcc84367c7df9d18428d3e23e5c5912b83789328a91a5f9747461158e0",
+      "verified_on": "2026-09-28"
+    },
+    {
+      "id": "31",
+      "name": "剪心辑梦之影",
+      "url": "https://guide-res.aki-game.com/introduction/material/31333166139db3e3f97c4ce3a64a2e54/7d2045f2f6e5418b752005eed8758311.png",
+      "response_sha256": "b6116af67abbf8937683c16cc3bda535710e24ae2b29be7d4c01964fd804325c",
+      "icon_sha256": "f123d04dbffe585418361027dea907e8a51b1b613972897725069cdb27ebee28",
+      "verified_on": "2026-09-28"
+    },
+    {
+      "id": "24",
+      "name": "逆光跃彩之约",
+      "url": "https://guide-res.aki-game.com/introduction/material/10e7cc57d5973e4cf6ae03bde40173be/2484a7df36877a14689574eebda6dd7c.png",
+      "response_sha256": "2926e6f6ae45901a6eca4056cc43706daca96a182fe67f5a4dac48f2fd2a0ccd",
+      "icon_sha256": "d475f69bc92e79e81d52134cbc0d0d931d5f6f7a9ba8fa0b37087a6909dc003d",
+      "verified_on": "2026-09-28"
+    },
+    {
+      "id": "27",
+      "name": "长路启航之星",
+      "url": "https://guide-res.aki-game.com/introduction/material/6685d4094acdb93fcd6a7a19179641a5/fff5c6cf4ca1543a72b64bf5dff0d8ef.png",
+      "response_sha256": "b6116af67abbf8937683c16cc3bda535710e24ae2b29be7d4c01964fd804325c",
+      "icon_sha256": "9d7d8b795ffa0c1645a2ea3b8eeded11795929f754869b42ff9eb81a35c9f693",
+      "verified_on": "2026-09-28"
+    },
+    {
+      "id": "26",
+      "name": "流金溯真之式",
+      "url": "https://guide-res.aki-game.com/introduction/material/10e7cc57d5973e4cf6ae03bde40173be/258f63b9448490d648948081e23d86db.png",
+      "response_sha256": "3b0b059ba72a7e0a30cdea12acd57372b148bbe6edf1206c0dd25b7c4902a0ea",
+      "icon_sha256": "479cbc7120a021d42efc1ab6851cd3632c9648c07d4cb3a5e11ba7b395191a03",
+      "verified_on": "2026-09-28"
+    },
+    {
+      "id": "5",
+      "name": "浮星祛暗",
+      "url": "https://guide-res.aki-game.com/introduction/material/4ca54c6b2bb585f0ddd52dcb618033da/8266e4bfeda1bd42d8f9794eb4ea0a13.png",
+      "response_sha256": "7084ae80240633ef53c340e47a694238b41cda96d9abb8cc9498890cd0dded1c",
+      "icon_sha256": "ac82ac4c9ce23f6971b3a66903aa26dbb2a7d48eb444c9b2a9c6e621cc6c94d8",
+      "verified_on": "2026-09-28"
+    },
+    {
+      "id": "11",
+      "name": "此間永駐之光",
+      "url": "https://guide-res.aki-game.com/introduction/material/4ca54c6b2bb585f0ddd52dcb618033da/59b2900aa03cb2182a51cdb520b535b6.png",
+      "response_sha256": "3e4baa09920dbefeedcf126afce93af3440eacc7e772c640089f269b6b5316b7",
+      "icon_sha256": "1e7eb8c3035eded873302fd84982028852725f61ae84c78a0865cd12b43947a0",
+      "verified_on": "2026-09-28"
+    },
+    {
+      "id": "13",
+      "name": "高天共奏之曲",
+      "url": "https://guide-res.aki-game.com/introduction/material/4ca54c6b2bb585f0ddd52dcb618033da/c00b57557743e709b8b96933432e0dfa.png",
+      "response_sha256": "498935d8050d112153d7702750080643d0a8a33a021f74ce0169e0688c880e71",
+      "icon_sha256": "b6e3441f8df43cfbc7f8a773829183da04aff90753cf3ab6e395f785eb91bb08",
+      "verified_on": "2026-09-28"
+    },
+    {
+      "id": "10",
+      "name": "凌冽决断之心",
+      "url": "https://guide-res.aki-game.com/introduction/material/4ca54c6b2bb585f0ddd52dcb618033da/586e508f161f26ce94633729ac56c602.png",
+      "response_sha256": "856942b54616f52228fe7445350d5a3a839e076cfc4e74e9ef805d414d117bba",
+      "icon_sha256": "78728175f6d3e867b57e41f0f9568955b7c811e9cddfc443fd65ba11b1cf85b2",
+      "verified_on": "2026-09-28"
+    },
+    {
+      "id": "1",
+      "name": "凝夜白霜",
+      "url": "https://guide-res.aki-game.com/introduction/material/4ca54c6b2bb585f0ddd52dcb618033da/4a47a0db6e60853dedfcfdf08a5ca249.png",
+      "response_sha256": "856942b54616f52228fe7445350d5a3a839e076cfc4e74e9ef805d414d117bba",
+      "icon_sha256": "a6a52bf60dcc3e42b6a1648eaf69dd2ad4c7843325c400f75e869f2c06ad1894",
+      "verified_on": "2026-09-28"
+    },
+    {
+      "id": "17",
+      "name": "愿戴荣光之旅",
+      "url": "https://guide-res.aki-game.com/introduction/material/9c5099ff94792222da26953554e0862f/c9baca3cda1c39194c04fe2170c3da65.png",
+      "response_sha256": "67b44a8296e0e2527f5c756ebf36532970ba1c9d7be7af8e94e474923f377608",
+      "icon_sha256": "c75b1995b1b2d71218d1362a4b5de208e69484a8fb0c02c546637ffd17e353fb",
+      "verified_on": "2026-09-28"
+    },
+    {
+      "id": "16",
+      "name": "流云逝尽之空",
+      "url": "https://guide-res.aki-game.com/introduction/material/4ca54c6b2bb585f0ddd52dcb618033da/1e412544122065c25107eadecd8208c7.png",
+      "response_sha256": "34e3358b52e5612254e19634098e826b3fbc6fb516e5a16f378a03a20725d69a",
+      "icon_sha256": "3011033ad3b53a4a035eff474b9321fe058b2f485df7dea555bf14fb8594ced0",
+      "verified_on": "2026-09-28"
+    },
+    {
+      "id": "23",
+      "name": "命理崩毁之弦",
+      "url": "https://guide-res.aki-game.com/introduction/material/2bf51842b0399bc1f9b1da0c7dd9c575/7ae5e99a8c2f19cd25f44313293553aa.png",
+      "response_sha256": "a2990b4628f668b7dce2799a911985f48a4d6585e3b234bcea18f7c6633252db",
+      "icon_sha256": "b9ff354204111240bd3104885451895a876be56391041b7098f3754ad7e9dbd8",
+      "verified_on": "2026-09-28"
+    },
+    {
+      "id": "30",
+      "name": "雪落无声之愿",
+      "url": "https://guide-res.aki-game.com/introduction/material/31333166139db3e3f97c4ce3a64a2e54/19ee203f0229aae4b91567bff25442e5.png",
+      "response_sha256": "f7db0e460f08af3dfd125177b2fd34631305f585da7dd73eaed5296c2880279d",
+      "icon_sha256": "c816e224f311863d5b10bafd81814edbcc9376e1968fd10a422dbe92cd9cced1",
+      "verified_on": "2026-09-28"
+    },
+    {
+      "id": "33",
+      "name": "羽落空尘之歌",
+      "url": "https://guide-res.aki-game.com/introduction/material/69e2b6508604133e640da4e8a69ea4a1/9c86482e30a12260a6d0bbbcb91e82ad.png",
+      "response_sha256": "a2990b4628f668b7dce2799a911985f48a4d6585e3b234bcea18f7c6633252db",
+      "icon_sha256": "6011b95f2075cf13482449afb45b5b94e19b3b81961dbf4c8406d4c0470b26d3",
+      "verified_on": "2026-09-28"
+    },
+    {
+      "id": "28",
+      "name": "斑驳粉饰之沫",
+      "url": "https://guide-res.aki-game.com/introduction/material/6685d4094acdb93fcd6a7a19179641a5/b9153260449b3690d1c2c5963a8cd00f.png",
+      "response_sha256": "b6116af67abbf8937683c16cc3bda535710e24ae2b29be7d4c01964fd804325c",
+      "icon_sha256": "9c7f2426f8e7b52bfb9ebc74481e8013f2a64a41c10c8bf032e5098d95920d1a",
+      "verified_on": "2026-09-28"
+    },
+    {
+      "id": "34",
+      "name": "清邪荡煞之心",
+      "url": "https://guide-res.aki-game.com/introduction/material/69e2b6508604133e640da4e8a69ea4a1/0a15afc49252258b6e7c0821c3499d3d.png",
+      "response_sha256": "0c2b13f8fdcb2a441ab1ae86549c3b0effe94a53fb58ede9af7dfdb5fbda98cc",
+      "icon_sha256": "8447622dc848be473ee97bdfccba15e4ffbf7e74897d50bf83075d56492d6757",
+      "verified_on": "2026-09-28"
+    },
+    {
+      "id": "6",
+      "name": "沉日劫明",
+      "url": "https://guide-res.aki-game.com/introduction/material/4ca54c6b2bb585f0ddd52dcb618033da/f19c9085129709ee14d013be869df69b.png",
+      "response_sha256": "34e3358b52e5612254e19634098e826b3fbc6fb516e5a16f378a03a20725d69a",
+      "icon_sha256": "f94108043f424759aa7884fcd3769492410398dcba394b83caae91e49e60c70e",
+      "verified_on": "2026-09-28"
+    },
+    {
+      "id": "12",
+      "name": "幽夜隐匿之帷",
+      "url": "https://guide-res.aki-game.com/introduction/material/4ca54c6b2bb585f0ddd52dcb618033da/9eb60bc8bf2b004e4db7d1cc0d5f1d8c.png",
+      "response_sha256": "9183a4b3d1f0963bfdd1d51c0741f065c7c93997beddb8ff003e12beabb1b797",
+      "icon_sha256": "94c65836943749e4bc700bd02ef04180a4a0745e9a624e77e2ccd8c722d24dd9",
+      "verified_on": "2026-09-28"
+    }
+  ]
+}

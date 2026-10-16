@@ -1,0 +1,209 @@
+{
+  "schema_version": 1,
+  "data_version": "scoring-templates-2026.09-v3",
+  "provenance": {
+    "status": "project_default",
+    "source": "Wuwa Personal Assistant V1 editable defaults",
+    "is_official": false,
+    "notes": "These weights are neutral starting points, not an official or character tier list. Users should tune them for their own roster, weapon, team and rotation."
+  },
+  "default_thresholds": {
+    "usable": 55.0,
+    "passing": 70.0,
+    "perfect": 88.0,
+    "exceptional": 95.0
+  },
+  "templates": [
+    {
+      "profile_id": "generic_dps_v1",
+      "name": "通用輸出型",
+      "template_kind": "generic_dps",
+      "version": 3,
+      "description": "V2 校準：暴擊、暴擊傷害及攻擊百分比優先；各傷害類型保有通用價值，再由角色輸出占比條件調整。",
+      "is_default": true,
+      "roll_data_version": "echo-rolls-2026.09-official-v2",
+      "thresholds": {
+        "usable": 50.0,
+        "passing": 65.0,
+        "perfect": 85.0,
+        "exceptional": 93.0
+      },
+      "weights": {
+        "crit_rate": 1.0,
+        "crit_damage": 1.0,
+        "attack_pct": 0.82,
+        "flat_attack": 0.28,
+        "hp_pct": 0.08,
+        "flat_hp": 0.04,
+        "defense_pct": 0.08,
+        "flat_defense": 0.04,
+        "energy_regen": 0.55,
+        "basic_attack_damage": 0.55,
+        "heavy_attack_damage": 0.55,
+        "resonance_skill_damage": 0.55,
+        "resonance_liberation_damage": 0.55
+      },
+      "conditional_weights": [
+        {
+          "stat": "basic_attack_damage",
+          "condition_key": "uses_basic_attack",
+          "expected_value": true,
+          "multiplier": 1.5
+        },
+        {
+          "stat": "heavy_attack_damage",
+          "condition_key": "uses_heavy_attack",
+          "expected_value": true,
+          "multiplier": 1.5
+        },
+        {
+          "stat": "resonance_skill_damage",
+          "condition_key": "uses_resonance_skill",
+          "expected_value": true,
+          "multiplier": 1.5
+        },
+        {
+          "stat": "resonance_liberation_damage",
+          "condition_key": "uses_resonance_liberation",
+          "expected_value": true,
+          "multiplier": 1.5
+        }
+      ],
+      "threshold_rules": [],
+      "crit_balance_rule": {
+        "target_excess_damage_per_rate": 2.0,
+        "tolerance": 0.25,
+        "max_adjustment": 0.2,
+        "required_context": false
+      }
+    },
+    {
+      "profile_id": "healing_hp_v1",
+      "name": "治療／生命型",
+      "template_kind": "healing_hp",
+      "version": 2,
+      "description": "生命百分比及共鳴效率優先，保留低權重輸出詞條以支援混合型角色。",
+      "is_default": false,
+      "roll_data_version": "echo-rolls-2026.09-official-v2",
+      "weights": {
+        "crit_rate": 0.2,
+        "crit_damage": 0.18,
+        "attack_pct": 0.18,
+        "flat_attack": 0.08,
+        "hp_pct": 1.0,
+        "flat_hp": 0.48,
+        "defense_pct": 0.15,
+        "flat_defense": 0.06,
+        "energy_regen": 0.9,
+        "basic_attack_damage": 0.05,
+        "heavy_attack_damage": 0.05,
+        "resonance_skill_damage": 0.15,
+        "resonance_liberation_damage": 0.15
+      },
+      "conditional_weights": [
+        {
+          "stat": "attack_pct",
+          "condition_key": "healing_scales_with_attack",
+          "expected_value": true,
+          "multiplier": 4.0
+        },
+        {
+          "stat": "defense_pct",
+          "condition_key": "healing_scales_with_defense",
+          "expected_value": true,
+          "multiplier": 4.0
+        }
+      ],
+      "threshold_rules": [],
+      "crit_balance_rule": null
+    },
+    {
+      "profile_id": "defense_v1",
+      "name": "防禦型",
+      "template_kind": "defense",
+      "version": 2,
+      "description": "防禦百分比及共鳴效率優先的防禦倍率角色起始模板。",
+      "is_default": false,
+      "roll_data_version": "echo-rolls-2026.09-official-v2",
+      "weights": {
+        "crit_rate": 0.55,
+        "crit_damage": 0.55,
+        "attack_pct": 0.08,
+        "flat_attack": 0.04,
+        "hp_pct": 0.15,
+        "flat_hp": 0.06,
+        "defense_pct": 1.0,
+        "flat_defense": 0.5,
+        "energy_regen": 0.72,
+        "basic_attack_damage": 0.24,
+        "heavy_attack_damage": 0.24,
+        "resonance_skill_damage": 0.24,
+        "resonance_liberation_damage": 0.24
+      },
+      "conditional_weights": [
+        {
+          "stat": "basic_attack_damage",
+          "condition_key": "uses_basic_attack",
+          "expected_value": true,
+          "multiplier": 2.5
+        },
+        {
+          "stat": "resonance_skill_damage",
+          "condition_key": "uses_resonance_skill",
+          "expected_value": true,
+          "multiplier": 2.5
+        }
+      ],
+      "threshold_rules": [],
+      "crit_balance_rule": {
+        "target_excess_damage_per_rate": 2.0,
+        "tolerance": 0.25,
+        "max_adjustment": 0.15,
+        "required_context": false
+      }
+    },
+    {
+      "profile_id": "energy_requirement_v1",
+      "name": "共鳴效率需求型",
+      "template_kind": "energy_requirement",
+      "version": 2,
+      "description": "在角色總共鳴效率達到可調門檻前提高其價值，超過門檻後回落。",
+      "is_default": false,
+      "roll_data_version": "echo-rolls-2026.09-official-v2",
+      "weights": {
+        "crit_rate": 0.82,
+        "crit_damage": 0.82,
+        "attack_pct": 0.7,
+        "flat_attack": 0.22,
+        "hp_pct": 0.12,
+        "flat_hp": 0.05,
+        "defense_pct": 0.12,
+        "flat_defense": 0.05,
+        "energy_regen": 1.0,
+        "basic_attack_damage": 0.3,
+        "heavy_attack_damage": 0.3,
+        "resonance_skill_damage": 0.3,
+        "resonance_liberation_damage": 0.55
+      },
+      "conditional_weights": [],
+      "threshold_rules": [
+        {
+          "rule_id": "energy_requirement_130",
+          "stat": "energy_regen",
+          "minimum": 130.0,
+          "maximum": null,
+          "below_multiplier": 1.2,
+          "within_multiplier": 0.75,
+          "above_multiplier": 0.75,
+          "required_context": true
+        }
+      ],
+      "crit_balance_rule": {
+        "target_excess_damage_per_rate": 2.0,
+        "tolerance": 0.25,
+        "max_adjustment": 0.18,
+        "required_context": false
+      }
+    }
+  ]
+}
