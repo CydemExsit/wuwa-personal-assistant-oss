@@ -31,15 +31,12 @@ WizardStyle=modern
 [Languages]
 Name: "chinesetraditional"; MessagesFile: "compiler:Languages\ChineseTraditional.isl"
 
-[Tasks]
-Name: "desktopicon"; Description: "建立桌面捷徑"
-
 [Files]
 Source: "{#SourcePath}\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 
 [Icons]
 Name: "{group}\{#EditionName}"; Filename: "{app}\WuwaDisplayAssistant.exe"; WorkingDir: "{app}"
-Name: "{autodesktop}\{#EditionName}"; Filename: "{app}\WuwaDisplayAssistant.exe"; WorkingDir: "{app}"; Tasks: desktopicon
+Name: "{autodesktop}\{#EditionName}"; Filename: "{app}\WuwaDisplayAssistant.exe"; WorkingDir: "{app}"
 
 [Run]
 Filename: "{app}\WuwaDisplayAssistant.exe"; Description: "開啟 {#EditionName}"; Flags: nowait postinstall skipifsilent

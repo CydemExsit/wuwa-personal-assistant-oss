@@ -25,7 +25,7 @@ function Run-Checked([string]$File, [string[]]$Arguments) {
 }
 $uninstaller = Join-Path $installRoot "unins000.exe"
 try {
-    $installArgs = @("/VERYSILENT", "/SUPPRESSMSGBOXES", "/NORESTART", "/TASKS=desktopicon", "/DIR=`"$installRoot`"", "/GROUP=$group")
+    $installArgs = @("/VERYSILENT", "/SUPPRESSMSGBOXES", "/NORESTART", "/DIR=`"$installRoot`"", "/GROUP=$group")
     Run-Checked $Installer $installArgs
     $exe = Join-Path $installRoot "WuwaDisplayAssistant.exe"
     $sourceFiles = @(Get-ChildItem -LiteralPath $PackageRoot -Recurse -File)
