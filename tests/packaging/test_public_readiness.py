@@ -22,6 +22,17 @@ def load_script(name):
 
 guard = load_script("public_safety_audit")
 audit = load_script("package_audit")
+sources = load_script("third_party_sources")
+
+
+def test_source_bundle_rejects_runtime_version_drift():
+    manifest = json.loads(
+        (Path(__file__).resolve().parents[2] / "third_party/upstream-sources.json").read_text()
+    )
+    sources.verify_runtime_versions(manifest["runtime_versions"])
+    manifest["runtime_versions"]["GEOS"] = "0.0.0"
+    with pytest.raises(RuntimeError, match="do not match build runtime"):
+        sources.verify_runtime_versions(manifest["runtime_versions"])
 
 
 @pytest.mark.parametrize(
@@ -57,6 +68,7 @@ def test_public_guard_checks_content_and_preserves_synthetic_redaction_tests():
         "Qt6QmlModels.dll",
         "Qt6Quick.dll",
         "opencv_videoio_ffmpeg999_64.dll",
+        "PySide6/opengl32sw.dll",
     ],
 )
 def test_unused_native_payload_is_rejected_even_if_present_in_build_inventory(tmp_path, name):

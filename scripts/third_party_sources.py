@@ -1,4 +1,4 @@
-"""Download immutable upstream Qt/PySide sources for release redistribution.
+"""Download immutable upstream library sources for release redistribution.
 
 Only build-time network access is used. Full archives and upstream license files
 are preserved; archive contents are never executed. Cache hashes are verified.
@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import argparse
 import hashlib
+import importlib.metadata
 import json
 import shutil
 import tarfile
@@ -16,12 +17,27 @@ from pathlib import Path, PurePosixPath
 from urllib.request import Request, urlopen
 
 
+def verify_runtime_versions(expected: dict[str, str]) -> None:
+    import shapely
+    from PySide6.QtCore import qVersion
+
+    actual = {
+        "PySide6": importlib.metadata.version("PySide6"),
+        "Qt": qVersion(),
+        "shapely": shapely.__version__,
+        "GEOS": shapely.geos_version_string,
+    }
+    if actual != expected:
+        raise RuntimeError(f"Corresponding sources do not match build runtime: {actual}")
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output-directory", type=Path, required=True)
     args = parser.parse_args()
     root = Path(__file__).resolve().parents[1]
-    payload = json.loads((root / "third_party/qt-sources.json").read_text(encoding="utf-8"))
+    payload = json.loads((root / "third_party/upstream-sources.json").read_text(encoding="utf-8"))
+    verify_runtime_versions(payload["runtime_versions"])
     cache = root / "build/third-party-sources"
     cache.mkdir(parents=True, exist_ok=True)
     licenses = cache / "licenses"
@@ -63,7 +79,7 @@ def main() -> None:
         records.append({**component, "url": url, "sha256": digest, "archive": archive.name})
         archives.append(archive)
         print(f"Verified upstream source: {repository} ({commit[:12]})", flush=True)
-    manifest = {"version": payload["version"], "components": records}
+    manifest = {"runtime_versions": payload["runtime_versions"], "components": records}
     (cache / "SOURCE_MANIFEST.json").write_text(
         json.dumps(manifest, indent=2) + "\n", encoding="utf-8"
     )

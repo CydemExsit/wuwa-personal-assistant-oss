@@ -20,6 +20,7 @@ Important components:
 | ONNX Runtime | MIT and Microsoft third-party notices |
 | OpenCV | Apache-2.0 plus its bundled third-party notices; unused FFmpeg codec DLLs are excluded |
 | NumPy / bundled numerical libraries | NumPy and its bundled upstream license texts |
+| Shapely / GEOS 3.14.1 | Shapely BSD-3-Clause; bundled dynamic GEOS LGPL-2.1 with matching source archives |
 | Other Python dependencies | Original license texts collected from the exact build environment |
 
 The Windows package contains original license files and a hash inventory in
@@ -28,8 +29,8 @@ model provenance, dependency notices and corresponding-source manifest.
 The inventory covers the build environment; it does not claim that every listed
 developer tool is shipped as executable code.
 
-Each binary release also includes `ThirdPartySources-Qt6.11.1.zip`: complete
-upstream archives for the exact Qt/PySide source revisions used. Read
+Each binary release also includes `ThirdPartySources-1.1.1.zip`: complete
+upstream archives for the matching Qt/PySide, Shapely and GEOS revisions. Read
 [dependency licensing and rebuilding](docs/dependency-licensing.md) for source
 access, dynamic library replacement and the release verification procedure.
 

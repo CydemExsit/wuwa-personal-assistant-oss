@@ -17,7 +17,9 @@ applicable licenses permit, including for debugging a modified Qt library.
 The generic PyInstaller Qt hooks otherwise include an unused GPL-only virtual
 keyboard and unrelated QML, Quick, PDF and video codec libraries. This build
 explicitly excludes those optional components. The package audit rejects their
-return. Widgets, native Windows input, SVG/static-image display and the existing
+return. The unused Mesa software OpenGL fallback is also omitted; this Widgets
+interface uses ordinary raster painting. Widgets, native Windows input,
+SVG/static-image display and the existing
 passive tool panel remain supported.
 
 Original LGPL/GPL/exception and third-party texts are copied from the exact
@@ -26,12 +28,13 @@ into `_internal/legal/`. Do not remove these notices when sharing the package.
 
 ## Corresponding source access
 
-Download `ThirdPartySources-Qt6.11.1.zip` beside the Windows application at the
+Download `ThirdPartySources-1.1.1.zip` beside the Windows application at the
 [v1.1.1 release](https://github.com/CydemExsit/wuwa-personal-assistant-oss/releases/tag/v1.1.1).
 It contains complete upstream qtbase, qtsvg, qtimageformats, qttranslations and
-pyside-setup archives, including Shiboken, plus `SOURCE_MANIFEST.json`. Source
+pyside-setup archives, including Shiboken, plus Shapely 2.2.0 and its bundled
+GEOS 3.14.1 and `SOURCE_MANIFEST.json`. Source
 revisions and SHA-256 values are recorded in
-[`third_party/qt-sources.json`](../third_party/qt-sources.json).
+[`third_party/upstream-sources.json`](../third_party/upstream-sources.json).
 The manifest's immutable official upstream URLs provide an additional way to
 retrieve those same sources. The project does not modify these upstream libraries.
 
@@ -41,6 +44,22 @@ Use matching architecture/compiler/Qt/PySide ABI. You can build compatible dynam
 libraries and replace them in a copy of `_internal`, or build/install your modified
 PySide environment and run `scripts/build.ps1`. The default dependency lock is a
 reproducible installation profile, not a restriction on modified builds.
+
+## Shapely / GEOS
+
+RapidOCR uses Shapely, whose Windows wheel bundles dynamic GEOS libraries under
+LGPL-2.1. The original Shapely, GEOS and Windows runtime notices are preserved.
+The source bundle includes complete matching Shapely and GEOS archives; the build
+rejects a runtime version that differs from the source manifest.
+
+GEOS includes CMake build instructions; see its
+[build guide](https://libgeos.org/usage/download/). To use a modified GEOS build,
+follow [Shapely's custom GEOS instructions](https://shapely.readthedocs.io/en/stable/installation.html#installation-from-source-with-custom-geos-library)
+and build Shapely against it, then package that environment with `scripts/build.ps1`.
+The default wheel uses renamed DLLs in `_internal/shapely.libs`; rebuilding the
+binding avoids relying on those wheel-specific filenames. No technical or
+licensing restriction prevents compatible replacement or debugging this tool
+with modified libraries.
 
 ## Release procedure
 

@@ -12,4 +12,5 @@ def excluded_binary(relative: str) -> bool:
         "qtvirtualkeyboardplugin.dll",
         "qpdf.dll",
         "qt6pdf.dll",
+        "opengl32sw.dll",
     } or name.startswith(("qt6qml", "qt6quick", "opencv_videoio_ffmpeg"))

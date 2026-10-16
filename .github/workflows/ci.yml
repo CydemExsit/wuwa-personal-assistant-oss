@@ -95,6 +95,6 @@ jobs:
         uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
         with:
           name: corresponding-sources-${{ github.sha }}
-          path: dist/ci/ThirdPartySources-Qt6.11.1.zip
+          path: dist/ci/ThirdPartySources-1.1.1.zip
           if-no-files-found: error
           retention-days: 14

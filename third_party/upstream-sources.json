@@ -1,6 +1,5 @@
 {
-  "version": "6.11.1",
-  "source_bundle": "ThirdPartySources-Qt6.11.1.zip",
+  "source_bundle": "ThirdPartySources-1.1.1.zip",
   "components": [
     {
       "repository": "qt/qtbase",
@@ -26,6 +25,22 @@
       "repository": "pyside/pyside-setup",
       "commit": "73fb12a067c2e8f7a464a310aaee2860fa2b64d2",
       "sha256": "f0fb48c878195575705813be2a2f82f670b5a375a63c940ac0f300d799e93d9b"
+    },
+    {
+      "repository": "libgeos/geos",
+      "commit": "c389f532d25fe6228861d9b19339f9cb57ca4bdb",
+      "sha256": "c6ef7660abd410d20b4f30085dfc1b0f804f487967aeddda6eca2aaa36abfa5a"
+    },
+    {
+      "repository": "shapely/shapely",
+      "commit": "229c71f7128713b37201f3c77336d32b52467454",
+      "sha256": "f218c93375b5aebe8440b24324e3d87b20b65df99ad07ae0ab003b3dd7cb006a"
     }
-  ]
+  ],
+  "runtime_versions": {
+    "PySide6": "6.11.1",
+    "Qt": "6.11.1",
+    "shapely": "2.2.0",
+    "GEOS": "3.14.1"
+  }
 }
