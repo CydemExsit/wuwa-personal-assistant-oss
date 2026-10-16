@@ -13,8 +13,10 @@ if (Test-Path $registry) { throw "Refusing to overwrite an existing installed ed
 $testRoot = Join-Path $repoRoot ("work\installer-test-" + [guid]::NewGuid())
 $installRoot = Join-Path $testRoot "安裝 程式"
 $dataRoot = Join-Path $testRoot "保留 資料"
-$group = "WuwaInstallerTest-" + [guid]::NewGuid()
+# DisableProgramGroupPage=yes ignores /GROUP; verify the real default group.
+$group = $edition.name
 $shortcutRoot = Join-Path ([Environment]::GetFolderPath("Programs")) $group
+if (Test-Path -LiteralPath $shortcutRoot) { throw "Refusing to replace an existing Start-menu folder during verification." }
 $desktopLink = Join-Path ([Environment]::GetFolderPath("DesktopDirectory")) "$($edition.name).lnk"
 if (Test-Path -LiteralPath $desktopLink) { throw "Refusing to replace an existing desktop shortcut during verification." }
 New-Item -ItemType Directory -Force -Path $testRoot | Out-Null
@@ -38,7 +40,7 @@ function Assert-Shortcut([string]$Path, [string]$Expected) {
     if ($LASTEXITCODE -ne 0) { throw "Shortcut target is not the installed executable." }
 }
 try {
-    $installArgs = @("/VERYSILENT", "/SUPPRESSMSGBOXES", "/NORESTART", "/DIR=`"$installRoot`"", "/GROUP=$group")
+    $installArgs = @("/VERYSILENT", "/SUPPRESSMSGBOXES", "/NORESTART", "/DIR=`"$installRoot`"")
     Run-Checked $Installer $installArgs
     $exe = Join-Path $installRoot "WuwaDisplayAssistant.exe"
     $sourceFiles = @(Get-ChildItem -LiteralPath $PackageRoot -Recurse -File)
