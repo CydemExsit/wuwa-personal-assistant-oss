@@ -6,6 +6,7 @@
 - Reduce first-run setup to one page with topology-based mode and resolution defaults.
 - Preserve explicit capture, uncertainty, existing data and third-party notices/sources.
 - Verify installed contents, startup/OCR, shortcuts, reinstall, uninstall and data retention.
+- Fence late runtime statuses during stop and publish cleanup completion atomically.
 
 ## 1.1.1 — OSS baseline (2026-10-16)
 

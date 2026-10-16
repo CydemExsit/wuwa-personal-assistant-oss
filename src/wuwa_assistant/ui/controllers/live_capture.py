@@ -607,33 +607,34 @@ class LiveCaptureController(QObject):
             if self._runtime is runtime:
                 self._runtime = None
                 self._active_run_id = None
+            # Publish the final state before another Start can acquire the lock.
+            self._set_running(False)
+            self._set_status(CaptureStatus.STOPPED, "辨識已停止。")
             self._stop_thread = None
-
-        self._set_running(False)
-        self._set_status(CaptureStatus.STOPPED, "辨識已停止。")
         self._logger.info(
             "capture_stop_completed generation=%s success=true",
             _optional_log_int(run_id),
         )
 
     def _handle_runtime_status(self, run_id: int, update: LiveStatusUpdate) -> None:
-        if not self._is_current_run(run_id):
-            return
         with self._lock:
-            if self._stop_thread is not None and self._stop_thread.is_alive():
+            if not self._is_current_run(run_id) or self._stop_thread is not None:
                 # Coordinator STOPPED invalidates jobs before native OCR and
                 # backend cleanup have joined. Only the stop worker may mark
-                # the UI restartable after those joins actually complete.
+                # the UI restartable. The thread reference fences callbacks
+                # even between stop() assigning it and Thread.start().
                 return
-        mapped = _CAPTURE_STATUS_BY_LIVE_STATUS[update.status]
-        self._set_status(
-            mapped,
-            _localize_status_reason(update),
-            generation=run_id,
-            source_sequence=update.source_sequence,
-        )
-        if update.status is LiveStatus.STOPPED:
-            self._set_running(False)
+            # Validation, mutation and queued publication must be atomic with
+            # stop(); a callback already in flight must not overtake STOPPING.
+            mapped = _CAPTURE_STATUS_BY_LIVE_STATUS[update.status]
+            self._set_status(
+                mapped,
+                _localize_status_reason(update),
+                generation=run_id,
+                source_sequence=update.source_sequence,
+            )
+            if update.status is LiveStatus.STOPPED:
+                self._set_running(False)
 
     def _handle_runtime_result(self, run_id: int, result: LiveRecognitionResult) -> None:
         if not self._is_current_run(run_id):

@@ -693,3 +693,36 @@ def test_shutdown_suppresses_late_monitor_signal(qapp: QApplication) -> None:
     assert controller.shutdown(timeout=3.0)
     QCoreApplication.processEvents()
     assert spy.count() == 0
+
+
+def test_status_arriving_before_stop_thread_starts_cannot_replace_stopping(
+    qapp: QApplication, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    harness = RuntimeHarness()
+    controller = LiveCaptureController(
+        backend_factory=IdleBackend, analyzer_factory=NoopAnalyzer, runtime_factory=harness
+    )
+    assert controller.start(LiveCaptureSettings(1))
+    runtime = harness.runtimes[0]
+    original_set_status = controller._set_status
+
+    def late_startup_status(status: Any, reason: str, **kwargs: Any) -> None:
+        original_set_status(status, reason, **kwargs)
+        if status.value == "stopping":
+            # stop() has assigned the join thread, but has not started it yet.
+            runtime._on_status(
+                LiveStatusUpdate(LiveStatus.WAITING_FOR_PAGE, 1, monotonic(), "late startup")
+            )
+
+    monkeypatch.setattr(controller, "_set_status", late_startup_status)
+    try:
+        assert controller.stop()
+        assert controller.status.value == "stopping"
+        assert controller.is_running
+        runtime.stop_gate.set()
+        _wait_until(
+            qapp, lambda: not controller.is_running and controller.status.value == "stopped"
+        )
+    finally:
+        runtime.stop_gate.set()
+        assert controller.shutdown()
