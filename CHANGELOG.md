@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.1.2 — Simple first installation (2026-10-16)
+
+- Add a per-user Setup.exe with shortcuts, update/uninstall and portable ZIP.
+- Reduce first-run setup to one page with topology-based mode and resolution defaults.
+- Preserve explicit capture, uncertainty, existing data and third-party notices/sources.
+- Verify installed contents, startup/OCR, shortcuts, reinstall, uninstall and data retention.
+
 ## 1.1.1 — OSS baseline (2026-10-16)
 
 - Begin a clean repository from privately developed1.1.0. Old commits, personal

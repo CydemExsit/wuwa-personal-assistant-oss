@@ -25,7 +25,7 @@ def _monitors() -> tuple[MonitorChoice, ...]:
     )
 
 
-def test_short_wizard_has_three_pages_and_non_gate_safety_explanation(
+def test_short_wizard_has_one_page_and_non_gate_safety_explanation(
     qapp: QApplication,
     tmp_path: Path,
 ) -> None:
@@ -33,15 +33,15 @@ def test_short_wizard_has_three_pages_and_non_gate_safety_explanation(
     wizard.show()
     qapp.processEvents()
     try:
-        assert len(wizard.pageIds()) == 3
+        assert len(wizard.pageIds()) == 1
         safety = wizard.findChild(QLabel, "OnboardingSafetyText")
         assert safety is not None
         assert "不操作遊戲" in safety.text()
         assert "不讀取遊戲記憶體" in safety.text()
         assert "獨立小面板" in safety.text()
         assert wizard.findChildren(QCheckBox) == []
-        assert "解析度" in wizard.welcome_page.subTitle()
-        assert "切換" in wizard.welcome_page.subTitle()
+        assert "解析度" in wizard.monitor_page.subTitle()
+        assert "切換" in wizard.monitor_page.subTitle()
     finally:
         wizard.close()
 
@@ -57,7 +57,6 @@ def test_wizard_emits_quick_start_completion_without_writing_frames(
     wizard.show()
     qapp.processEvents()
     try:
-        wizard.next()
         QTest.mouseClick(wizard.monitor_page.test_button, Qt.MouseButton.LeftButton)
         assert capture_spy.count() == 1
         assert capture_spy.at(0)[0] == CaptureTestRequest("monitor-1")
@@ -65,9 +64,7 @@ def test_wizard_emits_quick_start_completion_without_writing_frames(
 
         wizard.set_capture_test_result("monitor-1", True, "辨識為聲骸強化")
         assert wizard.monitor_page.isComplete()
-        wizard.next()
-        assert wizard.currentPage() is wizard.summary_page
-        assert "左側螢幕" in wizard.summary_label.text()
+        assert wizard.currentPage() is wizard.monitor_page
 
         wizard.accept()
         assert completion_spy.count() == 1
@@ -147,3 +144,49 @@ def test_onboarding_request_rejects_unconfirmed_capture(tmp_path: Path) -> None:
             data_path=tmp_path.resolve(),
             capture_test_confirmed=False,
         )
+
+
+def test_defaults_follow_supported_primary_and_monitor_resolution(qtbot, tmp_path):
+    wizard = OnboardingWizard(
+        data_path=tmp_path,
+        monitors=(
+            MonitorChoice("monitor-1", "4K", 3840, 2160, True),
+            MonitorChoice("monitor-2", "1080p", 1920, 1080),
+            MonitorChoice("monitor-3", "1440p", 2560, 1440),
+        ),
+    )
+    qtbot.addWidget(wizard)
+    spy = QSignalSpy(wizard.capture_test_requested)
+    assert wizard.monitor_page.selected_identifier() == "monitor-2"
+    assert wizard.monitor_page.resolution_combo.currentData() == "1920x1080"
+    assert wizard.display_mode_combo.currentData() == "dual"
+    wizard.monitor_page.combo.setCurrentIndex(2)
+    assert wizard.monitor_page.resolution_combo.currentData() == "2560x1440"
+    assert not wizard.monitor_page.isComplete()
+    assert spy.count() == 0
+
+
+def test_single_screen_default_and_explicit_mode_survive_rediscovery(qtbot, tmp_path):
+    wizard = OnboardingWizard(data_path=tmp_path)
+    qtbot.addWidget(wizard)
+    choices = (MonitorChoice("monitor-2", "1080p", 1920, 1080, True),)
+    wizard.set_monitors(choices)
+    assert wizard.display_mode_combo.currentData() == "single"
+    assert wizard.monitor_page.resolution_combo.currentData() == "1920x1080"
+    wizard.display_mode_combo.setCurrentIndex(wizard.display_mode_combo.findData("dual"))
+    wizard.set_monitors(choices)
+    assert wizard.display_mode_combo.currentData() == "dual"
+    assert not wizard.monitor_page.isComplete()
+
+
+def test_primary_supported_screen_is_preferred(qtbot, tmp_path):
+    wizard = OnboardingWizard(
+        data_path=tmp_path,
+        monitors=(
+            MonitorChoice("monitor-1", "left", 2560, 1440),
+            MonitorChoice("monitor-2", "primary", 1920, 1080, True),
+        ),
+    )
+    qtbot.addWidget(wizard)
+    assert wizard.monitor_page.selected_identifier() == "monitor-2"
+    assert wizard.monitor_page.resolution_combo.currentData() == "1920x1080"

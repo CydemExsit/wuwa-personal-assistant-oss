@@ -28,8 +28,8 @@ into `_internal/legal/`. Do not remove these notices when sharing the package.
 
 ## Corresponding source access
 
-Download `ThirdPartySources-1.1.1.zip` beside the Windows application at the
-[v1.1.1 release](https://github.com/CydemExsit/wuwa-personal-assistant-oss/releases/tag/v1.1.1).
+Download `ThirdPartySources-1.1.2.zip` beside the Windows application at the
+[v1.1.2 release](https://github.com/CydemExsit/wuwa-personal-assistant-oss/releases/tag/v1.1.2).
 It contains complete upstream qtbase, qtsvg, qtimageformats, qttranslations and
 pyside-setup archives, including Shiboken, plus Shapely 2.2.0 and its bundled
 GEOS 3.14.1 and `SOURCE_MANIFEST.json`. Source
@@ -70,7 +70,7 @@ with modified libraries.
    URLs or installation paths. `LICENSE_MANIFEST.json` records their hashes.
 4. Build the app; independently audit source/resources/native DLLs/legal files and
    OCR model hashes, then run offline OCR and isolated startup smoke tests.
-5. Publish the Windows ZIP, corresponding-source ZIP and their checksums together.
+5. Publish the Windows installer, portable ZIP, corresponding-source ZIP and their checksums together.
    Keep the source archive available alongside the matching binary release.
 
 Installation/build-time dependency downloads and optional public-announcement

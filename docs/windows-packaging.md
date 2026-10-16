@@ -1,81 +1,42 @@
-> 此獨立版本使用 `%LOCALAPPDATA%\WuwaDisplayAssistant`，與原版資料隔離。參閱 [雙模式版](display-edition.md)。
+# Windows 安裝與開發封裝
 
-# Windows 開發與封裝
+一般使用者請使用 README 的 **Setup.exe 安裝檔**，不需要開發環境。
+完整建置腳本在 one-folder 程式通過稽核、啟動與離線 OCR 後，另產出：
 
-本專案以 Windows 10、64 位元 Python 3.12 與 one-folder PyInstaller 輸出為 V1 基準。封裝流程只使用安裝在本機虛擬環境內的套件與 RapidOCR 模型，不會在建置或首次啟動時下載 OCR 模型。
+- `*-1.1.2-Setup.exe`：預設的一般安裝版，使用者目錄、桌面／開始捷徑、Windows 解除安裝。
+- `*-1.1.2-windows-x64.zip`：免安裝替代方案，完整解壓並保留 `_internal`。
+- `SHA256SUMS.txt`、`VerificationReports-1.1.2.zip`；OSS 另提供對應的第三方來源。
 
-## 開發環境
+安裝器採 Inno Setup，`PrivilegesRequired=lowest`，不要求管理員權限；程式安裝在
+`%LOCALAPPDATA%\Programs`，與既有 `%LOCALAPPDATA%\WuwaDisplayAssistant` 資料分開。
+兩版安裝識別、資料夾與捷徑各自獨立，應用資料位置沿用舊版。關閉工具後執行新版安裝檔即可更新。
+解除安裝移除程式與捷徑，保留角色／歷史／設定／備份。不自動設定開機啟動。
 
-從一般 PowerShell 執行，不需要系統管理員權限：
+建置使用已安裝的 Inno Setup 6 或 7（可設定 `ISCC_EXE`）；GitHub Windows CI 已提供。
+這是開發／CI 依賴，一般使用者與首次啟動均不需下載工具或模型。
+本機只驗證 one-folder 時可指定 `-SkipDistribution`；正式交付須由 CI 完成安裝檔驗證。
+`scripts/verify-installer.ps1` 以隔離含中文空格路徑測試安裝、全檔雜湊、開始捷徑、
+已安裝程式啟動／離線 OCR、重裝、解除安裝及資料保留。若發現已正式安裝同版，拒絕覆寫它做測試。
+CI 保留安裝與封裝報告，以及可直接放進 Release 的安裝檔與免安裝 ZIP。
+
+## 開發環境與品質關卡
 
 ```powershell
-cd wuwa-personal-assistant-oss
 .\scripts\setup.ps1
-.\scripts\run.ps1
-```
-
-`setup.ps1` 明確使用 `py.exe -3.12` 建立 `.venv`，並以 editable mode 安裝應用程式、測試及封裝相依套件。若 Python Launcher 找不到 Python 3.12，腳本會停止並顯示錯誤，不會退回其他 Python 版本。
-
-若只想驗證啟動與全新本機資料庫，可使用隔離資料目錄：
-
-```powershell
-.\scripts\run.ps1 -SmokeTest -DataRoot "$env:TEMP\WuwaAssistantManualSmoke"
-```
-
-正式執行未指定 `-DataRoot` 時，使用者資料仍放在 `%LOCALAPPDATA%\WuwaDisplayAssistant\`，不會寫入 repository。
-
-## 完整品質檢查
-
-```powershell
 .\scripts\test.ps1
+.\scripts\build.ps1 -SkipQualityChecks -OutputDirectory dist/releases/1.1.2
 ```
 
-此腳本依序執行 pytest、Ruff lint、Ruff format check、mypy、`pip check`、永久安全邊界掃描及 `git diff --check`。Qt 測試固定使用 offscreen platform。腳本不會格式化或修改原始碼。
+需要 Windows x64、Python 3.12 與 Python Launcher。`test.ps1` 包含 pytest、Ruff、格式、
+mypy、依賴與安全檢查。正式交付必須完成完整品質關卡，`-SkipQualityChecks` 僅用於同次已檢查後的建置。
+原始碼可用 `.\scripts\run.ps1` 執行。封裝會檢查本機 OCR 模型、Qt platform、資料與遷移，
+暫時隔離建置 PATH 避免其他軟體的同名 DLL 混入；不修改全機 PATH。
 
-## 建立 Windows one-folder 版本
+## 首次使用與限制
 
-```powershell
-.\scripts\build.ps1
-```
-
-預設會先執行完整品質檢查，再使用 `packaging/WuwaDisplayAssistant.spec` 建立：
-
-```text
-dist/WuwaDisplayAssistant/
-  WuwaDisplayAssistant.exe
-  _internal/
-```
-
-若同一次工作流程已經完成完整檢查，可明確使用 `-SkipQualityChecks`，但正式交付前仍應至少執行一次 `scripts/test.ps1`。
-
-封裝規格與 build 腳本會驗證下列資產：
-
-- RapidOCR wheel 內既有的三個 ONNX 模型與 YAML 設定。
-- Qt Windows platform plugin `qwindows.dll`；PySide6 的標準 PyInstaller hook 負責收集 Qt runtime 與 plugins。
-- Alembic migration Python 檔案。
-- 版本化 Roll、評分模板與強化決策政策 JSON。
-- 應用程式深色主題 QSS。
-- 八名角色的本機頭像與來源／雜湊 manifest；未知角色使用文字頭像，不會在執行時下載。
-- `tzdata` 的 IANA 時區資料。
-
-缺少任一 OCR 模型時，建置會立即失敗並列出缺少的本機路徑。流程沒有模型下載 fallback。輸出完成後，腳本以隱藏、offscreen 模式執行 `WuwaDisplayAssistant.exe --smoke-test`，資料寫到唯一的暫存目錄，驗證後才安全刪除該目錄。
-
-建置腳本會暫時將 PyInstaller 的 `PATH` 限制為本專案 Python 環境、其基底 Python 與
-Windows 系統目錄，完成或失敗後都還原原本設定。這可避免其他工具的同名 DLL 被誤收進
-封裝。例如 Poppler 的 `icuuc.dll` 缺少 Qt 使用的 Windows ICU 函式，會造成
-`DLL load failed while importing QtCore`。不需修改全機 PATH 或另行下載 DLL；請透過
-`scripts/build.ps1` 重建完整目錄。封裝的 OCR 自我檢查及啟動測試會在還原 PATH 後執行。
-
-## 發佈與已知限制
-
-- V1 是可直接複製的 one-folder 版本，不是單一 EXE；`_internal` 不可移除。
-- 目前沒有程式碼簽章。Windows SmartScreen 可能對未簽章的私人應用程式顯示提示。
-- 不要只複製 EXE；應壓縮並傳遞整個 `dist/WuwaDisplayAssistant` 目錄。
-- 應在乾淨的 Windows 10 非開發機器上再做一次啟動、資料保存及被動顯示器 capture 驗收。
-- 後續 installer 建議使用 Inno Setup 或 WiX，安裝範圍採 per-user，資料仍保留在 `%LOCALAPPDATA%`。installer 不應內嵌管理員權限、自動啟動遊戲、輸入模擬或附掛遊戲的功能。
-
-## 使用中的舊版與新版分開輸出
-
-舊版仍開著時，可用 `scripts/build.ps1 -OutputDirectory dist/releases/1.1.0` 輸出到獨立資料夾。
-輸出路徑限制在 repository 的 `dist` 下，完整執行相同的資產、OCR 和啟動驗證。
-此雙模式版使用獨立資料根目錄，不會自動讀寫原版資料。要沿用原版紀錄，先從原版匯出備份，再到此版本預覽並匯入。此獨立版本後續更新則沿用 `WuwaDisplayAssistant` 內的資料。
+快速開始只有一頁，自動建議模式／支援解析度與主要支援螢幕；多螢幕時仍需確認遊戲實際所在位置。
+不以螢幕數量推測遊戲位置，也不擷取畫面直到明確按下測試。測試成功後才能完成設定；
+黑畫面、不支援尺寸、缺模型與過時結果均有保護。模式可在設定修改，舊有設定無需重做。
+Windows 10 2004+／11 x64；遊戲繁中、1080p 或 1440p 無邊框滿螢幕。
+未簽章可能顯示 SmartScreen 提示；不要停用防毒或系統安全功能。
+本機與 CI 隔離測試並不等於已在所有乾淨 Windows 實體機或實際遊戲配置驗證。

@@ -8,11 +8,16 @@ from pathlib import Path
 
 from PySide6.QtCore import Signal, Slot
 from PySide6.QtWidgets import (
+    QComboBox as MonitorComboBox,
+)
+from PySide6.QtWidgets import (
     QFormLayout,
-    QFrame,
     QHBoxLayout,
     QLabel,
+    QLayout,
     QPushButton,
+    QScrollArea,
+    QSizePolicy,
     QVBoxLayout,
     QWidget,
     QWizard,
@@ -33,6 +38,9 @@ from wuwa_assistant.ui.widgets.choice_selector import ChoiceSelector as QComboBo
 class MonitorChoice:
     identifier: str
     label: str
+    width: int = 0
+    height: int = 0
+    is_primary: bool = False
 
     def __post_init__(self) -> None:
         if not self.identifier.strip() or not self.label.strip():
@@ -103,7 +111,11 @@ class _MonitorPage(QWizardPage):
         self.setTitle("選擇遊戲所在螢幕")
         self.setSubTitle("請依照左側/右側與「主要螢幕」標示選擇; 測試不會保存畫面。")
 
-        self.combo = QComboBox()
+        self.combo = MonitorComboBox()
+        self.combo.setMinimumContentsLength(18)
+        self.combo.setSizeAdjustPolicy(
+            MonitorComboBox.SizeAdjustPolicy.AdjustToMinimumContentsLengthWithIcon
+        )
         self.combo.setObjectName("OnboardingMonitorCombo")
         self.resolution_combo = QComboBox()
         self.resolution_combo.setObjectName("OnboardingResolutionCombo")
@@ -118,11 +130,9 @@ class _MonitorPage(QWizardPage):
         self.status_label.setObjectName("OnboardingCaptureStatus")
         self.status_label.setWordWrap(True)
         self.status_label.setMinimumHeight(54)
+        self.status_label.setSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Minimum)
 
-        hint = QLabel(
-            "測試只會在記憶體中讀取固定的小範圍, 辨識目前是哪種聲骸頁面; "
-            "完整畫面會立即釋放, 不會寫入硬碟。"
-        )
+        hint = QLabel("測試只讀取記憶體中的聲骸區域, 不儲存畫面。")
         hint.setObjectName("PageDescription")
         hint.setWordWrap(True)
 
@@ -149,6 +159,7 @@ class _MonitorPage(QWizardPage):
         self.set_choices(choices)
 
     def set_choices(self, choices: Sequence[MonitorChoice]) -> None:
+        self._choices = {choice.identifier: choice for choice in choices}
         selected = self.selected_identifier()
         self.combo.blockSignals(True)
         self.combo.clear()
@@ -161,6 +172,13 @@ class _MonitorPage(QWizardPage):
             index = self.combo.findData(selected)
             if index >= 0:
                 self.combo.setCurrentIndex(index)
+        if selected not in self._choices and choices:
+            supported = [
+                item for item in choices if (item.width, item.height) in RESOLUTIONS.values()
+            ]
+            preferred = next((item for item in supported if item.is_primary), None)
+            preferred = preferred or next(iter(supported), choices[0])
+            self.combo.setCurrentIndex(self.combo.findData(preferred.identifier))
         self.combo.blockSignals(False)
         self._selection_changed()
 
@@ -198,6 +216,13 @@ class _MonitorPage(QWizardPage):
 
     def _selection_changed(self, _index: int = -1) -> None:
         self._tested_identifier = None
+        choice = self._choices.get(self.selected_identifier())
+        if choice and self.sender() is not self.resolution_combo:
+            resolution = f"{choice.width}x{choice.height}"
+            if resolution in RESOLUTIONS:
+                self.resolution_combo.blockSignals(True)
+                self.resolution_combo.setCurrentIndex(self.resolution_combo.findData(resolution))
+                self.resolution_combo.blockSignals(False)
         self.status_label.setText("按下「測試這個螢幕」, 確認是否選到遊戲畫面。")
         self.status_label.setProperty("error", False)
         self.status_label.setProperty("captureTest", "idle")
@@ -240,88 +265,71 @@ class OnboardingWizard(QWizard):
         self.setObjectName("OnboardingWizard")
         self.setWindowTitle(f"{APP_TITLE} - 快速開始")
         self.setWizardStyle(QWizard.WizardStyle.ModernStyle)
-        self.setMinimumSize(720, 500)
-
-        self.welcome_page = QWizardPage()
-        self.welcome_page.setTitle("先讓聲骸辨識可以使用")
-        self.welcome_page.setSubTitle("選擇使用方式與遊戲解析度; 之後可隨時到設定切換。")
+        self.setMinimumSize(640, 480)
+        self.setOption(QWizard.WizardOption.NoBackButtonOnStartPage)
+        self._mode_chosen = False
+        self._mode_initialized = False
         self.display_mode_combo = QComboBox()
         self.display_mode_combo.setObjectName("OnboardingDisplayModeCombo")
         for key, label in DISPLAY_MODES.items():
             self.display_mode_combo.addItem(label, key)
-        welcome_text = QLabel(
-            "下一頁會列出你的螢幕。選擇遊戲所在的左側或右側螢幕, 再按一次測試即可進入工具。"
-        )
-        welcome_text.setWordWrap(True)
-
-        safety_card = QFrame()
-        safety_card.setObjectName("SafetyCard")
-        safety_layout = QVBoxLayout(safety_card)
-        safety_title = QLabel("安全邊界")
-        safety_title.setObjectName("SafetyTitle")
-        safety_text = QLabel(
-            "本工具只被動讀取畫面; 單螢幕模式使用獨立小面板顯示結果。\n"
-            "不操作遊戲、不讀取遊戲記憶體、不注入。\n"
-            "不模擬輸入、不上傳畫面、不錄影, 也不保存完整即時畫面。"
-        )
-        safety_text.setObjectName("OnboardingSafetyText")
-        safety_text.setWordWrap(True)
-        safety_layout.addWidget(safety_title)
-        safety_layout.addWidget(safety_text)
-
-        welcome_layout = QVBoxLayout(self.welcome_page)
-        welcome_layout.setSpacing(18)
-        welcome_layout.addWidget(welcome_text)
-        display_form = QFormLayout()
-        display_form.addRow("使用方式", self.display_mode_combo)
-        welcome_layout.addLayout(display_form)
-        welcome_layout.addWidget(safety_card)
-        welcome_layout.addStretch(1)
+        self.display_mode_combo.currentIndexChanged.connect(self._mode_changed)
 
         self.monitor_page = _MonitorPage(monitors)
-
-        self.summary_page = QWizardPage()
-        self.summary_page.setTitle("可以開始了")
-        self.summary_page.setSubTitle("完成後會進入總覽, 工具不會自動開始擷取。")
-        self.summary_label = QLabel()
-        self.summary_label.setObjectName("OnboardingSummary")
-        self.summary_label.setWordWrap(True)
+        self.monitor_page.setTitle("確認螢幕, 就能開始")
+        self.monitor_page.setSubTitle(
+            "已自動帶入建議設定; 可修改模式、螢幕與解析度。之後也能在設定切換。"
+        )
+        layout = self.monitor_page.layout()
+        assert isinstance(layout, QVBoxLayout)
+        mode_form = QFormLayout()
+        mode_form.addRow("使用方式", self.display_mode_combo)
+        layout.insertLayout(0, mode_form)
+        safety = QLabel(
+            "只被動讀取畫面, 不操作遊戲、不讀取遊戲記憶體、不上傳畫面。"
+            "單螢幕使用工具自己的獨立小面板。"
+        )
+        safety.setObjectName("OnboardingSafetyText")
+        safety.setWordWrap(True)
+        layout.addWidget(safety)
         self.completion_status_label = QLabel()
         self.completion_status_label.setObjectName("OnboardingCompletionStatus")
         self.completion_status_label.setWordWrap(True)
-        later_card = QFrame()
-        later_card.setObjectName("MetricCard")
-        later_layout = QVBoxLayout(later_card)
-        later_title = QLabel("稍後設定")
-        later_title.setObjectName("MetricTitle")
-        later_text = QLabel(
-            "角色、評分模板、示範資料、備份位置與線上公開資料都可進入工具後再處理。"
-        )
-        later_text.setWordWrap(True)
-        later_layout.addWidget(later_title)
-        later_layout.addWidget(later_text)
-        summary_layout = QVBoxLayout(self.summary_page)
-        summary_layout.setSpacing(18)
-        summary_layout.addWidget(self.summary_label)
-        summary_layout.addWidget(later_card)
-        summary_layout.addWidget(self.completion_status_label)
-        summary_layout.addStretch(1)
-
-        for page in (self.welcome_page, self.monitor_page, self.summary_page):
-            self.addPage(page)
-
+        layout.addWidget(self.completion_status_label)
+        # Keep wrapped errors readable at high DPI and on 1080p screens. The
+        # wizard's action buttons stay outside the scrollable content.
+        content = QWidget()
+        content.setLayout(layout)
+        layout.setSizeConstraint(QLayout.SizeConstraint.SetMinimumSize)
+        scroll = QScrollArea()
+        scroll.setObjectName("OnboardingScrollArea")
+        scroll.setWidgetResizable(True)
+        scroll.setWidget(content)
+        page_layout = QVBoxLayout(self.monitor_page)
+        page_layout.setContentsMargins(0, 0, 0, 0)
+        page_layout.addWidget(scroll)
+        self.addPage(self.monitor_page)
         self.monitor_page.test_requested.connect(self.capture_test_requested.emit)
-        self.currentIdChanged.connect(lambda _page_id: self._update_summary())
-        self.setButtonText(QWizard.WizardButton.BackButton, "上一步")
-        self.setButtonText(QWizard.WizardButton.NextButton, "下一步")
         self.setButtonText(QWizard.WizardButton.FinishButton, "進入工具")
-        self.setButtonText(QWizard.WizardButton.CancelButton, "取消")
-        self.button(QWizard.WizardButton.NextButton).setProperty("role", "primary")
+        self.setButtonText(QWizard.WizardButton.CancelButton, "稍後再開")
         self.button(QWizard.WizardButton.FinishButton).setProperty("role", "primary")
-        self._update_summary()
+        self._set_default_mode(monitors)
+
+    def _mode_changed(self, _index: int) -> None:
+        self._mode_chosen = True
+
+    def _set_default_mode(self, choices: Sequence[MonitorChoice]) -> None:
+        if choices and not self._mode_chosen and not self._mode_initialized:
+            self.display_mode_combo.blockSignals(True)
+            self.display_mode_combo.setCurrentIndex(
+                self.display_mode_combo.findData("single" if len(choices) == 1 else "dual")
+            )
+            self.display_mode_combo.blockSignals(False)
+            self._mode_initialized = True
 
     def set_monitors(self, choices: Sequence[MonitorChoice]) -> None:
         self.monitor_page.set_choices(choices)
+        self._set_default_mode(choices)
 
     @Slot(str)
     def set_monitor_discovery_error(self, message: str) -> None:
@@ -337,7 +345,6 @@ class OnboardingWizard(QWizard):
     ) -> None:
         self.monitor_page.set_test_result(monitor_identifier, success, message, resolution)
         self.monitor_page.test_button.setEnabled(bool(self.monitor_page.selected_identifier()))
-        self._update_summary()
 
     def request(self) -> OnboardingRequest:
         return OnboardingRequest(
@@ -374,15 +381,6 @@ class OnboardingWizard(QWizard):
         self.completion_status_label.setText(message)
         self.completion_status_label.setProperty("error", True)
         self.button(QWizard.WizardButton.FinishButton).setEnabled(True)
-
-    def _update_summary(self) -> None:
-        monitor = self.monitor_page.combo.currentText() or "尚未選擇"
-        self.summary_label.setText(
-            f"遊戲螢幕: {monitor}\n\n"
-            f"使用方式: {self.display_mode_combo.currentText()}\n"
-            f"解析度: {self.monitor_page.resolution_combo.currentText()}\n\n"
-            "進入後請前往「聲骸強化」, 遊戲切到聲骸強化頁, 再手動按下「開始辨識」。"
-        )
 
 
 def _repolish(widget: QWidget) -> None:

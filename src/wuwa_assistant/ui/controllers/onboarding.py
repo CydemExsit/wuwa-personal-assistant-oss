@@ -297,6 +297,9 @@ def _monitor_choices(monitors: Sequence[MonitorInfo]) -> tuple[MonitorChoice, ..
                     f"{position_label}螢幕 (Windows 顯示器 {monitor.index}){primary} · "
                     f"{monitor.width}x{monitor.height}{compatibility}"
                 ),
+                width=monitor.width,
+                height=monitor.height,
+                is_primary=monitor.is_primary,
             )
         )
     return tuple(choices)

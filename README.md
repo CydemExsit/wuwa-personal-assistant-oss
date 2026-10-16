@@ -24,26 +24,26 @@
 
 ## 安裝與第一次使用
 
-一般使用者到 [Releases](https://github.com/CydemExsit/wuwa-personal-assistant-oss/releases)
-下載 Windows ZIP，**完整解壓**，保留 EXE 同層 `_internal`，執行 `WuwaDisplayAssistant.exe`。
-首個 OSS 版本為 **1.1.1**。封裝目前未簽章；請核對同一 release 的 SHA-256。
+**一般使用者：[下載 Windows 安裝檔（1.1.2）](https://github.com/CydemExsit/wuwa-personal-assistant-oss/releases/download/v1.1.2/WuwaPersonalAssistant-OSS-1.1.2-Setup.exe)** · [其他下載與免安裝 ZIP](https://github.com/CydemExsit/wuwa-personal-assistant-oss/releases/latest)
 
-從原始碼執行需要 Git、Python 3.12 與 Windows Python Launcher：
+1. 下載檔名結尾為 `-Setup.exe` 的安裝檔，雙擊後按「安裝」。
+2. 安裝完成開啟程式，之後使用桌面或開始功能表的「鳴潮本機助手 OSS」捷徑。
+3. 快速開始只有一頁：已依螢幕配置預選模式、遊戲螢幕與支援解析度；確認遊戲所在螢幕，按「測試這個螢幕」再「進入工具」。
+4. 遊戲使用繁中、無邊框並填滿所選螢幕，開啟聲骸選擇清單；在「聲骸強化」按「啟動小面板」或「開始辨識」。
 
-```powershell
-git clone https://github.com/CydemExsit/wuwa-personal-assistant-oss.git
-cd wuwa-personal-assistant-oss
-.\scripts\setup.ps1
-.\scripts\run.ps1
-```
+安裝不需要 Python、Git、PowerShell 指令或管理員權限；OCR 模型已包含，首次啟動不另行下載。
+角色與評分模板可以稍後設定。單螢幕小面板按住 Ctrl+Shift 拖曳，回工具按「結束小面板」停止。
+模式、螢幕與解析度可隨時在設定修改；擷取只會在你明確按下測試或開始後執行。
 
-安裝會下載鎖定依賴並檢查雜湊。若 PowerShell 原則阻擋腳本，依你管理的 Windows
-環境允許受信任的本機腳本即可，不需要更改全機設定。
+更新時關閉工具，再執行新版安裝檔即可。可由 Windows「已安裝的應用程式」解除安裝；
+更新與解除安裝均保留 `%LOCALAPPDATA%\WuwaDisplayAssistant` 的角色、歷史、設定與備份。
+兩個版本使用不同安裝目錄與捷徑，但沿用原本相同的本機資料位置；使用其中一版前先關閉另一版。
+免安裝 ZIP 仍可使用：完整解壓後執行 `WuwaDisplayAssistant.exe`，保留 `_internal`。
+`ThirdPartySources`、`VerificationReports` 與 GitHub 的 `Source code` 是來源／驗證資料，一般使用者只需安裝檔。
 
-首次啟動選單／雙螢幕、遊戲顯示器與解析度，完成擷取測試。單螢幕按「啟動小面板」，
-回遊戲查看結果；按住 Ctrl+Shift 拖曳，放開後穿透點擊。回工具按「結束小面板」停止。
-面板不因離開聲骸頁自動消失，舊結果會清楚標示；資料不足時回工具「修正 OCR」。
-詳見 [雙模式說明](docs/display-edition.md)。
+封裝目前未簽章，Windows 可能顯示 SmartScreen 提示；請確認檔案來自本專案正式 Release，
+不要停用防毒或 Windows 安全功能。同版 SHA-256 列於 `SHA256SUMS.txt`。
+不支援的解析度或黑畫面會說明原因，不會猜測設定或自動更改 Windows／遊戲。
 
 ## 隱私、安全與限制
 
@@ -62,7 +62,7 @@ cd wuwa-personal-assistant-oss
 
 ```powershell
 .\scripts\test.ps1
-.\scripts\build.ps1 -SkipQualityChecks -OutputDirectory dist/releases/1.1.1
+.\scripts\build.ps1 -SkipQualityChecks -OutputDirectory dist/releases/1.1.2
 ```
 
 品質關卡包含完整測試、Ruff、格式、mypy、依賴與安全檢查。CI 另檢查可公開檔案、

@@ -1,6 +1,7 @@
 [CmdletBinding()]
 param(
     [switch]$SkipQualityChecks,
+    [switch]$SkipDistribution,
     [string]$OutputDirectory = "dist"
 )
 
@@ -151,6 +152,10 @@ try {
         startup = "passed (isolated temporary data root, capture disabled)"
         source_and_resource_audit = "passed"
     } | ConvertTo-Json | Set-Content -LiteralPath (Join-Path $reportRoot "package-validation.json") -Encoding UTF8
+    if (-not $SkipDistribution) {
+        & (Join-Path $PSScriptRoot "build-installer.ps1") -OutputDirectory $outputRoot
+        if (-not $?) { throw "Installer and portable distribution failed." }
+    }
     Write-Host "Windows one-folder build ready at $distRoot; verification reports at $reportRoot"
 }
 finally {

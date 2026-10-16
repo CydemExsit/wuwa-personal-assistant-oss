@@ -84,6 +84,16 @@ def main() -> None:
         json.dumps(manifest, indent=2) + "\n", encoding="utf-8"
     )
     args.output_directory.mkdir(parents=True, exist_ok=True)
+    for sdist in payload.get("sdists", []):
+        archive = cache / sdist["filename"]
+        if not archive.is_file():
+            with urlopen(sdist["url"], timeout=120) as response, archive.open("wb") as stream:
+                shutil.copyfileobj(response, stream)
+        with archive.open("rb") as stream:
+            digest = hashlib.file_digest(stream, "sha256").hexdigest()
+        if digest != sdist["sha256"]:
+            raise SystemExit("Upstream sdist checksum mismatch")
+        shutil.copy2(archive, args.output_directory / archive.name)
     destination = args.output_directory / payload["source_bundle"]
     with zipfile.ZipFile(destination, "w", compression=zipfile.ZIP_STORED) as bundle:
         for archive in archives:
