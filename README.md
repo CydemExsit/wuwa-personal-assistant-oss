@@ -24,7 +24,7 @@
 
 ## 安裝與第一次使用
 
-**一般使用者：[下載 Windows 安裝檔（1.1.2）](https://github.com/CydemExsit/wuwa-personal-assistant-oss/releases/download/v1.1.2/WuwaPersonalAssistant-OSS-1.1.2-Setup.exe)** · [其他下載與免安裝 ZIP](https://github.com/CydemExsit/wuwa-personal-assistant-oss/releases/latest)
+**一般使用者：[下載 Windows 安裝檔（1.1.2）](https://github.com/CydemExsit/wuwa-personal-assistant-oss/releases/download/v1.1.4/WuwaPersonalAssistant-OSS-1.1.4-Setup.exe)** · [其他下載與免安裝 ZIP](https://github.com/CydemExsit/wuwa-personal-assistant-oss/releases/latest)
 
 1. 下載檔名結尾為 `-Setup.exe` 的安裝檔，雙擊後按「安裝」。
 2. 安裝完成開啟程式，之後使用桌面或開始功能表的「鳴潮本機助手 OSS」捷徑。
@@ -35,7 +35,12 @@
 角色與評分模板可以稍後設定。單螢幕小面板按住 Ctrl+Shift 拖曳，回工具按「結束小面板」停止。
 模式、螢幕與解析度可隨時在設定修改；擷取只會在你明確按下測試或開始後執行。
 
-更新時關閉工具，再執行新版安裝檔即可。可由 Windows「已安裝的應用程式」解除安裝；
+更新：工具開啟時會檢查正式新版，僅在工具內提示；也可到「設定 → 一般設定 → 程式更新」按「檢查新版」。
+按「下載新版」後會比對正式 Release 的 SHA-256，完成後按「安裝並重新開啟」。
+可關閉啟動檢查；不會自動下載或安裝，不會在工具關閉後執行。離線時仍能使用原版，也可選取收到的新版安裝檔。
+更新會先停止辨識、完成已提交的保存、關閉資料庫，再安裝並重新開啟；安裝期間請勿關機。
+安裝版沿用原位置；ZIP 版使用工具內更新時會轉為目前使用者的安裝版，資料位置不變。
+尚未儲存的表單請先自行儲存。首次改用這個更新入口，需先安裝 1.1.4 或更新版本。可由 Windows「已安裝的應用程式」解除安裝；
 更新與解除安裝均保留 `%LOCALAPPDATA%\WuwaDisplayAssistant` 的角色、歷史、設定與備份。
 兩個版本使用不同安裝目錄與捷徑，但沿用原本相同的本機資料位置；使用其中一版前先關閉另一版。
 免安裝 ZIP 仍可使用：完整解壓後執行 `WuwaDisplayAssistant.exe`，保留 `_internal`。

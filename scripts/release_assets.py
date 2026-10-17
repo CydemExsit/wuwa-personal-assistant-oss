@@ -25,7 +25,12 @@ def main() -> None:
     installer = output / f"{edition['asset']}-{version}-Setup.exe"
     if not installer.is_file():
         raise FileNotFoundError("Verified installer missing")
-    for report in ("package-audit.json", "package-validation.json", "installer-validation.json"):
+    for report in (
+        "package-audit.json",
+        "package-validation.json",
+        "installer-validation.json",
+        "update-validation.json",
+    ):
         payload = json.loads((output / "reports" / report).read_text(encoding="utf-8-sig"))
         if payload.get("errors") or ("status" in payload and payload["status"] != "passed"):
             raise ValueError(f"Verification failed: {report}")

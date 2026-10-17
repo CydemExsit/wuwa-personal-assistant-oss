@@ -1,7 +1,8 @@
 [CmdletBinding()]
 param(
     [Parameter(Mandatory = $true)][string]$Installer,
-    [Parameter(Mandatory = $true)][string]$PackageRoot
+    [Parameter(Mandatory = $true)][string]$PackageRoot,
+    [string]$PreviousInstaller = ""
 )
 
 Set-StrictMode -Version Latest
@@ -67,6 +68,12 @@ try {
     $reinstalled = @(Get-ChildItem -LiteralPath $dataRoot -Recurse -File | Get-FileHash | Select-Object Path,Hash)
     if ((ConvertTo-Json $before -Compress) -ne (ConvertTo-Json $reinstalled -Compress)) { throw "Reinstall changed application data." }
     Run-Checked $desktopLink @("--smoke-test", "--data-root", "`"$dataRoot`"")
+    if ($PreviousInstaller) {
+        Run-Checked $PreviousInstaller $installArgs
+        Run-Checked $exe @("--smoke-test", "--data-root", "`"$dataRoot`"")
+    }
+    & $python (Join-Path $PSScriptRoot "verify_update.py") --installer $Installer --installed-executable $exe --data-root $dataRoot
+    if ($LASTEXITCODE -ne 0) { throw "Real update/reopen verification failed." }
     # Snapshot after the application has closed; uninstall alone must change nothing.
     $before = @(Get-ChildItem -LiteralPath $dataRoot -Recurse -File | Get-FileHash | Select-Object Path,Hash)
     Run-Checked $uninstaller @("/VERYSILENT", "/SUPPRESSMSGBOXES", "/NORESTART")

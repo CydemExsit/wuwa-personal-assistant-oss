@@ -519,6 +519,9 @@ def main(argv: list[str] | None = None) -> int:
     database: Database | None = None
     window: MainWindow | None = None
     logger: logging.Logger | None = None
+    from wuwa_assistant.ui.controllers.software_update import SoftwareUpdatePresenter
+
+    software_update: SoftwareUpdatePresenter | None = None
     try:
         paths = _paths(args.data_root)
         logger = configure_local_logging(paths.logs_dir, app_version=__version__)
@@ -554,6 +557,20 @@ def main(argv: list[str] | None = None) -> int:
             return 0
 
         window.show()
+        software_update = SoftwareUpdatePresenter(
+            window.settings_page.software_update,
+            window,
+            DatabaseSettingsStore(database.settings),
+            paths.root / "cache" / "software-updates",
+        )
+        software_update.available.connect(
+            lambda version: window.statusBar().showMessage(
+                f"有新版 {version}, 可到「設定 → 程式更新」下載。"
+            )
+        )
+        window.register_shutdown(
+            software_update.finish_shutdown, prepare=software_update.prepare_shutdown
+        )
         return application.exec()
     except StorageError as exc:
         if logger is not None:
@@ -569,6 +586,18 @@ def main(argv: list[str] | None = None) -> int:
                 window.deleteLater()
             if database is not None:
                 database.dispose()
+            if software_update is not None and software_update.pending is not None:
+                from wuwa_assistant.updates import UpdateError, launch_installer
+
+                try:
+                    launch_installer(software_update.pending, paths.root)
+                except (UpdateError, OSError):
+                    QMessageBox.warning(
+                        None,
+                        "更新尚未安裝",
+                        "無法啟動更新, 原版本與資料都已保留。"
+                        "請重新開啟工具後重試, 或直接執行收到的安裝檔。",
+                    )
         elif logger is not None:
             logger.error("shutdown_incomplete resources_retained=true")
         if logger is not None:

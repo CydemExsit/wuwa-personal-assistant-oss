@@ -34,6 +34,7 @@ from wuwa_assistant.display import (
     RESOLUTIONS,
 )
 from wuwa_assistant.ui.widgets.choice_selector import ChoiceSelector as QComboBox
+from wuwa_assistant.ui.widgets.software_update import SoftwareUpdatePanel
 
 from ..settings_store import (
     SettingsStore,
@@ -298,6 +299,8 @@ class SettingsPage(QWidget):
         content_layout = QVBoxLayout(content)
         content_layout.setContentsMargins(0, 0, 12, 0)
         content_layout.setSpacing(16)
+        self.software_update = SoftwareUpdatePanel()
+        content_layout.addWidget(self.software_update)
         content_layout.addWidget(capture_group)
         content_layout.addWidget(ocr_group)
         content_layout.addWidget(scoring_group)
