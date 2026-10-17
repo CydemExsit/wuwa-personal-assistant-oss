@@ -125,7 +125,7 @@ class SoftwareUpdatePresenter(QObject):
         elif isinstance(result, PreparedUpdate):
             self.prepared = result
             self.panel.status.setText(
-                f"新版 {result.version} 已準備好。安裝時會先保存並關閉工具, 完成後重新開啟。"
+                f"新版 {result.version} 已準備好。請先儲存編輯中的表單, 再安裝並重新開啟。"
             )
             self.panel.install.show()
         else:
@@ -145,7 +145,8 @@ class SoftwareUpdatePresenter(QObject):
         answer = QMessageBox.question(
             self.window,
             "安裝新版",
-            warning + "現在保存並關閉工具、安裝新版後重新開啟?\n角色、歷史、設定與備份都會保留。",
+            warning + "請先儲存編輯中的表單。\n現在安裝並重新開啟?\n"
+            "已儲存的角色、歷史、設定與備份都會保留。",
             QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No,
             QMessageBox.StandardButton.Yes,
         )
