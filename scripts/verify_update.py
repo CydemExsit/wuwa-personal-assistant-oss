@@ -98,6 +98,9 @@ while not Path(sys.argv[1]).exists(): time.sleep(0.05)
         assert not connection.execute("PRAGMA foreign_key_check").fetchall()
     assert logical_snapshot(db) == before, "Update/reopen changed logical user data"
     assert backup.read_text("utf-8") == '{"synthetic_backup":"preserve"}'
+    # Old installations can contain an older OCR runtime. Exercise the updated
+    # models/runtime after replacement as well as on a clean installation.
+    subprocess.run([str(args.installed_executable), "--ocr-self-test"], check=True, timeout=120)
     report = {
         "status": "passed",
         "parent_exit_wait": "passed",
@@ -108,6 +111,7 @@ while not Path(sys.argv[1]).exists(): time.sleep(0.05)
         "synthetic_characters": 2,
         "synthetic_teams": 1,
         "backup_preserved": "passed",
+        "updated_offline_ocr": "passed",
     }
     output = args.installer.parent / "reports" / "update-validation.json"
     output.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
