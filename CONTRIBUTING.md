@@ -6,10 +6,19 @@ product-policy changes first. We do not claim external adoption.
 
 ## Set up and verify — Windows x64 / Python3.12
 
+Clone this public repository to set up a development environment:
+
 ```powershell
+git clone https://github.com/CydemExsit/wuwa-personal-assistant-oss.git
+cd wuwa-personal-assistant-oss
 .\scripts\setup.ps1
+.\scripts\run.ps1
 .\scripts\test.ps1
 ```
+
+See the [documentation index](docs/README.md) for usage, design and release documents.
+For ordinary problems and proposals, use the [issue forms](https://github.com/CydemExsit/wuwa-personal-assistant-oss/issues/new/choose).
+Read [SECURITY.md](SECURITY.md) before reporting security or privacy issues.
 
 `requirements/windows-py312.lock` pins the tested dev+packaging profile with PyPI
 SHA-256 values. Setup installs it, then installs the editable project without

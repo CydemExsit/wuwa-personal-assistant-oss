@@ -1,11 +1,13 @@
 # Windows 安裝與開發封裝
 
+[文件索引](README.md) · [下載與安裝](../README.md#下載與安裝)
+
 一般使用者請使用 README 的 **Setup.exe 安裝檔**，不需要開發環境。
 完整建置腳本在 one-folder 程式通過稽核、啟動與離線 OCR 後，另產出：
 
-- `*-1.1.2-Setup.exe`：預設的一般安裝版，使用者目錄、桌面／開始捷徑、Windows 解除安裝。
-- `*-1.1.2-windows-x64.zip`：免安裝替代方案，完整解壓並保留 `_internal`。
-- `SHA256SUMS.txt`、`VerificationReports-1.1.2.zip`；OSS 另提供對應的第三方來源。
+- `*-X.Y.Z-Setup.exe`：預設的一般安裝版，使用者目錄、桌面／開始捷徑、Windows 解除安裝。
+- `*-X.Y.Z-windows-x64.zip`：免安裝替代方案，完整解壓並保留 `_internal`。
+- `SHA256SUMS.txt`、`VerificationReports-X.Y.Z.zip`；OSS 另提供對應的第三方來源，來源包依其依賴版本命名，不必與應用版本相同。
 
 安裝器採 Inno Setup，`PrivilegesRequired=lowest`，不要求管理員權限；程式安裝在
 `%LOCALAPPDATA%\Programs`，與既有 `%LOCALAPPDATA%\WuwaDisplayAssistant` 資料分開。
@@ -24,7 +26,7 @@ CI 保留安裝與封裝報告，以及可直接放進 Release 的安裝檔與�
 ```powershell
 .\scripts\setup.ps1
 .\scripts\test.ps1
-.\scripts\build.ps1 -SkipQualityChecks -OutputDirectory dist/releases/1.1.2
+.\scripts\build.ps1 -SkipQualityChecks -OutputDirectory dist/local-build
 ```
 
 需要 Windows x64、Python 3.12 與 Python Launcher。`test.ps1` 包含 pytest、Ruff、格式、

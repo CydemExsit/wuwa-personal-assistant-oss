@@ -1,8 +1,13 @@
 # 本機資料、備份與還原
 
-V1 的使用者資料只存放在使用者指定的本機根目錄；預設為
-`%LOCALAPPDATA%\WuwaPersonalAssistant\`。Repository、private screenshots 與
-`debug_output` 都不是正式資料位置。
+[文件索引](README.md) · [程式更新](updates.md)
+
+公開版的使用者資料只存放在本機資料根目錄；預設為
+`%LOCALAPPDATA%\WuwaDisplayAssistant\`，以 `--data-root` 啟動時則使用指定位置。
+Repository、私人截圖與 `debug_output` 都不是正式資料位置。
+原個人版的 `%LOCALAPPDATA%\WuwaPersonalAssistant` 不會自動讀寫；需要轉移時，請先匯出備份再預覽匯入。
+OSS 與 Display 版預設共用 `WuwaDisplayAssistant` 資料位置，開啟其中一版前請先關閉另一版。
+程式更新與解除安裝會保留使用者資料；重要資料仍建議定期另存備份。
 
 ## 備份與 JSON 匯出
 

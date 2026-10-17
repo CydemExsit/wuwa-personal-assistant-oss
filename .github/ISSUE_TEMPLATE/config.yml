@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: 使用說明與常見問題 / Documentation
+    url: https://github.com/CydemExsit/wuwa-personal-assistant-oss/blob/main/docs/README.md
+    about: 下載安裝、雙模式操作、更新、備份與常見問題。
+  - name: 安全與隱私回報 / Security policy
+    url: https://github.com/CydemExsit/wuwa-personal-assistant-oss/security/policy
+    about: 先閱讀安全回報方式，請勿在公開 Issue 貼出敏感內容。

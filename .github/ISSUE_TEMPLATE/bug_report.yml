@@ -1,31 +1,72 @@
-name: Bug report / 問題回報
-description: 回報可重現問題，請勿上傳私人資料
+name: 問題回報 / Bug report
+description: 回報安裝、辨識、評分或更新問題；請勿上傳私人資料
+title: "[Bug] "
 body:
   - type: markdown
     attributes:
-      value: "勿附私人截圖、資料庫、備份、完整日誌或 token。安全／隱私漏洞先讀 SECURITY.md。只貼手動遮蔽的必要文字。"
+      value: |
+        請先查看 [快速開始與常見問題](https://github.com/CydemExsit/wuwa-personal-assistant-oss#常見問題)。中文或英文皆可。
+        安全／隱私漏洞請依 [SECURITY.md](https://github.com/CydemExsit/wuwa-personal-assistant-oss/blob/main/SECURITY.md) 回報。
+        勿附私人截圖、OCR 原文、資料庫、備份、診斷包、完整日誌或 token，只貼手動遮蔽的必要文字。
   - type: input
     id: version
     attributes:
-      label: App version / commit
+      label: 工具版本／commit
+      description: 請填確切版本；從原始碼執行者請附 commit。
+      placeholder: "例如：1.1.4"
+    validations:
+      required: true
+  - type: dropdown
+    id: installation
+    attributes:
+      label: 使用方式
+      options:
+        - Setup.exe 安裝版
+        - ZIP 免安裝版
+        - 從原始碼執行
     validations:
       required: true
   - type: input
     id: environment
     attributes:
-      label: Windows、單／雙螢幕、遊戲解析度、Windows縮放比例
+      label: Windows 與顯示設定
+      description: Windows 版本、單／雙螢幕、遊戲解析度、Windows 縮放、遊戲語言與視窗模式。
+      placeholder: "例如：Windows 11、單螢幕、2560×1440、125%、繁中、無邊框滿螢幕"
     validations:
       required: true
   - type: textarea
     id: reproduce
     attributes:
-      label: 重現步驟、預期與實際結果
+      label: 重現步驟
+      description: 從哪個頁面開始、按了哪些按鈕，以及發生頻率。
+      placeholder: |
+        1. 開啟工具……
+        2. 按下……
+        3. 發生……
     validations:
       required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: 預期結果
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: 實際結果
+      description: 如有錯誤提示，只貼已手動遮蔽的必要文字；請移除帳號、角色資料及個人路徑。
+    validations:
+      required: true
+  - type: textarea
+    id: attempted
+    attributes:
+      label: 已嘗試的處理方式（選填）
+      description: 例如停止後重新測試螢幕、手動修正 OCR；更新問題可說明原版與目標版本。
   - type: checkboxes
     id: privacy
     attributes:
       label: 隱私檢查
       options:
-        - label: 已確認沒有個人資料、憑證、資料庫或私人畫面。
+        - label: 已確認內容與附件沒有私人畫面、OCR 原文、個人資料、憑證、資料庫、備份或完整日誌。
           required: true

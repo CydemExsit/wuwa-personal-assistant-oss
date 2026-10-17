@@ -1,5 +1,18 @@
 # Changelog
 
+## 1.1.4 — 工具內更新與資料保留 (2026-10-17)
+
+- 在設定提供正式新版檢查、下載進度、取消及 SHA-256 驗證；下載與安裝均需使用者操作。
+- 安裝前停止辨識、完成已接受的保存並安全關閉，更新後沿用資料位置重新開啟。
+- ZIP 版經工具內更新轉為使用者安裝版；編輯中的表單需先自行儲存。
+- 詳見[更新說明與驗證範圍](docs/release-1.1.4.md)、[程式更新](docs/updates.md)。
+
+## 1.1.3 — 本機 GPU OCR (2026-10-17，未獨立發布，納入 1.1.4)
+
+- Windows OCR 優先使用隨附 DirectML，裝置不可用時回退 CPU；不需 CUDA 或另下載模型。
+- 限制推論佇列與執行資源，對非聲骸畫面採用有界探測間隔。
+- 詳見[版本說明](docs/release-1.1.3.md)及[測量條件與限制](docs/gpu-ocr-performance.md)。
+
 ## 1.1.2 — Simple first installation (2026-10-16)
 
 - Add a per-user Setup.exe with shortcuts, update/uninstall and portable ZIP.

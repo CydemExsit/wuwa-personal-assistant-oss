@@ -1,12 +1,34 @@
-name: Feature request / 功能建議
-description: 說明使用情境與想解決的問題
+name: 功能建議 / Feature request
+description: 說明使用情境、目前做法與希望改善的結果
+title: "[Feature] "
 body:
+  - type: markdown
+    attributes:
+      value: |
+        中文或英文皆可。請先搜尋既有 Issues，看看是否已有相同建議。
+        工具維持本機與被動辨識；遊戲自動操作、注入、讀記憶體或畫面上傳等不在範圍內。勿附私人資料。
   - type: textarea
     id: need
     attributes:
-      label: 問題、目前做法與建議結果
+      label: 使用情境與問題
+      description: 在什麼情境下遇到困難？這件事對你的使用有什麼影響？
     validations:
       required: true
-  - type: markdown
+  - type: textarea
+    id: workaround
     attributes:
-      value: "遵守本機／被動界線；遊戲自動操作、注入、讀記憶體、畫面上傳等不在範圍內。勿附私人資料。"
+      label: 目前怎麼處理（選填）
+  - type: textarea
+    id: outcome
+    attributes:
+      label: 希望改善的結果
+      description: 描述你想完成的事與預期操作流程，不需要先決定技術實作。
+    validations:
+      required: true
+  - type: checkboxes
+    id: privacy
+    attributes:
+      label: 隱私檢查
+      options:
+        - label: 已確認內容與附件不含私人畫面、個人資料、資料庫或憑證。
+          required: true
