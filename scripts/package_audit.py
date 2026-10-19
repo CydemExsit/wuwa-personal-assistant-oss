@@ -28,6 +28,7 @@ REQUIRED_MODULES = {
     "wuwa_assistant.application.echo_history",
     "wuwa_assistant.application.equipment_overview",
     "wuwa_assistant.application.characters",
+    "wuwa_assistant.application.character_stats",
     "wuwa_assistant.ui.main_window",
     "wuwa_assistant.ui.controllers.echo_workspace",
     "wuwa_assistant.ocr.rapidocr_engine",

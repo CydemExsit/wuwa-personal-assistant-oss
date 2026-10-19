@@ -54,6 +54,7 @@ from PySide6.QtWidgets import (
     QWidget,
 )
 
+from wuwa_assistant.application.character_stats import CORE_STATS, STAT_LABELS, CharacterPanel
 from wuwa_assistant.scoring.character_guides import guide_for_character
 from wuwa_assistant.ui.character_portraits import CharacterPortraitLabel
 from wuwa_assistant.ui.character_roster import CharacterRosterDelegate
@@ -194,6 +195,9 @@ class CharacterDetailView:
     unpositioned_echoes: tuple[str, ...] = ()
     panel_energy_regen: float | None = None
     energy_target_override: float | None = None
+    calculated_panel: CharacterPanel | None = None
+    character_ascension: int | None = None
+    weapon_ascension: int | None = None
 
     def __post_init__(self) -> None:
         if not self.identifier.strip() or not self.name.strip():
@@ -239,6 +243,8 @@ class CharacterEditRequest:
     echo_validations: tuple[tuple[bool | None, bool | None], ...] = ((None, None),) * 5
     panel_energy_regen: float | None = None
     energy_target_override: float | None = None
+    character_ascension: int | None = None
+    weapon_ascension: int | None = None
 
     def __post_init__(self) -> None:
         if self.identifier is not None and not self.identifier.strip():
@@ -681,6 +687,7 @@ class CharactersPage(QWidget):
         detail_layout.setSpacing(10)
         detail_layout.setSizeConstraint(QLayout.SizeConstraint.SetMinimumSize)
         detail_layout.addWidget(self._build_progress_panel())
+        detail_layout.addWidget(self._build_stats_panel())
         self.frequent_layout = QGridLayout()
         self.skill_group = self._build_skill_panel()
         self.node_group = self._build_node_panel()
@@ -752,7 +759,7 @@ class CharactersPage(QWidget):
         )
         self.frequent_layout.setColumnStretch(0, 3)
         self.frequent_layout.setColumnStretch(1, 0 if frequent_columns == 1 else 2)
-        node_columns = 5 if frequent_columns == 1 else 2
+        node_columns = 2
         for check in self.attribute_node_checks:
             self.node_grid.removeWidget(check)
         for index, check in enumerate(self.attribute_node_checks):
@@ -928,6 +935,8 @@ class CharactersPage(QWidget):
         level_row.addWidget(self.level_max_button)
         form = QFormLayout(group)
         form.addRow("等級", level_row)
+        self.character_ascension_combo = _ascension_combo("CharacterAscension")
+        form.addRow("突破階段", self.character_ascension_combo)
         form.addRow("共鳴鏈", self.chain_spin)
         return group
 
@@ -1010,6 +1019,8 @@ class CharactersPage(QWidget):
         level_row.addWidget(self.weapon_level_spin, 1)
         level_row.addWidget(self.weapon_level_max_button)
         form.addRow("武器等級", level_row)
+        self.weapon_ascension_combo = _ascension_combo("CharacterWeaponAscension")
+        form.addRow("突破階段", self.weapon_ascension_combo)
         form.addRow("諧振階級", self.weapon_rank_spin)
         form.addRow("武器操作", self.weapon_edit_button)
         form.addRow("隊伍", self.team_label)
@@ -1063,7 +1074,7 @@ class CharactersPage(QWidget):
             )
 
     def _build_node_panel(self) -> QGroupBox:
-        group = QGroupBox("小型屬性節點")
+        group = QGroupBox("技能分支節點 · 屬性與固有技能")
         self.attribute_node_checks: list[QCheckBox] = []
         grid = QGridLayout(group)
         self.node_grid = grid
@@ -1072,7 +1083,75 @@ class CharactersPage(QWidget):
             check.setObjectName(f"CharacterAttributeNode{index + 1}")
             self.attribute_node_checks.append(check)
             grid.addWidget(check, index // 2, index % 2)
+        self.unlock_nodes_button = QPushButton("全部節點已解鎖")
+        self.unlock_nodes_button.setObjectName("CharacterUnlockAllNodes")
+        self.unlock_nodes_button.clicked.connect(self._unlock_all_nodes)
+        grid.addWidget(self.unlock_nodes_button, 10, 0, 1, 2)
         return group
+
+    def _unlock_all_nodes(self) -> None:
+        for check in self.attribute_node_checks:
+            check.setChecked(True)
+
+    def _build_stats_panel(self) -> QGroupBox:
+        group = QGroupBox("角色數值 · 非戰鬥常態")
+        group.setObjectName("CharacterPanelStats")
+        layout = QVBoxLayout(group)
+        self.panel_status_label = QLabel("依已儲存資料計算;編輯後請儲存角色。")
+        self.panel_status_label.setWordWrap(True)
+        self.panel_status_label.setObjectName("CharacterPanelStatus")
+        layout.addWidget(self.panel_status_label)
+        grid = QGridLayout()
+        self.panel_stat_labels: dict[str, QLabel] = {}
+        for index, key in enumerate(CORE_STATS):
+            value = QLabel(f"{STAT_LABELS[key]}　待補資料")
+            value.setObjectName(f"CharacterPanel_{key}")
+            value.setWordWrap(True)
+            value.setTextInteractionFlags(Qt.TextInteractionFlag.TextSelectableByMouse)
+            grid.addWidget(value, index // 2, index % 2)
+            self.panel_stat_labels[key] = value
+        grid.setColumnStretch(0, 1)
+        grid.setColumnStretch(1, 1)
+        layout.addLayout(grid)
+        self.panel_details_button = TextDetailsButton("全部屬性與來源明細", group)
+        self.panel_details_button.setObjectName("CharacterPanelDetails")
+        layout.addWidget(self.panel_details_button)
+        return group
+
+    def _apply_calculated_panel(self, detail: CharacterDetailView) -> None:
+        panel = detail.calculated_panel
+        for key, label in self.panel_stat_labels.items():
+            label.setText(f"{STAT_LABELS[key]}　{panel.display(key) if panel else '待補資料'}")
+        if panel is None:
+            self.panel_status_label.setText("尚無角色數值;儲存角色後重新計算。")
+            self.panel_details_button.set_details("角色數值", "")
+            for index, check in enumerate(self.attribute_node_checks):
+                check.setText(f"節點 {index + 1}")
+                check.setToolTip("")
+            return
+        if panel.complete:
+            status = (
+                "已與登記的遊戲面板一致"
+                if panel.game_verified
+                else f"已登記遊戲面板,仍有{len(panel.comparison_differences)}項差異;請查看來源明細"
+                if panel.comparison_differences
+                else "本配置尚未逐項實測"
+            )
+            message = f"{status}。依已儲存資料計算;編輯後請儲存角色。"
+        else:
+            message = "待補資料:" + ";".join(panel.missing[:2])
+            if len(panel.missing) > 2:
+                message += f",另有{len(panel.missing) - 2}項,詳見來源明細。"
+        self.panel_status_label.setText(message)
+        self.panel_details_button.set_details("角色數值・全部屬性與來源明細", panel.details())
+        for index, check in enumerate(self.attribute_node_checks):
+            node_label = (
+                panel.node_labels[index] if panel.node_labels else f"節點 {index + 1}(來源待補)"
+            )
+            short = node_label.replace("常態攻擊", "普攻").replace("共鳴技能", "技能")
+            short = short.replace("共鳴解放", "解放").replace("變奏技能", "變奏").replace(" ", "")
+            check.setText(short if len(short) <= 17 else short[:16] + "…")
+            check.setToolTip(node_label)
 
     def _build_echo_panel(self) -> QGroupBox:
         group = QGroupBox("目前裝備 · 聲骸評分")
@@ -1313,6 +1392,7 @@ class CharactersPage(QWidget):
                 _select_validity(card.main_validity_combo, pending_validity[1])
         self._detail = detail
         self.team_label.setText(detail.team_name or "尚未設定")
+        self._apply_calculated_panel(detail)
         self._apply_unpositioned_echoes(detail)
         self._update_progress_summary()
         self.passing_echoes_label.setText(f"{detail.passing_echoes} / 5")
@@ -1325,6 +1405,7 @@ class CharactersPage(QWidget):
             raise TypeError("detail must be CharacterDetailView")
         self._detail = detail
         self._creating = False
+        self._apply_calculated_panel(detail)
         self.edit_mode_button.setChecked(False)
         self.character_portrait.set_character_name(detail.name)
         self._apply_unpositioned_echoes(detail)
@@ -1334,6 +1415,9 @@ class CharactersPage(QWidget):
         self.candidate_check.setChecked(detail.is_candidate)
         self.priority_spin.setValue(detail.priority)
         self.level_spin.setValue(detail.level)
+        self.character_ascension_combo.setCurrentIndex(
+            max(0, self.character_ascension_combo.findData(detail.character_ascension))
+        )
         self.chain_spin.setValue(detail.resonance_chain)
         self._apply_profile(detail.scoring_profile_id, detail.scoring_profile_name)
         self.panel_energy_spin.setValue(detail.panel_energy_regen or 0)
@@ -1345,6 +1429,9 @@ class CharactersPage(QWidget):
         )
         self.weapon_name_edit.setText(detail.weapon.name or "")
         self.weapon_level_spin.setValue(detail.weapon.level or 0)
+        self.weapon_ascension_combo.setCurrentIndex(
+            max(0, self.weapon_ascension_combo.findData(detail.weapon_ascension))
+        )
         self.weapon_rank_spin.setValue(detail.weapon.resonance_rank or 1)
         self.team_label.setText(detail.team_name or "尚未設定")
         self.skill_model.set_rows(detail.skills)
@@ -1477,6 +1564,8 @@ class CharactersPage(QWidget):
             echo_validations=tuple(card.validity() for card in self.echo_cards),
             panel_energy_regen=self.panel_energy_spin.value() or None,
             energy_target_override=self.energy_target_spin.value() or None,
+            character_ascension=self.character_ascension_combo.currentData(),
+            weapon_ascension=self.weapon_ascension_combo.currentData(),
         )
 
     def _apply_element(self, value: str) -> None:
@@ -1563,6 +1652,7 @@ class CharactersPage(QWidget):
         self.candidate_check.setChecked(True)
         self.priority_spin.setValue(1)
         self.level_spin.setValue(1)
+        self.character_ascension_combo.setCurrentIndex(0)
         self.chain_spin.setValue(0)
         self.scoring_profile_combo.setCurrentIndex(0)
         self.panel_energy_spin.setValue(0)
@@ -1570,6 +1660,7 @@ class CharactersPage(QWidget):
         self.energy_recommendation_label.setText("儲存角色後依攻略顯示建議")
         self.weapon_name_edit.clear()
         self.weapon_level_spin.setValue(1)
+        self.weapon_ascension_combo.setCurrentIndex(0)
         self.weapon_rank_spin.setValue(1)
         self.team_label.setText("尚未設定")
         self.skill_model.set_rows(
@@ -1581,8 +1672,14 @@ class CharactersPage(QWidget):
                 SkillProgressView("intro_skill", "變奏技能", 0, 6, False),
             )
         )
-        for check in self.attribute_node_checks:
+        for index, check in enumerate(self.attribute_node_checks):
             check.setChecked(False)
+            check.setText(f"節點 {index + 1}")
+            check.setToolTip("")
+        for key, label in self.panel_stat_labels.items():
+            label.setText(f"{STAT_LABELS[key]}　待補資料")
+        self.panel_status_label.setText("儲存角色後計算數值。")
+        self.panel_details_button.set_details("角色數值", "")
         for position, card in enumerate(self.echo_cards, start=1):
             card.apply_slot(PermanentEchoSlotView(position))
         self.goal_edit.clear()
@@ -1630,6 +1727,16 @@ def _validity_combo(object_name: str) -> QComboBox:
     combo.addItem("待確認", None)
     combo.addItem("符合目標", True)
     combo.addItem("不符合目標", False)
+    return combo
+
+
+def _ascension_combo(object_name: str) -> QComboBox:
+    combo = QComboBox()
+    combo.setObjectName(object_name)
+    combo.addItem("依等級;突破邊界需指定", None)
+    for phase in range(7):
+        combo.addItem("0階・未突破" if phase == 0 else f"{phase}階突破", phase)
+    combo.setToolTip("20/40/50/60/70/80級可能有突破前後兩種數值,請選擇目前階段。")
     return combo
 
 

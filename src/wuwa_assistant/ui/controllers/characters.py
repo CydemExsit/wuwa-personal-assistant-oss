@@ -19,6 +19,7 @@ from wuwa_assistant.application.character_catalog import (
     load_bundled_character_catalog,
 )
 from wuwa_assistant.application.character_completion import evaluate_character_detail
+from wuwa_assistant.application.character_stats import calculate_character_panel
 from wuwa_assistant.application.characters import (
     CharacterCultivationService,
     CharacterDetail,
@@ -428,6 +429,12 @@ class CharactersPresenter(QObject):
         existing: _WorkspaceEntry | None,
     ) -> tuple[_Workspace, str]:
         goal = {} if existing is None else deepcopy(existing.record.cultivation_goal)
+        # Save only panel inputs. Calculated values never overwrite measured scoring context.
+        goal["panel_config"] = {
+            "character_ascension": request.character_ascension,
+            "weapon_ascension": request.weapon_ascension,
+            "node_layout": 1,
+        }
         if request.energy_target_override is None:
             goal.pop("scoring_energy_target", None)
         elif not 100 <= request.energy_target_override <= 1000:
@@ -1043,6 +1050,9 @@ def _detail_view(
     summary = detail.summary
     first_team = detail.teams[0] if detail.teams else None
     assessed = {slot.slot_index: slot for slot in result.echo_slots}
+    config = detail.cultivation_goal.get("panel_config", {})
+    if not isinstance(config, dict):
+        config = {}
     return CharacterDetailView(
         identifier=summary.id,
         name=summary.name,
@@ -1109,6 +1119,9 @@ def _detail_view(
         cultivation_goal=str(detail.cultivation_goal.get("description", "")),
         panel_energy_regen=detail.cultivation_goal.get("scoring_panel_energy_regen"),
         energy_target_override=detail.cultivation_goal.get("scoring_energy_target"),
+        calculated_panel=calculate_character_panel(detail),
+        character_ascension=config.get("character_ascension"),
+        weapon_ascension=config.get("weapon_ascension"),
         notes=detail.notes or "",
         completion_percent=result.overall_percent,
         passing_echoes=result.echo_passing_count,
