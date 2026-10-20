@@ -196,6 +196,6 @@ def equipment_check(detail: CharacterDetail) -> EquipmentCheck:
         )
     lines.append(
         "請在遊戲聲骸選擇頁逐格停留,讓工具讀到角色、位置與完整詞條。"
-        "手動裝備有衝突時會保留,請核對後自行調整。"
+        "角色與明確位置皆達信心門檻時會自動同步裝備;位置不確定時保留手動設定。"
     )
     return EquipmentCheck(matched, tuple(labels), "\n\n".join(lines))

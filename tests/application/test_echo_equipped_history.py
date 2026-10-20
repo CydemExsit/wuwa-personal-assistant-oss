@@ -360,7 +360,22 @@ def test_weak_slot_stays_visible_under_owner_then_strong_slot_promotes_it(owner_
     assert service.get_history(first.echo_session_id).session.slot_index == 3
 
 
-def test_automatic_equipment_preserves_manual_slot_and_registers_conflict_pending(owner_history):
+@pytest.mark.parametrize(
+    "owner_confidence,slot_confidence,threshold,synchronized",
+    [
+        (0.99, 0.99, 0.85, True),
+        (0.90, 0.90, 0.85, True),
+        (0.89, 0.99, 0.85, False),
+        (None, 0.99, 0.85, False),
+        (0.99, 0.89, 0.85, False),
+        (0.99, None, 0.85, False),
+        (0.95, 0.99, 0.98, False),
+        (0.99, 0.95, 0.98, False),
+    ],
+)
+def test_live_equipment_sync_requires_strong_owner_and_explicit_slot(
+    owner_history, owner_confidence, slot_confidence, threshold, synchronized
+):
     database, service, data_set_id, capture_id = owner_history
     first = service.ingest_live_result(capture_id, _owner_payload(), source_sequence=1)
     service.set_disposition(
@@ -372,18 +387,30 @@ def test_automatic_equipment_preserves_manual_slot_and_registers_conflict_pendin
     payload = _owner_payload()
     payload["current_session"]["local_session_id"] = "echo-session-0002"
     payload["equipped_slot_index"] = 1
-    payload["confidence"]["equipped_slot_index"] = 0.99
-    second = service.ingest_live_result(capture_id, payload, source_sequence=2)
+    payload["confidence"]["equipped_character_name"] = owner_confidence
+    payload["confidence"]["equipped_slot_index"] = slot_confidence
+    second = service.ingest_live_result(
+        capture_id, payload, source_sequence=2, confidence_threshold=threshold
+    )
+    old_id = service.get_history(first.echo_session_id).session.echo_id
+    new_id = service.get_history(second.echo_session_id).session.echo_id
     detail = CharacterCultivationService(database.session_factory).get_character(
         first.created_character_id, data_set_id=data_set_id
     )
-    assert (
-        detail.echo_slots[0].echo_id == service.get_history(first.echo_session_id).session.echo_id
-    )
-    assert (
-        detail.unpositioned_echoes[0].id
-        == service.get_history(second.echo_session_id).session.echo_id
-    )
+    assert detail.echo_slots[0].echo_id == (new_id if synchronized else old_id)
+    if synchronized:
+        assert second.equipment_changed
+        assert detail.unpositioned_echoes == ()
+        repeated = service.ingest_live_result(capture_id, payload, source_sequence=3)
+        assert not repeated.equipment_changed
+        database.engine.dispose()
+        assert service.get_history(second.echo_session_id).session.slot_index == 1
+        displaced = service.get_history(first.echo_session_id).session
+        assert displaced.slot_index is None and displaced.character_id is None
+        assert displaced.final_status == "kept"
+    elif owner_confidence is not None and owner_confidence >= max(0.90, threshold):
+        assert detail.unpositioned_echoes[0].id == new_id
+    # Explicit saving remains available when live evidence cannot synchronize.
     service.set_disposition(
         second.echo_session_id,
         EchoDisposition.EQUIPPED,
@@ -398,6 +425,73 @@ def test_automatic_equipment_preserves_manual_slot_and_registers_conflict_pendin
     assert old.slot_index is None and old.character_id is None
     with database.session_factory() as session:
         assert session.get(EchoRecord, old.echo_id).archived_at is None
+
+
+@pytest.mark.parametrize("explicit_slot", [False, True])
+def test_live_owner_change_moves_manual_assignment_only_with_explicit_slot(
+    owner_history, explicit_slot
+):
+    database, service, data_set_id, capture_id = owner_history
+    first = service.ingest_live_result(capture_id, _owner_payload(), source_sequence=1)
+    service.set_disposition(
+        first.echo_session_id,
+        EchoDisposition.EQUIPPED,
+        character_id=first.created_character_id,
+        slot_index=1,
+    )
+    payload = _owner_payload("緋雪")
+    if explicit_slot:
+        payload["equipped_slot_index"] = 5
+        payload["confidence"]["equipped_slot_index"] = 0.99
+    receipt = service.ingest_live_result(capture_id, payload, source_sequence=2)
+    old_owner = CharacterCultivationService(database.session_factory).get_character(
+        first.created_character_id, data_set_id=data_set_id
+    )
+    database.engine.dispose()
+    saved = service.get_history(first.echo_session_id).session
+    if explicit_slot:
+        assert receipt.equipment_changed
+        assert saved.character_id == receipt.created_character_id and saved.slot_index == 5
+        assert old_owner.echo_slots[0].echo_id is None
+    else:
+        assert not receipt.equipment_changed
+        assert saved.character_id == first.created_character_id and saved.slot_index == 1
+
+
+def test_historical_registration_with_explicit_slot_preserves_manual_choices(owner_history):
+    from wuwa_assistant.application.recognized_equipment import register_recognized_equipment
+    from wuwa_assistant.storage.orm import EchoSessionRecord
+
+    database, service, data_set_id, capture_id = owner_history
+    first = service.ingest_live_result(capture_id, _owner_payload(), source_sequence=1)
+    service.set_disposition(
+        first.echo_session_id,
+        EchoDisposition.EQUIPPED,
+        character_id=first.created_character_id,
+        slot_index=1,
+    )
+    payload = _owner_payload()
+    payload["current_session"]["local_session_id"] = "echo-session-0002"
+    second = service.ingest_live_result(capture_id, payload, source_sequence=2)
+    with database.session_factory.begin() as session:
+        # Historical evidence must not replace a manually occupied slot.
+        register_recognized_equipment(
+            session,
+            session.get(EchoSessionRecord, second.echo_session_id),
+            data_set_id=data_set_id,
+            name="愛彌斯",
+            slot_index=1,
+        )
+        # Nor move an existing manual assignment to another position.
+        register_recognized_equipment(
+            session,
+            session.get(EchoSessionRecord, first.echo_session_id),
+            data_set_id=data_set_id,
+            name="愛彌斯",
+            slot_index=5,
+        )
+    assert service.get_history(first.echo_session_id).session.slot_index == 1
+    assert service.get_history(second.echo_session_id).session.slot_index is None
 
 
 def test_newer_explicit_equipment_replaces_only_prior_automatic_assignment(owner_history):

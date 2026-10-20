@@ -1,4 +1,4 @@
-"""Register explicit screen ownership without guessing position or replacing manual choices."""
+"""Register screen ownership; replace manual choices only with explicit live evidence."""
 
 from __future__ import annotations
 
@@ -58,11 +58,18 @@ def register_recognized_equipment(
     data_set_id: str,
     name: str,
     slot_index: int | None = None,
+    replace_manual: bool = False,
 ) -> EquipmentRegistration:
-    """Caller supplies strong same-frame owner/optional slot evidence; never commits."""
+    """Caller supplies strong same-frame owner/optional slot evidence; never commits.
+
+    Only live ingestion opts into replacing manual assignments. A position carried
+    forward from an earlier observation or inferred from a rescan cannot authorize
+    replacement, and historical repair retains the conservative default.
+    """
 
     if slot_index is not None and (type(slot_index) is not int or not 1 <= slot_index <= 5):
         raise ValueError("slot_index must be within [1, 5]")
+    replace_manual = replace_manual and slot_index is not None
     echo = session.get(EchoRecord, echo_session.echo_id)
     if echo is None or echo.data_set_id != data_set_id:
         raise ValueError("echo does not belong to the requested data set")
@@ -71,7 +78,11 @@ def register_recognized_equipment(
     character, created = ensure_recognized_character(session, data_set_id=data_set_id, name=name)
     if character is None:
         return EquipmentRegistration(None, False, False, "archived_character")
-    if echo.character_id is not None and not assignment_is_recognized(session, echo.id):
+    if (
+        echo.character_id is not None
+        and not replace_manual
+        and not assignment_is_recognized(session, echo.id)
+    ):
         return EquipmentRegistration(character.id, created, False, "manual_assignment")
     status = "registered" if slot_index is not None else "position_unknown"
     if slot_index is None and echo.character_id == character.id:
@@ -94,7 +105,11 @@ def register_recognized_equipment(
                 EchoRecord.id != echo.id,
             )
         )
-        if occupied is not None and not assignment_is_recognized(session, occupied.id):
+        if (
+            occupied is not None
+            and not replace_manual
+            and not assignment_is_recognized(session, occupied.id)
+        ):
             slot_index = None
             status = "manual_slot_conflict"
     if (echo.character_id, echo.slot_index, echo.final_status) == (

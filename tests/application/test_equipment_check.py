@@ -106,7 +106,7 @@ def test_uncertain_read_never_counts_as_matched(check_workspace, change):
     assert equipment_check(characters.get_character(owner, data_set_id=dataset)).matched == 0
 
 
-def test_manual_conflict_is_visible_and_preserved(check_workspace):
+def test_live_sync_matches_current_gear_and_later_manual_change_is_visible(check_workspace):
     db, history, characters, dataset, capture = check_workspace
     history.ingest_live_result(capture, check_payload(), source_sequence=1)
     owner = characters.list_characters(data_set_id=dataset)[0].id
@@ -126,11 +126,23 @@ def test_manual_conflict_is_visible_and_preserved(check_workspace):
     payload = check_payload()
     payload["current_session"]["local_session_id"] = "other"
     receipt = history.ingest_live_result(capture, payload, source_sequence=2)
-    assert receipt.equipment_check_changed
+    assert receipt.equipment_check_changed and receipt.equipment_changed
+    detail = characters.get_character(owner, data_set_id=dataset)
+    assert (
+        detail.echo_slots[0].echo_id == history.get_history(receipt.echo_session_id).session.echo_id
+    )
+    assert equipment_check(detail).matched == 1
+    with db.session_factory() as session:
+        displaced = session.get(EchoRecord, manual_id)
+        assert displaced.character_id is None and displaced.slot_index is None
+        assert displaced.archived_at is None and displaced.final_status == "kept"
+    # A subsequent explicit edit still takes effect and exposes its difference
+    # from the last screen read, until fresh live evidence arrives.
+    characters.assign_echo_slot(owner, 1, manual_id, data_set_id=dataset, replace=True)
     detail = characters.get_character(owner, data_set_id=dataset)
     assert detail.echo_slots[0].echo_id == manual_id
     check = equipment_check(detail)
-    assert check.matched == 0 and check.labels[0] == "1 有差異"
+    assert check.matched == 0 and check.labels[0] == "1 待重讀"
     assert "手動保留" in check.details and "測試種類1" in check.details
 
 

@@ -588,6 +588,7 @@ class EchoHistoryService:
                             and slot_confidence >= max(0.90, confidence_threshold)
                             else None
                         ),
+                        replace_manual=True,
                     )
                     equipment_changed = registration.changed
                     if (

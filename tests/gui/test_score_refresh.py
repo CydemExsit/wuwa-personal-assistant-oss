@@ -31,7 +31,7 @@ from wuwa_assistant.scoring import (
 from wuwa_assistant.storage import AppPaths, create_database
 from wuwa_assistant.storage.database import Database
 from wuwa_assistant.storage.orm import UpgradeDecisionRecord
-from wuwa_assistant.ui.controllers.echo_workspace import EchoWorkspacePresenter
+from wuwa_assistant.ui.controllers.echo_workspace import EchoWorkspacePresenter, _Ingested
 from wuwa_assistant.ui.pages.echo_live import ChoiceOption, EchoLivePage
 from wuwa_assistant.ui.pages.history import EchoHistoryPage
 
@@ -464,6 +464,61 @@ def test_save_during_new_analysis_targets_displayed_echo_and_survives_reopen(
         .echo_id
         == saved.echo_id
     )
+
+
+def test_live_upgrade_syncs_manual_slot_and_publishes_saved_state(workspace, qtbot):
+    characters = CharacterCultivationService(workspace.database.session_factory)
+    data_set_id = workspace.snapshot.capture.data_set_id
+    owner = characters.create_character(
+        data_set_id=data_set_id, command=CreateCharacter(name="測試角色")
+    ).summary.id
+    workspace.history.set_disposition(
+        workspace.snapshot.session.id,
+        EchoDisposition.EQUIPPED,
+        character_id=owner,
+        slot_index=5,
+    )
+    workspace.page.set_characters((ChoiceOption(owner, "測試角色"),))
+    payload = deepcopy(workspace.payload)
+    payload.update(
+        page_type="echo_selection",
+        level=25,
+        locked_substat_slots=0,
+        is_equipped=True,
+        equipped_character_name="測試角色",
+        equipped_slot_index=5,
+    )
+    payload["current_session"]["local_session_id"] = "echo-session-0002"
+    payload["sub_stats"].append(
+        {**payload["sub_stats"][0], "name": "生命", "value": 7.9, "slot_index": 5}
+    )
+    payload["confidence"].update(equipped_character_name=0.99, equipped_slot_index=0.99)
+    receipt = workspace.history.ingest_live_result(
+        workspace.snapshot.capture.id, payload, source_sequence=2
+    )
+    upgraded = workspace.history.get_history(receipt.echo_session_id)
+    recognition = replace(_recognition(), source_sequence=2, observation=payload)
+    with qtbot.waitSignal(workspace.presenter.characters_changed):
+        workspace.presenter._apply_ingested(_Ingested(receipt, upgraded, recognition))
+    qtbot.waitUntil(
+        lambda: (
+            workspace.page._observation is not None
+            and workspace.page._observation.observation_id == receipt.observation_id
+            and workspace.presenter._score_in_flight is None
+            and not workspace.presenter._futures
+        ),
+        timeout=30000,
+    )
+    assert workspace.page._observation.level == 25
+    assert workspace.page._observation.assigned_slot_index == 5
+    assert "已保存至 測試角色 · 位置 5" in workspace.page.result_status_label.text()
+    assert "尚未保存位置" not in workspace.page.game_equipped_label.text()
+    workspace.database.engine.dispose()
+    detail = characters.get_character(owner, data_set_id=data_set_id)
+    assert detail.echo_slots[4].echo_id == upgraded.session.echo_id
+    assert detail.echo_slots[4].level == 25
+    displaced = workspace.history.get_history(workspace.snapshot.session.id).session
+    assert displaced.final_status == "kept" and displaced.slot_index is None
 
 
 def test_profile_update_keeps_automatic_character_selection(workspace, qtbot, monkeypatch):
