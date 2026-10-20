@@ -689,8 +689,12 @@ class CharactersPage(QWidget):
         detail_layout.setContentsMargins(0, 0, 8, 0)
         detail_layout.setSpacing(10)
         detail_layout.setSizeConstraint(QLayout.SizeConstraint.SetMinimumSize)
-        detail_layout.addWidget(self._build_progress_panel())
-        detail_layout.addWidget(self._build_stats_panel())
+        self.overview_layout = QGridLayout()
+        self.summary_panel = self._build_progress_panel()
+        self.stats_panel = self._build_stats_panel()
+        self.overview_layout.addWidget(self.summary_panel, 0, 0)
+        self.overview_layout.addWidget(self.stats_panel, 1, 0)
+        detail_layout.addLayout(self.overview_layout)
         self.frequent_layout = QGridLayout()
         self.skill_group = self._build_skill_panel()
         self.node_group = self._build_node_panel()
@@ -726,7 +730,7 @@ class CharactersPage(QWidget):
         detail_layout.addWidget(self.edit_settings)
         detail_layout.addStretch(1)
         self.detail_scroll.setWidget(detail)
-        self._detail_layout_columns: tuple[int, int, int] | None = None
+        self._detail_layout_columns: tuple[int, ...] | None = None
         self.detail_scroll.viewport().installEventFilter(self)
 
         editor = QWidget()
@@ -748,10 +752,61 @@ class CharactersPage(QWidget):
         frequent_columns = 1 if width < 660 else 2
         setting_columns = 1 if width < 820 else 2
         echo_columns = 1 if width < 620 else 2 if width < 900 else 3
-        columns = (frequent_columns, setting_columns, echo_columns)
+        overview_columns = 1 if width < 900 else 2
+        stats_width = width if overview_columns == 1 else width * 5 // 7
+        stat_columns = 6 if stats_width >= 1000 else 3 if stats_width >= 540 else 2
+        compact_skill_actions = width >= 800
+        columns = (
+            frequent_columns,
+            setting_columns,
+            echo_columns,
+            overview_columns,
+            stat_columns,
+            int(compact_skill_actions),
+        )
         if columns == self._detail_layout_columns:
             return
         self._detail_layout_columns = columns
+        for panel in (self.summary_panel, self.stats_panel):
+            self.overview_layout.removeWidget(panel)
+        self.overview_layout.addWidget(self.summary_panel, 0, 0)
+        self.overview_layout.addWidget(
+            self.stats_panel,
+            1 if overview_columns == 1 else 0,
+            0 if overview_columns == 1 else 1,
+        )
+        self.overview_layout.setColumnStretch(0, 1 if overview_columns == 1 else 2)
+        self.overview_layout.setColumnStretch(1, 0 if overview_columns == 1 else 5)
+        self.summary_grid.removeWidget(self.equipment_button)
+        self.summary_grid.removeWidget(self.progress_label)
+        if overview_columns == 1:
+            self.summary_grid.addWidget(self.equipment_button, 0, 2)
+            self.summary_grid.addWidget(self.progress_label, 3, 0, 1, 3)
+        else:
+            self.summary_grid.addWidget(self.equipment_button, 3, 0, 1, 2)
+            self.summary_grid.addWidget(self.progress_label, 4, 0, 1, 2)
+        for label in self.panel_stat_labels.values():
+            self.panel_stat_grid.removeWidget(label)
+        for index, label in enumerate(self.panel_stat_labels.values()):
+            self.panel_stat_grid.addWidget(label, index // stat_columns, index % stat_columns)
+        for column in range(6):
+            self.panel_stat_grid.setColumnStretch(column, 1 if column < stat_columns else 0)
+        for button in (self.skills_target_button, self.skill_up_button, self.skill_down_button):
+            self.skill_actions.removeWidget(button)
+        self.skill_actions.addWidget(
+            self.skills_target_button, 0, 0, 1, 1 if compact_skill_actions else 2
+        )
+        self.skill_actions.addWidget(
+            self.skill_up_button,
+            0 if compact_skill_actions else 1,
+            1 if compact_skill_actions else 0,
+        )
+        self.skill_actions.addWidget(
+            self.skill_down_button,
+            0 if compact_skill_actions else 1,
+            2 if compact_skill_actions else 1,
+        )
+        self.skill_actions.setColumnStretch(2, 1 if compact_skill_actions else 0)
         for group in (self.skill_group, self.node_group):
             self.frequent_layout.removeWidget(group)
         self.frequent_layout.addWidget(self.skill_group, 0, 0)
@@ -827,13 +882,14 @@ class CharactersPage(QWidget):
             label.setParent(group)
             label.hide()
         grid = QGridLayout(group)
+        self.summary_grid = grid
         grid.setContentsMargins(14, 12, 14, 12)
         grid.addWidget(self.character_portrait, 0, 0, 3, 1)
         grid.addWidget(self.character_name_label, 0, 1)
         grid.addWidget(self.character_identity_label, 1, 1)
         grid.addWidget(self.character_equipment_label, 2, 1)
-        grid.addWidget(self.equipment_button, 0, 2)
-        grid.addWidget(self.progress_label, 3, 0, 1, 3)
+        grid.addWidget(self.equipment_button, 3, 0, 1, 2)
+        grid.addWidget(self.progress_label, 4, 0, 1, 2)
         grid.setColumnStretch(1, 1)
         return group
 
@@ -848,12 +904,14 @@ class CharactersPage(QWidget):
         layout.setContentsMargins(16, 12, 16, 12)
         title = QLabel("目前配裝 · 五件聲骸")
         title.setObjectName("CharacterEquipmentSummaryTitle")
-        layout.addWidget(title)
+        heading = QHBoxLayout()
+        heading.addWidget(title)
         self.equipment_summary_label = QLabel("尚未取得配裝資料")
         self.equipment_summary_label.setObjectName("CharacterEquipmentScoreSummary")
         apply_score_color(self.equipment_summary_label, None)
         self.equipment_summary_label.setWordWrap(True)
-        layout.addWidget(self.equipment_summary_label)
+        heading.addWidget(self.equipment_summary_label, 1)
+        layout.addLayout(heading)
         slots = QHBoxLayout()
         self.equipment_summary_slots: dict[int, tuple[QLabel, QLabel, QPushButton]] = {}
         for position in range(1, 6):
@@ -1050,18 +1108,21 @@ class CharactersPage(QWidget):
             | QAbstractItemView.EditTrigger.EditKeyPressed
         )
         layout = QVBoxLayout(group)
-        self.skills_target_button = QPushButton("目前技能全部填至目標")
+        self.skills_target_button = QPushButton("技能填至目標")
+        self.skills_target_button.setToolTip("將目前五項技能等級全部填至各自的目標等級")
         self.skills_target_button.setObjectName("CharacterSkillsTargetButton")
         self.skills_target_button.clicked.connect(self._fill_skill_targets)
-        layout.addWidget(self.skills_target_button)
-        priority_controls = QHBoxLayout()
+        self.skill_actions = QGridLayout()
         self.skill_up_button = QPushButton("↑ 提前升級")
         self.skill_down_button = QPushButton("↓ 延後升級")
         self.skill_up_button.clicked.connect(lambda: self._move_skill_priority(-1))
         self.skill_down_button.clicked.connect(lambda: self._move_skill_priority(1))
-        priority_controls.addWidget(self.skill_up_button)
-        priority_controls.addWidget(self.skill_down_button)
-        layout.addLayout(priority_controls)
+        self.skill_actions.addWidget(self.skills_target_button, 0, 0, 1, 2)
+        self.skill_actions.addWidget(self.skill_up_button, 1, 0)
+        self.skill_actions.addWidget(self.skill_down_button, 1, 1)
+        self.skill_actions.setColumnStretch(0, 1)
+        self.skill_actions.setColumnStretch(1, 1)
+        layout.addLayout(self.skill_actions)
         layout.addWidget(self.skill_table)
         return group
 
@@ -1080,6 +1141,7 @@ class CharactersPage(QWidget):
         group = QGroupBox("技能分支節點 · 屬性與固有技能")
         self.attribute_node_checks: list[QCheckBox] = []
         grid = QGridLayout(group)
+        grid.setAlignment(Qt.AlignmentFlag.AlignTop)
         self.node_grid = grid
         for index in range(10):
             check = QCheckBox(f"節點 {index + 1}")
@@ -1089,7 +1151,7 @@ class CharactersPage(QWidget):
         self.unlock_nodes_button = QPushButton("全部節點已解鎖")
         self.unlock_nodes_button.setObjectName("CharacterUnlockAllNodes")
         self.unlock_nodes_button.clicked.connect(self._unlock_all_nodes)
-        grid.addWidget(self.unlock_nodes_button, 10, 0, 1, 2)
+        grid.addWidget(self.unlock_nodes_button, 5, 0, 1, 2)
         return group
 
     def _unlock_all_nodes(self) -> None:
@@ -1105,6 +1167,7 @@ class CharactersPage(QWidget):
         self.panel_status_label.setObjectName("CharacterPanelStatus")
         layout.addWidget(self.panel_status_label)
         grid = QGridLayout()
+        self.panel_stat_grid = grid
         self.panel_stat_labels: dict[str, QLabel] = {}
         for index, key in enumerate(CORE_STATS):
             value = QLabel(f"{STAT_LABELS[key]}　待補資料")
@@ -1116,20 +1179,21 @@ class CharactersPage(QWidget):
         grid.setColumnStretch(0, 1)
         grid.setColumnStretch(1, 1)
         layout.addLayout(grid)
-        self.panel_details_button = TextDetailsButton("全部屬性與來源明細", group)
+        self.panel_details_button = TextDetailsButton("屬性與來源明細", group)
         self.panel_details_button.setObjectName("CharacterPanelDetails")
-        layout.addWidget(self.panel_details_button)
         self.equipment_check_label = QLabel("最近核對 0/5;請逐格讀取聲骸。")
         self.equipment_check_label.setObjectName("CharacterEquipmentCheck")
         self.equipment_check_label.setWordWrap(True)
         layout.addWidget(self.equipment_check_label)
         actions = QHBoxLayout()
+        actions.addWidget(self.panel_details_button)
         self.equipment_check_button = QPushButton("重新核對五格")
         self.equipment_check_button.setObjectName("CharacterEquipmentCheckReset")
         self.equipment_check_button.clicked.connect(self._request_equipment_check)
         self.equipment_check_details = TextDetailsButton("核對明細", group)
         actions.addWidget(self.equipment_check_button)
         actions.addWidget(self.equipment_check_details)
+        actions.addStretch(1)
         layout.addLayout(actions)
         return group
 

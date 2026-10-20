@@ -568,6 +568,14 @@ QMenu::item:selected { background: #55305f; }
 #CharacterSummaryCard { background: #2e203d; border: 1px solid #665078; border-radius: 12px; }
 #CharacterSelectedName { font-size: 24px; font-weight: 700; color: #e2a0dd; }
 #CharacterSelectedIdentity, #CharacterLoadStatus { color: #cbb7d8; }
+#CharacterDetailContent QGroupBox {
+    margin-top: 10px;
+    padding: 12px 10px 10px;
+}
+#CharacterDetailContent QPushButton {
+    min-height: 28px;
+    padding: 3px 10px;
+}
 #EquipmentDetailScoreSummary { font-size: 20px; font-weight: 600; color: #e2a0dd; }
 #EquipmentPieceName { font-size: 16px; font-weight: 600; }
 

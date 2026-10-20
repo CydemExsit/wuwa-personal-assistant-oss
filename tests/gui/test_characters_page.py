@@ -6,7 +6,14 @@ import pytest
 from PySide6.QtCore import QPoint, QPointF, Qt
 from PySide6.QtGui import QWheelEvent
 from PySide6.QtTest import QTest
-from PySide6.QtWidgets import QApplication, QDialog, QLabel, QStyleOptionViewItem, QTextBrowser
+from PySide6.QtWidgets import (
+    QApplication,
+    QDialog,
+    QLabel,
+    QStyleOptionViewItem,
+    QTextBrowser,
+    QWidget,
+)
 
 from tests.gui.helpers import MemorySettings
 from wuwa_assistant.ui.main_window import MainWindow
@@ -557,4 +564,68 @@ def test_cultivation_fits_real_shell_with_expanded_rail_and_rare_edit_fields(
             assert page.skill_table.verticalScrollBar().maximum() == 0
             last = page.skill_table.visualRect(page.skill_model.index(4, 3))
             assert page.skill_table.viewport().rect().contains(last)
+    window.close()
+
+
+@pytest.mark.parametrize("size", ((1440, 900), (2048, 1089)))
+def test_wide_character_page_shows_frequent_content_without_scrolling(
+    qapp: QApplication, size: tuple[int, int]
+) -> None:
+    window = MainWindow(MemorySettings())
+    window.resize(*size)
+    page = window.characters_page
+    page.set_characters(_summaries())
+    page.apply_character(_detail())
+    page.panel_status_label.setText(
+        "已與登記的遊戲面板一致。聲骸紀錄更新時自動重算;角色或武器編輯後請儲存。"
+    )
+    for key, value in {
+        "hp": "生命值　18240",
+        "attack": "攻擊力　2310",
+        "defense": "防禦力　1290",
+        "crit_rate": "暴擊　72.5%",
+        "crit_damage": "暴擊傷害　297.0%",
+        "energy_regen": "共鳴效率　146.0%",
+    }.items():
+        page.panel_stat_labels[key].setText(value)
+    page.equipment_check_label.setText(
+        "最近核對 2/5　1 詞條相符・2 有差異・3 待確認・4 詞條相符・5 待重讀"
+    )
+    window.navigate_to(PageId.CHARACTERS)
+    window.show()
+    for _ in range(5):
+        qapp.processEvents()
+    viewport = page.detail_scroll.viewport()
+
+    def inside(widget: QWidget) -> bool:
+        return viewport.rect().contains(widget.mapTo(viewport, widget.rect().topLeft())) and (
+            viewport.rect().contains(widget.mapTo(viewport, widget.rect().bottomRight()))
+        )
+
+    assert page.detail_scroll.verticalScrollBar().maximum() == 0
+    for widget in (
+        page.character_portrait,
+        *page.panel_stat_labels.values(),
+        page.panel_details_button,
+        page.equipment_check_button,
+        page.equipment_check_details,
+        page.skill_table,
+        *page.attribute_node_checks,
+        *(button for _, _, button in page.equipment_summary_slots.values()),
+    ):
+        assert inside(widget), widget.objectName()
+
+    # Reflow must preserve edits and keep all actions reachable on smaller windows.
+    page.weapon_name_edit.setText("未儲存武器")
+    page.skill_model.setData(page.skill_model.index(0, 1), 7)
+    page.attribute_node_checks[9].setChecked(True)
+    for width in (1100, 1280, size[0]):
+        window.resize(width, size[1])
+        for _ in range(3):
+            qapp.processEvents()
+        assert page.detail_scroll.horizontalScrollBar().maximum() == 0
+        assert page.skill_table.verticalScrollBar().maximum() == 0
+        assert page.weapon_name_edit.text() == "未儲存武器"
+        assert page.skill_model.rows()[0].current_level == 7
+        assert page.attribute_node_checks[9].isChecked()
     window.close()
