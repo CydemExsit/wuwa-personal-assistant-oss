@@ -324,6 +324,171 @@ def history_storage(tmp_path: Path) -> Iterator[tuple[Database, EchoHistoryServi
         database.dispose()
 
 
+def test_live_same_echo_values_recalculate_panel_and_preserve_draft(
+    qtbot: QtBot,
+    history_storage: tuple[Database, EchoHistoryService],
+) -> None:
+    from datetime import UTC, datetime
+
+    from wuwa_assistant.application.characters import SaveCharacter, UpdateCharacter, UpsertWeapon
+
+    database, history = history_storage
+    dataset = history.ensure_active_primary_dataset()
+    service = CharacterCultivationService(database.session_factory)
+    profiles = ScoringProfileService(database.session_factory)
+    profiles.ensure_system_templates(load_template_seed_definitions())
+    live, page, echo_page, history_page = (
+        _FakeLiveController(),
+        CharactersPage(),
+        EchoLivePage(),
+        EchoHistoryPage(),
+    )
+    for widget in (page, echo_page, history_page):
+        qtbot.addWidget(widget)
+    echo = EchoWorkspacePresenter(
+        live_controller=live,
+        history_service=history,
+        echo_page=echo_page,
+        history_page=history_page,
+        data_set_id=dataset,
+        app_version="test",
+    )
+    character = CharactersPresenter(
+        service=service,
+        scoring_profiles=profiles,
+        page=page,
+        data_set_id=dataset,
+    )
+    echo.characters_changed.connect(character.refresh_external_changes)
+    character.equipment_recheck_ready.connect(echo.recheck_capture)
+    try:
+        echo.initialize()
+        qtbot.waitUntil(lambda: echo_page.monitor_combo.currentData() == "monitor-1")
+        echo.start_capture("monitor-1", "", "")
+        qtbot.waitUntil(lambda: echo._active_capture_id is not None)
+        payloads = []
+        for slot in range(1, 6):
+            payload = {
+                "page_type": "echo_selection",
+                "name": "異構武裝" if slot == 1 else f"測試{slot}",
+                "set_name": "凌冽決斷之心",
+                "level": 0,
+                "cost": 4 if slot == 1 else 1,
+                "main_stats": [
+                    {
+                        "name": "暴擊" if slot == 1 else "生命",
+                        "unit": "%",
+                        "value": 4.4 if slot == 1 else 4.5,
+                        "confidence": 0.99,
+                    },
+                    {
+                        "name": "攻擊" if slot == 1 else "生命",
+                        "unit": "",
+                        "value": 30 if slot == 1 else 456,
+                        "confidence": 0.99,
+                    },
+                ],
+                "sub_stats": [],
+                "is_equipped": True,
+                "equipped_character_name": "珂萊塔",
+                "equipped_slot_index": slot,
+                "confidence": {
+                    "page_type": 0.99,
+                    "equipped_character_name": 0.99,
+                    "equipped_slot_index": 0.99,
+                },
+                "current_session": {
+                    "local_session_id": f"live-{slot}",
+                    "current_state": "active",
+                    "latest_level": 0,
+                    "is_discarded": False,
+                    "was_consumed": False,
+                },
+                "events": [],
+            }
+            history.ingest_live_result(echo._active_capture_id, payload, source_sequence=slot)
+            payloads.append(payload)
+        owner = service.list_characters(data_set_id=dataset)[0].id
+        service.save_character(
+            character_id=owner,
+            data_set_id=dataset,
+            command=SaveCharacter(
+                character=UpdateCharacter(
+                    name="珂萊塔",
+                    element="冷凝",
+                    role=None,
+                    is_candidate=True,
+                    priority=1,
+                    level=90,
+                    resonance_chain=0,
+                    scoring_profile_id=None,
+                    notes=None,
+                    small_stat_nodes=(True,) * 10,
+                ),
+                weapon=UpsertWeapon(name="死與舞", level=90),
+            ),
+        )
+        character.initialize()
+        qtbot.waitUntil(lambda: page.current_character_id() == owner)
+        before = character._entries[owner].view.calculated_panel
+        assert before is not None and before.complete, before
+        hp = int(before.display("hp"))
+        page.notes_edit.setPlainText("尚未儲存的備註")
+        draft = page.build_edit_request()
+        current = deepcopy(payloads[-1])
+        current["main_stats"][1]["value"] += 100
+        live.recognition_ready.emit(
+            replace(
+                _recognition(),
+                source_sequence=6,
+                page_type="echo_selection",
+                captured_at=datetime.now(UTC).isoformat(),
+                observation=current,
+            )
+        )
+        qtbot.waitUntil(
+            lambda: page.panel_stat_labels["hp"].text() == f"生命值　{hp + 100}", timeout=10000
+        )
+        assert page.build_edit_request() == draft
+        assert "最近核對 5/5" in page.equipment_check_label.text()
+        detail = service.get_character(owner, data_set_id=dataset)
+        assert detail.echo_slots[-1].main_stats[1]["value"] == 556
+        page.equipment_check_button.click()
+        qtbot.waitUntil(lambda: "最近核對 0/5" in page.equipment_check_label.text())
+        qtbot.waitUntil(lambda: live.recheck_count == 1)
+        assert page.build_edit_request() == draft
+        live.recognition_ready.emit(
+            replace(
+                _recognition(),
+                source_sequence=7,
+                page_type="echo_selection",
+                captured_at=datetime.now(UTC).isoformat(),
+                observation=current,
+            )
+        )
+        qtbot.waitUntil(lambda: "最近核對 1/5" in page.equipment_check_label.text(), timeout=10000)
+        assert page.panel_stat_labels["hp"].text() == f"生命值　{hp + 100}"
+        latest = echo._current_history
+        assert latest is not None
+        echo.correct_observation(
+            CorrectionRequest(
+                session_id=latest.session.local_session_id,
+                observation_id=latest.observations[-1].id,
+                field_path="/main_stats/1/value",
+                previous_value="556",
+                corrected_value="656",
+            )
+        )
+        qtbot.waitUntil(
+            lambda: page.panel_stat_labels["hp"].text() == f"生命值　{hp + 200}", timeout=10000
+        )
+        assert "5 待重讀" in page.equipment_check_label.text()
+        assert page.build_edit_request() == draft
+    finally:
+        assert echo.shutdown()
+        assert character.shutdown()
+
+
 def _recognition() -> RecognitionPayload:
     confidence = 0.96
     stat = {

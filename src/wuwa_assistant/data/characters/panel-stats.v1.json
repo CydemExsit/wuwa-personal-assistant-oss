@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "version": "2026.10.20.2",
+  "version": "2026.10.20.3",
   "state": "non_combat_no_temporary_buffs",
   "precision_model": {
     "kind": "empirical_source_specific",
@@ -2436,7 +2436,38 @@
         ],
         "notes": "依公開初始三圍、屬性、武器類型交叉核對；候選列的初始屬性一致。",
         "sha256": "6bfedeb74243217b73d90928884c413226dda8c9768c3bc22dbec77d5413d9a3"
-      }
+      },
+      "chain_source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1457744312692867072",
+        "accessed_at": "2026-10-20",
+        "updated_at": "2026-08-28",
+        "content_sha256": "b8567eeafcd12ed57fae3c65a9ebfa8646999920366d22af7c283c68c5fcfc89"
+      },
+      "resonance_chains": [
+        {
+          "level": 1,
+          "label": "如金粉般灑落的初煦",
+          "panel_effects": {},
+          "conditional_effects": {},
+          "note": "強化指定重擊的暴傷與狀態機制；重擊專屬暴傷不是全域面板暴傷。"
+        },
+        {
+          "level": 2,
+          "label": "如雪絨般漂浮的音符",
+          "panel_effects": {},
+          "conditional_effects": {},
+          "note": "強化指定技能與效應的倍率，不改本次六項常態面板。"
+        },
+        {
+          "level": 3,
+          "label": "熾烈在靜默間延展如初",
+          "panel_effects": {},
+          "conditional_effects": {
+            "crit_damage": 60
+          },
+          "note": "強化解放並替換固有技能。60%暴傷須依模態觸發，入隊或切換模態重置；不能以脫戰判定已清除，當前基準不納入該觸發效果。"
+        }
+      ]
     },
     "折枝": {
       "base": [
@@ -3228,7 +3259,29 @@
         ],
         "notes": "依公開初始三圍、屬性、武器類型交叉核對；候選列的初始屬性一致。",
         "sha256": "6bfedeb74243217b73d90928884c413226dda8c9768c3bc22dbec77d5413d9a3"
-      }
+      },
+      "chain_source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1242295554161025024",
+        "accessed_at": "2026-10-20",
+        "updated_at": "2026-02-05",
+        "content_sha256": "c8ee30e9ebca4df9db465b5025132a2ef8978f2aec053d017d76d59310d3ee98"
+      },
+      "resonance_chains": [
+        {
+          "level": 1,
+          "label": "萌芽的一瞬",
+          "panel_effects": {},
+          "conditional_effects": {},
+          "note": "延奏後提供持續治療，不增加本次六項常態屬性。"
+        },
+        {
+          "level": 2,
+          "label": "抽葉的思考",
+          "panel_effects": {},
+          "conditional_effects": {},
+          "note": "共鳴技能額外取得光合能量與協奏能量；協奏能量不是共鳴效率百分比。"
+        }
+      ]
     },
     "緋雪": {
       "base": [

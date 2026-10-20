@@ -55,6 +55,7 @@ from PySide6.QtWidgets import (
 )
 
 from wuwa_assistant.application.character_stats import CORE_STATS, STAT_LABELS, CharacterPanel
+from wuwa_assistant.application.equipment_check import EquipmentCheck
 from wuwa_assistant.scoring.character_guides import guide_for_character
 from wuwa_assistant.ui.character_portraits import CharacterPortraitLabel
 from wuwa_assistant.ui.character_roster import CharacterRosterDelegate
@@ -198,6 +199,7 @@ class CharacterDetailView:
     calculated_panel: CharacterPanel | None = None
     character_ascension: int | None = None
     weapon_ascension: int | None = None
+    equipment_check: EquipmentCheck | None = None
 
     def __post_init__(self) -> None:
         if not self.identifier.strip() or not self.name.strip():
@@ -528,6 +530,7 @@ class CharactersPage(QWidget):
     weapon_edit_requested = Signal(str)
     team_edit_requested = Signal(str)
     echo_slot_edit_requested = Signal(str, int)
+    equipment_check_requested = Signal(str)
     training_requested = Signal(str, int)
     equipment_requested = Signal()
     cultivation_requested = Signal()
@@ -1116,9 +1119,37 @@ class CharactersPage(QWidget):
         self.panel_details_button = TextDetailsButton("全部屬性與來源明細", group)
         self.panel_details_button.setObjectName("CharacterPanelDetails")
         layout.addWidget(self.panel_details_button)
+        self.equipment_check_label = QLabel("最近核對 0/5;請逐格讀取聲骸。")
+        self.equipment_check_label.setObjectName("CharacterEquipmentCheck")
+        self.equipment_check_label.setWordWrap(True)
+        layout.addWidget(self.equipment_check_label)
+        actions = QHBoxLayout()
+        self.equipment_check_button = QPushButton("重新核對五格")
+        self.equipment_check_button.setObjectName("CharacterEquipmentCheckReset")
+        self.equipment_check_button.clicked.connect(self._request_equipment_check)
+        self.equipment_check_details = TextDetailsButton("核對明細", group)
+        actions.addWidget(self.equipment_check_button)
+        actions.addWidget(self.equipment_check_details)
+        layout.addLayout(actions)
         return group
 
+    @Slot()
+    def _request_equipment_check(self) -> None:
+        identifier = self.current_character_id()
+        if identifier:
+            self.equipment_check_requested.emit(identifier)
+
     def _apply_calculated_panel(self, detail: CharacterDetailView) -> None:
+        equipment = detail.equipment_check
+        self.equipment_check_button.setEnabled(True)
+        self.equipment_check_label.setText(
+            f"最近核對 {equipment.matched}/5　" + "・".join(equipment.labels)
+            if equipment
+            else "最近核對 0/5;請逐格讀取聲骸。"
+        )
+        self.equipment_check_details.set_details(
+            "聲骸逐格核對", equipment.details if equipment else ""
+        )
         panel = detail.calculated_panel
         for key, label in self.panel_stat_labels.items():
             label.setText(f"{STAT_LABELS[key]}　{panel.display(key) if panel else '待補資料'}")
@@ -1137,7 +1168,7 @@ class CharactersPage(QWidget):
                 if panel.comparison_differences
                 else "本配置尚未逐項實測"
             )
-            message = f"{status}。依已儲存資料計算;編輯後請儲存角色。"
+            message = f"{status}。聲骸紀錄更新時自動重算;角色或武器編輯後請儲存。"
         else:
             message = "待補資料:" + ";".join(panel.missing[:2])
             if len(panel.missing) > 2:
@@ -1453,7 +1484,7 @@ class CharactersPage(QWidget):
         self._set_detail_enabled(True)
         self.detail_stack.setCurrentIndex(1)
         self.status_label.setProperty("error", False)
-        self.status_label.setText(f"{detail.name} · 已同步")
+        self.status_label.setText(f"{detail.name} · 已載入工具紀錄")
         _repolish(self.status_label)
 
     @Slot()
@@ -1680,6 +1711,9 @@ class CharactersPage(QWidget):
             label.setText(f"{STAT_LABELS[key]}　待補資料")
         self.panel_status_label.setText("儲存角色後計算數值。")
         self.panel_details_button.set_details("角色數值", "")
+        self.equipment_check_label.setText("最近核對 0/5;儲存角色後可開始核對。")
+        self.equipment_check_button.setEnabled(False)
+        self.equipment_check_details.set_details("聲骸逐格核對", "")
         for position, card in enumerate(self.echo_cards, start=1):
             card.apply_slot(PermanentEchoSlotView(position))
         self.goal_edit.clear()

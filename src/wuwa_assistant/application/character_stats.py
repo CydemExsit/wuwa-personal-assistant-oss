@@ -103,6 +103,7 @@ class StatContribution:
     reference: str | None = None
     in_panel: bool = True
     input_percent: Decimal | None = None
+    scope_note: str | None = None
 
 
 @dataclass(frozen=True, slots=True)
@@ -169,7 +170,7 @@ class CharacterPanel:
                 or item.stat in {"weapon_attack", "tune_break_boost"}
                 else "%"
             )
-            scope = "(不顯示於角色面板)" if not item.in_panel else ""
+            scope = f"({item.scope_note or '不顯示於角色面板'})" if not item.in_panel else ""
             conversion = (
                 f"(生命加成{item.input_percent.normalize():f}%,逐節點取整)"
                 if item.input_percent is not None
@@ -370,6 +371,7 @@ def calculate_character_panel(detail: CharacterDetail) -> CharacterPanel:
         growth: Decimal = Decimal(1),
         off_panel: bool = False,
         kind: Literal["default", "attribute_node", "echo_substat"] = "default",
+        scope_note: str | None = None,
     ) -> None:
         for stat, value in effects.items():
             if stat == "all_element_damage":
@@ -380,6 +382,7 @@ def calculate_character_panel(detail: CharacterDetail) -> CharacterPanel:
                     growth=growth,
                     off_panel=off_panel,
                     kind=kind,
+                    scope_note=scope_note,
                 )
                 continue
             amount = Decimal(str(value)) * growth
@@ -398,7 +401,9 @@ def calculate_character_panel(detail: CharacterDetail) -> CharacterPanel:
             if in_panel:
                 sums[stat] += amount
             contributions.append(
-                StatContribution(label, stat, amount, reference, in_panel, input_percent)
+                StatContribution(
+                    label, stat, amount, reference, in_panel, input_percent, scope_note
+                )
             )
 
     name = canonical_character_name(detail.summary.name)
@@ -447,8 +452,23 @@ def calculate_character_panel(detail: CharacterDetail) -> CharacterPanel:
             and config.get("node_layout") != 1
         ):
             missing.append("舊節點只有編號,請核對節點名稱後儲存以確認對應")
-        if detail.summary.resonance_chain:
-            missing.append("非零共鳴鏈的常駐效果尚待逐項校對")
+        chain = detail.summary.resonance_chain
+        chain_rules = entry.get("resonance_chains", [])
+        if chain < 0 or chain > len(chain_rules):
+            missing.append(f"{name}共鳴鏈{chain}的常態效果尚待逐項校對")
+        else:
+            chain_ref = entry.get("chain_source", entry["source"])["url"]
+            for rule in chain_rules[:chain]:
+                label = f"共鳴鏈{rule['level']}・{rule['label']}"
+                add(label, rule["panel_effects"], chain_ref)
+                add(
+                    label,
+                    rule["conditional_effects"],
+                    chain_ref,
+                    off_panel=True,
+                    scope_note="條件未觸發,不納入本次常態面板",
+                )
+                notes.append(f"{label}: {rule['note']}")
 
     weapon = detail.weapon
     if weapon is None or weapon.name == "未指定武器":

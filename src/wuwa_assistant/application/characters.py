@@ -384,6 +384,19 @@ class CharacterCultivationService:
             command=SaveCharacter(character=command),
         )
 
+    def reset_equipment_check(self, character_id: str, *, data_set_id: str) -> None:
+        """Start a fresh five-slot read without changing saved equipment or drafts."""
+        with self._session_factory.begin() as session:
+            record = _require_character(session, character_id, data_set_id)
+            record.cultivation_goal_json = {
+                **record.cultivation_goal_json,
+                "equipment_check": {
+                    "version": 1,
+                    "started_at": utc_now().isoformat(),
+                    "slots": {},
+                },
+            }
+
     def save_character(
         self,
         *,
@@ -1037,7 +1050,10 @@ def _apply_character_update(
     record.notes = command.notes
     if command.cultivation_goal is not None or command.small_stat_nodes is not None:
         current_goal = _json_object(record.cultivation_goal_json, "cultivation goal")
-        goal = current_goal if command.cultivation_goal is None else command.cultivation_goal
+        goal = dict(current_goal if command.cultivation_goal is None else command.cultivation_goal)
+        # Live recognition owns this evidence; an older editor draft cannot erase it.
+        if "equipment_check" in current_goal:
+            goal["equipment_check"] = current_goal["equipment_check"]
         nodes = (
             _nodes_from_goal(current_goal)
             if command.small_stat_nodes is None

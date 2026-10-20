@@ -125,6 +125,41 @@ def test_weapon_rank_changes_only_constant_passive() -> None:
     assert new.value("resonance_skill_damage") == old.value("resonance_skill_damage")
 
 
+@pytest.mark.parametrize("name,chain", [("愛彌斯", 3), ("維里奈", 2)])
+def test_reviewed_chains_do_not_add_triggered_bonuses_to_baseline(name, chain) -> None:
+    detail = panel_fixture()
+    detail = replace(
+        detail,
+        summary=replace(detail.summary, name=name),
+        weapon=WeaponSnapshot(
+            "weapon", "永遠的啟明星" if name == "愛彌斯" else "漪瀾浮錄", "", 90, 1, None
+        ),
+    )
+    before = calculate_character_panel(detail)
+    after = calculate_character_panel(
+        replace(detail, summary=replace(detail.summary, resonance_chain=chain))
+    )
+    assert after.complete, after.missing
+    assert after.totals == before.totals
+    if name == "愛彌斯":
+        assert any(
+            c.stat == "crit_damage" and c.value == 60 and not c.in_panel
+            for c in after.contributions
+        )
+        assert "條件未觸發" in after.details()
+    else:
+        assert "協奏" in after.details()
+
+
+def test_unreviewed_chain_stays_incomplete() -> None:
+    detail = panel_fixture()
+    panel = calculate_character_panel(
+        replace(detail, summary=replace(detail.summary, resonance_chain=1))
+    )
+    assert not panel.complete
+    assert any("共鳴鏈1" in item for item in panel.missing)
+
+
 def test_raw_weapon_hp_precision_and_public_card_truncation() -> None:
     # WeaponConf21020056 stores0.16050000488758087, not the16.0% card display.
     detail = panel_fixture()
