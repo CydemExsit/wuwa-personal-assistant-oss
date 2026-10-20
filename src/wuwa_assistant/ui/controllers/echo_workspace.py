@@ -946,6 +946,7 @@ class EchoWorkspacePresenter(QObject):
                     persist_score=True,
                 )
             self.refresh_history()
+            self.characters_changed.emit()
         elif value.operation is _Operation.DISPOSITION:
             if isinstance(value.value, EchoHistory):
                 self._apply_history(
@@ -1129,6 +1130,8 @@ class EchoWorkspacePresenter(QObject):
         if (
             receipt.created_character_id is not None
             or receipt.equipment_changed
+            or receipt.panel_inputs_changed
+            or receipt.equipment_check_changed
             or receipt.event_ids
         ):
             self.characters_changed.emit()

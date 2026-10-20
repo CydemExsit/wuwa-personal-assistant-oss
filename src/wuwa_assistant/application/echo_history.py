@@ -45,6 +45,7 @@ from wuwa_assistant.vision.selection_identity import visual_identity_matches
 
 from .characters import assign_echo_record
 from .echo_duplicates import group_echo_records
+from .equipment_check import panel_record_signature, record_equipment_read
 from .observation_review import confirmed_fields, observation_review_issues
 from .recognized_equipment import clear_recognized_equipment, register_recognized_equipment
 
@@ -164,6 +165,8 @@ class IngestReceipt:
     duplicate: bool
     created_character_id: str | None = None
     equipment_changed: bool = False
+    panel_inputs_changed: bool = False
+    equipment_check_changed: bool = False
 
 
 @dataclass(frozen=True, slots=True)
@@ -502,6 +505,8 @@ class EchoHistoryService:
             observation: EchoObservationRecord | None = None
             created_character_id: str | None = None
             equipment_changed = False
+            panel_inputs_changed = False
+            equipment_check_changed = False
             if current_summary is not None:
                 current_session = _upsert_echo_session(
                     session,
@@ -543,11 +548,17 @@ class EchoHistoryService:
                         observed_at=when,
                         confidence_threshold=confidence_threshold,
                     )
+                echo_record = _require_record(session, EchoRecord, current_session.echo_id, "echo")
+                before_signature = panel_record_signature(echo_record)
                 _update_echo_from_payload(
                     session,
                     current_session,
                     observation_payload,
                     preserve_confirmed=True,
+                )
+                panel_inputs_changed = (
+                    echo_record.character_id is not None
+                    and before_signature != panel_record_signature(echo_record)
                 )
                 owner_confidence = (
                     _optional_json_object(observation_payload.get("confidence"), label="confidence")
@@ -579,6 +590,21 @@ class EchoHistoryService:
                         ),
                     )
                     equipment_changed = registration.changed
+                    if (
+                        registration.character_id is not None
+                        and slot_index is not None
+                        and slot_confidence is not None
+                        and slot_confidence >= max(0.90, confidence_threshold)
+                    ):
+                        equipment_check_changed = record_equipment_read(
+                            session,
+                            character_id=registration.character_id,
+                            slot=slot_index,
+                            capture_id=capture.id,
+                            payload=observation_payload,
+                            when=when,
+                            requires_review=observation.requires_review if observation else False,
+                        )
                     if registration.created:
                         created_character_id = registration.character_id
                 elif (
@@ -606,6 +632,8 @@ class EchoHistoryService:
                 duplicate=False,
                 created_character_id=created_character_id,
                 equipment_changed=equipment_changed,
+                panel_inputs_changed=panel_inputs_changed,
+                equipment_check_changed=equipment_check_changed,
             )
 
     def correct_observation(

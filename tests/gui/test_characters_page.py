@@ -446,7 +446,9 @@ def test_cultivation_defaults_to_compact_view_with_direct_skill_and_node_edits(
     )
     assert page.skill_table.isVisible()
     assert page.attribute_node_checks[0].isVisible()
-    assert page.detail_scroll.verticalScrollBar().maximum() == 0
+    # The numeric panel adds a section; the compact editor remains vertically scrollable.
+    assert page.panel_stat_labels["crit_rate"].isVisible()
+    assert page.detail_scroll.horizontalScrollBar().maximum() == 0
     assert page.skill_model.setData(page.skill_model.index(1, 1), 9)
     page.attribute_node_checks[-1].setChecked(True)
     assert page.build_edit_request().skills[1].current_level == 9

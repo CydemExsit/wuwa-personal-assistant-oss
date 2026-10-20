@@ -19,6 +19,7 @@ from wuwa_assistant.application.character_catalog import (
     load_bundled_character_catalog,
 )
 from wuwa_assistant.application.character_completion import evaluate_character_detail
+from wuwa_assistant.application.character_stats import calculate_character_panel
 from wuwa_assistant.application.characters import (
     CharacterCultivationService,
     CharacterDetail,
@@ -34,6 +35,7 @@ from wuwa_assistant.application.characters import (
     UpdateTeam,
     UpsertWeapon,
 )
+from wuwa_assistant.application.equipment_check import equipment_check
 from wuwa_assistant.application.equipment_overview import (
     CharacterEquipmentOverview,
     EquipmentOverview,
@@ -82,6 +84,7 @@ _T = TypeVar("_T")
 class _Operation(StrEnum):
     LOAD = "load"
     LOAD_EXTERNAL = "load_external"
+    RESET_CHECK = "reset_check"
     SAVE = "save"
     ARCHIVE = "archive"
     CATALOG_IMPORT = "catalog_import"
@@ -158,6 +161,7 @@ class CharactersPresenter(QObject):
     character_choices_changed = Signal(object)
     dashboard_snapshot_changed = Signal(object)
     scoring_context_changed = Signal()
+    equipment_recheck_ready = Signal()
 
     def __init__(
         self,
@@ -202,6 +206,7 @@ class CharactersPresenter(QObject):
         page.weapon_edit_requested.connect(self.focus_weapon_editor)
         page.team_edit_requested.connect(self.open_team_editor)
         page.echo_slot_edit_requested.connect(self.open_echo_editor)
+        page.equipment_check_requested.connect(self.reset_equipment_check)
         page.overview_page.profile_requested.connect(self.change_comparison_profile)
 
     @Slot(str)
@@ -231,6 +236,15 @@ class CharactersPresenter(QObject):
 
         if not self._closing:
             self._submit(_Operation.LOAD_EXTERNAL, self._load_workspace)
+
+    @Slot(str)
+    def reset_equipment_check(self, character_id: str) -> None:
+        def reset() -> _Workspace:
+            self._service.reset_equipment_check(character_id, data_set_id=self._data_set_id)
+            return self._load_workspace()
+
+        if not self._closing:
+            self._submit(_Operation.RESET_CHECK, reset)
 
     @Slot(str)
     def select_character(self, character_id: str) -> None:
@@ -428,6 +442,12 @@ class CharactersPresenter(QObject):
         existing: _WorkspaceEntry | None,
     ) -> tuple[_Workspace, str]:
         goal = {} if existing is None else deepcopy(existing.record.cultivation_goal)
+        # Save only panel inputs. Calculated values never overwrite measured scoring context.
+        goal["panel_config"] = {
+            "character_ascension": request.character_ascension,
+            "weapon_ascension": request.weapon_ascension,
+            "node_layout": 1,
+        }
         if request.energy_target_override is None:
             goal.pop("scoring_energy_target", None)
         elif not 100 <= request.energy_target_override <= 1000:
@@ -813,12 +833,14 @@ class CharactersPresenter(QObject):
         self._apply_workspace(
             payload.workspace,
             payload.selected_id,
-            preserve_editor=payload.operation is _Operation.LOAD_EXTERNAL,
+            preserve_editor=payload.operation in {_Operation.LOAD_EXTERNAL, _Operation.RESET_CHECK},
             accept_stale_mutation=payload.operation
             in {_Operation.SAVE, _Operation.ARCHIVE, _Operation.CATALOG_IMPORT},
         )
         if payload.operation in {_Operation.SAVE, _Operation.ARCHIVE, _Operation.CATALOG_IMPORT}:
             self.scoring_context_changed.emit()
+        if payload.operation is _Operation.RESET_CHECK:
+            self.equipment_recheck_ready.emit()
         if payload.operation is _Operation.CATALOG_IMPORT:
             self._apply_catalog_to_dialog()
             if self._catalog_dialog is not None:
@@ -1043,6 +1065,9 @@ def _detail_view(
     summary = detail.summary
     first_team = detail.teams[0] if detail.teams else None
     assessed = {slot.slot_index: slot for slot in result.echo_slots}
+    config = detail.cultivation_goal.get("panel_config", {})
+    if not isinstance(config, dict):
+        config = {}
     return CharacterDetailView(
         identifier=summary.id,
         name=summary.name,
@@ -1109,6 +1134,10 @@ def _detail_view(
         cultivation_goal=str(detail.cultivation_goal.get("description", "")),
         panel_energy_regen=detail.cultivation_goal.get("scoring_panel_energy_regen"),
         energy_target_override=detail.cultivation_goal.get("scoring_energy_target"),
+        calculated_panel=calculate_character_panel(detail),
+        equipment_check=equipment_check(detail),
+        character_ascension=config.get("character_ascension"),
+        weapon_ascension=config.get("weapon_ascension"),
         notes=detail.notes or "",
         completion_percent=result.overall_percent,
         passing_echoes=result.echo_passing_count,

@@ -380,6 +380,7 @@ def _create_window(
     window.characters_page.training_requested.connect(presenter.set_training_target)
     presenter.training_ready.connect(lambda: window.navigate_to(PageId.ECHO_ENHANCEMENT))
     presenter.characters_changed.connect(characters_presenter.refresh_external_changes)
+    characters_presenter.equipment_recheck_ready.connect(presenter.recheck_capture)
     characters_presenter.dashboard_snapshot_changed.connect(
         window.dashboard_page.set_character_snapshot
     )

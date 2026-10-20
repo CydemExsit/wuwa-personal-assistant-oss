@@ -16,6 +16,8 @@
 
 ## 評分、辨識與養成
 
+- [角色常態數值與來源](character-panel-stats.md)：計算範圍、精度限制及遊戲對照。
+
 - [評分方法](scoring-methodology.md)與[角色需求及來源](character-scoring-sources.md)：權重、門檻、資料來源與模型限制。
 - [角色養成](character-cultivation.md)、[養成規劃](cultivation-planning.md)、[待辦與抽卡規劃](tasks-gacha-planning.md)。
 - [OCR 策略](ocr-strategy.md)、[被動擷取設計](passive-live-capture-design.md)、[ROI 規劃](roi-plan.md)。

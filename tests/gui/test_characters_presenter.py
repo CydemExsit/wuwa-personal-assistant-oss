@@ -104,6 +104,50 @@ def test_scoring_panel_and_target_survive_editor_round_trip(character_workspace)
     assert presenter.shutdown()
 
 
+def test_calculated_panel_inputs_survive_reload_without_overwriting_measured_context(
+    character_workspace,
+) -> None:
+    _, service, profiles, data_set_id, page = character_workspace
+    presenter = CharactersPresenter(
+        service=service, scoring_profiles=profiles, page=page, data_set_id=data_set_id
+    )
+    try:
+        request = replace(
+            _request(name="珂萊塔"),
+            level=20,
+            character_ascension=1,
+            weapon_ascension=0,
+            weapon=WeaponProgressView("死與舞", 20, 1),
+            panel_energy_regen=123.4,
+            attribute_nodes=(True,) * 10,
+        )
+        workspace, identifier = presenter._save_and_reload(request, None)
+        presenter._apply_workspace(workspace, selected_id=identifier)
+        saved = service.get_character(identifier, data_set_id=data_set_id)
+        assert saved.cultivation_goal["panel_config"] == {
+            "character_ascension": 1,
+            "weapon_ascension": 0,
+            "node_layout": 1,
+        }
+        assert saved.cultivation_goal["scoring_panel_energy_regen"] == 123.4
+        restored = page.build_edit_request()
+        assert restored.character_ascension == 1
+        assert restored.weapon_ascension == 0
+        assert page.panel_stat_labels["crit_rate"].text() == "暴擊　待補資料"
+        assert "暴擊" in page.attribute_node_checks[0].text()
+        assert "死與舞" in page.panel_details_button._details_text
+        assert "位置1" in page.panel_details_button._details_text
+        # A background recognition reload recomputes the saved panel but retains editor drafts.
+        page.character_ascension_combo.setCurrentIndex(0)
+        page.weapon_name_edit.setText("未儲存武器")
+        page.apply_external_characters(workspace.rows, tuple(e.view for e in workspace.entries))
+        assert page.character_ascension_combo.currentData() is None
+        assert page.weapon_name_edit.text() == "未儲存武器"
+        assert "死與舞" in page.panel_details_button._details_text
+    finally:
+        assert presenter.shutdown()
+
+
 def test_presenter_creates_updates_and_archives_without_blocking_qt(
     qapp: QApplication,
     qtbot: QtBot,
