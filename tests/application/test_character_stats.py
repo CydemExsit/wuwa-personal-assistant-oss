@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from copy import deepcopy
 from dataclasses import replace
 from decimal import Decimal
 
@@ -107,6 +108,8 @@ def test_hand_worked_non_combat_panel_and_source_breakdown() -> None:
     assert "武器常駐被動" in panel.details()
     assert "本配置尚未逐項實測" in panel.details()
     assert "不顯示於角色面板" in panel.details()
+    assert "武器基礎攻擊 +500" in panel.details()
+    assert "暴擊傷害 +150%" in panel.details()
     assert len(panel.node_labels) == 10
 
 
@@ -133,8 +136,8 @@ def test_raw_weapon_hp_precision_and_public_card_truncation() -> None:
             weapon=replace(detail.weapon, name="不屈命定之冠"),
         )
     )
-    # HP14800*(1+11.96% nodes+72.22% weapon+11.99% passive)+4560.
-    assert panel.value("hp") == Decimal("33593.16")
+    # HP14800*(1+72.22% weapon+11.99% passive)+2*(266+621) nodes+4560.
+    assert panel.value("hp") == Decimal("33597.08")
     crown = next(c for c in panel.contributions if c.stat == "hp_pct" and "Lv.90" in c.source)
     assert crown.value == Decimal("72.22")
     assert format_stat("hp_pct", crown.value) == "72.2%"
@@ -382,6 +385,7 @@ def test_game_comparison_is_bound_to_measured_inputs_and_values() -> None:
     # A synthetic observation; real account records remain local and private.
     observed = {
         "source": "user_game_panel",
+        "measurement_method": "user_supplied_ocr",
         "input_sha256": panel_input_fingerprint(detail),
         "bases": {"hp": 12450, "attack": 962, "defense": 1197},
         "values": {
@@ -398,6 +402,7 @@ def test_game_comparison_is_bound_to_measured_inputs_and_values() -> None:
     )
     assert calculate_character_panel(saved).game_verified
     assert "已與登記的遊戲面板逐項一致" in calculate_character_panel(saved).details()
+    assert "影像辨識結果" in calculate_character_panel(saved).details()
     assert not calculate_character_panel(
         replace(saved, small_stat_nodes=(False,) * 10)
     ).game_verified
@@ -422,3 +427,72 @@ def test_character_initial_tune_properties_use_published_base_properties() -> No
     for entry in data.values():
         assert entry["initial_properties"]["tune_strain_accumulation"] == 100
         assert len(entry["initial_properties_source"]["sha256"]) == 64
+
+
+@pytest.mark.parametrize(
+    ("name", "roll", "stat", "expected"),
+    [
+        ("生命", 10.9, "hp", "13807.05"),
+        ("攻擊", 7.1, "attack", "1450.7010"),
+        ("防禦", 9.0, "defense", "1304.6103"),
+        ("生命", 6.4, "hp", "13245.555"),
+        ("生命", 11.6, "hp", "13894.2"),
+        ("攻擊", 10.9, "attack", "1487.257"),
+        ("防禦", 10.9, "defense", "1327.473"),
+    ],
+)
+def test_substat_precision_uses_origin_and_preserves_raw_roll(
+    name: str, roll: float, stat: str, expected: str
+) -> None:
+    # One synthetic C4 Echo; flat ATK150+40. Separate effective rolls are
+    # HP10.90%, ATK7.10%, DEF8.99%; none are taken from the observed total.
+    detail = panel_fixture()
+    slot = replace(
+        detail.echo_slots[0],
+        sub_stats=(
+            _stat("暴擊", 7.5),
+            _stat("暴擊傷害", 15),
+            _stat("攻擊", 40, None),
+            _stat("共鳴效率", 9.2),
+            _stat(name, roll),
+        ),
+    )
+    detail = replace(detail, echo_slots=(slot,))
+    fingerprint = panel_input_fingerprint(detail)
+    panel = calculate_character_panel(detail)
+    assert panel.complete, panel.missing
+    assert panel.value(stat) == Decimal(expected)
+    assert slot.sub_stats[-1]["value"] == roll
+    assert panel_input_fingerprint(detail) == fingerprint
+    # Main ATK18% remains on its own conversion path; converting it as a
+    # substat would lose0.01 percentage points per C1 Echo.
+    full = calculate_character_panel(panel_fixture())
+    main = [
+        c.value for c in full.contributions if c.stat == "attack_pct" and "主/次詞條" in c.source
+    ]
+    assert main == [Decimal(30), Decimal(18), Decimal(18)]
+
+
+def test_hp_nodes_truncate_each_node_and_explain_the_original_percentage(monkeypatch) -> None:
+    # Synthetic level1 base1013. Two1.8% and two4.2% nodes give18+42+18+42,
+    # not floor(1013*12%)=121. No weapon HP and no Echoes in this case.
+    catalog = deepcopy(load_panel_catalog())
+    catalog["characters"]["守岸人"]["base"][0] = 1013
+    monkeypatch.setattr(
+        "wuwa_assistant.application.character_stats.load_panel_catalog", lambda: catalog
+    )
+    detail = panel_fixture()
+    detail = replace(
+        detail,
+        summary=replace(detail.summary, name="守岸人", level=1),
+        weapon=replace(detail.weapon, name="奇幻變奏", level=1),
+        echo_slots=(),
+    )
+    panel = calculate_character_panel(detail)
+    assert panel.complete, panel.missing
+    assert panel.value("hp") == 1133
+    nodes = [c for c in panel.contributions if c.input_percent is not None]
+    assert [c.value for c in nodes] == [18, 42, 18, 42]
+    assert [c.input_percent for c in nodes] == [Decimal("1.8"), Decimal("4.2")] * 2
+    assert all(c.stat == "flat_hp" for c in nodes)
+    assert "生命加成1.8%,逐節點取整" in panel.details()

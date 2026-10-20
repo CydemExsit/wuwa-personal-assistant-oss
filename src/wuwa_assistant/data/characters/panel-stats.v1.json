@@ -1,7 +1,13 @@
 {
   "schema_version": 1,
-  "version": "2026.10.19.3",
+  "version": "2026.10.20.2",
   "state": "non_combat_no_temporary_buffs",
+  "precision_model": {
+    "kind": "empirical_source_specific",
+    "validated_at": "2026-10-20",
+    "scope": "Calibrated non-combat configurations and independent prospective comparisons; other levels and configurations still require game validation. Not official engine code.",
+    "echo_substat_conversion": "HP/DEF: float32 basis-point scaling. ATK: direct float32 ratio. Multiply the ratio by 10000 in float32 before truncating integer basis points. No per-roll or per-character offsets."
+  },
   "growth_source": {
     "url": "https://github.com/Dimbreath/WutheringData/tree/e9234ffe094b2d944d16b222d31102e8ab32d954/ConfigDB",
     "accessed_at": "2026-10-19",

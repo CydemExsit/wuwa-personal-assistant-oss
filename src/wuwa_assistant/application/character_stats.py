@@ -1,9 +1,9 @@
 """Offline, non-combat panel arithmetic with explicit provenance and unknown inputs.
 
 Percentages use percentage points (5 means 5%). Base properties are integers.
-HP/ATK/DEF ratios pass through float32 and integer basis points before addition.
-This precision model reproduces the first two supplied non-combat game panels;
-it is an empirical model, not an assertion of official engine implementation.
+HP/ATK/DEF precision depends on the source of a contribution. Skill HP nodes
+become separately truncated flat HP; Echo main/substat ratios have distinct paths.
+This is a measured model, not an assertion of official engine implementation.
 This module does not change Echo scores or claim that a calculated panel was observed.
 """
 
@@ -18,7 +18,7 @@ from functools import lru_cache
 from hashlib import sha256
 from importlib.resources import files
 from math import isfinite
-from typing import TYPE_CHECKING, Any
+from typing import TYPE_CHECKING, Any, Literal
 
 from wuwa_assistant.models.names import canonical_character_name
 from wuwa_assistant.scoring.data import load_roll_data
@@ -102,6 +102,7 @@ class StatContribution:
     value: Decimal
     reference: str | None = None
     in_panel: bool = True
+    input_percent: Decimal | None = None
 
 
 @dataclass(frozen=True, slots=True)
@@ -152,7 +153,8 @@ class CharacterPanel:
             lines += ["", "遊戲對照差異:", *self.comparison_differences]
         lines += ["", "完整計算值" if self.complete else "已知項目小計(不是完整面板)"]
         lines += [
-            f"{STAT_LABELS[k]}:{format_stat(k, v)}(未截位 {v.normalize()})" for k, v in self.totals
+            f"{STAT_LABELS[k]}:{format_stat(k, v)}(未截位 {v.normalize():f})"
+            for k, v in self.totals
         ]
         if self.bases:
             lines += ["", "基礎值 + 額外加成"]
@@ -168,7 +170,14 @@ class CharacterPanel:
                 else "%"
             )
             scope = "(不顯示於角色面板)" if not item.in_panel else ""
-            lines.append(f"{item.source} → {label} +{item.value.normalize()}{unit}{scope}")
+            conversion = (
+                f"(生命加成{item.input_percent.normalize():f}%,逐節點取整)"
+                if item.input_percent is not None
+                else ""
+            )
+            lines.append(
+                f"{item.source} → {label} +{item.value.normalize():f}{unit}{conversion}{scope}"
+            )
         lines += [
             "",
             "計算方式:",
@@ -176,6 +185,7 @@ class CharacterPanel:
             "攻擊=(角色基礎攻擊+武器基礎攻擊)*(1+攻擊加成)+固定攻擊。",
             "角色/武器成長後基礎值各自取整,再相加。",
             "生命/攻擊/防禦百分比以單精度比率轉整數萬分位後加算。",
+            "聲骸主/次詞條與副詞條分別換算;生命屬性節點逐筆轉固定生命。",
             "雙暴/效率與傷害百分比採加算;暴擊面板不截在100%。",
             "最終整數向下截位;百分比顯示一位小數。首位聲骸/固有技能被動另列。",
             "",
@@ -195,6 +205,10 @@ def format_stat(key: str, value: Decimal) -> str:
     return f"{value.quantize(Decimal('0.1'), rounding=ROUND_DOWN)}%"
 
 
+def _float32(value: float) -> float:
+    return struct.unpack("<f", struct.pack("<f", value))[0]
+
+
 def _ratio_percent(value: Decimal, growth: Decimal = Decimal(1)) -> Decimal:
     """Empirical ratio quantization being checked against recorded game panels.
 
@@ -202,8 +216,24 @@ def _ratio_percent(value: Decimal, growth: Decimal = Decimal(1)) -> Decimal:
     use integer percentage points in the source. Growing a weapon happens before
     conversion to integer basis points; never grow its truncated display card.
     """
-    raw = struct.unpack("<f", struct.pack("<f", float(value / 100)))[0]
+    raw = _float32(float(value / 100))
     points = Decimal.from_float(raw) * growth * 10000
+    return points.quantize(Decimal(1), rounding=ROUND_DOWN) / 100
+
+
+def _echo_substat_percent(stat: str, value: Decimal) -> Decimal:
+    """Convert a displayed roll independently of main stats and weapon growth.
+
+    Keep the multiply back to basis points in float32, too: promoting to
+    Decimal before that multiply drops some rolls by a whole basis point.
+    HP/DEF use the basis-point scaling path; ATK starts with a direct ratio.
+    Both paths are shared across roles, with no calibrated per-roll constants.
+    """
+    if stat == "attack_pct":
+        ratio = _float32(float(value / 100))
+    else:
+        ratio = _float32(_float32(float(value * 100)) * _float32(0.0001))
+    points = Decimal.from_float(_float32(ratio * 10000))
     return points.quantize(Decimal(1), rounding=ROUND_DOWN) / 100
 
 
@@ -326,6 +356,9 @@ def calculate_character_panel(detail: CharacterDetail) -> CharacterPanel:
         "數值含公開成長倍率;WIKI 個別突破表的矛盾未作為計算輸入。",
         "遊戲對照前請清除觸發加成;脫離戰鬥不一定會清除所有已累積效果。",
     ]
+    observed = detail.cultivation_goal.get("panel_observation")
+    if isinstance(observed, dict) and observed.get("measurement_method") == "user_supplied_ocr":
+        notes.append("登記面板來自使用者提供的影像辨識結果;有疑點時需核對遊戲原值。")
     contributions: list[StatContribution] = []
     sums: dict[str, Decimal] = defaultdict(Decimal)
 
@@ -336,18 +369,37 @@ def calculate_character_panel(detail: CharacterDetail) -> CharacterPanel:
         *,
         growth: Decimal = Decimal(1),
         off_panel: bool = False,
+        kind: Literal["default", "attribute_node", "echo_substat"] = "default",
     ) -> None:
         for stat, value in effects.items():
             if stat == "all_element_damage":
-                add(label, dict.fromkeys(ELEMENT_STATS, value), reference, off_panel=off_panel)
+                add(
+                    label,
+                    dict.fromkeys(ELEMENT_STATS, value),
+                    reference,
+                    growth=growth,
+                    off_panel=off_panel,
+                    kind=kind,
+                )
                 continue
             amount = Decimal(str(value)) * growth
+            input_percent = None
             if stat in {"hp_pct", "attack_pct", "defense_pct"}:
-                amount = _ratio_percent(Decimal(str(value)), growth)
+                if kind == "attribute_node" and stat == "hp_pct":
+                    input_percent = Decimal(str(value))
+                    ratio = Decimal.from_float(_float32(float(input_percent / 100)))
+                    amount = (sums["base_hp"] * ratio).quantize(Decimal(1), rounding=ROUND_DOWN)
+                    stat = "flat_hp"
+                elif kind == "echo_substat":
+                    amount = _echo_substat_percent(stat, Decimal(str(value)))
+                else:
+                    amount = _ratio_percent(Decimal(str(value)), growth)
             in_panel = not off_panel
             if in_panel:
                 sums[stat] += amount
-            contributions.append(StatContribution(label, stat, amount, reference, in_panel))
+            contributions.append(
+                StatContribution(label, stat, amount, reference, in_panel, input_percent)
+            )
 
     name = canonical_character_name(detail.summary.name)
     character = _lookup(catalog["characters"], name)
@@ -387,6 +439,7 @@ def calculate_character_panel(detail: CharacterDetail) -> CharacterPanel:
                     node["effects"],
                     ref,
                     off_panel=node["kind"] == "inherent",
+                    kind="attribute_node" if node["kind"] == "attribute" else "default",
                 )
         if (
             any(detail.small_stat_nodes)
@@ -483,7 +536,11 @@ def calculate_character_panel(detail: CharacterDetail) -> CharacterPanel:
                     ):
                         missing.append(f"{prefix}副詞條數值不在已公布檔位: {observed.get('name')}")
                         continue
-                    add(f"{prefix}・{slot.name or '名稱未確認'}・{group}", {key: value})
+                    add(
+                        f"{prefix}・{slot.name or '名稱未確認'}・{group}",
+                        {key: value},
+                        kind="echo_substat" if group == "副詞條" else "default",
+                    )
         if not slot.name:
             missing.append(f"{prefix}名稱未確認,無法核對套裝重複種類")
         found_set = _lookup(catalog["sets"], slot.set_name or "")
