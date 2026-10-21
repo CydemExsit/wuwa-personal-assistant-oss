@@ -19,6 +19,7 @@ from wuwa_assistant.application.character_catalog import (
     load_bundled_character_catalog,
 )
 from wuwa_assistant.application.character_completion import evaluate_character_detail
+from wuwa_assistant.application.character_scoring import character_profile
 from wuwa_assistant.application.character_stats import calculate_character_panel
 from wuwa_assistant.application.characters import (
     CharacterCultivationService,
@@ -35,6 +36,8 @@ from wuwa_assistant.application.characters import (
     UpdateTeam,
     UpsertWeapon,
 )
+from wuwa_assistant.application.combat_build import evaluate_build
+from wuwa_assistant.application.combat_service import CombatSettings
 from wuwa_assistant.application.equipment_check import equipment_check
 from wuwa_assistant.application.equipment_overview import (
     CharacterEquipmentOverview,
@@ -42,6 +45,7 @@ from wuwa_assistant.application.equipment_overview import (
     EquippedEchoScore,
 )
 from wuwa_assistant.application.scoring_profiles import ScoringProfileService
+from wuwa_assistant.application.scoring_workflow import profile_from_snapshot
 from wuwa_assistant.cultivation import CultivationCompletion
 from wuwa_assistant.scoring.character_guides import AUTO_PROFILE_ID, guide_for_character
 from wuwa_assistant.ui.controllers.background_executor import BackgroundExecutor
@@ -59,6 +63,7 @@ from wuwa_assistant.ui.dialogs import (
     TeamSaveRequest,
     TeamSummaryView,
 )
+from wuwa_assistant.ui.dialogs.combat_teams import CombatTeamsDialog
 from wuwa_assistant.ui.pages.characters import (
     CharacterDetailView,
     CharacterEditRequest,
@@ -88,6 +93,7 @@ class _Operation(StrEnum):
     SAVE = "save"
     ARCHIVE = "archive"
     CATALOG_IMPORT = "catalog_import"
+    COMBAT_SAVE = "combat_save"
 
 
 class _DialogOperation(StrEnum):
@@ -187,6 +193,7 @@ class CharactersPresenter(QObject):
         self._team_dialog: TeamEditorDialog | None = None
         self._echo_dialog: EchoSlotAssignmentDialog | None = None
         self._catalog_dialog: CharacterCatalogDialog | None = None
+        self._combat_dialog: CombatTeamsDialog | None = None
         self._default_profile_id: str | None = None
         self._comparison_profile_id: str | None = AUTO_PROFILE_ID
         self._echo_generation = 0
@@ -205,6 +212,7 @@ class CharactersPresenter(QObject):
         page.archive_requested.connect(self.toggle_archive)
         page.weapon_edit_requested.connect(self.focus_weapon_editor)
         page.team_edit_requested.connect(self.open_team_editor)
+        page.combat_edit_requested.connect(self.open_combat_editor)
         page.echo_slot_edit_requested.connect(self.open_echo_editor)
         page.equipment_check_requested.connect(self.reset_equipment_check)
         page.overview_page.profile_requested.connect(self.change_comparison_profile)
@@ -221,6 +229,37 @@ class CharactersPresenter(QObject):
             return
         self._page.set_loading(True, "正在載入角色養成資料…")
         self._submit(_Operation.LOAD, self._load_workspace)
+
+    @Slot(str)
+    def open_combat_editor(self, character_id: str) -> None:
+        entry = self._entries.get(character_id)
+        if self._closing or entry is None:
+            return
+        if self._combat_dialog is not None:
+            self._combat_dialog.close()
+        dialog = CombatTeamsDialog(
+            entry.record,
+            {
+                key: value.record
+                for key, value in self._entries.items()
+                if value.record.summary.archived_at is None
+            },
+            self._page,
+        )
+        self._combat_dialog = dialog
+        dialog.save_requested.connect(self._save_combat_settings)
+        dialog.show()
+
+    @Slot(object)
+    def _save_combat_settings(self, settings: object) -> None:
+        if self._closing or not isinstance(settings, CombatSettings):
+            return
+
+        def save() -> _Workspace:
+            self._service.save_combat_settings(self._data_set_id, settings)
+            return self._load_workspace()
+
+        self._submit(_Operation.COMBAT_SAVE, save, selected_id=settings.character_id)
 
     @Slot()
     def refresh(self) -> None:
@@ -702,6 +741,24 @@ class CharactersPresenter(QObject):
                 ),
             )
             view = _detail_view(detail, evaluated.completion, evaluated.next_action)
+            combat_profile = character_profile(
+                self._profiles,
+                data_set_id=self._data_set_id,
+                name=summary.name,
+                explicit_profile_id=summary.scoring_profile_id,
+                profile_snapshots=tuple(profiles),
+            )
+            weights = (
+                None
+                if combat_profile is None
+                else {str(w.stat): w.weight for w in profile_from_snapshot(combat_profile).weights}
+            )
+            combat = evaluate_build(detail, {d.summary.id: d for d in details}, weights=weights)
+            view = replace(
+                view,
+                combat_summary=combat.summary,
+                combat_details=combat.details() if combat.teams else "",
+            )
             if summary.id in overview_by_id:
                 view = _with_equipment_scores(
                     view, overview_by_id[summary.id], overview.profile_name
@@ -826,6 +883,8 @@ class CharactersPresenter(QObject):
         if self._closing or not isinstance(payload, _JobResult):
             return
         if payload.error is not None or payload.workspace is None:
+            if payload.operation is _Operation.COMBAT_SAVE and self._combat_dialog is not None:
+                self._combat_dialog.set_result(payload.error or "儲存失敗")
             if payload.operation is _Operation.CATALOG_IMPORT and self._catalog_dialog is not None:
                 self._catalog_dialog.show_error(payload.error or "角色目錄匯入失敗。")
             self._page.show_error(payload.error or "角色資料操作失敗。")
@@ -833,12 +892,25 @@ class CharactersPresenter(QObject):
         self._apply_workspace(
             payload.workspace,
             payload.selected_id,
-            preserve_editor=payload.operation in {_Operation.LOAD_EXTERNAL, _Operation.RESET_CHECK},
+            preserve_editor=payload.operation
+            in {_Operation.LOAD_EXTERNAL, _Operation.RESET_CHECK, _Operation.COMBAT_SAVE},
             accept_stale_mutation=payload.operation
-            in {_Operation.SAVE, _Operation.ARCHIVE, _Operation.CATALOG_IMPORT},
+            in {
+                _Operation.SAVE,
+                _Operation.ARCHIVE,
+                _Operation.CATALOG_IMPORT,
+                _Operation.COMBAT_SAVE,
+            },
         )
-        if payload.operation in {_Operation.SAVE, _Operation.ARCHIVE, _Operation.CATALOG_IMPORT}:
+        if payload.operation in {
+            _Operation.SAVE,
+            _Operation.ARCHIVE,
+            _Operation.CATALOG_IMPORT,
+            _Operation.COMBAT_SAVE,
+        }:
             self.scoring_context_changed.emit()
+        if payload.operation is _Operation.COMBAT_SAVE and self._combat_dialog is not None:
+            self._combat_dialog.set_result()
         if payload.operation is _Operation.RESET_CHECK:
             self.equipment_recheck_ready.emit()
         if payload.operation is _Operation.CATALOG_IMPORT:

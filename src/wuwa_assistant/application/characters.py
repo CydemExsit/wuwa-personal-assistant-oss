@@ -20,6 +20,7 @@ from sqlalchemy import exists, select
 from sqlalchemy.orm import Session
 
 if TYPE_CHECKING:
+    from .combat_service import CombatSettings
     from .equipment_overview import EquipmentOverview
 
 from wuwa_assistant.models.names import canonical_character_name, character_name_key
@@ -641,6 +642,11 @@ class CharacterCultivationService:
             character.updated_at = utc_now()
             session.flush()
             return _character_detail(session, character)
+
+    def save_combat_settings(self, data_set_id: str, settings: CombatSettings) -> None:
+        from .combat_service import CombatBuildService
+
+        CombatBuildService(self._session_factory).save(data_set_id, settings)
 
     def list_echoes_for_assignment(
         self,

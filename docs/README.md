@@ -16,6 +16,7 @@
 
 ## 評分、辨識與養成
 
+- [戰鬥隊伍與聲骸替換](combat-build.md)：逐隊充能、戰鬥雙暴及其他位置補強。
 - [角色常態數值與來源](character-panel-stats.md)：計算範圍、精度限制及遊戲對照。
 
 - [評分方法](scoring-methodology.md)與[角色需求及來源](character-scoring-sources.md)：權重、門檻、資料來源與模型限制。
@@ -39,4 +40,4 @@
 與 `release-1.0.*`／`release-1.1.0.md` 保留私人開發階段的設計及驗證背景，可能含舊版本、舊路徑或舊介面描述。
 它們不代表目前公開版的下載入口、公開可重現樣本或外部採用情況。
 
-公開版後續版本說明：[1.1.2](release-1.1.2.md)、[1.1.3](release-1.1.3.md)、[1.1.4](release-1.1.4.md)、[1.1.5](release-1.1.5.md)、[1.1.6](release-1.1.6.md)、[1.1.7](release-1.1.7.md)。
+公開版後續版本說明：[1.1.2](release-1.1.2.md)、[1.1.3](release-1.1.3.md)、[1.1.4](release-1.1.4.md)、[1.1.5](release-1.1.5.md)、[1.1.6](release-1.1.6.md)、[1.1.7](release-1.1.7.md)、[1.1.8](release-1.1.8.md)。

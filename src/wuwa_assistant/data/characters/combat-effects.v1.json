@@ -1,0 +1,2488 @@
+{
+  "schema_version": 1,
+  "version": "2026.10.21.1",
+  "policy": "ideal-recurring-output-window",
+  "default_modes": {
+    "愛彌斯": "震諧",
+    "心": "同奏",
+    "達妮婭": "聚爆",
+    "洛瑟菈": "霜漸"
+  },
+  "modes": {
+    "愛彌斯": [
+      "震諧",
+      "聚爆"
+    ],
+    "心": [
+      "同奏",
+      "電磁"
+    ],
+    "達妮婭": [
+      "聚爆",
+      "集諧"
+    ],
+    "洛瑟菈": [
+      "霜漸",
+      "聲骸"
+    ]
+  },
+  "effects": [
+    {
+      "id": "e001",
+      "kind": "character",
+      "owner": "千咲",
+      "label": "終點在此處",
+      "values": {
+        "havoc_damage": 20,
+        "healing_bonus": 20
+      },
+      "recipient": "self",
+      "condition": "正常輪轉中完成觸發；主要輸出窗口生效",
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1429457793942482944",
+        "accessed_at": "2026-10-21",
+        "updated_at": "2026-01-07",
+        "content_sha256": "74aa579ed81fae7cac78c8c93be764d5411522f216391ee27153f87c3d21b3b9"
+      },
+      "node": 5
+    },
+    {
+      "id": "e002",
+      "kind": "character",
+      "owner": "千咲",
+      "label": "一鏈・虛無絞痕",
+      "values": {
+        "attack_pct": 30
+      },
+      "recipient": "self",
+      "condition": "正常輪轉中完成觸發；主要輸出窗口生效",
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1429457793942482944",
+        "accessed_at": "2026-10-21",
+        "updated_at": "2026-01-07",
+        "content_sha256": "74aa579ed81fae7cac78c8c93be764d5411522f216391ee27153f87c3d21b3b9"
+      },
+      "chain": 1
+    },
+    {
+      "id": "e003",
+      "kind": "character",
+      "owner": "千咲",
+      "label": "二鏈・虛湮之線",
+      "values": {
+        "all_element_damage": 50
+      },
+      "recipient": "team",
+      "condition": "正常輪轉中完成觸發；主要輸出窗口生效",
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1429457793942482944",
+        "accessed_at": "2026-10-21",
+        "updated_at": "2026-01-07",
+        "content_sha256": "74aa579ed81fae7cac78c8c93be764d5411522f216391ee27153f87c3d21b3b9"
+      },
+      "chain": 2
+    },
+    {
+      "id": "e004",
+      "kind": "character",
+      "owner": "卡提希婭",
+      "label": "一鏈・決意滿層",
+      "values": {
+        "crit_damage": 100
+      },
+      "recipient": "self",
+      "condition": "芙露德莉斯決意達120，終結解放命中前；每層不刷新，請依窗口確認",
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1370471621924728832",
+        "accessed_at": "2026-10-21",
+        "updated_at": "2025-12-29",
+        "content_sha256": "38d929a25ba28f5727d337e562812236da8759033746846a8af57f5ed666bdd2"
+      },
+      "chain": 1
+    },
+    {
+      "id": "e005",
+      "kind": "character",
+      "owner": "卡提希婭",
+      "label": "四鏈・異常效應",
+      "values": {
+        "all_element_damage": 20
+      },
+      "recipient": "team",
+      "condition": "正常輪轉中完成觸發；主要輸出窗口生效",
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1370471621924728832",
+        "accessed_at": "2026-10-21",
+        "updated_at": "2025-12-29",
+        "content_sha256": "38d929a25ba28f5727d337e562812236da8759033746846a8af57f5ed666bdd2"
+      },
+      "chain": 4
+    },
+    {
+      "id": "e006",
+      "kind": "character",
+      "owner": "嘉貝莉娜",
+      "label": "內燃燒",
+      "values": {
+        "attack_pct": 20
+      },
+      "recipient": "self",
+      "condition": "正常輪轉中完成觸發；主要輸出窗口生效",
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1415137052791296000",
+        "accessed_at": "2026-10-21",
+        "updated_at": "2026-06-15",
+        "content_sha256": "94d6712c3cd2847785ac0033fbb8e4b29987f33ac013175d17a7c2afcd0cc07d"
+      },
+      "max_chain": 1
+    },
+    {
+      "id": "e007",
+      "kind": "character",
+      "owner": "嘉貝莉娜",
+      "label": "二鏈・內燃燒強化",
+      "values": {
+        "attack_pct": 90
+      },
+      "recipient": "self",
+      "condition": "正常輪轉中完成觸發；主要輸出窗口生效",
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1415137052791296000",
+        "accessed_at": "2026-10-21",
+        "updated_at": "2026-06-15",
+        "content_sha256": "94d6712c3cd2847785ac0033fbb8e4b29987f33ac013175d17a7c2afcd0cc07d"
+      },
+      "chain": 2
+    },
+    {
+      "id": "e008",
+      "kind": "character",
+      "owner": "嘉貝莉娜",
+      "label": "一鏈・餘火滿層",
+      "values": {
+        "crit_damage": 80
+      },
+      "recipient": "self",
+      "condition": "惡魔位格惡翼揚升，餘火40，適用指定普攻、重擊、掠襲",
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1415137052791296000",
+        "accessed_at": "2026-10-21",
+        "updated_at": "2026-06-15",
+        "content_sha256": "94d6712c3cd2847785ac0033fbb8e4b29987f33ac013175d17a7c2afcd0cc07d"
+      },
+      "chain": 1,
+      "scopes": [
+        "basic_attack",
+        "heavy_attack",
+        "resonance_skill"
+      ]
+    },
+    {
+      "id": "e009",
+      "kind": "character",
+      "owner": "嘉貝莉娜",
+      "label": "四鏈・聲骸技能",
+      "values": {
+        "all_element_damage": 20
+      },
+      "recipient": "team",
+      "condition": "正常輪轉中完成觸發；主要輸出窗口生效",
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1415137052791296000",
+        "accessed_at": "2026-10-21",
+        "updated_at": "2026-06-15",
+        "content_sha256": "94d6712c3cd2847785ac0033fbb8e4b29987f33ac013175d17a7c2afcd0cc07d"
+      },
+      "chain": 4
+    },
+    {
+      "id": "e010",
+      "kind": "character",
+      "owner": "守岸人",
+      "label": "自我引力",
+      "values": {
+        "energy_regen": 10
+      },
+      "recipient": "self",
+      "condition": "正常輪轉中完成觸發；主要輸出窗口生效",
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1286814658335739904",
+        "accessed_at": "2026-10-21",
+        "updated_at": "2025-12-29",
+        "content_sha256": "8d623031e2d985c15ef3bfd4748018043fdd8c3b2a628e68cedd11a2b17da10b"
+      },
+      "node": 5
+    },
+    {
+      "id": "e011",
+      "kind": "character",
+      "owner": "守岸人",
+      "label": "延奏",
+      "values": {
+        "deepen": 15
+      },
+      "recipient": "team",
+      "condition": "正常輪轉中完成觸發；主要輸出窗口生效",
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1286814658335739904",
+        "accessed_at": "2026-10-21",
+        "updated_at": "2025-12-29",
+        "content_sha256": "8d623031e2d985c15ef3bfd4748018043fdd8c3b2a628e68cedd11a2b17da10b"
+      }
+    },
+    {
+      "id": "e012",
+      "kind": "character",
+      "owner": "守岸人",
+      "label": "二鏈・星域",
+      "values": {
+        "attack_pct": 40
+      },
+      "recipient": "team",
+      "condition": "正常輪轉中完成觸發；主要輸出窗口生效",
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1286814658335739904",
+        "accessed_at": "2026-10-21",
+        "updated_at": "2025-12-29",
+        "content_sha256": "8d623031e2d985c15ef3bfd4748018043fdd8c3b2a628e68cedd11a2b17da10b"
+      },
+      "chain": 2
+    },
+    {
+      "id": "e013",
+      "kind": "character",
+      "owner": "心",
+      "label": "循流引興替・同奏",
+      "values": {
+        "attack_pct": 50
+      },
+      "recipient": "self",
+      "condition": "正常輪轉中完成觸發；主要輸出窗口生效",
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1543050481616060416",
+        "accessed_at": "2026-10-21",
+        "updated_at": "2026-10-09",
+        "content_sha256": "06a69ef112641fe7782feb3dc519742580080a1d60953fecb79c26929315db0c"
+      },
+      "node": 4,
+      "mode": "同奏"
+    },
+    {
+      "id": "e014",
+      "kind": "character",
+      "owner": "心",
+      "label": "循流引興替・電磁",
+      "values": {
+        "electro_damage": 50
+      },
+      "recipient": "self",
+      "condition": "兩位不同角色附加電磁效應；不足兩位請排除此滿層效果",
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1543050481616060416",
+        "accessed_at": "2026-10-21",
+        "updated_at": "2026-10-09",
+        "content_sha256": "06a69ef112641fe7782feb3dc519742580080a1d60953fecb79c26929315db0c"
+      },
+      "node": 4,
+      "mode": "電磁"
+    },
+    {
+      "id": "e015",
+      "kind": "character",
+      "owner": "心",
+      "label": "延奏・同奏",
+      "values": {
+        "deepen": 20
+      },
+      "recipient": "next",
+      "condition": "正常輪轉中完成觸發；主要輸出窗口生效",
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1543050481616060416",
+        "accessed_at": "2026-10-21",
+        "updated_at": "2026-10-09",
+        "content_sha256": "06a69ef112641fe7782feb3dc519742580080a1d60953fecb79c26929315db0c"
+      },
+      "mode": "同奏"
+    },
+    {
+      "id": "e016",
+      "kind": "character",
+      "owner": "心",
+      "label": "延奏・電磁",
+      "values": {
+        "deepen": 20
+      },
+      "recipient": "next",
+      "condition": "下一位登場角色造成導電傷害",
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1543050481616060416",
+        "accessed_at": "2026-10-21",
+        "updated_at": "2026-10-09",
+        "content_sha256": "06a69ef112641fe7782feb3dc519742580080a1d60953fecb79c26929315db0c"
+      },
+      "mode": "電磁"
+    },
+    {
+      "id": "e017",
+      "kind": "character",
+      "owner": "心",
+      "label": "三鏈・同奏解放",
+      "values": {
+        "crit_damage": 80
+      },
+      "recipient": "self",
+      "condition": "正常輪轉中完成觸發；主要輸出窗口生效",
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1543050481616060416",
+        "accessed_at": "2026-10-21",
+        "updated_at": "2026-10-09",
+        "content_sha256": "06a69ef112641fe7782feb3dc519742580080a1d60953fecb79c26929315db0c"
+      },
+      "chain": 3,
+      "mode": "同奏",
+      "scope": "resonance_liberation",
+      "max_chain": 5
+    },
+    {
+      "id": "e018",
+      "kind": "character",
+      "owner": "心",
+      "label": "四鏈・循環",
+      "values": {
+        "all_element_damage": 20
+      },
+      "recipient": "team",
+      "condition": "正常輪轉中完成觸發；主要輸出窗口生效",
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1543050481616060416",
+        "accessed_at": "2026-10-21",
+        "updated_at": "2026-10-09",
+        "content_sha256": "06a69ef112641fe7782feb3dc519742580080a1d60953fecb79c26929315db0c"
+      },
+      "chain": 4
+    },
+    {
+      "id": "e019",
+      "kind": "character",
+      "owner": "愛彌斯",
+      "label": "星與星之間・震諧",
+      "values": {
+        "crit_damage": 60
+      },
+      "recipient": "self",
+      "condition": "相應模態的隊伍觸發已達滿層；三鏈改為一次觸發，數值不重複疊加",
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1457744312692867072",
+        "accessed_at": "2026-10-21",
+        "updated_at": "2026-08-28",
+        "content_sha256": "b8567eeafcd12ed57fae3c65a9ebfa8646999920366d22af7c283c68c5fcfc89"
+      },
+      "node": 5,
+      "mode": "震諧",
+      "stacks": {
+        "tag": "震諧",
+        "per_actor": 20,
+        "cap": 60,
+        "full_chain": 3
+      }
+    },
+    {
+      "id": "e020",
+      "kind": "character",
+      "owner": "愛彌斯",
+      "label": "延奏・震諧",
+      "values": {
+        "deepen": 20
+      },
+      "recipient": "next",
+      "condition": "隊友附加相應偏移或聚爆效應，延奏增益由10%提高至20%",
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1457744312692867072",
+        "accessed_at": "2026-10-21",
+        "updated_at": "2026-08-28",
+        "content_sha256": "b8567eeafcd12ed57fae3c65a9ebfa8646999920366d22af7c283c68c5fcfc89"
+      },
+      "mode": "震諧"
+    },
+    {
+      "id": "e021",
+      "kind": "character",
+      "owner": "愛彌斯",
+      "label": "星與星之間・聚爆",
+      "values": {
+        "crit_damage": 60
+      },
+      "recipient": "self",
+      "condition": "相應模態的隊伍觸發已達滿層；三鏈改為一次觸發，數值不重複疊加",
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1457744312692867072",
+        "accessed_at": "2026-10-21",
+        "updated_at": "2026-08-28",
+        "content_sha256": "b8567eeafcd12ed57fae3c65a9ebfa8646999920366d22af7c283c68c5fcfc89"
+      },
+      "node": 5,
+      "mode": "聚爆",
+      "stacks": {
+        "tag": "聚爆",
+        "per_actor": 30,
+        "cap": 60,
+        "full_chain": 3
+      }
+    },
+    {
+      "id": "e022",
+      "kind": "character",
+      "owner": "愛彌斯",
+      "label": "延奏・聚爆",
+      "values": {
+        "deepen": 20
+      },
+      "recipient": "next",
+      "condition": "隊友附加相應偏移或聚爆效應，延奏增益由10%提高至20%",
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1457744312692867072",
+        "accessed_at": "2026-10-21",
+        "updated_at": "2026-08-28",
+        "content_sha256": "b8567eeafcd12ed57fae3c65a9ebfa8646999920366d22af7c283c68c5fcfc89"
+      },
+      "mode": "聚爆"
+    },
+    {
+      "id": "e023",
+      "kind": "character",
+      "owner": "愛彌斯",
+      "label": "三鏈・終結",
+      "values": {
+        "deepen": 25
+      },
+      "recipient": "self",
+      "condition": "正常輪轉中完成觸發；主要輸出窗口生效",
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1457744312692867072",
+        "accessed_at": "2026-10-21",
+        "updated_at": "2026-08-28",
+        "content_sha256": "b8567eeafcd12ed57fae3c65a9ebfa8646999920366d22af7c283c68c5fcfc89"
+      },
+      "chain": 3,
+      "scope": "resonance_liberation"
+    },
+    {
+      "id": "e024",
+      "kind": "character",
+      "owner": "折枝",
+      "label": "揮毫",
+      "values": {
+        "attack_pct": 18
+      },
+      "recipient": "self",
+      "condition": "正常輪轉中完成觸發；主要輸出窗口生效",
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1269802618305703936",
+        "accessed_at": "2026-10-21",
+        "updated_at": "2025-12-29",
+        "content_sha256": "704f554e56208a2e9f381ddeb2793c0aa6f2dcefdb969cfec20a63ff8031b466"
+      },
+      "node": 4
+    },
+    {
+      "id": "e025",
+      "kind": "character",
+      "owner": "折枝",
+      "label": "延奏",
+      "values": {
+        "glacio_damage_deepen": 20,
+        "resonance_skill_deepen": 25
+      },
+      "recipient": "next",
+      "condition": "正常輪轉中完成觸發；主要輸出窗口生效",
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1269802618305703936",
+        "accessed_at": "2026-10-21",
+        "updated_at": "2025-12-29",
+        "content_sha256": "704f554e56208a2e9f381ddeb2793c0aa6f2dcefdb969cfec20a63ff8031b466"
+      }
+    },
+    {
+      "id": "e026",
+      "kind": "character",
+      "owner": "折枝",
+      "label": "一鏈・極意",
+      "values": {
+        "crit_rate": 10
+      },
+      "recipient": "self",
+      "condition": "正常輪轉中完成觸發；主要輸出窗口生效",
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1269802618305703936",
+        "accessed_at": "2026-10-21",
+        "updated_at": "2025-12-29",
+        "content_sha256": "704f554e56208a2e9f381ddeb2793c0aa6f2dcefdb969cfec20a63ff8031b466"
+      },
+      "chain": 1
+    },
+    {
+      "id": "e027",
+      "kind": "character",
+      "owner": "折枝",
+      "label": "三鏈・神來之筆",
+      "values": {
+        "attack_pct": 45
+      },
+      "recipient": "self",
+      "condition": "正常輪轉中完成觸發；主要輸出窗口生效",
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1269802618305703936",
+        "accessed_at": "2026-10-21",
+        "updated_at": "2025-12-29",
+        "content_sha256": "704f554e56208a2e9f381ddeb2793c0aa6f2dcefdb969cfec20a63ff8031b466"
+      },
+      "chain": 3
+    },
+    {
+      "id": "e028",
+      "kind": "character",
+      "owner": "折枝",
+      "label": "四鏈・解放",
+      "values": {
+        "attack_pct": 20
+      },
+      "recipient": "team",
+      "condition": "正常輪轉中完成觸發；主要輸出窗口生效",
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1269802618305703936",
+        "accessed_at": "2026-10-21",
+        "updated_at": "2025-12-29",
+        "content_sha256": "704f554e56208a2e9f381ddeb2793c0aa6f2dcefdb969cfec20a63ff8031b466"
+      },
+      "chain": 4
+    },
+    {
+      "id": "e029",
+      "kind": "character",
+      "owner": "洛瑟菈",
+      "label": "一鏈・追光",
+      "values": {
+        "crit_rate": 20
+      },
+      "recipient": "self",
+      "condition": "正常輪轉中完成觸發；主要輸出窗口生效",
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1514097978770092032",
+        "accessed_at": "2026-10-21",
+        "updated_at": "2026-07-21",
+        "content_sha256": "04c8dce153569b0b65c914c545d75207dfc6a0f7393242e1faa25a80425c6b39"
+      },
+      "chain": 1
+    },
+    {
+      "id": "e030",
+      "kind": "character",
+      "owner": "洛瑟菈",
+      "label": "四鏈・遺忘",
+      "values": {
+        "attack_pct": 30
+      },
+      "recipient": "self",
+      "condition": "正常輪轉中完成觸發；主要輸出窗口生效",
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1514097978770092032",
+        "accessed_at": "2026-10-21",
+        "updated_at": "2026-07-21",
+        "content_sha256": "04c8dce153569b0b65c914c545d75207dfc6a0f7393242e1faa25a80425c6b39"
+      },
+      "chain": 4
+    },
+    {
+      "id": "e031",
+      "kind": "character",
+      "owner": "清宵",
+      "label": "三鏈・解放",
+      "values": {
+        "crit_damage": 100
+      },
+      "recipient": "self",
+      "condition": "正常輪轉中完成觸發；主要輸出窗口生效",
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1536353668409655296",
+        "accessed_at": "2026-10-21",
+        "updated_at": "2026-08-28",
+        "content_sha256": "3675669ecfdbfce8f5830608f6b74e85e5efd3b84e1377a0b0a0fc584671bf43"
+      },
+      "chain": 3,
+      "scope": "resonance_liberation"
+    },
+    {
+      "id": "e032",
+      "kind": "character",
+      "owner": "清宵",
+      "label": "四鏈・集諧",
+      "values": {
+        "attack_pct": 20
+      },
+      "recipient": "team",
+      "condition": "正常輪轉中完成觸發；主要輸出窗口生效",
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1536353668409655296",
+        "accessed_at": "2026-10-21",
+        "updated_at": "2026-08-28",
+        "content_sha256": "3675669ecfdbfce8f5830608f6b74e85e5efd3b84e1377a0b0a0fc584671bf43"
+      },
+      "chain": 4
+    },
+    {
+      "id": "e033",
+      "kind": "character",
+      "owner": "珂萊塔",
+      "label": "一鏈・解離",
+      "values": {
+        "crit_rate": 12.5
+      },
+      "recipient": "self",
+      "condition": "正常輪轉中完成觸發；主要輸出窗口生效",
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1321977849344999424",
+        "accessed_at": "2026-10-21",
+        "updated_at": "2025-12-29",
+        "content_sha256": "3068e84fd7a300a6e240a9924a344910cf7492826d76982bb443918c6b36cada"
+      },
+      "chain": 1
+    },
+    {
+      "id": "e034",
+      "kind": "character",
+      "owner": "琳奈",
+      "label": "延奏",
+      "values": {
+        "deepen": 15,
+        "resonance_liberation_deepen": 25
+      },
+      "recipient": "next",
+      "condition": "正常輪轉中完成觸發；主要輸出窗口生效",
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1445377391854534656",
+        "accessed_at": "2026-10-21",
+        "updated_at": "2026-01-15",
+        "content_sha256": "f9668800d9ce7c701f61d2c2dcbbb2e74d00044836d3f005ab08154f840a650d"
+      }
+    },
+    {
+      "id": "e035",
+      "kind": "character",
+      "owner": "琳奈",
+      "label": "二鏈・延奏強化",
+      "values": {
+        "deepen": 25
+      },
+      "recipient": "next",
+      "condition": "正常輪轉中完成觸發；主要輸出窗口生效",
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1445377391854534656",
+        "accessed_at": "2026-10-21",
+        "updated_at": "2026-01-15",
+        "content_sha256": "f9668800d9ce7c701f61d2c2dcbbb2e74d00044836d3f005ab08154f840a650d"
+      },
+      "chain": 2
+    },
+    {
+      "id": "e036",
+      "kind": "character",
+      "owner": "秧秧·玄翎",
+      "label": "四鏈・劍式",
+      "values": {
+        "attack_pct": 20
+      },
+      "recipient": "team",
+      "condition": "正常輪轉中完成觸發；主要輸出窗口生效",
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1519669180526559232",
+        "accessed_at": "2026-10-21",
+        "updated_at": "2026-07-10",
+        "content_sha256": "ec327003ec1c5d455a61b615709f3468799c659cad0fc8867c1c56400d36e5f5"
+      },
+      "chain": 4
+    },
+    {
+      "id": "e037",
+      "kind": "character",
+      "owner": "秧秧·玄翎",
+      "label": "蒼劍式絕息",
+      "values": {
+        "crit_damage": 160
+      },
+      "recipient": "self",
+      "condition": "25秒內一次絕息重擊；該段輸出窗口，不是全部攻擊通用",
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1519669180526559232",
+        "accessed_at": "2026-10-21",
+        "updated_at": "2026-07-10",
+        "content_sha256": "ec327003ec1c5d455a61b615709f3468799c659cad0fc8867c1c56400d36e5f5"
+      },
+      "scope": "heavy_attack"
+    },
+    {
+      "id": "e038",
+      "kind": "character",
+      "owner": "穗穗",
+      "label": "延奏",
+      "values": {
+        "deepen": 25
+      },
+      "recipient": "team",
+      "condition": "正常輪轉中完成觸發；主要輸出窗口生效",
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1519669262123954176",
+        "accessed_at": "2026-10-21",
+        "updated_at": "2026-08-10",
+        "content_sha256": "566aefb52aa5068d61f37c571bb855b1f3a31147402ef804e4475ce3aeb13801"
+      }
+    },
+    {
+      "id": "e039",
+      "kind": "character",
+      "owner": "穗穗",
+      "label": "二鏈・山河水境",
+      "values": {
+        "crit_damage": 50
+      },
+      "recipient": "team",
+      "condition": "目標角色滿足異常觸發條件並處於山河水境內",
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1519669262123954176",
+        "accessed_at": "2026-10-21",
+        "updated_at": "2026-08-10",
+        "content_sha256": "566aefb52aa5068d61f37c571bb855b1f3a31147402ef804e4475ce3aeb13801"
+      },
+      "chain": 2
+    },
+    {
+      "id": "e040",
+      "kind": "character",
+      "owner": "維里奈",
+      "label": "自然的獻禮",
+      "values": {
+        "attack_pct": 20
+      },
+      "recipient": "team",
+      "condition": "正常輪轉中完成觸發；主要輸出窗口生效",
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1242295554161025024",
+        "accessed_at": "2026-10-21",
+        "updated_at": "2026-02-05",
+        "content_sha256": "c8ee30e9ebca4df9db465b5025132a2ef8978f2aec053d017d76d59310d3ee98"
+      },
+      "node": 4
+    },
+    {
+      "id": "e041",
+      "kind": "character",
+      "owner": "維里奈",
+      "label": "延奏",
+      "values": {
+        "deepen": 15
+      },
+      "recipient": "team",
+      "condition": "正常輪轉中完成觸發；主要輸出窗口生效",
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1242295554161025024",
+        "accessed_at": "2026-10-21",
+        "updated_at": "2026-02-05",
+        "content_sha256": "c8ee30e9ebca4df9db465b5025132a2ef8978f2aec053d017d76d59310d3ee98"
+      }
+    },
+    {
+      "id": "e042",
+      "kind": "character",
+      "owner": "維里奈",
+      "label": "四鏈・延奏循環",
+      "values": {
+        "spectro_damage": 15
+      },
+      "recipient": "team",
+      "condition": "正常輪轉中完成觸發；主要輸出窗口生效",
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1242295554161025024",
+        "accessed_at": "2026-10-21",
+        "updated_at": "2026-02-05",
+        "content_sha256": "c8ee30e9ebca4df9db465b5025132a2ef8978f2aec053d017d76d59310d3ee98"
+      },
+      "chain": 4
+    },
+    {
+      "id": "e043",
+      "kind": "character",
+      "owner": "緋雪",
+      "label": "細雪",
+      "values": {
+        "crit_damage": 40
+      },
+      "recipient": "self",
+      "condition": "持有至少一層雪鏽",
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1488853937364017152",
+        "accessed_at": "2026-10-21",
+        "updated_at": "2026-08-28",
+        "content_sha256": "14c577ac566f49f1aadc15c26569ed083198cb3fcd50152b3b9f95363e8517fc"
+      },
+      "node": 4
+    },
+    {
+      "id": "e044",
+      "kind": "character",
+      "owner": "緋雪",
+      "label": "六鏈・雪鏽",
+      "values": {
+        "crit_damage": 40
+      },
+      "recipient": "self",
+      "condition": "持有至少兩層雪鏽",
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1488853937364017152",
+        "accessed_at": "2026-10-21",
+        "updated_at": "2026-08-28",
+        "content_sha256": "14c577ac566f49f1aadc15c26569ed083198cb3fcd50152b3b9f95363e8517fc"
+      },
+      "chain": 6
+    },
+    {
+      "id": "e045",
+      "kind": "character",
+      "owner": "莫寧",
+      "label": "強諧振場",
+      "values": {
+        "defense_pct": 20
+      },
+      "recipient": "team",
+      "condition": "正常輪轉中完成觸發；主要輸出窗口生效",
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1429461088674648064",
+        "accessed_at": "2026-10-21",
+        "updated_at": "2026-08-28",
+        "content_sha256": "aa2a79091badf02402ff3e2d51d7c3734e8bdc196711e5cf70884943b72176b8"
+      }
+    },
+    {
+      "id": "e046",
+      "kind": "character",
+      "owner": "莫寧",
+      "label": "延奏",
+      "values": {
+        "deepen": 25
+      },
+      "recipient": "team",
+      "condition": "正常輪轉中完成觸發；主要輸出窗口生效",
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1429461088674648064",
+        "accessed_at": "2026-10-21",
+        "updated_at": "2026-08-28",
+        "content_sha256": "aa2a79091badf02402ff3e2d51d7c3734e8bdc196711e5cf70884943b72176b8"
+      }
+    },
+    {
+      "id": "e047",
+      "kind": "character",
+      "owner": "蕾貝卡",
+      "label": "延奏",
+      "values": {
+        "deepen": 15,
+        "heavy_attack_deepen": 35
+      },
+      "recipient": "next",
+      "condition": "浪客羈絆；超限滿層，露西直接滿層，其他角色依窗口確認",
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1502681773647212544",
+        "accessed_at": "2026-10-21",
+        "updated_at": "2026-06-10",
+        "content_sha256": "1321ec8ad55c5669a6506ea0d1e9310816f5d4749feee3e05640dc5d3a51be24"
+      }
+    },
+    {
+      "id": "e048",
+      "kind": "character",
+      "owner": "蕾貝卡",
+      "label": "二鏈・循環",
+      "values": {
+        "all_element_damage": 20,
+        "deepen": 15
+      },
+      "recipient": "team",
+      "condition": "正常輪轉中完成觸發；主要輸出窗口生效",
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1502681773647212544",
+        "accessed_at": "2026-10-21",
+        "updated_at": "2026-06-10",
+        "content_sha256": "1321ec8ad55c5669a6506ea0d1e9310816f5d4749feee3e05640dc5d3a51be24"
+      },
+      "chain": 2
+    },
+    {
+      "id": "e049",
+      "kind": "character",
+      "owner": "達妮婭",
+      "label": "熵變強化・幻滅",
+      "values": {
+        "attack_pct": 30
+      },
+      "recipient": "self",
+      "condition": "幻滅之形主要輸出窗口；布景之形請排除",
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1488852222116831232",
+        "accessed_at": "2026-10-21",
+        "updated_at": "2026-05-21",
+        "content_sha256": "a9c618edc7fb444af5733832f16af27849cdec24e73ebae18685fde1c59db170"
+      }
+    },
+    {
+      "id": "e050",
+      "kind": "character",
+      "owner": "達妮婭",
+      "label": "蝕刻繁彩・聚爆",
+      "values": {
+        "fusion_damage": 30
+      },
+      "recipient": "team",
+      "condition": "正常輪轉中完成觸發；主要輸出窗口生效",
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1488852222116831232",
+        "accessed_at": "2026-10-21",
+        "updated_at": "2026-05-21",
+        "content_sha256": "a9c618edc7fb444af5733832f16af27849cdec24e73ebae18685fde1c59db170"
+      },
+      "node": 5,
+      "mode": "聚爆"
+    },
+    {
+      "id": "e051",
+      "kind": "character",
+      "owner": "達妮婭",
+      "label": "二鏈・聚爆",
+      "values": {
+        "fusion_damage": 50
+      },
+      "recipient": "team",
+      "condition": "正常輪轉中完成觸發；主要輸出窗口生效",
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1488852222116831232",
+        "accessed_at": "2026-10-21",
+        "updated_at": "2026-05-21",
+        "content_sha256": "a9c618edc7fb444af5733832f16af27849cdec24e73ebae18685fde1c59db170"
+      },
+      "chain": 2,
+      "mode": "聚爆"
+    },
+    {
+      "id": "e052",
+      "kind": "character",
+      "owner": "達妮婭",
+      "label": "六鏈・熵變",
+      "values": {
+        "attack_pct": 60,
+        "fusion_damage": 60
+      },
+      "recipient": "self",
+      "condition": "正常輪轉中完成觸發；主要輸出窗口生效",
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1488852222116831232",
+        "accessed_at": "2026-10-21",
+        "updated_at": "2026-05-21",
+        "content_sha256": "a9c618edc7fb444af5733832f16af27849cdec24e73ebae18685fde1c59db170"
+      },
+      "chain": 6
+    },
+    {
+      "id": "e053",
+      "kind": "character",
+      "owner": "露帕",
+      "label": "燃旗",
+      "values": {
+        "attack_pct": 12
+      },
+      "recipient": "self",
+      "condition": "正常輪轉中完成觸發；主要輸出窗口生效",
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1370474602963382272",
+        "accessed_at": "2026-10-21",
+        "updated_at": "2025-12-29",
+        "content_sha256": "09ca8201ea9a5086852ab5a7640a2a24007ea10a129fd2fff16fe8369e8b73ae"
+      }
+    },
+    {
+      "id": "e054",
+      "kind": "character",
+      "owner": "露帕",
+      "label": "追獵滿層",
+      "values": {
+        "attack_pct": 18
+      },
+      "recipient": "team",
+      "condition": "正常輪轉中完成觸發；主要輸出窗口生效",
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1370474602963382272",
+        "accessed_at": "2026-10-21",
+        "updated_at": "2025-12-29",
+        "content_sha256": "09ca8201ea9a5086852ab5a7640a2a24007ea10a129fd2fff16fe8369e8b73ae"
+      }
+    },
+    {
+      "id": "e055",
+      "kind": "character",
+      "owner": "露帕",
+      "label": "延奏",
+      "values": {
+        "fusion_damage_deepen": 20,
+        "basic_attack_deepen": 25
+      },
+      "recipient": "next",
+      "condition": "正常輪轉中完成觸發；主要輸出窗口生效",
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1370474602963382272",
+        "accessed_at": "2026-10-21",
+        "updated_at": "2025-12-29",
+        "content_sha256": "09ca8201ea9a5086852ab5a7640a2a24007ea10a129fd2fff16fe8369e8b73ae"
+      }
+    },
+    {
+      "id": "e056",
+      "kind": "character",
+      "owner": "露帕",
+      "label": "一鏈・解放",
+      "values": {
+        "crit_rate": 20
+      },
+      "recipient": "self",
+      "condition": "正常輪轉中完成觸發；主要輸出窗口生效",
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1370474602963382272",
+        "accessed_at": "2026-10-21",
+        "updated_at": "2025-12-29",
+        "content_sha256": "09ca8201ea9a5086852ab5a7640a2a24007ea10a129fd2fff16fe8369e8b73ae"
+      },
+      "chain": 1
+    },
+    {
+      "id": "e057",
+      "kind": "character",
+      "owner": "露帕",
+      "label": "二鏈・疊滿",
+      "values": {
+        "fusion_damage": 40
+      },
+      "recipient": "team",
+      "condition": "正常輪轉中完成觸發；主要輸出窗口生效",
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1370474602963382272",
+        "accessed_at": "2026-10-21",
+        "updated_at": "2025-12-29",
+        "content_sha256": "09ca8201ea9a5086852ab5a7640a2a24007ea10a129fd2fff16fe8369e8b73ae"
+      },
+      "chain": 2
+    },
+    {
+      "id": "e058",
+      "kind": "character",
+      "owner": "露西",
+      "label": "延奏",
+      "values": {
+        "basic_attack_deepen": 25,
+        "deepen": 20
+      },
+      "recipient": "next",
+      "condition": "下一角色附加駭破偏移；全傷害加深生效",
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1502669582481317888",
+        "accessed_at": "2026-10-21",
+        "updated_at": "2026-06-10",
+        "content_sha256": "6096aaaa6afeb455bea20220168249a75397102fe514558810e59864210b40ef"
+      }
+    },
+    {
+      "id": "e059",
+      "kind": "character",
+      "owner": "露西",
+      "label": "一鏈・變奏",
+      "values": {
+        "attack_pct": 20
+      },
+      "recipient": "self",
+      "condition": "正常輪轉中完成觸發；主要輸出窗口生效",
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1502669582481317888",
+        "accessed_at": "2026-10-21",
+        "updated_at": "2026-06-10",
+        "content_sha256": "6096aaaa6afeb455bea20220168249a75397102fe514558810e59864210b40ef"
+      },
+      "chain": 1
+    },
+    {
+      "id": "e060",
+      "kind": "character",
+      "owner": "露西",
+      "label": "三鏈・解放",
+      "values": {
+        "crit_damage": 100
+      },
+      "recipient": "self",
+      "condition": "正常輪轉中完成觸發；主要輸出窗口生效",
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1502669582481317888",
+        "accessed_at": "2026-10-21",
+        "updated_at": "2026-06-10",
+        "content_sha256": "6096aaaa6afeb455bea20220168249a75397102fe514558810e59864210b40ef"
+      },
+      "chain": 3,
+      "scope": "resonance_liberation"
+    },
+    {
+      "id": "e061",
+      "kind": "character",
+      "owner": "露西",
+      "label": "四鏈・駭破",
+      "values": {
+        "all_element_damage": 20
+      },
+      "recipient": "team",
+      "condition": "正常輪轉中完成觸發；主要輸出窗口生效",
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1502669582481317888",
+        "accessed_at": "2026-10-21",
+        "updated_at": "2026-06-10",
+        "content_sha256": "6096aaaa6afeb455bea20220168249a75397102fe514558810e59864210b40ef"
+      },
+      "chain": 4
+    },
+    {
+      "id": "e062",
+      "kind": "weapon",
+      "owner": "曇切",
+      "label": "武器循環增益",
+      "values": {
+        "resonance_liberation_damage": [
+          24,
+          30,
+          36,
+          42,
+          48
+        ]
+      },
+      "recipient": "self",
+      "condition": "正常輪轉中完成觸發；主要輸出窗口生效",
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1438830164665520128",
+        "accessed_at": "2026-10-21",
+        "updated_at": "2025-11-19",
+        "content_sha256": "ccca664b2d00ba64077b8101c11ea0abda9e52dd4bc297de142a2226ae289a75"
+      }
+    },
+    {
+      "id": "e063",
+      "kind": "weapon",
+      "owner": "曇切",
+      "label": "武器循環增益",
+      "values": {
+        "all_element_damage": [
+          24,
+          30,
+          36,
+          42,
+          48
+        ]
+      },
+      "recipient": "team",
+      "condition": "正常輪轉中完成觸發；主要輸出窗口生效",
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1438830164665520128",
+        "accessed_at": "2026-10-21",
+        "updated_at": "2025-11-19",
+        "content_sha256": "ccca664b2d00ba64077b8101c11ea0abda9e52dd4bc297de142a2226ae289a75"
+      }
+    },
+    {
+      "id": "e064",
+      "kind": "weapon",
+      "owner": "存幀",
+      "label": "武器循環增益",
+      "values": {
+        "glacio_damage": [
+          30,
+          37.5,
+          45,
+          52.5,
+          60
+        ]
+      },
+      "recipient": "self",
+      "condition": "正常輪轉中完成觸發；主要輸出窗口生效",
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1514988820060258304",
+        "accessed_at": "2026-10-21",
+        "updated_at": "2026-06-12",
+        "content_sha256": "f55a0469fc448738942345df8d9f956e60f1089c5f4bed5b44aeee5887cea05e"
+      }
+    },
+    {
+      "id": "e065",
+      "kind": "weapon",
+      "owner": "存幀",
+      "label": "武器循環增益",
+      "values": {
+        "attack_pct": [
+          24,
+          30,
+          36,
+          42,
+          48
+        ]
+      },
+      "recipient": "team",
+      "condition": "正常輪轉中完成觸發；主要輸出窗口生效",
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1514988820060258304",
+        "accessed_at": "2026-10-21",
+        "updated_at": "2026-06-12",
+        "content_sha256": "f55a0469fc448738942345df8d9f956e60f1089c5f4bed5b44aeee5887cea05e"
+      }
+    },
+    {
+      "id": "e066",
+      "kind": "weapon",
+      "owner": "雲琅",
+      "label": "武器循環增益",
+      "values": {
+        "aero_damage": [
+          56,
+          70,
+          84,
+          98,
+          112
+        ]
+      },
+      "recipient": "self",
+      "condition": "正常輪轉中完成觸發；主要輸出窗口生效",
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1538900888550293504",
+        "accessed_at": "2026-10-21",
+        "updated_at": "2026-08-20",
+        "content_sha256": "e3788c45b13d98b78f9ad8498a103248145d5b9dee3394ae5192135c70a2a426"
+      }
+    },
+    {
+      "id": "e067",
+      "kind": "weapon",
+      "owner": "死與舞",
+      "label": "武器循環增益",
+      "values": {
+        "resonance_skill_damage": [
+          48,
+          60,
+          72,
+          84,
+          96
+        ]
+      },
+      "recipient": "self",
+      "condition": "正常輪轉中完成觸發；主要輸出窗口生效",
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1321264324460343296",
+        "accessed_at": "2026-10-21",
+        "updated_at": "2025-09-29",
+        "content_sha256": "f8dffe3f5479d8389664667dfee710d06b63a9ccc41e730db181c40342592995"
+      }
+    },
+    {
+      "id": "e068",
+      "kind": "weapon",
+      "owner": "贗作的矮星",
+      "label": "武器循環增益",
+      "values": {
+        "resonance_liberation_damage": [
+          36,
+          45,
+          54,
+          63,
+          72
+        ]
+      },
+      "recipient": "self",
+      "condition": "正常輪轉中完成觸發；主要輸出窗口生效",
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1506107908334694400",
+        "accessed_at": "2026-10-21",
+        "updated_at": "2026-05-26",
+        "content_sha256": "bbcd4795d562e7d87ba35006ef39c19aec3271dc3167662f337d7d518a72da22"
+      }
+    },
+    {
+      "id": "e069",
+      "kind": "weapon",
+      "owner": "贗作的矮星",
+      "label": "武器循環增益",
+      "values": {
+        "attack_pct": [
+          24,
+          30,
+          36,
+          42,
+          48
+        ]
+      },
+      "recipient": "team",
+      "condition": "正常輪轉中完成觸發；主要輸出窗口生效",
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1506107908334694400",
+        "accessed_at": "2026-10-21",
+        "updated_at": "2026-05-26",
+        "content_sha256": "bbcd4795d562e7d87ba35006ef39c19aec3271dc3167662f337d7d518a72da22"
+      }
+    },
+    {
+      "id": "e070",
+      "kind": "weapon",
+      "owner": "相位漣漪",
+      "label": "武器循環增益",
+      "values": {
+        "all_element_damage": [
+          20,
+          22.5,
+          25,
+          27.5,
+          30
+        ]
+      },
+      "recipient": "self",
+      "condition": "正常輪轉中完成觸發；主要輸出窗口生效",
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1452708158811205632",
+        "accessed_at": "2026-10-21",
+        "updated_at": "2025-12-25",
+        "content_sha256": "21c6f3ab5426328723b3cdc55e7acdf8857ca22def5fa7e5b651faac46aac2ad"
+      }
+    },
+    {
+      "id": "e071",
+      "kind": "weapon",
+      "owner": "漪瀾浮錄",
+      "label": "武器循環增益",
+      "values": {
+        "basic_attack_damage": [
+          16,
+          20,
+          24,
+          28,
+          32
+        ]
+      },
+      "recipient": "self",
+      "condition": "正常輪轉中完成觸發；主要輸出窗口生效",
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1237352221406724096",
+        "accessed_at": "2026-10-21",
+        "updated_at": "2025-09-29",
+        "content_sha256": "79b50758618b6bfc997c9dbb21f2bb670401c9866f2ca26b3d3e45772d84214f"
+      }
+    },
+    {
+      "id": "e072",
+      "kind": "weapon",
+      "owner": "停駐之煙",
+      "label": "武器循環增益",
+      "values": {
+        "attack_pct": [
+          10,
+          12.5,
+          15,
+          17.5,
+          20
+        ]
+      },
+      "recipient": "next",
+      "condition": "正常輪轉中完成觸發；主要輸出窗口生效",
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1236044731675115520",
+        "accessed_at": "2026-10-21",
+        "updated_at": "2026-03-05",
+        "content_sha256": "1d6cc152e123cdad7f9d6f03aff95d706033484c2049d6ea3422d8940363b651"
+      }
+    },
+    {
+      "id": "e073",
+      "kind": "weapon",
+      "owner": "凋亡頻移",
+      "label": "武器循環增益",
+      "values": {
+        "attack_pct": [
+          10,
+          12.5,
+          15,
+          17.5,
+          20
+        ]
+      },
+      "recipient": "self",
+      "condition": "正常輪轉中完成觸發；主要輸出窗口生效",
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1289338644902535168",
+        "accessed_at": "2026-10-21",
+        "updated_at": "2024-10-15",
+        "content_sha256": "6ab5f6788a675e62a1257c6ccfaf50b588db394a6c028b4f7ed5003493514b5e"
+      }
+    },
+    {
+      "id": "e074",
+      "kind": "set",
+      "owner": "清邪蕩煞之心",
+      "label": "合鳴循環增益",
+      "values": {
+        "crit_damage": 20,
+        "aero_damage": 30
+      },
+      "recipient": "self",
+      "condition": "正常輪轉中完成觸發；主要輸出窗口生效",
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1524779774465699840",
+        "accessed_at": "2026-10-21",
+        "updated_at": "2026-08-20",
+        "content_sha256": "0381c0f0886100aa2191c0aacf9039a32830d2fe8e0db5a89f01344fbc5720e5"
+      },
+      "count": 5
+    },
+    {
+      "id": "e075",
+      "kind": "set",
+      "owner": "羽落空塵之歌",
+      "label": "合鳴循環增益",
+      "values": {
+        "crit_rate": 20,
+        "heavy_attack_damage": 35
+      },
+      "recipient": "self",
+      "condition": "裝配者附加虛湮效應；玄翎之羽",
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1524765410731888640",
+        "accessed_at": "2026-10-21",
+        "updated_at": "2026-07-09",
+        "content_sha256": "a43c289bdf0d667f5558f074ad9222e6247bffd0c3ed437abd1f31a7511618ed"
+      },
+      "count": 5,
+      "trigger": "虛湮"
+    },
+    {
+      "id": "e076",
+      "kind": "set",
+      "owner": "雪落無聲之願",
+      "label": "合鳴循環增益",
+      "values": {
+        "glacio_damage": 10
+      },
+      "recipient": "self",
+      "condition": "正常輪轉中完成觸發；主要輸出窗口生效",
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1498475770147909632",
+        "accessed_at": "2026-10-21",
+        "updated_at": "2026-04-29",
+        "content_sha256": "67d68e127955c832a209786ab9908e22eb59a6b4c9b961704c28f0d667dd9253"
+      },
+      "count": 5
+    },
+    {
+      "id": "e077",
+      "kind": "set",
+      "owner": "雪落無聲之願",
+      "label": "合鳴循環增益",
+      "values": {
+        "crit_rate": 25
+      },
+      "recipient": "self",
+      "condition": "落雪由共鳴解放清除；與延奏冷凝增益互斥",
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1498475770147909632",
+        "accessed_at": "2026-10-21",
+        "updated_at": "2026-04-29",
+        "content_sha256": "67d68e127955c832a209786ab9908e22eb59a6b4c9b961704c28f0d667dd9253"
+      },
+      "count": 5,
+      "exclusive": "snow"
+    },
+    {
+      "id": "e078",
+      "kind": "set",
+      "owner": "雪落無聲之願",
+      "label": "合鳴循環增益",
+      "values": {
+        "glacio_damage": 25
+      },
+      "recipient": "next",
+      "condition": "落雪由延奏清除；與自身暴擊增益互斥",
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1498475770147909632",
+        "accessed_at": "2026-10-21",
+        "updated_at": "2026-04-29",
+        "content_sha256": "67d68e127955c832a209786ab9908e22eb59a6b4c9b961704c28f0d667dd9253"
+      },
+      "count": 5,
+      "exclusive": "snow"
+    },
+    {
+      "id": "e079",
+      "kind": "set",
+      "owner": "長路啟航之星",
+      "label": "合鳴循環增益",
+      "values": {
+        "crit_rate": 20,
+        "fusion_damage": 20
+      },
+      "recipient": "self",
+      "condition": "正常輪轉中完成觸發；主要輸出窗口生效",
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1468619743799422976",
+        "accessed_at": "2026-10-21",
+        "updated_at": "2026-02-04",
+        "content_sha256": "9d496a32f1f791d82dbf5ff7ef80ab0f80173bdff81b09710444ead2b148f3f4"
+      },
+      "count": 5
+    },
+    {
+      "id": "e080",
+      "kind": "set",
+      "owner": "命理崩毀之弦",
+      "label": "合鳴循環增益",
+      "values": {
+        "attack_pct": 20,
+        "resonance_liberation_damage": 30
+      },
+      "recipient": "self",
+      "condition": "正常輪轉中完成觸發；主要輸出窗口生效",
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1431439416570245120",
+        "accessed_at": "2026-10-21",
+        "updated_at": "2025-11-22",
+        "content_sha256": "e2e1ea9a1753d61bd5174bc20be6f78a52e7facddc83ad5aeb5c6f4f36f3721f"
+      },
+      "count": 3
+    },
+    {
+      "id": "e081",
+      "kind": "set",
+      "owner": "願戴榮光之旅",
+      "label": "合鳴循環增益",
+      "values": {
+        "crit_rate": 10,
+        "aero_damage": 30
+      },
+      "recipient": "self",
+      "condition": "正常輪轉中完成觸發；主要輸出窗口生效",
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1380234925152161792",
+        "accessed_at": "2026-10-21",
+        "updated_at": "2025-08-23",
+        "content_sha256": "ec936c30031a5994aa72c3563607d1bf9c255c5fa04f379bd53027d1637bc46c"
+      },
+      "count": 5
+    },
+    {
+      "id": "e082",
+      "kind": "set",
+      "owner": "焚羽獵魔之影",
+      "label": "合鳴循環增益",
+      "values": {
+        "crit_rate": 20,
+        "fusion_damage": 16
+      },
+      "recipient": "self",
+      "condition": "正常輪轉中完成觸發；主要輸出窗口生效",
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1418669356516003840",
+        "accessed_at": "2026-10-21",
+        "updated_at": "2025-10-25",
+        "content_sha256": "d7fcb6b6adfce236896f80bda0aad7a7fea223eb7f44dc383a4a671c3903efe6"
+      },
+      "count": 3,
+      "scope": "heavy_attack"
+    },
+    {
+      "id": "e083",
+      "kind": "set",
+      "owner": "隱世回光",
+      "label": "合鳴循環增益",
+      "values": {
+        "attack_pct": 15
+      },
+      "recipient": "team",
+      "condition": "正常輪轉中完成觸發；主要輸出窗口生效",
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1233106270208733184",
+        "accessed_at": "2026-10-21",
+        "updated_at": "2026-03-03",
+        "content_sha256": "b7c040240df2ef778ca22ea85d1cfe9fa8899dd385752c575959c95902ce7709"
+      },
+      "count": 5
+    },
+    {
+      "id": "e084",
+      "kind": "set",
+      "owner": "碎夢亡鬼之魘",
+      "label": "合鳴循環增益",
+      "values": {
+        "basic_attack_damage": 35,
+        "heavy_attack_damage": 35
+      },
+      "recipient": "self",
+      "condition": "正常輪轉中完成觸發；主要輸出窗口生效",
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1512506247322669056",
+        "accessed_at": "2026-10-21",
+        "updated_at": "2026-06-07",
+        "content_sha256": "d1978f2f651bf1df1266651dc04388a5881d8d4529571155eb576c70210ad917"
+      },
+      "count": 1
+    },
+    {
+      "id": "e085",
+      "kind": "set",
+      "owner": "不絕餘音",
+      "label": "合鳴循環增益",
+      "values": {
+        "attack_pct": 20
+      },
+      "recipient": "self",
+      "condition": "持續在場6秒，四層已滿",
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1233505098310021120",
+        "accessed_at": "2026-10-21",
+        "updated_at": "2026-03-03",
+        "content_sha256": "6cf44fef861c8def85bc89d206c14726dc7e3beb78ed1f32ca232d64018c937d"
+      },
+      "count": 5
+    },
+    {
+      "id": "e086",
+      "kind": "set",
+      "owner": "銜夢照世之心",
+      "label": "合鳴循環增益",
+      "values": {
+        "crit_rate": 15,
+        "electro_damage": 22.5
+      },
+      "recipient": "self",
+      "condition": "正常輪轉中完成觸發；主要輸出窗口生效",
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1553888649630220288",
+        "accessed_at": "2026-10-21",
+        "updated_at": "2026-10-09",
+        "content_sha256": "c29776eb69958d6d1b236003c2cd4b0352f2f8696e4d2cf6109a500647ac3898"
+      },
+      "count": 5
+    },
+    {
+      "id": "e087",
+      "kind": "set",
+      "owner": "高天共奏之曲",
+      "label": "合鳴循環增益",
+      "values": {
+        "attack_pct": 20
+      },
+      "recipient": "team",
+      "condition": "協同攻擊命中且暴擊",
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1321882647069708288",
+        "accessed_at": "2026-10-21",
+        "updated_at": "2026-05-22",
+        "content_sha256": "cfa67436fdbecd3231818a5b22a74ceec3fdf82d62237dc561a9177a148a8365"
+      },
+      "count": 5
+    },
+    {
+      "id": "e088",
+      "kind": "echo",
+      "owner": "無歸的謬誤",
+      "label": "首位聲骸技能增益",
+      "values": {
+        "energy_regen": 10
+      },
+      "recipient": "self",
+      "condition": "正常輪轉中完成觸發；主要輸出窗口生效",
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1287797218668396544",
+        "accessed_at": "2026-10-21",
+        "updated_at": "2026-05-03",
+        "content_sha256": "4c5fd0c470b5f46a0fe11aa2bd461072a3f649f1344297f8facc1f263610918c"
+      }
+    },
+    {
+      "id": "e089",
+      "kind": "echo",
+      "owner": "無歸的謬誤",
+      "label": "首位聲骸技能增益",
+      "values": {
+        "attack_pct": 10
+      },
+      "recipient": "team",
+      "condition": "正常輪轉中完成觸發；主要輸出窗口生效",
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1287797218668396544",
+        "accessed_at": "2026-10-21",
+        "updated_at": "2026-05-03",
+        "content_sha256": "4c5fd0c470b5f46a0fe11aa2bd461072a3f649f1344297f8facc1f263610918c"
+      }
+    },
+    {
+      "id": "e090",
+      "kind": "echo",
+      "owner": "鳴鐘之龜",
+      "label": "首位聲骸技能增益",
+      "values": {
+        "deepen": 10
+      },
+      "recipient": "team",
+      "condition": "聲骸盾持續，未受三次攻擊",
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1226643538400329728",
+        "accessed_at": "2026-10-21",
+        "updated_at": "2026-01-17",
+        "content_sha256": "9c633ac81a3bfa77f2c8c06cb2e1072e22ecca5ab6d10011b2993bb4824e0d4d"
+      }
+    },
+    {
+      "id": "e091",
+      "kind": "echo",
+      "owner": "天傀劫煞",
+      "label": "首位聲骸技能增益",
+      "values": {
+        "aero_damage": 10
+      },
+      "recipient": "self",
+      "condition": "正常輪轉中完成觸發；主要輸出窗口生效",
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1539278533590556672",
+        "accessed_at": "2026-10-21",
+        "updated_at": "2026-08-24",
+        "content_sha256": "2251ba40143d6a2961f5ce09609c611a2d36b45fac58b908023d29b9eb12b33f"
+      }
+    },
+    {
+      "id": "e092",
+      "kind": "echo",
+      "owner": "天演溯心",
+      "label": "首位聲骸技能增益",
+      "values": {
+        "electro_damage": 10
+      },
+      "recipient": "self",
+      "condition": "正常輪轉中完成觸發；主要輸出窗口生效",
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1554443108309405696",
+        "accessed_at": "2026-10-21",
+        "updated_at": "2026-10-09",
+        "content_sha256": "931eb59d03b07a5a7be39f6a8646b231bfab0af98bf0f722e8b6d3552f3d65a4"
+      }
+    },
+    {
+      "id": "e093",
+      "kind": "echo",
+      "owner": "達妮婭聲骸",
+      "label": "首位聲骸技能增益",
+      "values": {
+        "fusion_damage": 12
+      },
+      "recipient": "next",
+      "condition": "正常輪轉中完成觸發；主要輸出窗口生效",
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1498439403399122944",
+        "accessed_at": "2026-10-21",
+        "updated_at": "2026-05-06",
+        "content_sha256": "2e6827932451b9a6e932ae9e1d1d66adc6208537c07bd1ab27fbf20560ae1467"
+      }
+    },
+    {
+      "id": "x093",
+      "kind": "set",
+      "owner": "沉日劫明",
+      "label": "合鳴循環增益",
+      "values": {
+        "havoc_damage": 30
+      },
+      "recipient": "self",
+      "condition": "正常輪轉觸發並於主要輸出窗口生效",
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1233504904249409536",
+        "accessed_at": "2026-10-21",
+        "updated_at": "2026-03-03",
+        "content_sha256": "9e127377ed2ae7723707ddb52c8b66265bff06fe88c09466732e8e2f2fc574de"
+      },
+      "count": 5
+    },
+    {
+      "id": "x094",
+      "kind": "set",
+      "owner": "凌冽決斷之心",
+      "label": "合鳴循環增益",
+      "values": {
+        "glacio_damage": 22.5,
+        "resonance_skill_damage": 36
+      },
+      "recipient": "self",
+      "condition": "正常輪轉觸發並於主要輸出窗口生效",
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1321845428049342464",
+        "accessed_at": "2026-10-21",
+        "updated_at": "2025-08-23",
+        "content_sha256": "026113a0b4731ada7db5d546c0d62ce7f937a2041705fe49190474a268c65a21"
+      },
+      "count": 5
+    },
+    {
+      "id": "x095",
+      "kind": "set",
+      "owner": "浮星祛暗",
+      "label": "合鳴循環增益",
+      "values": {
+        "spectro_damage": 30
+      },
+      "recipient": "self",
+      "condition": "正常輪轉觸發並於主要輸出窗口生效",
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1233504230639992832",
+        "accessed_at": "2026-10-21",
+        "updated_at": "2026-03-03",
+        "content_sha256": "2a4c07fc6eb8f40cc88de11bc5148ace37467e8dffc22c05f925899ba7701412"
+      },
+      "count": 5
+    },
+    {
+      "id": "x096",
+      "kind": "set",
+      "owner": "徹空冥雷",
+      "label": "合鳴循環增益",
+      "values": {
+        "electro_damage": 30
+      },
+      "recipient": "self",
+      "condition": "正常輪轉觸發並於主要輸出窗口生效",
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1233505002939936768",
+        "accessed_at": "2026-10-21",
+        "updated_at": "2026-03-03",
+        "content_sha256": "9df5628154e50e1f418a4a59c98a6104a5a5753b2391d82ad558e52e92d251e2"
+      },
+      "count": 5
+    },
+    {
+      "id": "x097",
+      "kind": "set",
+      "owner": "斑駁粉飾之沫",
+      "label": "合鳴循環增益",
+      "values": {
+        "fusion_damage": 10
+      },
+      "recipient": "self",
+      "condition": "正常輪轉觸發並於主要輸出窗口生效",
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1468619762249129984",
+        "accessed_at": "2026-10-21",
+        "updated_at": "2026-05-20",
+        "content_sha256": "ef2d800e196467432c7eea38c1b603c6dad4a0974721a289ff4bbb38ebfef683"
+      },
+      "count": 5,
+      "trigger": "聚爆"
+    },
+    {
+      "id": "x098",
+      "kind": "set",
+      "owner": "斑駁粉飾之沫",
+      "label": "合鳴循環增益",
+      "values": {
+        "fusion_damage": 25
+      },
+      "recipient": "next",
+      "condition": "正常輪轉觸發並於主要輸出窗口生效",
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1468619762249129984",
+        "accessed_at": "2026-10-21",
+        "updated_at": "2026-05-20",
+        "content_sha256": "ef2d800e196467432c7eea38c1b603c6dad4a0974721a289ff4bbb38ebfef683"
+      },
+      "count": 5,
+      "trigger": "聚爆"
+    },
+    {
+      "id": "x099",
+      "kind": "set",
+      "owner": "奔狼燎原之焰",
+      "label": "合鳴循環增益",
+      "values": {
+        "fusion_damage": 15
+      },
+      "recipient": "team",
+      "condition": "正常輪轉觸發並於主要輸出窗口生效",
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1380240498098720768",
+        "accessed_at": "2026-10-21",
+        "updated_at": "2026-03-03",
+        "content_sha256": "586cd9c6f6fb8068fc2229a1afe7bcf801dc9c28ff7ace01d2fdafc9db17928d"
+      },
+      "count": 5
+    },
+    {
+      "id": "x100",
+      "kind": "set",
+      "owner": "奔狼燎原之焰",
+      "label": "合鳴循環增益",
+      "values": {
+        "resonance_liberation_damage": 20
+      },
+      "recipient": "self",
+      "condition": "正常輪轉觸發並於主要輸出窗口生效",
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1380240498098720768",
+        "accessed_at": "2026-10-21",
+        "updated_at": "2026-03-03",
+        "content_sha256": "586cd9c6f6fb8068fc2229a1afe7bcf801dc9c28ff7ace01d2fdafc9db17928d"
+      },
+      "count": 5
+    },
+    {
+      "id": "x101",
+      "kind": "set",
+      "owner": "星構尋輝之環",
+      "label": "合鳴循環增益",
+      "values": {
+        "attack_pct": 0
+      },
+      "recipient": "team",
+      "condition": "提供治療後，依裝配者的偏諧值累積效率計算",
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1452385855040229376",
+        "accessed_at": "2026-10-21",
+        "updated_at": "2026-01-17",
+        "content_sha256": "ca8377d580cf447bbdd95b31704a4e570004d2b80313c42c254c696de32a8644"
+      },
+      "count": 5,
+      "variable": {
+        "stat": "tune_strain_accumulation",
+        "factor": 0.2,
+        "cap": 25
+      }
+    },
+    {
+      "id": "x102",
+      "kind": "set",
+      "owner": "羽落空塵之歌",
+      "label": "合鳴循環增益",
+      "values": {
+        "attack_pct": 0
+      },
+      "recipient": "team",
+      "condition": "裝配者附加霜漸效應，重明之羽",
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1524765410731888640",
+        "accessed_at": "2026-10-21",
+        "updated_at": "2026-07-09",
+        "content_sha256": "a43c289bdf0d667f5558f074ad9222e6247bffd0c3ed437abd1f31a7511618ed"
+      },
+      "count": 5,
+      "trigger": "霜漸",
+      "variable": {
+        "stat": "energy_regen",
+        "factor": 0.1,
+        "cap": 25
+      }
+    },
+    {
+      "id": "x103",
+      "kind": "set",
+      "owner": "逆光躍彩之約",
+      "label": "合鳴循環增益",
+      "values": {
+        "attack_pct": 15
+      },
+      "recipient": "next",
+      "condition": "正常輪轉觸發並於主要輸出窗口生效",
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1452391375529074688",
+        "accessed_at": "2026-10-21",
+        "updated_at": "2026-01-17",
+        "content_sha256": "3e079f18cf505490b2565d388571a62197d2e4cfc247a9843f7e78d111ac6a40"
+      },
+      "count": 5
+    },
+    {
+      "id": "x104",
+      "kind": "set",
+      "owner": "逆光躍彩之約",
+      "label": "合鳴循環增益",
+      "values": {
+        "attack_pct": 0
+      },
+      "recipient": "next",
+      "condition": "依下一位登場角色的諧度破壞增幅追加攻擊",
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1452391375529074688",
+        "accessed_at": "2026-10-21",
+        "updated_at": "2026-01-17",
+        "content_sha256": "3e079f18cf505490b2565d388571a62197d2e4cfc247a9843f7e78d111ac6a40"
+      },
+      "count": 5,
+      "variable": {
+        "stat": "tune_break_boost",
+        "factor": 0.3,
+        "cap": 15,
+        "receiver": true
+      }
+    },
+    {
+      "id": "x105",
+      "kind": "echo",
+      "owner": "海維夏",
+      "label": "聲骸技能延奏",
+      "values": {
+        "all_element_damage": 10
+      },
+      "recipient": "next",
+      "condition": "正常輪轉觸發並於主要輸出窗口生效",
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1452356724912001024",
+        "accessed_at": "2026-10-21",
+        "updated_at": "2026-01-17",
+        "content_sha256": "64aea586afb1c4c3d474b70f930b41aa840369f7a6abd1a0279064c7d00fd166"
+      }
+    },
+    {
+      "id": "x106",
+      "kind": "echo",
+      "owner": "格洛獁圖",
+      "label": "聲骸技能延奏",
+      "values": {
+        "glacio_damage": 12
+      },
+      "recipient": "next",
+      "condition": "正常輪轉觸發並於主要輸出窗口生效",
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1467227839525851136",
+        "accessed_at": "2026-10-21",
+        "updated_at": "2026-06-16",
+        "content_sha256": "b23d19e272b6bb05e93fa3c3e37b7a61971987f3c73ff434c481c753d4d58aac"
+      }
+    },
+    {
+      "id": "x107",
+      "kind": "character",
+      "owner": "琳奈",
+      "label": "自適應光學",
+      "values": {
+        "spectro_damage": 25
+      },
+      "recipient": "self",
+      "condition": "正常輪轉觸發並於主要輸出窗口生效",
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1445377391854534656",
+        "accessed_at": "2026-10-21",
+        "updated_at": "2026-01-15",
+        "content_sha256": "f9668800d9ce7c701f61d2c2dcbbb2e74d00044836d3f005ab08154f840a650d"
+      },
+      "node": 5
+    },
+    {
+      "id": "x108",
+      "kind": "character",
+      "owner": "莫寧",
+      "label": "諧振場",
+      "values": {
+        "tune_strain_accumulation": 50
+      },
+      "recipient": "team",
+      "condition": "正常輪轉觸發並於主要輸出窗口生效",
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1429461088674648064",
+        "accessed_at": "2026-10-21",
+        "updated_at": "2026-08-28",
+        "content_sha256": "aa2a79091badf02402ff3e2d51d7c3734e8bdc196711e5cf70884943b72176b8"
+      }
+    },
+    {
+      "id": "x109",
+      "kind": "character",
+      "owner": "莫寧",
+      "label": "二鏈諧振場",
+      "values": {
+        "tune_strain_accumulation": 20
+      },
+      "recipient": "team",
+      "condition": "正常輪轉觸發並於主要輸出窗口生效",
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1429461088674648064",
+        "accessed_at": "2026-10-21",
+        "updated_at": "2026-08-28",
+        "content_sha256": "aa2a79091badf02402ff3e2d51d7c3734e8bdc196711e5cf70884943b72176b8"
+      },
+      "chain": 2
+    },
+    {
+      "id": "x110",
+      "kind": "character",
+      "owner": "蕾貝卡",
+      "label": "該你了",
+      "values": {
+        "attack_pct": 30
+      },
+      "recipient": "self",
+      "condition": "該你了三層，正常輪轉觸發",
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1502681773647212544",
+        "accessed_at": "2026-10-21",
+        "updated_at": "2026-06-10",
+        "content_sha256": "1321ec8ad55c5669a6506ea0d1e9310816f5d4749feee3e05640dc5d3a51be24"
+      },
+      "node": 4
+    },
+    {
+      "id": "x111",
+      "kind": "character",
+      "owner": "洛瑟菈",
+      "label": "解放霜漸模態",
+      "values": {
+        "basic_attack_damage": 30
+      },
+      "recipient": "self",
+      "condition": "正常輪轉觸發並於主要輸出窗口生效",
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1514097978770092032",
+        "accessed_at": "2026-10-21",
+        "updated_at": "2026-07-21",
+        "content_sha256": "04c8dce153569b0b65c914c545d75207dfc6a0f7393242e1faa25a80425c6b39"
+      },
+      "mode": "霜漸"
+    },
+    {
+      "id": "x112",
+      "kind": "character",
+      "owner": "洛瑟菈",
+      "label": "解放聲骸模態",
+      "values": {
+        "echo_damage": 30
+      },
+      "recipient": "self",
+      "condition": "正常輪轉觸發並於主要輸出窗口生效",
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1514097978770092032",
+        "accessed_at": "2026-10-21",
+        "updated_at": "2026-07-21",
+        "content_sha256": "04c8dce153569b0b65c914c545d75207dfc6a0f7393242e1faa25a80425c6b39"
+      },
+      "mode": "聲骸"
+    },
+    {
+      "id": "x113",
+      "kind": "character",
+      "owner": "卡提希婭",
+      "label": "以風刻痕留蝕",
+      "values": {
+        "deepen": 60
+      },
+      "recipient": "self",
+      "condition": "目標風蝕至少6層，主要輸出窗口滿層",
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1370471621924728832",
+        "accessed_at": "2026-10-21",
+        "updated_at": "2025-12-29",
+        "content_sha256": "38d929a25ba28f5727d337e562812236da8759033746846a8af57f5ed666bdd2"
+      },
+      "node": 5
+    },
+    {
+      "id": "x114",
+      "kind": "character",
+      "owner": "嘉貝莉娜",
+      "label": "誓獵",
+      "values": {
+        "deepen": 20
+      },
+      "recipient": "self",
+      "condition": "死運既定滿四層",
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1415137052791296000",
+        "accessed_at": "2026-10-21",
+        "updated_at": "2026-06-15",
+        "content_sha256": "94d6712c3cd2847785ac0033fbb8e4b29987f33ac013175d17a7c2afcd0cc07d"
+      },
+      "node": 4
+    },
+    {
+      "id": "x115",
+      "kind": "character",
+      "owner": "秧秧·玄翎",
+      "label": "恆守之誓",
+      "values": {
+        "deepen": 66
+      },
+      "recipient": "self",
+      "condition": "目標虛湮效應滿6層",
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1519669180526559232",
+        "accessed_at": "2026-10-21",
+        "updated_at": "2026-07-10",
+        "content_sha256": "ec327003ec1c5d455a61b615709f3468799c659cad0fc8867c1c56400d36e5f5"
+      },
+      "node": 4
+    },
+    {
+      "id": "w116",
+      "kind": "character",
+      "owner": "愛彌斯",
+      "label": "一鏈・即刻響應重擊",
+      "values": {
+        "crit_damage": 300
+      },
+      "recipient": "self",
+      "condition": "正常解放輪轉內取得即刻響應後的蓄力重擊；不計脫戰輝芒",
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1457744312692867072",
+        "accessed_at": "2026-10-21",
+        "updated_at": "2026-08-28",
+        "content_sha256": "b8567eeafcd12ed57fae3c65a9ebfa8646999920366d22af7c283c68c5fcfc89"
+      },
+      "chain": 1,
+      "scope": "heavy_attack"
+    },
+    {
+      "id": "w117",
+      "kind": "character",
+      "owner": "心",
+      "label": "六鏈・同奏解放",
+      "values": {
+        "crit_damage": 95
+      },
+      "recipient": "self",
+      "condition": "同奏增益上限5層，三鏈20%加每層15%",
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1543050481616060416",
+        "accessed_at": "2026-10-21",
+        "updated_at": "2026-10-09",
+        "content_sha256": "06a69ef112641fe7782feb3dc519742580080a1d60953fecb79c26929315db0c"
+      },
+      "chain": 6,
+      "scope": "resonance_liberation",
+      "mode": "同奏"
+    },
+    {
+      "id": "w118",
+      "kind": "character",
+      "owner": "守岸人",
+      "label": "洞悉傷害窗口",
+      "values": {
+        "guaranteed_crit": 1
+      },
+      "recipient": "self",
+      "condition": "洞悉視為共鳴解放傷害且必定暴擊；其他攻擊窗口請排除",
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1286814658335739904",
+        "accessed_at": "2026-10-21",
+        "updated_at": "2025-12-29",
+        "content_sha256": "8d623031e2d985c15ef3bfd4748018043fdd8c3b2a628e68cedd11a2b17da10b"
+      },
+      "scope": "resonance_liberation"
+    },
+    {
+      "id": "w119",
+      "kind": "character",
+      "owner": "守岸人",
+      "label": "六鏈・洞悉",
+      "values": {
+        "crit_damage": 500
+      },
+      "recipient": "self",
+      "condition": "六鏈施放變奏洞悉時的傷害窗口",
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1286814658335739904",
+        "accessed_at": "2026-10-21",
+        "updated_at": "2025-12-29",
+        "content_sha256": "8d623031e2d985c15ef3bfd4748018043fdd8c3b2a628e68cedd11a2b17da10b"
+      },
+      "chain": 6,
+      "scope": "resonance_liberation"
+    },
+    {
+      "id": "w120",
+      "kind": "character",
+      "owner": "緋雪",
+      "label": "六鏈・預求我身",
+      "values": {
+        "crit_damage": 500
+      },
+      "recipient": "self",
+      "condition": "預求我身見心或歸刃的解放傷害窗口",
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1488853937364017152",
+        "accessed_at": "2026-10-21",
+        "updated_at": "2026-08-28",
+        "content_sha256": "14c577ac566f49f1aadc15c26569ed083198cb3fcd50152b3b9f95363e8517fc"
+      },
+      "chain": 6,
+      "scope": "resonance_liberation"
+    }
+  ],
+  "conversions": {
+    "守岸人": {
+      "target": 250,
+      "rules": [
+        {
+          "stat": "crit_rate",
+          "offset": 0,
+          "factor": 0.05,
+          "cap": 12.5,
+          "condition": "正常輪轉已觸發對應領域與標記"
+        },
+        {
+          "stat": "crit_damage",
+          "offset": 0,
+          "factor": 0.1,
+          "cap": 25,
+          "condition": "正常輪轉已觸發對應領域與標記"
+        }
+      ],
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1286814658335739904",
+        "accessed_at": "2026-10-21",
+        "updated_at": "2025-12-29",
+        "content_sha256": "8d623031e2d985c15ef3bfd4748018043fdd8c3b2a628e68cedd11a2b17da10b"
+      }
+    },
+    "莫寧": {
+      "target": 260,
+      "rules": [
+        {
+          "stat": "deepen",
+          "offset": 100,
+          "factor": 0.25,
+          "cap": 40,
+          "condition": "正常輪轉已觸發對應領域與標記"
+        },
+        {
+          "stat": "crit_damage",
+          "offset": 100,
+          "factor": 0.2,
+          "cap": 32,
+          "condition": "正常輪轉已觸發對應領域與標記",
+          "chain": 2
+        },
+        {
+          "stat": "crit_rate",
+          "offset": 100,
+          "factor": 0.5,
+          "cap": 80,
+          "condition": "正常輪轉已觸發對應領域與標記",
+          "recipient": "self",
+          "scope": "resonance_liberation"
+        },
+        {
+          "stat": "crit_damage",
+          "offset": 100,
+          "factor": 1,
+          "cap": 160,
+          "condition": "正常輪轉已觸發對應領域與標記",
+          "recipient": "self",
+          "scope": "resonance_liberation"
+        }
+      ],
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1429461088674648064",
+        "accessed_at": "2026-10-21",
+        "updated_at": "2026-08-28",
+        "content_sha256": "aa2a79091badf02402ff3e2d51d7c3734e8bdc196711e5cf70884943b72176b8"
+      }
+    },
+    "穗穗": {
+      "target": 260,
+      "rules": [
+        {
+          "stat": "deepen",
+          "offset": 200,
+          "factor": 0.2,
+          "cap": 12,
+          "condition": "正常輪轉已觸發對應領域與標記"
+        },
+        {
+          "stat": "attack_pct",
+          "offset": 200,
+          "factor": 0.8333333333333334,
+          "cap": 50,
+          "condition": "芳菲信600，第三次翾舞取得煙嵐，目標角色滿足異常觸發條件"
+        }
+      ],
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1519669262123954176",
+        "accessed_at": "2026-10-21",
+        "updated_at": "2026-08-10",
+        "content_sha256": "566aefb52aa5068d61f37c571bb855b1f3a31147402ef804e4475ce3aeb13801"
+      }
+    }
+  },
+  "reviewed_characters": [
+    "千咲",
+    "卡提希婭",
+    "嘉貝莉娜",
+    "守岸人",
+    "心",
+    "愛彌斯",
+    "折枝",
+    "洛瑟菈",
+    "清宵",
+    "珂萊塔",
+    "琳奈",
+    "秧秧·玄翎",
+    "穗穗",
+    "維里奈",
+    "緋雪",
+    "莫寧",
+    "蕾貝卡",
+    "達妮婭",
+    "露帕",
+    "露西"
+  ],
+  "notes": [
+    "數值事實來自公開詞條；庫街區WIKI由玩家編輯。",
+    "倍率、抗性、防禦忽略與固定暴擊的獨立傷害不等於面板增益，不混算。",
+    "技能專屬效果按主要傷害窗口供確認，未採用的效果可排除。"
+  ],
+  "triggers": {
+    "千咲": [
+      "虛湮"
+    ],
+    "秧秧·玄翎": [
+      "虛湮"
+    ],
+    "緋雪": [
+      "霜漸"
+    ],
+    "洛瑟菈": [
+      "霜漸"
+    ],
+    "穗穗": [
+      "霜漸"
+    ],
+    "愛彌斯": [
+      "聚爆",
+      "震諧"
+    ],
+    "達妮婭": [
+      "聚爆",
+      "集諧"
+    ],
+    "清宵": [
+      "集諧"
+    ],
+    "心": [
+      "電磁",
+      "同奏"
+    ],
+    "琳奈": [
+      "震諧"
+    ],
+    "露西": [
+      "駭破"
+    ],
+    "蕾貝卡": [
+      "駭破"
+    ],
+    "莫寧": [
+      "震諧"
+    ]
+  }
+}

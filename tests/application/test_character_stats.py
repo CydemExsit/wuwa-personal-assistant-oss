@@ -151,7 +151,12 @@ def test_reviewed_chains_do_not_add_triggered_bonuses_to_baseline(name, chain) -
         assert "協奏" in after.details()
 
 
-def test_unreviewed_chain_stays_incomplete() -> None:
+def test_unreviewed_chain_stays_incomplete(monkeypatch) -> None:
+    catalog = deepcopy(load_panel_catalog())
+    catalog["characters"]["珂萊塔"]["resonance_chains"] = []
+    monkeypatch.setattr(
+        "wuwa_assistant.application.character_stats.load_panel_catalog", lambda: catalog
+    )
     detail = panel_fixture()
     panel = calculate_character_panel(
         replace(detail, summary=replace(detail.summary, resonance_chain=1))
@@ -240,7 +245,7 @@ def test_all_supported_levels_have_complete_published_growth_rows() -> None:
         "unknown_main",
         "duplicate_echo",
         "too_much_cost",
-        "nonzero_chain",
+        "unsupported_chain",
         "incompatible_weapon",
         "duplicate_substat",
         "invalid_roll",
@@ -258,8 +263,8 @@ def test_incomplete_inputs_never_become_a_complete_panel(change: str) -> None:
         detail = replace(detail, weapon=replace(detail.weapon, name="曇切"))
     elif change == "unknown_character":
         detail = replace(detail, summary=replace(detail.summary, name="未知角色"))
-    elif change == "nonzero_chain":
-        detail = replace(detail, summary=replace(detail.summary, resonance_chain=1))
+    elif change == "unsupported_chain":
+        detail = replace(detail, summary=replace(detail.summary, resonance_chain=7))
     else:
         if change == "missing_slot":
             slot = replace(slot, echo_id=None)

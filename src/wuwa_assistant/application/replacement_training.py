@@ -14,10 +14,20 @@ from wuwa_assistant.storage.engine import SessionFactory
 from .character_completion import _main_stat_validity, _set_validity
 from .character_scoring import character_context, character_profile
 from .characters import CharacterCultivationService, EchoSlotSnapshot
+from .combat_build import (
+    BuildComparison,
+    CompensationPlan,
+    compare_builds,
+    evaluate_build,
+    find_compensation,
+    with_candidate,
+)
+from .combat_projection import CombatProjection, project_combat_substats
+from .combat_service import CombatBuildService
 from .equipment_analysis import guide_fit
 from .equipment_overview import EquipmentOverviewService, EquippedEchoScore
 from .scoring_profiles import ScoringProfileService
-from .scoring_workflow import ScoringEvaluation, ScoringWorkflowService
+from .scoring_workflow import ScoringEvaluation, ScoringWorkflowService, profile_from_snapshot
 
 
 @dataclass(frozen=True, slots=True)
@@ -30,6 +40,7 @@ class ReplacementTarget:
     profile_name: str
     context: ScoringContext
     description: str
+    weakest_other_slot: int | None = None
 
 
 @dataclass(frozen=True, slots=True)
@@ -41,6 +52,9 @@ class ReplacementComparison:
     delta: float | None = None
     target_comparable: bool = False
     is_same_echo: bool = False
+    combat: BuildComparison | None = None
+    compensation: tuple[CompensationPlan, ...] = ()
+    combat_projection: CombatProjection | None = None
 
 
 class ReplacementTrainingService:
@@ -51,10 +65,21 @@ class ReplacementTrainingService:
         self._overview = EquipmentOverviewService(factory)
         self._profiles = ScoringProfileService(factory)
         self._scoring = ScoringWorkflowService(factory, self._profiles)
+        self._combat = CombatBuildService(factory)
 
     @property
     def minimum_confidence(self) -> float:
         return self._scoring.minimum_confidence
+
+    def equipped_target(self, data_set_id: str, echo_id: str | None) -> tuple[str, int] | None:
+        if echo_id is None:
+            return None
+        for detail in self._combat.roster(data_set_id).values():
+            if detail.cultivation_goal.get("combat_teams"):
+                for slot in detail.echo_slots:
+                    if slot.echo_id == echo_id:
+                        return detail.summary.id, slot.slot_index
+        return None
 
     def target(self, data_set_id: str, character_id: str, slot_index: int) -> ReplacementTarget:
         if slot_index not in range(1, 6):
@@ -91,7 +116,11 @@ class ReplacementTrainingService:
             description += "\n套裝: " + (" / ".join(advice.target_sets) or "依自訂配裝")
             description += "\n主詞條: " + (" / ".join(advice.target_main_stats) or "依目標位置確認")
             description += "\n副詞條優先: " + ("、".join(advice.target_substats) or "尚無角色設定")
-        description += "\n沿用目前角色需求與面板效率; 換裝後若效率改變請更新面板。"
+        description += "\n" + (
+            "依已儲存戰鬥隊伍比較整套配裝。"
+            if detail.cultivation_goal.get("combat_teams")
+            else "可在角色頁設定戰鬥隊伍, 比較換裝後的整套效益。"
+        )
         return ReplacementTarget(
             character_id,
             character.character_name,
@@ -101,6 +130,20 @@ class ReplacementTrainingService:
             "尚無角色設定" if snapshot is None else snapshot.name,
             character_context(detail.cultivation_goal),
             description,
+            next(
+                (
+                    p.slot_index
+                    for p in sorted(
+                        (
+                            p
+                            for p in character.slots
+                            if p.slot_index != slot_index and p.score is not None
+                        ),
+                        key=lambda p: p.score if p.score is not None else 101,
+                    )
+                ),
+                None,
+            ),
         )
 
     def evaluate(
@@ -335,11 +378,116 @@ class ReplacementTrainingService:
             and not evaluation.projection.requires_manual_confirmation
             and score is not None
             and cost is not None
-            and target.piece.cost == cost
+            and (target.piece.cost is None or target.piece.cost == cost)
             and set_fit is True
             and main_fit is True
             and not breaks_set
         )
+        combat = None
+        combat_projection = None
+        compensation: tuple[CompensationPlan, ...] = ()
+        if detail.cultivation_goal.get("combat_teams") and (
+            not requires_review
+            and not evaluation.breakdown.requires_manual_confirmation
+            and cost is not None
+            and set_fit is True
+            and main_fit is True
+            and not breaks_set
+            and (target.piece.cost is None or target.piece.cost == cost)
+        ):
+            raw_subs = payload.get("sub_stats")
+            candidate_name = payload.get("name")
+            candidate = replace(
+                candidate,
+                echo_id=target.piece.echo_id
+                if is_same_echo
+                else candidate_echo_id or "preview-candidate",
+                name=candidate_name if isinstance(candidate_name, str) else None,
+                sub_stats=tuple(s for s in raw_subs if isinstance(s, dict))
+                if isinstance(raw_subs, list)
+                else (),
+            )
+            roster = self._combat.roster(data_set_id)
+            selected_profile = self._profiles.get_profile(
+                target.profile_id, data_set_id=data_set_id
+            )
+            weights = {
+                str(w.stat): w.weight for w in profile_from_snapshot(selected_profile).weights
+            }
+            anchored = with_candidate(detail, slot_index, candidate)
+            combat = compare_builds(
+                evaluate_build(detail, roster, weights=weights),
+                evaluate_build(anchored, roster, weights=weights),
+            )
+            combat_projection = project_combat_substats(
+                combat.before, combat.after, anchored, slot_index
+            )
+            if combat.after.sufficient is None:
+                conclusion = "戰鬥資料待補"
+            elif combat.after.sufficient is False:
+                threshold = selected_profile.thresholds.perfect
+                high_quality = score is not None and score >= threshold
+                conclusion = "值得保留, 需補充能" if high_quality else "充能不足, 需配合調整"
+                inventory = self._combat.free_inventory(data_set_id, character_id)
+                compensation = find_compensation(
+                    detail, anchored, inventory, roster, slot_index, weights=weights
+                )
+                if compensation:
+                    locations = "、".join(str(p) for p, _, _ in compensation[0].replacements)
+                    conclusion = f"有配裝方案 · 補強位置{locations}"
+                elif high_quality and type(level) is int and level < 25:
+                    conclusion = "值得續練, 需補充能"
+            elif combat.primary_delta is not None:
+                if combat.improves:
+                    if level == 25 and not is_same_echo:
+                        if target.piece.level == 25:
+                            conclusion = (
+                                "充能已補足, 可考慮替換"
+                                if combat.before.sufficient is False
+                                else "主隊持平, 其他隊提升"
+                                if abs(combat.primary_delta) <= 1e-9
+                                else "配裝效益提升, 可考慮替換"
+                            )
+                    elif type(level) is int and level < 25:
+                        conclusion = (
+                            "配裝改善, 後續依品質評估"
+                            if evaluation.decision.action is UpgradeAction.STOP
+                            else "配裝效益提升, 可繼續培養"
+                        )
+                elif level == 25 and not is_same_echo:
+                    conclusion = "保留候選, 主隊效益未提升"
+            reason += "\n" + combat.after.summary + "\n" + combat.details
+            if combat_projection is not None:
+                reason += (
+                    f"\n剩餘副詞條: 全隊充能達標機率 "
+                    f"{combat_projection.probability_sufficient:.1%}; "
+                    f"達標且主隊提升機率 {combat_projection.probability_improve:.1%}。"
+                    f"範圍: {combat_projection.scope}; {combat_projection.outcome_count}種結果。"
+                )
+                if (
+                    combat_projection.probability_improve >= 0.25
+                    and type(level) is int
+                    and level < 25
+                ):
+                    conclusion = "可繼續培養, 仍有配裝提升機會"
+            if compensation:
+                reason += "\n可用庫存方案:\n" + "\n".join(
+                    " + ".join(
+                        f"位置{p}: {name} ({identifier})"
+                        for p, identifier, name in plan.replacements
+                    )
+                    for plan in compensation
+                )
+            elif combat.after.sufficient is False:
+                position_hint = (
+                    ""
+                    if target.weakest_other_slot is None
+                    else f"可先查看目前品質較低的位置{target.weakest_other_slot}。"
+                )
+                reason += (
+                    "\n補強目標: 從其餘四件補足所有隊伍的充能; 本次搜尋未找到已確認庫存方案。"
+                    + position_hint
+                )
         return ReplacementComparison(
             target,
             evaluation,
@@ -348,4 +496,7 @@ class ReplacementTrainingService:
             delta if comparable else None,
             comparable,
             is_same_echo,
+            combat,
+            compensation,
+            combat_projection,
         )

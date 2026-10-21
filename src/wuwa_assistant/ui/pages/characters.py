@@ -200,6 +200,8 @@ class CharacterDetailView:
     character_ascension: int | None = None
     weapon_ascension: int | None = None
     equipment_check: EquipmentCheck | None = None
+    combat_summary: str = "尚未設定戰鬥隊伍"
+    combat_details: str = ""
 
     def __post_init__(self) -> None:
         if not self.identifier.strip() or not self.name.strip():
@@ -529,6 +531,7 @@ class CharactersPage(QWidget):
     archive_requested = Signal(str)
     weapon_edit_requested = Signal(str)
     team_edit_requested = Signal(str)
+    combat_edit_requested = Signal(str)
     echo_slot_edit_requested = Signal(str, int)
     equipment_check_requested = Signal(str)
     training_requested = Signal(str, int)
@@ -1195,7 +1198,25 @@ class CharactersPage(QWidget):
         actions.addWidget(self.equipment_check_details)
         actions.addStretch(1)
         layout.addLayout(actions)
+        combat = QHBoxLayout()
+        self.combat_summary_label = QLabel("尚未設定戰鬥隊伍")
+        self.combat_summary_label.setWordWrap(True)
+        self.combat_summary_label.setObjectName("CharacterCombatSummary")
+        self.combat_edit_button = QPushButton("戰鬥隊伍")
+        self.combat_edit_button.setObjectName("CharacterCombatEdit")
+        self.combat_edit_button.clicked.connect(self._request_combat_edit)
+        self.combat_details_button = TextDetailsButton("戰鬥數值", group)
+        combat.addWidget(self.combat_summary_label, 1)
+        combat.addWidget(self.combat_edit_button)
+        combat.addWidget(self.combat_details_button)
+        layout.addLayout(combat)
         return group
+
+    @Slot()
+    def _request_combat_edit(self) -> None:
+        identifier = self.current_character_id()
+        if identifier:
+            self.combat_edit_requested.emit(identifier)
 
     @Slot()
     def _request_equipment_check(self) -> None:
@@ -1204,6 +1225,8 @@ class CharactersPage(QWidget):
             self.equipment_check_requested.emit(identifier)
 
     def _apply_calculated_panel(self, detail: CharacterDetailView) -> None:
+        self.combat_summary_label.setText(detail.combat_summary)
+        self.combat_details_button.set_details("戰鬥配裝", detail.combat_details)
         equipment = detail.equipment_check
         self.equipment_check_button.setEnabled(True)
         self.equipment_check_label.setText(

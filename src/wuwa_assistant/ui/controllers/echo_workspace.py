@@ -1021,6 +1021,7 @@ class EchoWorkspacePresenter(QObject):
                         if comparison.conclusion
                         in {
                             "資料待補",
+                            "戰鬥資料待補",
                             "配裝資料待補",
                             "COST 不同",
                             "先檢查配裝",
@@ -1029,6 +1030,9 @@ class EchoWorkspacePresenter(QObject):
                     ),
                     reason=reason,
                     is_same_echo=comparison.is_same_echo,
+                    combat_summary=""
+                    if comparison.combat is None
+                    else comparison.combat.after.summary,
                 )
                 if comparison.evaluation is not None:
                     self._apply_scoring(comparison.evaluation, context, recommendation)
@@ -1331,9 +1335,9 @@ class EchoWorkspacePresenter(QObject):
                 context=score_context,
             )
             return
-        self._submit(
-            _Operation.SCORE,
-            lambda: scoring.evaluate(
+
+        def evaluate_current() -> ScoringEvaluation | ReplacementComparison:
+            evaluation = scoring.evaluate(
                 latest.effective_payload,
                 data_set_id=history.capture.data_set_id,
                 profile_id=profile_id or history.capture.scoring_profile_id,
@@ -1342,9 +1346,32 @@ class EchoWorkspacePresenter(QObject):
                 requires_review=latest.requires_review,
                 persist=persist,
                 character_mode=not (profile_id or history.capture.scoring_profile_id),
-            ),
-            context=score_context,
-        )
+            )
+            if replacement is not None and not (profile_id or history.capture.scoring_profile_id):
+                equipped = replacement.equipped_target(
+                    history.capture.data_set_id, history.session.echo_id
+                )
+                if equipped is not None:
+                    value = replacement.evaluate(
+                        latest.effective_payload,
+                        data_set_id=history.capture.data_set_id,
+                        character_id=equipped[0],
+                        slot_index=equipped[1],
+                        requires_review=latest.requires_review,
+                        candidate_echo_id=history.session.echo_id,
+                    )
+                    if value.evaluation is not None:
+                        value = replace(
+                            value,
+                            evaluation=replace(
+                                value.evaluation,
+                                persisted_decision_id=evaluation.persisted_decision_id,
+                            ),
+                        )
+                    return value
+            return evaluation
+
+        self._submit(_Operation.SCORE, evaluate_current, context=score_context)
 
     def _apply_scoring(
         self,

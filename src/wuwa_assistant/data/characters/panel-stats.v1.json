@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "version": "2026.10.20.3",
+  "version": "2026.10.21.1",
   "state": "non_combat_no_temporary_buffs",
   "precision_model": {
     "kind": "empirical_source_specific",
@@ -1941,7 +1941,57 @@
         ],
         "notes": "依公開初始三圍、屬性、武器類型交叉核對；候選列的初始屬性一致。",
         "sha256": "6bfedeb74243217b73d90928884c413226dda8c9768c3bc22dbec77d5413d9a3"
-      }
+      },
+      "chain_source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1429457793942482944",
+        "accessed_at": "2026-10-21",
+        "updated_at": "2026-01-07",
+        "content_sha256": "74aa579ed81fae7cac78c8c93be764d5411522f216391ee27153f87c3d21b3b9"
+      },
+      "resonance_chains": [
+        {
+          "level": 1,
+          "label": "穿行于荒芜长廊",
+          "panel_effects": {},
+          "conditional_effects": {},
+          "note": "常態效果已核對；限時及技能專屬效果由戰鬥配裝模型依情境處理。"
+        },
+        {
+          "level": 2,
+          "label": "织作牵绊的弦网",
+          "panel_effects": {},
+          "conditional_effects": {},
+          "note": "常態效果已核對；限時及技能專屬效果由戰鬥配裝模型依情境處理。"
+        },
+        {
+          "level": 3,
+          "label": "踱过长夜的迷惘",
+          "panel_effects": {},
+          "conditional_effects": {},
+          "note": "常態效果已核對；限時及技能專屬效果由戰鬥配裝模型依情境處理。"
+        },
+        {
+          "level": 4,
+          "label": "斩断循环的劫章",
+          "panel_effects": {},
+          "conditional_effects": {},
+          "note": "常態效果已核對；限時及技能專屬效果由戰鬥配裝模型依情境處理。"
+        },
+        {
+          "level": 5,
+          "label": "万盏灯火将照亮归途所向",
+          "panel_effects": {},
+          "conditional_effects": {},
+          "note": "常態效果已核對；限時及技能專屬效果由戰鬥配裝模型依情境處理。"
+        },
+        {
+          "level": 6,
+          "label": "由此重铸希望，与天光",
+          "panel_effects": {},
+          "conditional_effects": {},
+          "note": "常態效果已核對；限時及技能專屬效果由戰鬥配裝模型依情境處理。"
+        }
+      ]
     },
     "卡提希婭": {
       "base": [
@@ -2040,7 +2090,57 @@
         ],
         "notes": "依公開初始三圍、屬性、武器類型交叉核對；候選列的初始屬性一致。",
         "sha256": "6bfedeb74243217b73d90928884c413226dda8c9768c3bc22dbec77d5413d9a3"
-      }
+      },
+      "chain_source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1370471621924728832",
+        "accessed_at": "2026-10-21",
+        "updated_at": "2025-12-29",
+        "content_sha256": "38d929a25ba28f5727d337e562812236da8759033746846a8af57f5ed666bdd2"
+      },
+      "resonance_chains": [
+        {
+          "level": 1,
+          "label": "因命运戴上冠冕",
+          "panel_effects": {},
+          "conditional_effects": {},
+          "note": "常態效果已核對；限時及技能專屬效果由戰鬥配裝模型依情境處理。"
+        },
+        {
+          "level": 2,
+          "label": "听风潮斩断利刃",
+          "panel_effects": {},
+          "conditional_effects": {},
+          "note": "常態效果已核對；限時及技能專屬效果由戰鬥配裝模型依情境處理。"
+        },
+        {
+          "level": 3,
+          "label": "以自身束悬高塔",
+          "panel_effects": {},
+          "conditional_effects": {},
+          "note": "常態效果已核對；限時及技能專屬效果由戰鬥配裝模型依情境處理。"
+        },
+        {
+          "level": 4,
+          "label": "为拯救舍弃其身",
+          "panel_effects": {},
+          "conditional_effects": {},
+          "note": "常態效果已核對；限時及技能專屬效果由戰鬥配裝模型依情境處理。"
+        },
+        {
+          "level": 5,
+          "label": "将烈风重塑希望",
+          "panel_effects": {},
+          "conditional_effects": {},
+          "note": "常態效果已核對；限時及技能專屬效果由戰鬥配裝模型依情境處理。"
+        },
+        {
+          "level": 6,
+          "label": "尽一线挣扎自由",
+          "panel_effects": {},
+          "conditional_effects": {},
+          "note": "常態效果已核對；限時及技能專屬效果由戰鬥配裝模型依情境處理。"
+        }
+      ]
     },
     "嘉貝莉娜": {
       "base": [
@@ -2139,7 +2239,57 @@
         ],
         "notes": "依公開初始三圍、屬性、武器類型交叉核對；候選列的初始屬性一致。",
         "sha256": "6bfedeb74243217b73d90928884c413226dda8c9768c3bc22dbec77d5413d9a3"
-      }
+      },
+      "chain_source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1415137052791296000",
+        "accessed_at": "2026-10-21",
+        "updated_at": "2026-06-15",
+        "content_sha256": "94d6712c3cd2847785ac0033fbb8e4b29987f33ac013175d17a7c2afcd0cc07d"
+      },
+      "resonance_chains": [
+        {
+          "level": 1,
+          "label": "不熄抵牾抗争之心",
+          "panel_effects": {},
+          "conditional_effects": {},
+          "note": "常態效果已核對；限時及技能專屬效果由戰鬥配裝模型依情境處理。"
+        },
+        {
+          "level": 2,
+          "label": "行过烈狱与幽暗冥途",
+          "panel_effects": {},
+          "conditional_effects": {},
+          "note": "常態效果已核對；限時及技能專屬效果由戰鬥配裝模型依情境處理。"
+        },
+        {
+          "level": 3,
+          "label": "再燃血狩死猎之誓",
+          "panel_effects": {},
+          "conditional_effects": {},
+          "note": "常態效果已核對；限時及技能專屬效果由戰鬥配裝模型依情境處理。"
+        },
+        {
+          "level": 4,
+          "label": "承负无薪孤惧苦火",
+          "panel_effects": {},
+          "conditional_effects": {},
+          "note": "常態效果已核對；限時及技能專屬效果由戰鬥配裝模型依情境處理。"
+        },
+        {
+          "level": 5,
+          "label": "纵使光明远去，厄难焚身",
+          "panel_effects": {},
+          "conditional_effects": {},
+          "note": "常態效果已核對；限時及技能專屬效果由戰鬥配裝模型依情境處理。"
+        },
+        {
+          "level": 6,
+          "label": "我仍炽耀不移，自有永有",
+          "panel_effects": {},
+          "conditional_effects": {},
+          "note": "常態效果已核對；限時及技能專屬效果由戰鬥配裝模型依情境處理。"
+        }
+      ]
     },
     "守岸人": {
       "base": [
@@ -2238,7 +2388,57 @@
         ],
         "notes": "依公開初始三圍、屬性、武器類型交叉核對；候選列的初始屬性一致。",
         "sha256": "6bfedeb74243217b73d90928884c413226dda8c9768c3bc22dbec77d5413d9a3"
-      }
+      },
+      "chain_source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1286814658335739904",
+        "accessed_at": "2026-10-21",
+        "updated_at": "2025-12-29",
+        "content_sha256": "8d623031e2d985c15ef3bfd4748018043fdd8c3b2a628e68cedd11a2b17da10b"
+      },
+      "resonance_chains": [
+        {
+          "level": 1,
+          "label": "不语者假想",
+          "panel_effects": {},
+          "conditional_effects": {},
+          "note": "常態效果已核對；限時及技能專屬效果由戰鬥配裝模型依情境處理。"
+        },
+        {
+          "level": 2,
+          "label": "夜幕的赠予与拒绝",
+          "panel_effects": {},
+          "conditional_effects": {},
+          "note": "常態效果已核對；限時及技能專屬效果由戰鬥配裝模型依情境處理。"
+        },
+        {
+          "level": 3,
+          "label": "无限正将  我等待",
+          "panel_effects": {},
+          "conditional_effects": {},
+          "note": "常態效果已核對；限時及技能專屬效果由戰鬥配裝模型依情境處理。"
+        },
+        {
+          "level": 4,
+          "label": "万物寂静满溢",
+          "panel_effects": {},
+          "conditional_effects": {},
+          "note": "常態效果已核對；限時及技能專屬效果由戰鬥配裝模型依情境處理。"
+        },
+        {
+          "level": 5,
+          "label": "来自缄默的回声",
+          "panel_effects": {},
+          "conditional_effects": {},
+          "note": "常態效果已核對；限時及技能專屬效果由戰鬥配裝模型依情境處理。"
+        },
+        {
+          "level": 6,
+          "label": "我所驶向的新世界",
+          "panel_effects": {},
+          "conditional_effects": {},
+          "note": "常態效果已核對；限時及技能專屬效果由戰鬥配裝模型依情境處理。"
+        }
+      ]
     },
     "心": {
       "base": [
@@ -2337,7 +2537,57 @@
         ],
         "notes": "依公開初始三圍、屬性、武器類型交叉核對；候選列的初始屬性一致。",
         "sha256": "6bfedeb74243217b73d90928884c413226dda8c9768c3bc22dbec77d5413d9a3"
-      }
+      },
+      "chain_source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1543050481616060416",
+        "accessed_at": "2026-10-21",
+        "updated_at": "2026-10-09",
+        "content_sha256": "06a69ef112641fe7782feb3dc519742580080a1d60953fecb79c26929315db0c"
+      },
+      "resonance_chains": [
+        {
+          "level": 1,
+          "label": "授以舟楫渡潮生",
+          "panel_effects": {},
+          "conditional_effects": {},
+          "note": "常態效果已核對；限時及技能專屬效果由戰鬥配裝模型依情境處理。"
+        },
+        {
+          "level": 2,
+          "label": "一念初醒问此身",
+          "panel_effects": {},
+          "conditional_effects": {},
+          "note": "常態效果已核對；限時及技能專屬效果由戰鬥配裝模型依情境處理。"
+        },
+        {
+          "level": 3,
+          "label": "溪山深处留归梦",
+          "panel_effects": {},
+          "conditional_effects": {},
+          "note": "常態效果已核對；限時及技能專屬效果由戰鬥配裝模型依情境處理。"
+        },
+        {
+          "level": 4,
+          "label": "浮灯照水藏微愿",
+          "panel_effects": {},
+          "conditional_effects": {},
+          "note": "常態效果已核對；限時及技能專屬效果由戰鬥配裝模型依情境處理。"
+        },
+        {
+          "level": 5,
+          "label": "诸相流转由心定",
+          "panel_effects": {},
+          "conditional_effects": {},
+          "note": "常態效果已核對；限時及技能專屬效果由戰鬥配裝模型依情境處理。"
+        },
+        {
+          "level": 6,
+          "label": "不教朝月负今人",
+          "panel_effects": {},
+          "conditional_effects": {},
+          "note": "常態效果已核對；限時及技能專屬效果由戰鬥配裝模型依情境處理。"
+        }
+      ]
     },
     "愛彌斯": {
       "base": [
@@ -2439,7 +2689,7 @@
       },
       "chain_source": {
         "url": "https://wiki.kurobbs.com/mc/item/1457744312692867072",
-        "accessed_at": "2026-10-20",
+        "accessed_at": "2026-10-21",
         "updated_at": "2026-08-28",
         "content_sha256": "b8567eeafcd12ed57fae3c65a9ebfa8646999920366d22af7c283c68c5fcfc89"
       },
@@ -2466,6 +2716,27 @@
             "crit_damage": 60
           },
           "note": "強化解放並替換固有技能。60%暴傷須依模態觸發，入隊或切換模態重置；不能以脫戰判定已清除，當前基準不納入該觸發效果。"
+        },
+        {
+          "level": 4,
+          "label": "于无垠电子海间轻舞",
+          "panel_effects": {},
+          "conditional_effects": {},
+          "note": "常態效果已核對；限時及技能專屬效果由戰鬥配裝模型依情境處理。"
+        },
+        {
+          "level": 5,
+          "label": "远航至那星海尽处",
+          "panel_effects": {},
+          "conditional_effects": {},
+          "note": "常態效果已核對；限時及技能專屬效果由戰鬥配裝模型依情境處理。"
+        },
+        {
+          "level": 6,
+          "label": "春风祝颂你的旅途",
+          "panel_effects": {},
+          "conditional_effects": {},
+          "note": "常態效果已核對；限時及技能專屬效果由戰鬥配裝模型依情境處理。"
         }
       ]
     },
@@ -2566,7 +2837,57 @@
         ],
         "notes": "依公開初始三圍、屬性、武器類型交叉核對；候選列的初始屬性一致。",
         "sha256": "6bfedeb74243217b73d90928884c413226dda8c9768c3bc22dbec77d5413d9a3"
-      }
+      },
+      "chain_source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1269802618305703936",
+        "accessed_at": "2026-10-21",
+        "updated_at": "2025-12-29",
+        "content_sha256": "704f554e56208a2e9f381ddeb2793c0aa6f2dcefdb969cfec20a63ff8031b466"
+      },
+      "resonance_chains": [
+        {
+          "level": 1,
+          "label": "骨法用笔",
+          "panel_effects": {},
+          "conditional_effects": {},
+          "note": "常態效果已核對；限時及技能專屬效果由戰鬥配裝模型依情境處理。"
+        },
+        {
+          "level": 2,
+          "label": "气韵生动",
+          "panel_effects": {},
+          "conditional_effects": {},
+          "note": "常態效果已核對；限時及技能專屬效果由戰鬥配裝模型依情境處理。"
+        },
+        {
+          "level": 3,
+          "label": "应物象形",
+          "panel_effects": {},
+          "conditional_effects": {},
+          "note": "常態效果已核對；限時及技能專屬效果由戰鬥配裝模型依情境處理。"
+        },
+        {
+          "level": 4,
+          "label": "随类赋彩",
+          "panel_effects": {},
+          "conditional_effects": {},
+          "note": "常態效果已核對；限時及技能專屬效果由戰鬥配裝模型依情境處理。"
+        },
+        {
+          "level": 5,
+          "label": "经营位置",
+          "panel_effects": {},
+          "conditional_effects": {},
+          "note": "常態效果已核對；限時及技能專屬效果由戰鬥配裝模型依情境處理。"
+        },
+        {
+          "level": 6,
+          "label": "传移摹写",
+          "panel_effects": {},
+          "conditional_effects": {},
+          "note": "常態效果已核對；限時及技能專屬效果由戰鬥配裝模型依情境處理。"
+        }
+      ]
     },
     "洛瑟菈": {
       "base": [
@@ -2665,7 +2986,57 @@
         ],
         "notes": "依公開初始三圍、屬性、武器類型交叉核對；候選列的初始屬性一致。",
         "sha256": "6bfedeb74243217b73d90928884c413226dda8c9768c3bc22dbec77d5413d9a3"
-      }
+      },
+      "chain_source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1514097978770092032",
+        "accessed_at": "2026-10-21",
+        "updated_at": "2026-07-21",
+        "content_sha256": "04c8dce153569b0b65c914c545d75207dfc6a0f7393242e1faa25a80425c6b39"
+      },
+      "resonance_chains": [
+        {
+          "level": 1,
+          "label": "遥远的晌午",
+          "panel_effects": {},
+          "conditional_effects": {},
+          "note": "常態效果已核對；限時及技能專屬效果由戰鬥配裝模型依情境處理。"
+        },
+        {
+          "level": 2,
+          "label": "酣睡的月光",
+          "panel_effects": {},
+          "conditional_effects": {},
+          "note": "常態效果已核對；限時及技能專屬效果由戰鬥配裝模型依情境處理。"
+        },
+        {
+          "level": 3,
+          "label": "时间自无声处消逝",
+          "panel_effects": {},
+          "conditional_effects": {},
+          "note": "常態效果已核對；限時及技能專屬效果由戰鬥配裝模型依情境處理。"
+        },
+        {
+          "level": 4,
+          "label": "过去悄然沉默",
+          "panel_effects": {},
+          "conditional_effects": {},
+          "note": "常態效果已核對；限時及技能專屬效果由戰鬥配裝模型依情境處理。"
+        },
+        {
+          "level": 5,
+          "label": "岁月如溪水",
+          "panel_effects": {},
+          "conditional_effects": {},
+          "note": "常態效果已核對；限時及技能專屬效果由戰鬥配裝模型依情境處理。"
+        },
+        {
+          "level": 6,
+          "label": "在如烟的时间里张望",
+          "panel_effects": {},
+          "conditional_effects": {},
+          "note": "常態效果已核對；限時及技能專屬效果由戰鬥配裝模型依情境處理。"
+        }
+      ]
     },
     "清宵": {
       "base": [
@@ -2764,7 +3135,59 @@
         ],
         "notes": "依公開初始三圍、屬性、武器類型交叉核對；候選列的初始屬性一致。",
         "sha256": "6bfedeb74243217b73d90928884c413226dda8c9768c3bc22dbec77d5413d9a3"
-      }
+      },
+      "chain_source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1536353668409655296",
+        "accessed_at": "2026-10-21",
+        "updated_at": "2026-08-28",
+        "content_sha256": "3675669ecfdbfce8f5830608f6b74e85e5efd3b84e1377a0b0a0fc584671bf43"
+      },
+      "resonance_chains": [
+        {
+          "level": 1,
+          "label": "起若流云聚还散",
+          "panel_effects": {
+            "crit_rate": 16
+          },
+          "conditional_effects": {},
+          "note": "常態效果已核對；限時及技能專屬效果由戰鬥配裝模型依情境處理。"
+        },
+        {
+          "level": 2,
+          "label": "罢如素英落无声",
+          "panel_effects": {},
+          "conditional_effects": {},
+          "note": "常態效果已核對；限時及技能專屬效果由戰鬥配裝模型依情境處理。"
+        },
+        {
+          "level": 3,
+          "label": "长梦无痕剑留影",
+          "panel_effects": {},
+          "conditional_effects": {},
+          "note": "常態效果已核對；限時及技能專屬效果由戰鬥配裝模型依情境處理。"
+        },
+        {
+          "level": 4,
+          "label": "红尘杳渺且偕行",
+          "panel_effects": {},
+          "conditional_effects": {},
+          "note": "常態效果已核對；限時及技能專屬效果由戰鬥配裝模型依情境處理。"
+        },
+        {
+          "level": 5,
+          "label": "寒芒愿暖凡间雪",
+          "panel_effects": {},
+          "conditional_effects": {},
+          "note": "常態效果已核對；限時及技能專屬效果由戰鬥配裝模型依情境處理。"
+        },
+        {
+          "level": 6,
+          "label": "涤荡浊岁天地清",
+          "panel_effects": {},
+          "conditional_effects": {},
+          "note": "常態效果已核對；限時及技能專屬效果由戰鬥配裝模型依情境處理。"
+        }
+      ]
     },
     "珂萊塔": {
       "base": [
@@ -2863,7 +3286,57 @@
         ],
         "notes": "依公開初始三圍、屬性、武器類型交叉核對；候選列的初始屬性一致。",
         "sha256": "6bfedeb74243217b73d90928884c413226dda8c9768c3bc22dbec77d5413d9a3"
-      }
+      },
+      "chain_source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1321977849344999424",
+        "accessed_at": "2026-10-21",
+        "updated_at": "2025-12-29",
+        "content_sha256": "3068e84fd7a300a6e240a9924a344910cf7492826d76982bb443918c6b36cada"
+      },
+      "resonance_chains": [
+        {
+          "level": 1,
+          "label": "美或死，璀璨即凋零",
+          "panel_effects": {},
+          "conditional_effects": {},
+          "note": "常態效果已核對；限時及技能專屬效果由戰鬥配裝模型依情境處理。"
+        },
+        {
+          "level": 2,
+          "label": "寂与亡，衰败亦新生",
+          "panel_effects": {},
+          "conditional_effects": {},
+          "note": "常態效果已核對；限時及技能專屬效果由戰鬥配裝模型依情境處理。"
+        },
+        {
+          "level": 3,
+          "label": "切步、向前，此为优雅的进行式",
+          "panel_effects": {},
+          "conditional_effects": {},
+          "note": "常態效果已核對；限時及技能專屬效果由戰鬥配裝模型依情境處理。"
+        },
+        {
+          "level": 4,
+          "label": "以旧雨，为颂赞的苦酒",
+          "panel_effects": {},
+          "conditional_effects": {},
+          "note": "常態效果已核對；限時及技能專屬效果由戰鬥配裝模型依情境處理。"
+        },
+        {
+          "level": 5,
+          "label": "敬昨夜、今日和彼时彼刻",
+          "panel_effects": {},
+          "conditional_effects": {},
+          "note": "常態效果已核對；限時及技能專屬效果由戰鬥配裝模型依情境處理。"
+        },
+        {
+          "level": 6,
+          "label": "我依然故我，于终幕之上",
+          "panel_effects": {},
+          "conditional_effects": {},
+          "note": "常態效果已核對；限時及技能專屬效果由戰鬥配裝模型依情境處理。"
+        }
+      ]
     },
     "琳奈": {
       "base": [
@@ -2962,7 +3435,59 @@
         ],
         "notes": "依公開初始三圍、屬性、武器類型交叉核對；候選列的初始屬性一致。",
         "sha256": "6bfedeb74243217b73d90928884c413226dda8c9768c3bc22dbec77d5413d9a3"
-      }
+      },
+      "chain_source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1445377391854534656",
+        "accessed_at": "2026-10-21",
+        "updated_at": "2026-01-15",
+        "content_sha256": "f9668800d9ce7c701f61d2c2dcbbb2e74d00044836d3f005ab08154f840a650d"
+      },
+      "resonance_chains": [
+        {
+          "level": 1,
+          "label": "应是肆意挥洒的年华",
+          "panel_effects": {},
+          "conditional_effects": {},
+          "note": "常態效果已核對；限時及技能專屬效果由戰鬥配裝模型依情境處理。"
+        },
+        {
+          "level": 2,
+          "label": "驶向光彩交绘的彼方",
+          "panel_effects": {},
+          "conditional_effects": {},
+          "note": "常態效果已核對；限時及技能專屬效果由戰鬥配裝模型依情境處理。"
+        },
+        {
+          "level": 3,
+          "label": "为一瞬的绚烂",
+          "panel_effects": {},
+          "conditional_effects": {},
+          "note": "常態效果已核對；限時及技能專屬效果由戰鬥配裝模型依情境處理。"
+        },
+        {
+          "level": 4,
+          "label": "灰影随风呼啸而去",
+          "panel_effects": {
+            "attack_pct": 20
+          },
+          "conditional_effects": {},
+          "note": "常態效果已核對；限時及技能專屬效果由戰鬥配裝模型依情境處理。"
+        },
+        {
+          "level": 5,
+          "label": "不羁未来的映想",
+          "panel_effects": {},
+          "conditional_effects": {},
+          "note": "常態效果已核對；限時及技能專屬效果由戰鬥配裝模型依情境處理。"
+        },
+        {
+          "level": 6,
+          "label": "以「我」为名的真彩",
+          "panel_effects": {},
+          "conditional_effects": {},
+          "note": "常態效果已核對；限時及技能專屬效果由戰鬥配裝模型依情境處理。"
+        }
+      ]
     },
     "秧秧·玄翎": {
       "base": [
@@ -3061,7 +3586,57 @@
         ],
         "notes": "依公開初始三圍、屬性、武器類型交叉核對；候選列的初始屬性一致。",
         "sha256": "6bfedeb74243217b73d90928884c413226dda8c9768c3bc22dbec77d5413d9a3"
-      }
+      },
+      "chain_source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1519669180526559232",
+        "accessed_at": "2026-10-21",
+        "updated_at": "2026-07-10",
+        "content_sha256": "ec327003ec1c5d455a61b615709f3468799c659cad0fc8867c1c56400d36e5f5"
+      },
+      "resonance_chains": [
+        {
+          "level": 1,
+          "label": "禾雀随风初绽",
+          "panel_effects": {},
+          "conditional_effects": {},
+          "note": "常態效果已核對；限時及技能專屬效果由戰鬥配裝模型依情境處理。"
+        },
+        {
+          "level": 2,
+          "label": "戛剑棹歌而远",
+          "panel_effects": {},
+          "conditional_effects": {},
+          "note": "常態效果已核對；限時及技能專屬效果由戰鬥配裝模型依情境處理。"
+        },
+        {
+          "level": 3,
+          "label": "追念暨云陵",
+          "panel_effects": {},
+          "conditional_effects": {},
+          "note": "常態效果已核對；限時及技能專屬效果由戰鬥配裝模型依情境處理。"
+        },
+        {
+          "level": 4,
+          "label": "一纸信笺遥眷",
+          "panel_effects": {},
+          "conditional_effects": {},
+          "note": "常態效果已核對；限時及技能專屬效果由戰鬥配裝模型依情境處理。"
+        },
+        {
+          "level": 5,
+          "label": "羽展。羽展",
+          "panel_effects": {},
+          "conditional_effects": {},
+          "note": "常態效果已核對；限時及技能專屬效果由戰鬥配裝模型依情境處理。"
+        },
+        {
+          "level": 6,
+          "label": "所愿苍琅长睆",
+          "panel_effects": {},
+          "conditional_effects": {},
+          "note": "常態效果已核對；限時及技能專屬效果由戰鬥配裝模型依情境處理。"
+        }
+      ]
     },
     "穗穗": {
       "base": [
@@ -3160,7 +3735,57 @@
         ],
         "notes": "依公開初始三圍、屬性、武器類型交叉核對；候選列的初始屬性一致。",
         "sha256": "6bfedeb74243217b73d90928884c413226dda8c9768c3bc22dbec77d5413d9a3"
-      }
+      },
+      "chain_source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1519669262123954176",
+        "accessed_at": "2026-10-21",
+        "updated_at": "2026-08-10",
+        "content_sha256": "566aefb52aa5068d61f37c571bb855b1f3a31147402ef804e4475ce3aeb13801"
+      },
+      "resonance_chains": [
+        {
+          "level": 1,
+          "label": "雨洗千山皆入画",
+          "panel_effects": {},
+          "conditional_effects": {},
+          "note": "常態效果已核對；限時及技能專屬效果由戰鬥配裝模型依情境處理。"
+        },
+        {
+          "level": 2,
+          "label": "霞铺万顷欲流金",
+          "panel_effects": {},
+          "conditional_effects": {},
+          "note": "常態效果已核對；限時及技能專屬效果由戰鬥配裝模型依情境處理。"
+        },
+        {
+          "level": 3,
+          "label": "半卷疏帘邀晚照",
+          "panel_effects": {},
+          "conditional_effects": {},
+          "note": "常態效果已核對；限時及技能專屬效果由戰鬥配裝模型依情境處理。"
+        },
+        {
+          "level": 4,
+          "label": "一桁秋山共我吟",
+          "panel_effects": {},
+          "conditional_effects": {},
+          "note": "常態效果已核對；限時及技能專屬效果由戰鬥配裝模型依情境處理。"
+        },
+        {
+          "level": 5,
+          "label": "愿乘东风千万里",
+          "panel_effects": {},
+          "conditional_effects": {},
+          "note": "常態效果已核對；限時及技能專屬效果由戰鬥配裝模型依情境處理。"
+        },
+        {
+          "level": 6,
+          "label": "不负江山锦绣心",
+          "panel_effects": {},
+          "conditional_effects": {},
+          "note": "常態效果已核對；限時及技能專屬效果由戰鬥配裝模型依情境處理。"
+        }
+      ]
     },
     "維里奈": {
       "base": [
@@ -3262,7 +3887,7 @@
       },
       "chain_source": {
         "url": "https://wiki.kurobbs.com/mc/item/1242295554161025024",
-        "accessed_at": "2026-10-20",
+        "accessed_at": "2026-10-21",
         "updated_at": "2026-02-05",
         "content_sha256": "c8ee30e9ebca4df9db465b5025132a2ef8978f2aec053d017d76d59310d3ee98"
       },
@@ -3280,6 +3905,34 @@
           "panel_effects": {},
           "conditional_effects": {},
           "note": "共鳴技能額外取得光合能量與協奏能量；協奏能量不是共鳴效率百分比。"
+        },
+        {
+          "level": 3,
+          "label": "生长的选择",
+          "panel_effects": {},
+          "conditional_effects": {},
+          "note": "常態效果已核對；限時及技能專屬效果由戰鬥配裝模型依情境處理。"
+        },
+        {
+          "level": 4,
+          "label": "盛放的拥抱",
+          "panel_effects": {},
+          "conditional_effects": {},
+          "note": "常態效果已核對；限時及技能專屬效果由戰鬥配裝模型依情境處理。"
+        },
+        {
+          "level": 5,
+          "label": "结果的奇迹",
+          "panel_effects": {},
+          "conditional_effects": {},
+          "note": "常態效果已核對；限時及技能專屬效果由戰鬥配裝模型依情境處理。"
+        },
+        {
+          "level": 6,
+          "label": "丰收的喜悦",
+          "panel_effects": {},
+          "conditional_effects": {},
+          "note": "常態效果已核對；限時及技能專屬效果由戰鬥配裝模型依情境處理。"
         }
       ]
     },
@@ -3380,7 +4033,57 @@
         ],
         "notes": "依公開初始三圍、屬性、武器類型交叉核對；候選列的初始屬性一致。",
         "sha256": "6bfedeb74243217b73d90928884c413226dda8c9768c3bc22dbec77d5413d9a3"
-      }
+      },
+      "chain_source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1488853937364017152",
+        "accessed_at": "2026-10-21",
+        "updated_at": "2026-08-28",
+        "content_sha256": "14c577ac566f49f1aadc15c26569ed083198cb3fcd50152b3b9f95363e8517fc"
+      },
+      "resonance_chains": [
+        {
+          "level": 1,
+          "label": "不见春",
+          "panel_effects": {},
+          "conditional_effects": {},
+          "note": "常態效果已核對；限時及技能專屬效果由戰鬥配裝模型依情境處理。"
+        },
+        {
+          "level": 2,
+          "label": "于无声处冰冷燃烧",
+          "panel_effects": {},
+          "conditional_effects": {},
+          "note": "常態效果已核對；限時及技能專屬效果由戰鬥配裝模型依情境處理。"
+        },
+        {
+          "level": 3,
+          "label": "我身无我亦无穷",
+          "panel_effects": {},
+          "conditional_effects": {},
+          "note": "常態效果已核對；限時及技能專屬效果由戰鬥配裝模型依情境處理。"
+        },
+        {
+          "level": 4,
+          "label": "有如苇草浮沉",
+          "panel_effects": {},
+          "conditional_effects": {},
+          "note": "常態效果已核對；限時及技能專屬效果由戰鬥配裝模型依情境處理。"
+        },
+        {
+          "level": 5,
+          "label": "千祈万愿尽求我身",
+          "panel_effects": {},
+          "conditional_effects": {},
+          "note": "常態效果已核對；限時及技能專屬效果由戰鬥配裝模型依情境處理。"
+        },
+        {
+          "level": 6,
+          "label": "纵使前路永夜无终",
+          "panel_effects": {},
+          "conditional_effects": {},
+          "note": "常態效果已核對；限時及技能專屬效果由戰鬥配裝模型依情境處理。"
+        }
+      ]
     },
     "莫寧": {
       "base": [
@@ -3481,7 +4184,57 @@
         ],
         "notes": "依公開初始三圍、屬性、武器類型交叉核對；候選列的初始屬性一致。",
         "sha256": "6bfedeb74243217b73d90928884c413226dda8c9768c3bc22dbec77d5413d9a3"
-      }
+      },
+      "chain_source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1429461088674648064",
+        "accessed_at": "2026-10-21",
+        "updated_at": "2026-08-28",
+        "content_sha256": "aa2a79091badf02402ff3e2d51d7c3734e8bdc196711e5cf70884943b72176b8"
+      },
+      "resonance_chains": [
+        {
+          "level": 1,
+          "label": "缄默的观测者",
+          "panel_effects": {},
+          "conditional_effects": {},
+          "note": "常態效果已核對；限時及技能專屬效果由戰鬥配裝模型依情境處理。"
+        },
+        {
+          "level": 2,
+          "label": "熵增的启明星",
+          "panel_effects": {},
+          "conditional_effects": {},
+          "note": "常態效果已核對；限時及技能專屬效果由戰鬥配裝模型依情境處理。"
+        },
+        {
+          "level": 3,
+          "label": "递归的蓝图",
+          "panel_effects": {},
+          "conditional_effects": {},
+          "note": "常態效果已核對；限時及技能專屬效果由戰鬥配裝模型依情境處理。"
+        },
+        {
+          "level": 4,
+          "label": "宇宙的隐变量",
+          "panel_effects": {},
+          "conditional_effects": {},
+          "note": "常態效果已核對；限時及技能專屬效果由戰鬥配裝模型依情境處理。"
+        },
+        {
+          "level": 5,
+          "label": "钟慢效应",
+          "panel_effects": {},
+          "conditional_effects": {},
+          "note": "常態效果已核對；限時及技能專屬效果由戰鬥配裝模型依情境處理。"
+        },
+        {
+          "level": 6,
+          "label": "直到群星的尽头",
+          "panel_effects": {},
+          "conditional_effects": {},
+          "note": "常態效果已核對；限時及技能專屬效果由戰鬥配裝模型依情境處理。"
+        }
+      ]
     },
     "蕾貝卡": {
       "base": [
@@ -3580,7 +4333,57 @@
         ],
         "notes": "依公開初始三圍、屬性、武器類型交叉核對；候選列的初始屬性一致。",
         "sha256": "6bfedeb74243217b73d90928884c413226dda8c9768c3bc22dbec77d5413d9a3"
-      }
+      },
+      "chain_source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1502681773647212544",
+        "accessed_at": "2026-10-21",
+        "updated_at": "2026-06-10",
+        "content_sha256": "1321ec8ad55c5669a6506ea0d1e9310816f5d4749feee3e05640dc5d3a51be24"
+      },
+      "resonance_chains": [
+        {
+          "level": 1,
+          "label": "请多指教咯~",
+          "panel_effects": {},
+          "conditional_effects": {},
+          "note": "常態效果已核對；限時及技能專屬效果由戰鬥配裝模型依情境處理。"
+        },
+        {
+          "level": 2,
+          "label": "哦，原来是你啊！",
+          "panel_effects": {},
+          "conditional_effects": {},
+          "note": "常態效果已核對；限時及技能專屬效果由戰鬥配裝模型依情境處理。"
+        },
+        {
+          "level": 3,
+          "label": "背后就交给我吧！",
+          "panel_effects": {},
+          "conditional_effects": {},
+          "note": "常態效果已核對；限時及技能專屬效果由戰鬥配裝模型依情境處理。"
+        },
+        {
+          "level": 4,
+          "label": "我会保护你的！",
+          "panel_effects": {},
+          "conditional_effects": {},
+          "note": "常態效果已核對；限時及技能專屬效果由戰鬥配裝模型依情境處理。"
+        },
+        {
+          "level": 5,
+          "label": "边缘幻梦",
+          "panel_effects": {},
+          "conditional_effects": {},
+          "note": "常態效果已核對；限時及技能專屬效果由戰鬥配裝模型依情境處理。"
+        },
+        {
+          "level": 6,
+          "label": "也许……",
+          "panel_effects": {},
+          "conditional_effects": {},
+          "note": "常態效果已核對；限時及技能專屬效果由戰鬥配裝模型依情境處理。"
+        }
+      ]
     },
     "達妮婭": {
       "base": [
@@ -3679,7 +4482,59 @@
         ],
         "notes": "依公開初始三圍、屬性、武器類型交叉核對；候選列的初始屬性一致。",
         "sha256": "6bfedeb74243217b73d90928884c413226dda8c9768c3bc22dbec77d5413d9a3"
-      }
+      },
+      "chain_source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1488852222116831232",
+        "accessed_at": "2026-10-21",
+        "updated_at": "2026-05-21",
+        "content_sha256": "a9c618edc7fb444af5733832f16af27849cdec24e73ebae18685fde1c59db170"
+      },
+      "resonance_chains": [
+        {
+          "level": 1,
+          "label": "薄明梦中的寂静光辉",
+          "panel_effects": {
+            "crit_damage": 30
+          },
+          "conditional_effects": {},
+          "note": "常態效果已核對；限時及技能專屬效果由戰鬥配裝模型依情境處理。"
+        },
+        {
+          "level": 2,
+          "label": "坠入此世一片潮水",
+          "panel_effects": {},
+          "conditional_effects": {},
+          "note": "常態效果已核對；限時及技能專屬效果由戰鬥配裝模型依情境處理。"
+        },
+        {
+          "level": 3,
+          "label": "黑夜与风中奔驰着赤杨",
+          "panel_effects": {},
+          "conditional_effects": {},
+          "note": "常態效果已核對；限時及技能專屬效果由戰鬥配裝模型依情境處理。"
+        },
+        {
+          "level": 4,
+          "label": "从远方，回到远方",
+          "panel_effects": {},
+          "conditional_effects": {},
+          "note": "常態效果已核對；限時及技能專屬效果由戰鬥配裝模型依情境處理。"
+        },
+        {
+          "level": 5,
+          "label": "若能以谎言缝补心脏",
+          "panel_effects": {},
+          "conditional_effects": {},
+          "note": "常態效果已核對；限時及技能專屬效果由戰鬥配裝模型依情境處理。"
+        },
+        {
+          "level": 6,
+          "label": "祝愿你于静默中，得到太阳",
+          "panel_effects": {},
+          "conditional_effects": {},
+          "note": "常態效果已核對；限時及技能專屬效果由戰鬥配裝模型依情境處理。"
+        }
+      ]
     },
     "露帕": {
       "base": [
@@ -3778,7 +4633,57 @@
         ],
         "notes": "依公開初始三圍、屬性、武器類型交叉核對；候選列的初始屬性一致。",
         "sha256": "6bfedeb74243217b73d90928884c413226dda8c9768c3bc22dbec77d5413d9a3"
-      }
+      },
+      "chain_source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1370474602963382272",
+        "accessed_at": "2026-10-21",
+        "updated_at": "2025-12-29",
+        "content_sha256": "09ca8201ea9a5086852ab5a7640a2a24007ea10a129fd2fff16fe8369e8b73ae"
+      },
+      "resonance_chains": [
+        {
+          "level": 1,
+          "label": "看那无名之人",
+          "panel_effects": {},
+          "conditional_effects": {},
+          "note": "常態效果已核對；限時及技能專屬效果由戰鬥配裝模型依情境處理。"
+        },
+        {
+          "level": 2,
+          "label": "所处皆为猎场",
+          "panel_effects": {},
+          "conditional_effects": {},
+          "note": "常態效果已核對；限時及技能專屬效果由戰鬥配裝模型依情境處理。"
+        },
+        {
+          "level": 3,
+          "label": "狼影随焰咆哮",
+          "panel_effects": {},
+          "conditional_effects": {},
+          "note": "常態效果已核對；限時及技能專屬效果由戰鬥配裝模型依情境處理。"
+        },
+        {
+          "level": 4,
+          "label": "旗帜于火飞扬",
+          "panel_effects": {},
+          "conditional_effects": {},
+          "note": "常態效果已核對；限時及技能專屬效果由戰鬥配裝模型依情境處理。"
+        },
+        {
+          "level": 5,
+          "label": "胜利让掌声喝彩",
+          "panel_effects": {},
+          "conditional_effects": {},
+          "note": "常態效果已核對；限時及技能專屬效果由戰鬥配裝模型依情境處理。"
+        },
+        {
+          "level": 6,
+          "label": "致那最闪耀的焰星",
+          "panel_effects": {},
+          "conditional_effects": {},
+          "note": "常態效果已核對；限時及技能專屬效果由戰鬥配裝模型依情境處理。"
+        }
+      ]
     },
     "露西": {
       "base": [
@@ -3877,7 +4782,57 @@
         ],
         "notes": "依公開初始三圍、屬性、武器類型交叉核對；候選列的初始屬性一致。",
         "sha256": "6bfedeb74243217b73d90928884c413226dda8c9768c3bc22dbec77d5413d9a3"
-      }
+      },
+      "chain_source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1502669582481317888",
+        "accessed_at": "2026-10-21",
+        "updated_at": "2026-06-10",
+        "content_sha256": "6096aaaa6afeb455bea20220168249a75397102fe514558810e59864210b40ef"
+      },
+      "resonance_chains": [
+        {
+          "level": 1,
+          "label": "月球、船票与梦想",
+          "panel_effects": {},
+          "conditional_effects": {},
+          "note": "常態效果已核對；限時及技能專屬效果由戰鬥配裝模型依情境處理。"
+        },
+        {
+          "level": 2,
+          "label": "黑墙、过去与逃离",
+          "panel_effects": {},
+          "conditional_effects": {},
+          "note": "常態效果已核對；限時及技能專屬效果由戰鬥配裝模型依情境處理。"
+        },
+        {
+          "level": 3,
+          "label": "赛博朋克",
+          "panel_effects": {},
+          "conditional_effects": {},
+          "note": "常態效果已核對；限時及技能專屬效果由戰鬥配裝模型依情境處理。"
+        },
+        {
+          "level": 4,
+          "label": "夜之城没有活着的传奇",
+          "panel_effects": {},
+          "conditional_effects": {},
+          "note": "常態效果已核對；限時及技能專屬效果由戰鬥配裝模型依情境處理。"
+        },
+        {
+          "level": 5,
+          "label": "前往地狱的断路",
+          "panel_effects": {},
+          "conditional_effects": {},
+          "note": "常態效果已核對；限時及技能專屬效果由戰鬥配裝模型依情境處理。"
+        },
+        {
+          "level": 6,
+          "label": "I Really Want to Stay At Your House",
+          "panel_effects": {},
+          "conditional_effects": {},
+          "note": "常態效果已核對；限時及技能專屬效果由戰鬥配裝模型依情境處理。"
+        }
+      ]
     }
   },
   "weapons": {

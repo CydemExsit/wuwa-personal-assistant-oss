@@ -157,6 +157,7 @@ class RecommendationView:
     target_probability: float | None = None
     score_delta: float | None = None
     is_same_echo: bool = False
+    combat_summary: str = ""
     save_advice: str = "等待評分"
     upgrade_advice: str = ""
 
@@ -638,7 +639,8 @@ class EchoLivePage(QWidget):
             upgrade_advice="資料不足, 請先確認"
             if missing
             else recommendation.upgrade_advice or recommendation.conclusion,
-            basis=f"{recommendation.scoring_basis} · {recommendation.scoring_profile_name}",
+            basis=recommendation.combat_summary
+            or f"{recommendation.scoring_basis} · {recommendation.scoring_profile_name}",
             status="辨識不足, 需要人工確認"
             if missing
             else "正在更新辨識與評分"
@@ -764,6 +766,10 @@ class EchoLivePage(QWidget):
         self.reason_label.setObjectName("EchoDecisionReason")
         self.reason_label.setWordWrap(True)
         self.reason_label.hide()
+        self.combat_summary_label = QLabel()
+        self.combat_summary_label.setObjectName("EchoCombatSummary")
+        self.combat_summary_label.setWordWrap(True)
+        self.combat_summary_label.hide()
         self.save_advice_label = QLabel()
         self.save_advice_label.setObjectName("EchoSaveAdvice")
         self.save_advice_label.setWordWrap(True)
@@ -791,6 +797,7 @@ class EchoLivePage(QWidget):
         layout.addWidget(self.upgrade_advice_label)
         layout.addWidget(self.breakdown_button)
         layout.addWidget(self.reason_label)
+        layout.addWidget(self.combat_summary_label)
         layout.addWidget(self.breakdown_label)
         layout.addStretch(1)
         self._recommendation_basis = "通用參考"
@@ -1351,6 +1358,8 @@ class EchoLivePage(QWidget):
             f"極品 {_format_probability(recommendation.exceptional_probability)}"
         )
         self.reason_label.setText(recommendation.reason)
+        self.combat_summary_label.setText(recommendation.combat_summary)
+        self.combat_summary_label.setVisible(bool(recommendation.combat_summary))
         details = (
             generic_probabilities,
             f"評分依據: {recommendation.scoring_basis} · {recommendation.scoring_profile_name}",
