@@ -82,14 +82,14 @@ jobs:
           name: windows-package-reports-${{ github.sha }}
           path: dist/ci/reports/*.json
           if-no-files-found: warn
-          retention-days: 14
+          retention-days: 1
       - name: Preserve verified application
         uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
         with:
           name: WuwaDisplayAssistant-windows-${{ github.sha }}
           path: dist/ci/WuwaDisplayAssistant/
           if-no-files-found: error
-          retention-days: 14
+          retention-days: 1
       - name: Preserve complete corresponding sources
         uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
         with:
@@ -98,7 +98,7 @@ jobs:
             dist/ci/ThirdPartySources-1.1.2.zip
             dist/ci/certifi-*.tar.gz
           if-no-files-found: error
-          retention-days: 14
+          retention-days: 1
 
       - name: Preserve installer and portable downloads
         uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
@@ -110,4 +110,4 @@ jobs:
             dist/ci/VerificationReports-*.zip
             dist/ci/SHA256SUMS.txt
           if-no-files-found: error
-          retention-days: 14
+          retention-days: 1
