@@ -38,6 +38,8 @@ from wuwa_assistant.application.planning import (
     MaterialRequirement as StoredMaterialRequirement,
 )
 from wuwa_assistant.application.scoring_profiles import ScoringProfileService
+from wuwa_assistant.application.tacet_catalog import load_tacet_catalog
+from wuwa_assistant.application.tacet_stock import TacetStockService
 from wuwa_assistant.cultivation import BlockerCode, CultivationCompletion
 from wuwa_assistant.planning import (
     CharacterPlanningState,
@@ -76,6 +78,7 @@ from wuwa_assistant.ui.pages.today_plan import (
     InventoryEditRequest,
     InventoryItemView,
     PlanRecommendationView,
+    TacetStockEditRequest,
     TodayPlanPage,
     TodayPlanRequest,
     TodayPlanSnapshot,
@@ -90,6 +93,7 @@ class _Operation(StrEnum):
     LOAD = "load"
     GENERATE = "generate"
     INVENTORY = "inventory"
+    TACET_STOCK = "tacet_stock"
     COMPLETE = "complete"
 
 
@@ -179,6 +183,7 @@ class TodayPlanPresenter(QObject):
         )
         page.plan_requested.connect(self.generate_plan)
         page.inventory_edit_requested.connect(self.update_inventory)
+        page.tacet_stock_edit_requested.connect(self.update_tacet_stock)
         page.manage_data_requested.connect(self.open_data_editor)
         page.complete_plan_requested.connect(self.complete_plan)
 
@@ -243,6 +248,28 @@ class TodayPlanPresenter(QObject):
             )
 
         self._submit(_Operation.INVENTORY, work)
+
+    @Slot(object)
+    def update_tacet_stock(self, payload: object) -> None:
+        if self._closing or not isinstance(payload, TacetStockEditRequest):
+            return
+        request = self._page.current_request()
+        self._page.set_loading(True, "正在保存聲骸庫存狀態並更新無音區順位…")
+
+        def work() -> _Bundle:
+            TacetStockService(self._settings).save(
+                self._data_set_id,
+                load_tacet_catalog(self._tacet_cache_directory),
+                payload.field_ids,
+                has_stock=payload.has_stock,
+            )
+            return self._build_bundle(
+                request.plan_date if self._legacy_resource_planning else self._today(),
+                request.available_waveplates,
+                persist=False,
+            )
+
+        self._submit(_Operation.TACET_STOCK, work)
 
     def refresh(self) -> None:
         if self._closing:
@@ -500,11 +527,17 @@ class TodayPlanPresenter(QObject):
             data_set_id=self._data_set_id,
             tacet_cache_directory=self._tacet_cache_directory,
             as_of=plan_date,
+            stocked_field_ids=TacetStockService(self._settings).stocked_field_ids(
+                self._data_set_id, load_tacet_catalog(self._tacet_cache_directory)
+            ),
         )
-        candidates = tuple(row for row in farming.farming.recommendations if row.points > 0)
+        positive = tuple(row for row in farming.farming.recommendations if row.points > 0)
+        candidates = tuple(row for row in positive if not row.has_unleveled_stock)
         dashboard = (
             f"技能待升級 {len(farming.skills)} 項 · 無音區: {candidates[0].zone.name}"
             if candidates
+            else f"技能待升級 {len(farming.skills)} 項 · 無音區先培養現有庫存"
+            if positive
             else f"技能待升級 {len(farming.skills)} 項 · 無音區暫無已確認缺口"
         )
         activity_notices = (
@@ -774,6 +807,8 @@ class TodayPlanPresenter(QObject):
         self._page.set_snapshot(payload.bundle.snapshot)
         if payload.operation is _Operation.INVENTORY:
             self._page.show_status("素材庫存已保存, 今日規劃已重新計算。")
+        elif payload.operation is _Operation.TACET_STOCK:
+            self._page.show_status("聲骸庫存狀態已保存, 無音區順位已更新。")
         elif payload.operation is _Operation.GENERATE:
             self._page.show_status(
                 "今日規劃已保存。"

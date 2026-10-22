@@ -33,6 +33,28 @@ def _character(
     )
 
 
+def test_stock_lowers_farming_priority_without_diluting_exhausted_field_or_scores() -> None:
+    secondary = replace(
+        _character("secondary", FarmRole.SECONDARY, score=65),
+        sets=("C",),
+        echoes=(FarmEcho(1, 1, 25, 65, "C", True, True),),
+    )
+    roster = (_character(score=10), secondary)
+    original = recommend_zones(roster, ZONES)
+    stocked = recommend_zones(roster, ZONES, stocked_field_ids=frozenset({"ab", "ac"}))
+    assert stocked.recommendations[0].zone.identifier == "cd"
+    assert stocked.recommendations[0].points < stocked.recommendations[1].points
+    assert [r for r in stocked.recommendations if r.has_unleveled_stock]
+    by_id = {r.zone.identifier: r for r in original.recommendations}
+    for row in stocked.recommendations:
+        assert replace(row, has_unleveled_stock=False) == by_id[row.zone.identifier]
+    # Exhausting just one wanted type restores the complete dual-set demand.
+    depleted = recommend_zones(roster, ZONES, stocked_field_ids=frozenset({"ac"}))
+    assert depleted.recommendations[0] == by_id["ab"]
+    assert not depleted.recommendations[0].has_unleveled_stock
+    assert recommend_zones(roster, ZONES) == original
+
+
 def test_both_sets_sum_benefits_and_same_character_is_not_counted_twice() -> None:
     main = _character()
     secondary = replace(

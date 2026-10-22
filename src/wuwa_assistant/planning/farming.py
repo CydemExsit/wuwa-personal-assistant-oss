@@ -84,6 +84,7 @@ class ZoneRecommendation:
     coverage_multiplier: float = 1.0
     dual_set_multiplier: float = 1.0
     effective_character_count: float = 0.0
+    has_unleveled_stock: bool = False
 
     @property
     def character_count(self) -> int:
@@ -194,7 +195,10 @@ def _rank_zone(zone: FarmZone, benefits: list[FarmBenefit]) -> ZoneRecommendatio
 
 
 def recommend_zones(
-    characters: tuple[FarmCharacter, ...], zones: tuple[FarmZone, ...]
+    characters: tuple[FarmCharacter, ...],
+    zones: tuple[FarmZone, ...],
+    *,
+    stocked_field_ids: frozenset[str] = frozenset(),
 ) -> FarmingPlan:
     """Rank both sets using known needs, importance and useful coverage.
 
@@ -360,6 +364,22 @@ def recommend_zones(
                         ),
                     )
                 )
-    recommendations = [_rank_zone(zone, benefits) for zone in zones]
-    recommendations.sort(key=lambda row: (-row.points, -len(row.useful_sets), row.zone.identifier))
+    recommendations = [
+        replace(
+            _rank_zone(zone, benefits), has_unleveled_stock=zone.identifier in stocked_field_ids
+        )
+        for zone in zones
+    ]
+    # Availability is a field-level gate: any wanted type exhausted means the
+    # entire field keeps its original priority. Other plentiful drops do not
+    # dilute it. Existing quality/coverage points remain unchanged and auditable.
+    recommendations.sort(
+        key=lambda row: (
+            row.points <= 0,
+            row.has_unleveled_stock,
+            -row.points,
+            -len(row.useful_sets),
+            row.zone.identifier,
+        )
+    )
     return FarmingPlan(tuple(recommendations), tuple(dict.fromkeys(notices)))

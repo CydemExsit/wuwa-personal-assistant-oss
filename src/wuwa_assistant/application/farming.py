@@ -139,6 +139,7 @@ def build_today_farming(
     data_set_id: str,
     tacet_cache_directory: Path | None = None,
     as_of: date | None = None,
+    stocked_field_ids: frozenset[str] = frozenset(),
 ) -> TodayFarmingSnapshot:
     """Use the same automatic per-character score/fit as the Echo overview."""
     details = characters.list_character_details(data_set_id=data_set_id, candidates_only=True)
@@ -189,7 +190,7 @@ def build_today_farming(
         for detail in details
         if detail.summary.id in by_id
     )
-    plan = recommend_zones(farm_characters, zones)
+    plan = recommend_zones(farm_characters, zones, stocked_field_ids=stocked_field_ids)
     role_notes = tuple(f"{row.name}: {row.role_reason}" for row in farm_characters)
     return TodayFarmingSnapshot(
         skills,
