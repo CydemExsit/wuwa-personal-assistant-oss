@@ -31,6 +31,7 @@ class FarmEcho:
     main_valid: bool | None
     equipped: bool = True
     target_sets: tuple[str, ...] = ()
+    fit_reason: str = ""
 
 
 @dataclass(frozen=True, slots=True)
@@ -72,6 +73,7 @@ class FarmBenefit:
     importance_multiplier: float = 1.0
     piece_multiplier: float = 1.0
     importance_reason: str = ""
+    role: str = ""
 
 
 @dataclass(frozen=True, slots=True)
@@ -310,13 +312,18 @@ def recommend_zones(
                 continue
             if not echo.equipped or fit_wrong:
                 points = 3.0 if character.role is FarmRole.MAIN else 2.0
-                reasons.append(
-                    "補齊整體套裝組合"
-                    if combination_gap
-                    else "補套裝/主詞條"
-                    if echo.equipped
-                    else "補齊空位"
-                )
+                if not echo.equipped:
+                    reasons.append("補齊空位")
+                else:
+                    if combination_gap:
+                        reasons.append("補齊整體套裝組合")
+                    if echo.fit_reason:
+                        reasons.append(echo.fit_reason)
+                    else:
+                        if echo.set_valid is False:
+                            reasons.append("套裝不符")
+                        if echo.main_valid is False:
+                            reasons.append("主詞條不符")
             elif echo.set_valid is None or echo.main_valid is None:
                 notices.append(f"{label}: 套裝或主詞條待確認, 不把未知資料當作低分。")
                 continue
@@ -331,7 +338,8 @@ def recommend_zones(
                 points = _quality_points(echo.score, character.passing_score, character.role)
                 if points:
                     reasons.append(
-                        f"{echo.score:g} 分, 低於 {character.passing_score:g} 分門檻"
+                        f"{echo.score:g} 分 / 門檻 {character.passing_score:g} 分, "
+                        f"差 {character.passing_score - echo.score:g} 分"
                         if echo.score < character.passing_score
                         else "主輸出持續精進(邊際收益遞減)"
                         if character.role is FarmRole.MAIN
@@ -350,6 +358,7 @@ def recommend_zones(
                         name,
                         points * importance / len(targets),
                         f"{character.role} · 第 {echo.slot_index} 件: {'; '.join(reasons)}",
+                        role=str(character.role),
                         slot_index=echo.slot_index,
                         current_score=echo.score,
                         need_points=points / len(targets),

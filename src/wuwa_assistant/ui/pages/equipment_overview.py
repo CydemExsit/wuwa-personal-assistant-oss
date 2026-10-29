@@ -39,6 +39,8 @@ class EquipmentPieceView:
     reason: str = ""
     scan_count: int = 1
     is_passing: bool | None = None
+    fit_alert: str = ""
+    fit_summary: str = ""
 
 
 @dataclass(frozen=True, slots=True)
@@ -145,6 +147,11 @@ class EquipmentOverviewPage(QWidget):
         self.summary_label = QLabel("等待聲骸資料")
         self.summary_label.setObjectName("EquipmentOverviewSummary")
         self.summary_label.setWordWrap(True)
+        self.fit_alert_summary = QLabel()
+        self.fit_alert_summary.setObjectName("EquipmentFitSummary")
+        self.fit_alert_summary.setWordWrap(True)
+        self.fit_alert_summary.setStyleSheet("color: #ffb4b4;")
+        self.fit_alert_summary.hide()
         self.scroll_area = QScrollArea()
         self.scroll_area.setWidgetResizable(True)
         self.scroll_area.setFrameShape(QFrame.Shape.NoFrame)
@@ -182,6 +189,7 @@ class EquipmentOverviewPage(QWidget):
         layout.addLayout(controls)
         layout.addLayout(filters)
         layout.addWidget(self.summary_label)
+        layout.addWidget(self.fit_alert_summary)
         layout.addWidget(self.scroll_area, 1)
 
     def set_selected_character(self, identifier: str | None, slot: int | None = None) -> None:
@@ -246,6 +254,19 @@ class EquipmentOverviewPage(QWidget):
         if not hasattr(self, "cards_grid"):
             return
         show_pieces = self.view_combo.currentData() == "pieces"
+        issues = [
+            f"{character.name}第{piece.slot}件 {piece.fit_summary}"
+            for character in self._characters
+            if not character.archived
+            for piece in character.pieces
+            if "不符" in piece.fit_summary
+        ]
+        self.fit_alert_summary.setText(
+            "配裝提醒: "
+            + "、".join(issues[:2])
+            + (f"; 另有 {len(issues) - 2} 件" if len(issues) > 2 else "")
+        )
+        self.fit_alert_summary.setVisible(bool(issues))
         category = "all" if show_pieces else self.filter_combo.currentData()
         self.filter_combo.setVisible(not show_pieces)
         self.sort_combo.setVisible(not show_pieces)
@@ -346,6 +367,13 @@ class EquipmentOverviewPage(QWidget):
             label.setToolTip("位置待辨識" if piece is None else f"{piece.name}\n{piece.reason}")
             scores.addWidget(label, 1)
         layout.addLayout(scores)
+        issues = [f"第{p.slot}件 {p.fit_summary}" for p in character.pieces if p.fit_summary]
+        if issues:
+            warning = QLabel("\n".join(issues))
+            warning.setObjectName("EquipmentFitAlert")
+            warning.setWordWrap(True)
+            warning.setStyleSheet("color: #ffb4b4;")
+            layout.addWidget(warning)
         states = [
             "等級完成" if character.level_done else character.level_label or "等級待補",
             "武器完成" if character.weapon_done else character.weapon_label or "武器待補",
@@ -424,6 +452,12 @@ class EquipmentOverviewPage(QWidget):
         name.setObjectName("EquipmentWeakPieceName")
         name.setWordWrap(True)
         layout.addWidget(name)
+        if piece.fit_alert:
+            warning = QLabel(piece.fit_alert)
+            warning.setObjectName("EquipmentFitAlert")
+            warning.setWordWrap(True)
+            warning.setStyleSheet("color: #ffb4b4;")
+            layout.addWidget(warning)
         footer = QHBoxLayout()
         set_name = QLabel(piece.set_name or "套裝待辨識")
         set_name.setObjectName("PageDescription")

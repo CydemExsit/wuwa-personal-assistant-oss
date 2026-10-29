@@ -20,6 +20,7 @@ from wuwa_assistant.scoring.character_guides import guide_for_character
 
 from .character_scoring import character_context, character_profile
 from .characters import CharacterCultivationService, CharacterDetail
+from .equipment_alerts import equipment_fit_alert
 from .equipment_overview import CharacterEquipmentOverview
 from .scoring_profiles import ScoringProfileService, ScoringProfileSnapshot
 from .tacet_catalog import canonical_set_name, load_tacet_catalog
@@ -112,6 +113,7 @@ def _farm_character(
                 main_valid=echo.main_stat_is_valid,
                 equipped=echo.echo_id is not None,
                 target_sets=_target_sets(detail, echo.slot_index or 0),
+                fit_reason=equipment_fit_alert(echo),
             )
             for echo in overview.slots
         ),

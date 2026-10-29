@@ -44,7 +44,7 @@ from PySide6.QtWidgets import (
 )
 
 from wuwa_assistant.application.farming import TodayFarmingSnapshot
-from wuwa_assistant.ui.widgets.text_details import TextDetailsButton
+from wuwa_assistant.ui.widgets.farming_reasons import FarmingReasonsButton
 
 _INVALID_INDEX = QModelIndex()
 type ModelIndex = QModelIndex | QPersistentModelIndex
@@ -739,7 +739,7 @@ class TodayPlanPage(QWidget):
         stock_actions.addWidget(self.stock_all_available)
         stock_actions.addWidget(self.stock_all_depleted)
         stock_actions.addStretch()
-        self.zone_details = TextDetailsButton("查看推薦理由與資料待確認項目", self.zone_group)
+        self.zone_details = FarmingReasonsButton("查看推薦理由與資料待確認項目", self.zone_group)
         self.catalog_label = QLabel("")
         self.catalog_label.setWordWrap(True)
         zone_layout = QVBoxLayout(self.zone_group)
@@ -933,6 +933,7 @@ class TodayPlanPage(QWidget):
             "無音區推薦理由",
             "\n\n".join((rules, *details, *snapshot.farming.notices)),
         )
+        self.zone_details.set_recommendations(recommendations)
         self.catalog_label.setText(snapshot.catalog_note)
         self.skill_table.resizeRowsToContents()
         self.zone_table.resizeRowsToContents()

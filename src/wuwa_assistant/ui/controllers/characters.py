@@ -38,6 +38,7 @@ from wuwa_assistant.application.characters import (
 )
 from wuwa_assistant.application.combat_build import evaluate_build
 from wuwa_assistant.application.combat_service import CombatSettings
+from wuwa_assistant.application.equipment_alerts import equipment_fit_alert
 from wuwa_assistant.application.equipment_check import equipment_check
 from wuwa_assistant.application.equipment_overview import (
     CharacterEquipmentOverview,
@@ -1237,6 +1238,8 @@ def _equipment_piece(piece: EquippedEchoScore) -> EquipmentPieceView:
         set_name=piece.set_name,
         score=piece.score,
         reason="、".join(piece.notes),
+        fit_alert=equipment_fit_alert(piece),
+        fit_summary=equipment_fit_alert(piece, brief=True),
         scan_count=piece.rescan_count + 1,
         is_passing=piece.is_passing,
     )
@@ -1351,6 +1354,7 @@ def _gear_detail(item: CharacterEquipmentOverview) -> GearCharacterDetailView:
                     )
                     for s in p.stat_details
                 ),
+                fit_alert=equipment_fit_alert(p),
                 fit=f"套裝: {p.set_fit_reason} · 主詞條: {p.main_stat_fit_reason}",
                 action="" if advice is None else advice.action,
                 reason="" if advice is None else advice.reason,

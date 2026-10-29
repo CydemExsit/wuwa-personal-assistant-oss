@@ -49,6 +49,7 @@ class GearPieceDetailView:
     target: str
     score_note: str = ""
     is_passing: bool | None = None
+    fit_alert: str = ""
 
 
 @dataclass(frozen=True, slots=True)
@@ -289,6 +290,12 @@ class EquipmentDetailPage(QWidget):
         mains = QLabel("主詞條: " + (" + ".join(piece.main_stats) or "尚未辨識"))
         mains.setWordWrap(True)
         layout.addWidget(mains)
+        if piece.fit_alert:
+            warning = QLabel(piece.fit_alert)
+            warning.setObjectName("EquipmentFitAlert")
+            warning.setWordWrap(True)
+            warning.setStyleSheet("color: #ffb4b4;")
+            layout.addWidget(warning)
         grid = QGridLayout()
         grid.setColumnStretch(0, 3)
         grid.setColumnStretch(1, 1)

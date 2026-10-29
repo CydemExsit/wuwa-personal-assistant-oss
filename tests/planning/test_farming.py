@@ -104,7 +104,8 @@ def test_known_wrong_main_is_actionable_even_if_score_is_unknown() -> None:
     echo = FarmEcho(1, 3, 0, None, "A", True, False)
     result = recommend_zones((replace(_character(role=FarmRole.HEALER), echoes=(echo,)),), ZONES)
     assert result.recommendations[0].points > 0
-    assert "補套裝/主詞條" in result.recommendations[0].benefits[0].reason
+    assert "主詞條不符" in result.recommendations[0].benefits[0].reason
+    assert "套裝不符" not in result.recommendations[0].benefits[0].reason
 
 
 def test_healer_energy_gap_is_required_but_unknown_energy_is_not_a_numeric_gap() -> None:
