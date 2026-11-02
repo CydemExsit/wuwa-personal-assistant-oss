@@ -89,6 +89,16 @@ def test_grouped_alternatives_use_exact_existing_shares_and_leave_ranking_unchan
     assert repr(plan) == before
 
 
+def stock_button(dialog, field):
+    # setCellWidget schedules the previous QObject for deferred deletion. Search
+    # the actual view, not detached widgets still present in QObject.findChild.
+    for row in range(dialog.table.rowCount()):
+        button = dialog.table.cellWidget(row, 2)
+        if isinstance(button, QPushButton) and button.objectName() == f"TacetStock_{field}":
+            return button
+    raise AssertionError(f"No visible stock control for {field}")
+
+
 def test_shared_stock_entries_refresh_plan_dashboard_failure_bulk_and_reopen(
     qtbot, tmp_path, monkeypatch
 ):
@@ -126,7 +136,7 @@ def test_shared_stock_entries_refresh_plan_dashboard_failure_bulk_and_reopen(
         window.characters_page.equipment_workspace.tacet_stock_button.click()
         qtbot.waitUntil(lambda: editor.dialog is not None and not editor._busy)
         dialog = editor.dialog
-        button = dialog.findChild(QPushButton, f"TacetStock_{field}")
+        button = stock_button(dialog, field)
         assert button.text() == "還有可培養"
         button.click()
         assert not dialog.table.isEnabled()
@@ -138,23 +148,23 @@ def test_shared_stock_entries_refresh_plan_dashboard_failure_bulk_and_reopen(
         window.echo_page.tacet_stock_button.click()
         qtbot.waitUntil(lambda: not editor._busy)
         assert editor.dialog is dialog
-        assert dialog.findChild(QPushButton, f"TacetStock_{field}").text() == "需要的已用完"
-        dialog.findChild(QPushButton, f"TacetStock_{field}").click()
+        assert stock_button(dialog, field).text() == "需要的已用完"
+        stock_button(dialog, field).click()
         qtbot.waitUntil(lambda: len(changed) == 2 and not editor._busy)
         dialog.close()
         window.characters_page.equipment_workspace.tacet_stock_button.click()
         qtbot.waitUntil(lambda: not editor._busy)
-        assert dialog.findChild(QPushButton, f"TacetStock_{field}").text() == "還有可培養"
+        assert stock_button(dialog, field).text() == "還有可培養"
         with monkeypatch.context() as patch:
 
             def fail(*a, **kw):
                 raise OSError("synthetic storage failure")
 
             patch.setattr(service, "save", fail)
-            dialog.findChild(QPushButton, f"TacetStock_{field}").click()
+            stock_button(dialog, field).click()
             qtbot.waitUntil(lambda: not editor._busy)
             assert "synthetic storage failure" in dialog.status.text()
-            assert dialog.findChild(QPushButton, f"TacetStock_{field}").text() == "還有可培養"
+            assert stock_button(dialog, field).text() == "還有可培養"
             assert len(changed) == 2
         dialog.all_exhausted.click()
         qtbot.waitUntil(lambda: len(changed) == 3 and not editor._busy)
@@ -162,7 +172,8 @@ def test_shared_stock_entries_refresh_plan_dashboard_failure_bulk_and_reopen(
         # The existing planner row/bulk entry uses the very same writer.
         planner.update_tacet_stock(TacetStockEditRequest((field,), True))
         qtbot.waitUntil(lambda: len(changed) == 4 and not editor._busy)
-        assert dialog.findChild(QPushButton, f"TacetStock_{field}").text() == "還有可培養"
+        assert stock_button(dialog, field).text() == "還有可培養"
+        assert field in service.stocked_field_ids("primary", load_tacet_catalog())
         assert service.stocked_field_ids("other", load_tacet_catalog()) == other_dataset_before
     finally:
         editor.shutdown()
@@ -387,7 +398,7 @@ def test_committed_stock_with_failed_readback_requires_reload_before_more_edits(
             editor.open()
             qtbot.waitUntil(lambda: not editor._busy)
             field = load_tacet_catalog().fields[0].field_id
-            before = editor.dialog.findChild(QPushButton, f"TacetStock_{field}").text()
+            before = stock_button(editor.dialog, field).text()
             with monkeypatch.context() as patch:
                 patch.setattr(
                     service,
@@ -399,13 +410,11 @@ def test_committed_stock_with_failed_readback_requires_reload_before_more_edits(
                 assert len(changed) == 1
                 assert "readback failed" in editor.dialog.status.text()
                 assert not editor.dialog.table.isEnabled()
-                assert editor.dialog.findChild(QPushButton, f"TacetStock_{field}").text() == before
+                assert stock_button(editor.dialog, field).text() == before
             editor.open()
             qtbot.waitUntil(lambda: not editor._busy)
             assert editor.dialog.table.isEnabled()
-            assert (
-                editor.dialog.findChild(QPushButton, f"TacetStock_{field}").text() == "需要的已用完"
-            )
+            assert stock_button(editor.dialog, field).text() == "需要的已用完"
             assert field not in service.stocked_field_ids("primary", load_tacet_catalog())
         finally:
             editor.shutdown()
