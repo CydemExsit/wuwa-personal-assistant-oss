@@ -409,15 +409,13 @@ class ReplacementTrainingService:
         combat = None
         combat_projection = None
         compensation: tuple[CompensationPlan, ...] = ()
-        if detail.cultivation_goal.get("combat_teams") and (
-            not requires_review
+        if (
+            detail.cultivation_goal.get("combat_teams")
+            and quality_advice_available
             and not evaluation.breakdown.requires_manual_confirmation
-            and cost is not None
-            and set_fit is True
-            and main_fit is True
-            and not breaks_set
-            and (target.piece.cost is None or target.piece.cost == cost)
         ):
+            # Combat cannot override a missing level/decision input or an
+            # equipment restriction already established by the quality pass.
             raw_subs = payload.get("sub_stats")
             candidate_name = payload.get("name")
             candidate = replace(

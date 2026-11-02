@@ -361,6 +361,14 @@ def test_unknown_combat_preserves_quality_decision_in_workspace_and_panel(
 @pytest.mark.parametrize("missing", ["review", "level", "cost", "set", "main", "subs"])
 def test_quality_fallback_does_not_bypass_necessary_data_or_equipment_gates(equipment, missing):
     detail = registered_build(equipment)
+    CombatBuildService(equipment.database.session_factory).save(
+        equipment.data_set_id,
+        CombatSettings(
+            detail.summary.id,
+            (CombatTeam("primary", "未確認隊伍", energy_target=145, confirmed=False),),
+            "primary",
+        ),
+    )
     payload = candidate(detail)
     if missing == "level":
         payload["level"] = None
@@ -381,9 +389,15 @@ def test_quality_fallback_does_not_bypass_necessary_data_or_equipment_gates(equi
     )
     assert not value.quality_advice_available
     assert not value.quality_only
+    assert value.combat is None
     view = replacement_to_echo_recommendation(value)
     assert "可考慮替換" not in view.conclusion
     assert "依聲骸品質評估" not in view.save_advice
+    assert view.save_advice != "戰鬥資料待補"
+    assert view.upgrade_advice != "戰鬥資料待補"
+    if missing == "level":
+        assert view.save_advice == "資料待補"
+        assert view.upgrade_advice == "資料待補"
 
 
 def test_committed_stock_with_failed_readback_requires_reload_before_more_edits(
