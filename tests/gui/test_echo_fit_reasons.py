@@ -25,6 +25,7 @@ from wuwa_assistant.ui.pages.equipment_detail import (
 )
 from wuwa_assistant.ui.pages.equipment_overview import EquipmentOverviewPage
 from wuwa_assistant.ui.widgets.farming_reasons import FarmingReasonsButton, reason_rows
+from wuwa_assistant.ui.widgets.text_details import TextDetailsButton
 
 
 def wrong_main_piece() -> EquippedEchoScore:
@@ -169,9 +170,15 @@ def test_continuous_score_gap_and_readable_reasons_keep_diagnostics_secondary(qt
     dialog = button.findChild(QDialog, "FarmingReasonsDialog")
     assert dialog is not None
     tree = dialog.findChild(QTreeWidget, "FarmingReasonRows")
-    assert tree is not None and tree.columnCount() == 4
+    assert tree is not None and tree.columnCount() == 5
     item = tree.topLevelItem(0).child(0)
     assert item.text(0) == "角色40" and "差 30 分" in item.text(3)
     assert "優先級" not in " ".join(item.text(c) for c in range(4))
+    assert item.text(4) == f"{zone.benefits[0].points:.3f}"
     assert not dialog.findChildren(QDialog, "TextDetailsDialog")
+    diagnostics = next(
+        b for b in dialog.findChildren(TextDetailsButton) if b.text() == "計算細節與資料待確認項目"
+    )
+    diagnostics.click()
+    assert diagnostics.findChild(QDialog, "TextDetailsDialog") is not None
     dialog.close()

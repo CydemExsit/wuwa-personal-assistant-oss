@@ -324,6 +324,7 @@ class EchoLivePage(QWidget):
     character_link_requested = Signal(str, str, int)
     session_navigation_requested = Signal(int)
     training_clear_requested = Signal()
+    tacet_stock_requested = Signal()
     presentation_changed = Signal()
 
     def __init__(
@@ -420,7 +421,13 @@ class EchoLivePage(QWidget):
         layout = QVBoxLayout(self)
         layout.setContentsMargins(24, 16, 24, 12)
         layout.setSpacing(6)
-        layout.addWidget(title)
+        heading = QHBoxLayout()
+        heading.addWidget(title)
+        self.tacet_stock_button = QPushButton("無音區庫存")
+        self.tacet_stock_button.clicked.connect(self.tacet_stock_requested.emit)
+        heading.addWidget(self.tacet_stock_button)
+        heading.addStretch(1)
+        layout.addLayout(heading)
         title.setToolTip(subtitle.text())
         subtitle.hide()
         layout.addWidget(controls)

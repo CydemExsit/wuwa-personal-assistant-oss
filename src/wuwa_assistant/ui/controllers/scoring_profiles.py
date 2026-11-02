@@ -12,6 +12,7 @@ from typing import TypeVar
 
 from PySide6.QtCore import QObject, Qt, Signal, Slot
 
+from wuwa_assistant.application.replacement_training import ReplacementComparison
 from wuwa_assistant.application.scoring_profiles import (
     ScoreThresholds,
     ScoringProfileDefinition,
@@ -680,9 +681,74 @@ def _normalized_contribution(
     return weighted_points / denominator * 100.0
 
 
+def replacement_to_echo_recommendation(comparison: ReplacementComparison) -> RecommendationView:
+    """Present quality and combat separately for the workspace and panel."""
+    if comparison.evaluation is not None:
+        recommendation = evaluation_to_echo_recommendation(
+            comparison.evaluation,
+            target_score=comparison.target.piece.score,
+            score_delta=comparison.delta,
+        )
+        if not comparison.target_comparable:
+            recommendation = replace(
+                recommendation,
+                target_score=None,
+                target_probability=None,
+                score_delta=None,
+            )
+    else:
+        recommendation = RecommendationView()
+    reason = comparison.reason
+    if comparison.delta is not None:
+        reason += f" 目前分差 {comparison.delta:+.2f} 分。"
+    quality_only = comparison.quality_only
+    recommendation = replace(
+        recommendation,
+        conclusion=(
+            "依聲骸品質評估 · " + comparison.quality_conclusion
+            if quality_only
+            else comparison.conclusion
+        ),
+        save_advice=(
+            "依聲骸品質評估: " + recommendation.save_advice
+            if quality_only
+            else comparison.conclusion
+        ),
+        upgrade_advice=(
+            "依聲骸品質評估: "
+            + (
+                recommendation.upgrade_advice
+                if comparison.evaluation is not None
+                and not comparison.evaluation.decision.requires_manual_confirmation
+                else comparison.quality_conclusion
+            )
+            if quality_only
+            else comparison.conclusion
+            if comparison.conclusion
+            in {
+                "資料待補",
+                "戰鬥資料待補",
+                "配裝資料待補",
+                "COST 不同",
+                "先檢查配裝",
+            }
+            else recommendation.upgrade_advice or comparison.conclusion
+        ),
+        reason=(
+            reason + "\n依聲骸品質評估; 戰鬥資料待補, 尚未驗證整隊最佳配裝或直接替換收益。"
+            if quality_only
+            else reason
+        ),
+        is_same_echo=comparison.is_same_echo,
+        combat_summary="" if comparison.combat is None else comparison.combat.after.summary,
+    )
+    return recommendation
+
+
 __all__ = [
     "ScoringProfilesPresenter",
     "evaluation_to_echo_recommendation",
     "evaluation_to_live_substats",
     "evaluation_to_profile_preview",
+    "replacement_to_echo_recommendation",
 ]

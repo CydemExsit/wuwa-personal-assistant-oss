@@ -77,6 +77,7 @@ class MainWindow(QMainWindow):
     """Main application window with data-driven navigation and injectable settings."""
 
     page_changed = Signal(object)
+    echo_enhancement_left = Signal()
 
     def __init__(
         self,
@@ -150,6 +151,9 @@ class MainWindow(QMainWindow):
         }
         for page in self._pages.values():
             self.page_stack.addWidget(page)
+
+        self._enhancement_active = False
+        self.page_stack.currentChanged.connect(self._on_workspace_changed)
 
         central = QWidget()
         central.setObjectName("ApplicationSurface")
@@ -276,6 +280,13 @@ class MainWindow(QMainWindow):
         """Drain services if the application event loop exited unexpectedly."""
 
         return self._shutdown.finish_blocking()
+
+    def _on_workspace_changed(self, _index: int) -> None:
+        active = self.page_stack.currentWidget() is self.echo_page
+        departed = self._enhancement_active and not active
+        self._enhancement_active = active
+        if departed:
+            self.echo_enhancement_left.emit()
 
     def navigate_to(self, page_id: PageId) -> None:
         if self._shutdown_started:

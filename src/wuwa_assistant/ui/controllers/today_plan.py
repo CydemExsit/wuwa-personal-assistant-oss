@@ -63,6 +63,7 @@ from wuwa_assistant.planning import (
 )
 from wuwa_assistant.storage.settings import SettingsService
 from wuwa_assistant.ui.controllers.background_executor import BackgroundExecutor
+from wuwa_assistant.ui.controllers.tacet_stock import TacetStockPresenter
 from wuwa_assistant.ui.dialogs.planning_data import (
     CultivationTargetSaveRequest,
     CultivationTargetView,
@@ -156,6 +157,7 @@ class TodayPlanPresenter(QObject):
         activity_notices: Callable[[date], tuple[str, ...]] | None = None,
         tacet_cache_directory: Path | None = None,
         legacy_resource_planning: bool = False,
+        tacet_stock: TacetStockPresenter | None = None,
         parent: QObject | None = None,
     ) -> None:
         super().__init__(parent)
@@ -163,6 +165,8 @@ class TodayPlanPresenter(QObject):
         self._characters = character_service
         self._profiles = scoring_profiles
         self._settings = settings
+        self._stock_editor = tacet_stock
+        self._stock_service = tacet_stock.service if tacet_stock else TacetStockService(settings)
         self._page = page
         self._data_set_id = data_set_id
         self._today = today
@@ -253,11 +257,14 @@ class TodayPlanPresenter(QObject):
     def update_tacet_stock(self, payload: object) -> None:
         if self._closing or not isinstance(payload, TacetStockEditRequest):
             return
+        if self._stock_editor is not None:
+            self._stock_editor.save(payload)
+            return
         request = self._page.current_request()
         self._page.set_loading(True, "正在保存聲骸庫存狀態並更新無音區順位…")
 
         def work() -> _Bundle:
-            TacetStockService(self._settings).save(
+            self._stock_service.save(
                 self._data_set_id,
                 load_tacet_catalog(self._tacet_cache_directory),
                 payload.field_ids,
@@ -527,7 +534,7 @@ class TodayPlanPresenter(QObject):
             data_set_id=self._data_set_id,
             tacet_cache_directory=self._tacet_cache_directory,
             as_of=plan_date,
-            stocked_field_ids=TacetStockService(self._settings).stocked_field_ids(
+            stocked_field_ids=self._stock_service.stocked_field_ids(
                 self._data_set_id, load_tacet_catalog(self._tacet_cache_directory)
             ),
         )

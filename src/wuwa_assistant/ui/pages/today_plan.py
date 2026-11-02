@@ -44,6 +44,7 @@ from PySide6.QtWidgets import (
 )
 
 from wuwa_assistant.application.farming import TodayFarmingSnapshot
+from wuwa_assistant.application.tacet_stock import TacetStockEditRequest
 from wuwa_assistant.ui.widgets.farming_reasons import FarmingReasonsButton
 
 _INVALID_INDEX = QModelIndex()
@@ -96,20 +97,6 @@ class InventoryEditRequest:
     def __post_init__(self) -> None:
         _require_identifier(self.material_id, "material_id")
         _validate_quantity(self.count, "count")
-
-
-@dataclass(frozen=True, slots=True)
-class TacetStockEditRequest:
-    """Availability of wanted drops, for one field or an explicit bulk edit."""
-
-    field_ids: tuple[str, ...]
-    has_stock: bool
-
-    def __post_init__(self) -> None:
-        if not self.field_ids or any(not value.strip() for value in self.field_ids):
-            raise ValueError("field_ids must be non-empty")
-        if type(self.has_stock) is not bool:
-            raise ValueError("has_stock must be bool")
 
 
 @dataclass(frozen=True, slots=True)

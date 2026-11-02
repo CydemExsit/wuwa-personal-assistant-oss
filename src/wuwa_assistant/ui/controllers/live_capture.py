@@ -352,7 +352,8 @@ class LiveCaptureController(QObject):
         """Fence Qt signals emitted before a manual recheck but delivered later."""
         with self._lock:
             return (
-                value.generation == self._active_run_id
+                self._stop_thread is None
+                and value.generation == self._active_run_id
                 and value.source_sequence > self._result_floor
             )
 
@@ -492,6 +493,11 @@ class LiveCaptureController(QObject):
                 _optional_log_int(run_id),
             )
             return False
+        # Invalidate queued Qt payloads before waiting for native cleanup. Real
+        # runtimes expose a cancellation-only call; no joins run on the Qt thread.
+        request_stop = getattr(runtime, "request_stop", None)
+        if callable(request_stop):
+            request_stop()
         worker.start()
         return True
 

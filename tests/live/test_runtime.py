@@ -561,3 +561,53 @@ def test_page_recovery_ignores_animated_obsolete_content_layout() -> None:
         assert sum(r.packet_kind is RoiPacketKind.PROBE for r in results) == 4
     finally:
         assert runtime.coordinator.stop()
+
+
+def test_request_stop_cancels_acquisition_and_pending_ocr_before_native_join() -> None:
+    class BlockingAnalyzer:
+        def __init__(self):
+            self.entered = Event()
+            self.release = Event()
+            self.calls = 0
+
+        def analyze(self, roi_packet):
+            self.calls += 1
+            self.entered.set()
+            assert self.release.wait(5)
+            return AnalysisResult("echo_selection", True, 0.99, {"name": "synthetic"})
+
+    analyzer = BlockingAnalyzer()
+    backend = FakeCaptureBackend([np.zeros((1440, 2560, 3), dtype=np.uint8)] * 16)
+    results = []
+    runtime = LiveCaptureRuntime(
+        backend,
+        CaptureConfig(1, sample_hz=8),
+        analyzer,
+        stable_duration_seconds=0.50,
+        minimum_stable_samples=2,
+        on_result=results.append,
+    )
+    token = runtime.start()
+    try:
+        assert analyzer.entered.wait(3)
+        # Queue a newer distinct OCR request while the first native call is active.
+        runtime.coordinator.submit(token, packet(100, 100, "pending"))
+        runtime.coordinator.submit(token, packet(101, 100.6, "pending"))
+        started = monotonic()
+        runtime.request_stop()
+        assert monotonic() - started < 0.5
+        # Cancellation leaves the native call to finish safely; no queued work runs.
+        sleep(0.3)
+        acquired = backend.audit.snapshot.acquired
+        sleep(0.3)
+        assert backend.audit.snapshot.acquired == acquired
+        assert analyzer.calls == 1
+        analyzer.release.set()
+        assert runtime.stop(timeout=3)
+        assert not runtime.is_running
+        assert analyzer.calls == 1 and not results
+        backend.audit.assert_all_released()
+        assert backend.audit.snapshot.acquired == acquired
+    finally:
+        analyzer.release.set()
+        runtime.stop(timeout=3)

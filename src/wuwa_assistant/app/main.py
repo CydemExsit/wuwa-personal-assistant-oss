@@ -304,17 +304,34 @@ def _create_window(
         data_set_id=selected_data_set_id,
         parent=window,
     )
+    from wuwa_assistant.application.tacet_stock import TacetStockService
     from wuwa_assistant.application.tacet_sync import TacetCatalogSync
+    from wuwa_assistant.ui.controllers.tacet_stock import TacetStockPresenter
 
+    stock_presenter = TacetStockPresenter(
+        TacetStockService(database.settings),
+        selected_data_set_id,
+        cache_directory=database.paths.public_data_cache_dir,
+        parent=window,
+    )
+    window.characters_page.equipment_workspace.tacet_stock_requested.connect(stock_presenter.open)
+    window.echo_page.tacet_stock_requested.connect(stock_presenter.open)
     planning_presenter = TodayPlanPresenter(
         planning_service=CultivationPlanningService(database.session_factory),
         character_service=CharacterCultivationService(database.session_factory),
         scoring_profiles=profile_service,
         settings=database.settings,
         page=window.today_plan_page,
+        tacet_stock=stock_presenter,
         tacet_cache_directory=database.paths.public_data_cache_dir,
         data_set_id=selected_data_set_id,
         parent=window,
+    )
+    stock_presenter.changed.connect(planning_presenter.refresh)
+    stock_presenter.busy_changed.connect(window.today_plan_page.set_loading)
+    stock_presenter.failed.connect(window.today_plan_page.show_error)
+    window.register_shutdown(
+        stock_presenter.finish_shutdown, prepare=stock_presenter.prepare_shutdown
     )
     from wuwa_assistant.public_data.schedule_state import ScheduleCompletionService
 
@@ -400,6 +417,8 @@ def _create_window(
         settings=settings_store,
         parent=window,
     )
+    window.echo_enhancement_left.connect(presenter.stop_capture)
+    window.echo_enhancement_left.connect(display_controller.end_panel)
     window.register_shutdown(display_controller.shutdown)
     data_presenter.restart_required.connect(lambda _message: window.close())
     window.register_shutdown(

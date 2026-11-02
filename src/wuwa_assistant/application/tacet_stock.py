@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from dataclasses import dataclass
+
 from wuwa_assistant.storage.settings import SettingsService
 
 from .tacet_catalog import TacetCatalog, TacetField
@@ -49,6 +51,20 @@ _INITIAL_STOCKED_SETS = frozenset(
 
 def _signature(field: TacetField) -> list[str]:
     return sorted(field.set_names)
+
+
+@dataclass(frozen=True, slots=True)
+class TacetStockEditRequest:
+    """Availability of wanted drops, for one field or an explicit bulk edit."""
+
+    field_ids: tuple[str, ...]
+    has_stock: bool
+
+    def __post_init__(self) -> None:
+        if not self.field_ids or any(not value.strip() for value in self.field_ids):
+            raise ValueError("field_ids must be non-empty")
+        if type(self.has_stock) is not bool:
+            raise ValueError("has_stock must be bool")
 
 
 class TacetStockService:

@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from math import fsum
+
 from PySide6.QtCore import QModelIndex, QPersistentModelIndex, QRect, QSize, Qt
 from PySide6.QtWidgets import (
     QDialog,
@@ -23,7 +25,7 @@ from .text_details import TextDetailsButton
 _ROLES = {"主輸出": "主C", "副輸出": "副C", "治療輔助": "治療"}
 
 
-def reason_rows(zone: ZoneRecommendation) -> tuple[tuple[str, str, str, str], ...]:
+def reason_rows(zone: ZoneRecommendation) -> tuple[tuple[str, str, str, str, str], ...]:
     rows: dict[tuple[str, int], tuple[str, str, str, str]] = {}
     for benefit in sorted(zone.benefits, key=lambda row: -row.points):
         key = (benefit.character_id, benefit.slot_index)
@@ -39,7 +41,15 @@ def reason_rows(zone: ZoneRecommendation) -> tuple[tuple[str, str, str, str], ..
         elif reason not in rows[key][3]:
             old = rows[key]
             rows[key] = (*old[:3], old[3] + "; " + reason)
-    return tuple(rows.values())
+    # Alternatives already carry their allocated shares and slot discount.
+    # Sum those exact shares once, without applying zone coverage/dual multipliers.
+    return tuple(
+        (
+            *row,
+            f"{fsum(b.points for b in zone.benefits if (b.character_id, b.slot_index) == key):.3f}",
+        )
+        for key, row in rows.items()
+    )
 
 
 class _WrappedReasons(QStyledItemDelegate):
@@ -57,7 +67,7 @@ class _WrappedReasons(QStyledItemDelegate):
         if model is None:
             return base
         height = 0
-        for column in range(4):
+        for column in range(5):
             value = model.index(index.row(), column, index.parent()).data()
             width = max(24, self._tree.columnWidth(column) - (36 if column == 0 else 12))
             box = option.fontMetrics.boundingRect(
@@ -85,19 +95,21 @@ class FarmingReasonsButton(TextDetailsButton):
         dialog.resize(min(1000, available.width() - 60), min(680, available.height() - 80))
         layout = QVBoxLayout(dialog)
         hint = QLabel(
-            "依無音區分組。先修正配裝問題; 分數差距依各角色門檻顯示。展開可查看其他區域。"
+            "貢獻點為各需求的份額合計; 無音區最終排序另含覆蓋與雙套裝倍率。展開可查看其他區域。"
         )
         hint.setWordWrap(True)
         layout.addWidget(hint)
         tree = QTreeWidget(dialog)
         tree.setObjectName("FarmingReasonRows")
-        tree.setHeaderLabels(("角色", "定位", "位置", "原因"))
+        tree.setHeaderLabels(("角色", "定位", "位置", "原因", "貢獻點"))
         tree.setWordWrap(True)
         tree.setUniformRowHeights(False)
         tree.setItemDelegate(_WrappedReasons(tree))
-        tree.header().setStretchLastSection(True)
+        tree.header().setStretchLastSection(False)
         tree.header().setSectionResizeMode(QHeaderView.ResizeMode.Interactive)
-        for column, width in enumerate((140, 70, 75)):
+        tree.header().setSectionResizeMode(3, QHeaderView.ResizeMode.Stretch)
+        tree.header().setSectionResizeMode(4, QHeaderView.ResizeMode.ResizeToContents)
+        for column, width in enumerate((120, 60, 65)):
             tree.setColumnWidth(column, width)
         tree.header().sectionResized.connect(lambda: tree.doItemsLayout())
         count = 0

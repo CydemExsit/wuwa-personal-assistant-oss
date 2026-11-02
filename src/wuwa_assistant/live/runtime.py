@@ -161,12 +161,16 @@ class LiveCaptureRuntime:
             self._manual_requested.set()
             return cutoff
 
+    def request_stop(self) -> None:
+        """Cancel acquisition and queued OCR now; worker joins happen separately."""
+        self._stop_event.set()
+        self.coordinator.stop(wait=False)
+
     def stop(self, *, timeout: float = 8.0) -> bool:
         if timeout < 0:
             raise ValueError("timeout cannot be negative")
         deadline = monotonic() + timeout
-        self._stop_event.set()
-        self.coordinator.stop(wait=False)
+        self.request_stop()
         with self._lock:
             thread = self._capture_thread
         if thread is not None and thread is not current_thread():

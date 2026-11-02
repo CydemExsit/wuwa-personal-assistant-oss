@@ -55,6 +55,16 @@ class ReplacementComparison:
     combat: BuildComparison | None = None
     compensation: tuple[CompensationPlan, ...] = ()
     combat_projection: CombatProjection | None = None
+    quality_conclusion: str = ""
+    quality_advice_available: bool = False
+
+    @property
+    def quality_only(self) -> bool:
+        return (
+            self.quality_advice_available
+            and self.combat is not None
+            and self.combat.after.sufficient is None
+        )
 
 
 class ReplacementTrainingService:
@@ -383,6 +393,19 @@ class ReplacementTrainingService:
             and main_fit is True
             and not breaks_set
         )
+        quality_conclusion = conclusion
+        quality_advice_available = (
+            not requires_review
+            and type(level) is int
+            and 0 <= level <= 25
+            and (unrolled or not evaluation.decision.requires_manual_confirmation)
+            and cost is not None
+            and set_name is not None
+            and (target.piece.cost is None or target.piece.cost == cost)
+            and set_fit is True
+            and main_fit is True
+            and not breaks_set
+        )
         combat = None
         combat_projection = None
         compensation: tuple[CompensationPlan, ...] = ()
@@ -499,4 +522,6 @@ class ReplacementTrainingService:
             combat,
             compensation,
             combat_projection,
+            quality_conclusion,
+            quality_advice_available,
         )

@@ -81,6 +81,7 @@ from .scoring_profiles import (
     evaluation_to_echo_recommendation,
     evaluation_to_live_substats,
     evaluation_to_profile_preview,
+    replacement_to_echo_recommendation,
 )
 
 _T = TypeVar("_T")
@@ -990,50 +991,12 @@ class EchoWorkspacePresenter(QObject):
                 self._apply_scoring(result.value, context)
             elif isinstance(result.value, ReplacementComparison):
                 comparison = result.value
-                if comparison.evaluation is not None:
-                    recommendation = evaluation_to_echo_recommendation(
-                        comparison.evaluation,
-                        target_score=comparison.target.piece.score,
-                        score_delta=comparison.delta,
-                    )
-                    if not comparison.target_comparable:
-                        recommendation = replace(
-                            recommendation,
-                            target_score=None,
-                            target_probability=None,
-                            score_delta=None,
-                        )
-                else:
+                if comparison.evaluation is None:
                     self._scored_evaluation = None
-                    recommendation = RecommendationView()
                 self._echo_page.set_training_target(
                     comparison.target.description, is_same_echo=comparison.is_same_echo
                 )
-                reason = comparison.reason
-                if comparison.delta is not None:
-                    reason += f" 目前分差 {comparison.delta:+.2f} 分。"
-                recommendation = replace(
-                    recommendation,
-                    conclusion=comparison.conclusion,
-                    save_advice=comparison.conclusion,
-                    upgrade_advice=(
-                        comparison.conclusion
-                        if comparison.conclusion
-                        in {
-                            "資料待補",
-                            "戰鬥資料待補",
-                            "配裝資料待補",
-                            "COST 不同",
-                            "先檢查配裝",
-                        }
-                        else recommendation.upgrade_advice or comparison.conclusion
-                    ),
-                    reason=reason,
-                    is_same_echo=comparison.is_same_echo,
-                    combat_summary=""
-                    if comparison.combat is None
-                    else comparison.combat.after.summary,
-                )
+                recommendation = replacement_to_echo_recommendation(comparison)
                 if comparison.evaluation is not None:
                     self._apply_scoring(comparison.evaluation, context, recommendation)
                 else:
