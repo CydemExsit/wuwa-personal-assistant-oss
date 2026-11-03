@@ -41,7 +41,7 @@ class RedeemCodesPage(QWidget):
         title = QLabel("兌換碼")
         title.setObjectName("PageTitle")
         layout.addWidget(title)
-        description = QLabel("發現新碼時只在工具內提醒。複製後, 請至遊戲內貼上兌換。")
+        description = QLabel("複製兌換碼後, 到遊戲內兌換。")
         description.setWordWrap(True)
         layout.addWidget(description)
         actions = QHBoxLayout()

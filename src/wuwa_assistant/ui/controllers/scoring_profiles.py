@@ -604,6 +604,24 @@ def evaluation_to_echo_recommendation(
             else "指定設定檔參考"
         ),
         scoring_profile_name=evaluation.profile_name,
+        target_condition=(
+            (
+                f"剩 {projection.remaining_slots} 條: 模型上限無法超過目標 {target_score:.2f} 分"
+                if projection.maximum_score is not None
+                and projection.maximum_score + 0.01 < target_score
+                else f"剩 {projection.remaining_slots} 條: 升滿需超過 {target_score:.2f} 分"
+                + (
+                    f", 尚需增加超過 {max(0, target_score - score.score):.2f} 分"
+                    if score.score is not None and score.score <= target_score
+                    else ""
+                )
+            )
+            if target_probability is not None
+            and target_score is not None
+            and projection.remaining_slots in (1, 2)
+            and not evaluation.decision.requires_manual_confirmation
+            else ""
+        ),
         target_score=target_score,
         target_probability=target_probability,
         score_delta=score_delta,
@@ -692,6 +710,7 @@ def replacement_to_echo_recommendation(comparison: ReplacementComparison) -> Rec
         if not comparison.target_comparable:
             recommendation = replace(
                 recommendation,
+                target_condition="",
                 target_score=None,
                 target_probability=None,
                 score_delta=None,
@@ -735,10 +754,11 @@ def replacement_to_echo_recommendation(comparison: ReplacementComparison) -> Rec
             else recommendation.upgrade_advice or comparison.conclusion
         ),
         reason=(
-            reason + "\n依聲骸品質評估; 戰鬥資料待補, 尚未驗證整隊最佳配裝或直接替換收益。"
+            reason + ("\n依聲骸品質評估; 戰鬥資料待補, 尚未驗證整隊最佳配裝或直接替換收益。")
             if quality_only
             else reason
         ),
+        target_condition="" if comparison.is_same_echo else recommendation.target_condition,
         is_same_echo=comparison.is_same_echo,
         combat_summary="" if comparison.combat is None else comparison.combat.after.summary,
     )

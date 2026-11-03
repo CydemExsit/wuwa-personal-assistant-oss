@@ -43,6 +43,7 @@ from PySide6.QtWidgets import (
 from wuwa_assistant.public_data.models import OfficialNotice
 from wuwa_assistant.ui.widgets import OfficialFeedWidget
 from wuwa_assistant.ui.widgets.choice_selector import ChoiceSelector as QComboBox
+from wuwa_assistant.ui.widgets.expandable_note import ExpandableNote
 from wuwa_assistant.ui.widgets.official_feed import EventCountdownWidget
 
 TAIPEI = ZoneInfo("Asia/Taipei")
@@ -363,7 +364,10 @@ class TasksEventsPage(QWidget):
 
         title = QLabel("活動與待辦")
         title.setObjectName("PageTitle")
-        description = QLabel("活動剩不到 10 天時於週末提醒; 海墟 / 深塔各期分別記錄完成狀態。")
+        description = ExpandableNote(
+            "活動倒數與本期完成狀態",
+            "活動剩不到 10 天時於週末提醒; 海墟 / 深塔各期分別記錄完成狀態。",
+        )
         description.setObjectName("PageDescription")
         description.setWordWrap(True)
 

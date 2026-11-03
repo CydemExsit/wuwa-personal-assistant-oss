@@ -252,6 +252,7 @@ def test_evaluation_mapping_explains_early_quality_and_normalizes_contributions(
         evaluation,
         projection=replace(
             projection,
+            remaining_slots=2,
             improvement_target=70.68,
             improvement_probability=0.015556,
         ),
@@ -259,6 +260,8 @@ def test_evaluation_mapping_explains_early_quality_and_normalizes_contributions(
     targeted_view = evaluation_to_echo_recommendation(
         targeted, target_score=70.68, score_delta=-20.68
     )
+    assert "70.68" in targeted_view.target_condition
+    assert "20.68" in targeted_view.target_condition
     assert targeted_view.target_score == 70.68
     assert targeted_view.target_probability == 0.015556
     assert targeted_view.target_probability != targeted_view.pass_probability
@@ -266,6 +269,7 @@ def test_evaluation_mapping_explains_early_quality_and_normalizes_contributions(
     # A stale target, extra replacement margin, or uncertain OCR cannot be
     # described as the chance of strictly beating the displayed equipped item.
     stale = evaluation_to_echo_recommendation(targeted, target_score=72.0)
+    assert not stale.target_condition
     assert stale.target_probability is None
     assert stale.score_delta == -22.0
     uncertain = evaluation_to_echo_recommendation(
@@ -273,6 +277,7 @@ def test_evaluation_mapping_explains_early_quality_and_normalizes_contributions(
             targeted, projection=replace(targeted.projection, requires_manual_confirmation=True)
         )
     )
+    assert not uncertain.target_condition
     assert uncertain.target_probability is None
     derived = evaluation_to_echo_recommendation(targeted)
     assert derived.target_score == 70.68

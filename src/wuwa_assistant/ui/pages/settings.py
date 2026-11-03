@@ -34,6 +34,7 @@ from wuwa_assistant.display import (
     RESOLUTIONS,
 )
 from wuwa_assistant.ui.widgets.choice_selector import ChoiceSelector as QComboBox
+from wuwa_assistant.ui.widgets.expandable_note import ExpandableNote
 from wuwa_assistant.ui.widgets.software_update import SoftwareUpdatePanel
 
 from ..settings_store import (
@@ -94,7 +95,7 @@ class SettingsPage(QWidget):
 
         title = QLabel("設定")
         title.setObjectName("PageTitle")
-        subtitle = QLabel("調整被動擷取、OCR、評分門檻與本機資料保留方式。")
+        subtitle = QLabel("辨識、顯示與本機資料")
         subtitle.setObjectName("PageDescription")
 
         self.monitor_combo = QComboBox()
@@ -134,10 +135,13 @@ class SettingsPage(QWidget):
         capture_form.addRow("擷取顯示器", self.monitor_combo)
         capture_form.addRow("遊戲畫面解析度", self.resolution_combo)
         capture_form.addRow("小面板位置", self.panel_preset_combo)
-        display_hint = QLabel(
-            "請讓無邊框遊戲填滿所選螢幕, 解析度須與該螢幕一致。\n"
-            "變更模式、螢幕或解析度後會停止辨識, 請重新啟動。\n"
-            "小面板啟動後持續顯示; 按住 Ctrl+Shift 可拖曳, 放開後滑鼠穿透。"
+        display_hint = ExpandableNote(
+            "無邊框遊戲須填滿所選螢幕",
+            (
+                "請讓無邊框遊戲填滿所選螢幕, 解析度須與該螢幕一致。\n"
+                "變更模式、螢幕或解析度後會停止辨識, 請重新啟動。\n"
+                "小面板啟動後持續顯示; 按住 Ctrl+Shift 可拖曳, 放開後滑鼠穿透。"
+            ),
         )
         display_hint.setWordWrap(True)
         capture_form.addRow(display_hint)
@@ -191,9 +195,12 @@ class SettingsPage(QWidget):
 
         public_data_group = QGroupBox("Asia 區服・公開資料與週末提醒")
         public_data_layout = QVBoxLayout(public_data_group)
-        public_data_explanation = QLabel(
-            "卡池與活動依 Asia 區服時間(UTC+8)顯示。"
-            "連網只讀取公開資料,失敗時顯示上次快取與更新時間。"
+        public_data_explanation = ExpandableNote(
+            "Asia 伺服器 · 離線沿用快取",
+            (
+                "卡池與活動依 Asia 區服時間(UTC+8)顯示。"
+                "連網只讀取公開資料,失敗時顯示上次快取與更新時間。"
+            ),
         )
         public_data_explanation.setWordWrap(True)
         self.public_auto_update_check = QCheckBox("啟動時及每 6 小時自動更新公開資料")
@@ -287,9 +294,12 @@ class SettingsPage(QWidget):
         safety_layout = QVBoxLayout(safety_group)
         safety_title = QLabel("安全邊界")
         safety_title.setObjectName("SafetyTitle")
-        safety_text = QLabel(
-            "本工具只被動讀取畫面, 使用獨立小面板顯示結果; "
-            "不操作遊戲、不讀取遊戲記憶體、不注入、不附掛遊戲視窗。"
+        safety_text = ExpandableNote(
+            "被動辨識 · 本機處理",
+            (
+                "本工具只被動讀取畫面, 使用獨立小面板顯示結果; "
+                "不操作遊戲、不讀取遊戲記憶體、不注入、不附掛遊戲視窗。"
+            ),
         )
         safety_text.setWordWrap(True)
         safety_layout.addWidget(safety_title)
@@ -305,6 +315,9 @@ class SettingsPage(QWidget):
         content_layout.addWidget(ocr_group)
         content_layout.addWidget(scoring_group)
         content_layout.addWidget(appearance_group)
+        from wuwa_assistant.ui.widgets.portrait_settings import PortraitSettings
+
+        content_layout.addWidget(PortraitSettings(enabled=data_root is not None))
         content_layout.addWidget(public_data_group)
         content_layout.addWidget(data_group)
         content_layout.addWidget(about_group)

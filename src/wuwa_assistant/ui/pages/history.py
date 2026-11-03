@@ -244,7 +244,7 @@ class EchoHistoryPage(QWidget):
         self.setObjectName("EchoHistoryPage")
         title = QLabel("歷史紀錄")
         title.setObjectName("PageTitle")
-        subtitle = QLabel("重複掃描可折疊查看; 取消勾選即可查閱每次掃描與修正紀錄。")
+        subtitle = QLabel("掃描、修正與強化紀錄")
         subtitle.setObjectName("PageDescription")
 
         self.search_edit = QLineEdit()

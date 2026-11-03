@@ -496,9 +496,7 @@ class ScoringProfilesPage(QWidget):
     def _build_editor(self) -> QWidget:
         group = QGroupBox("設定檔內容")
         group.setObjectName("ScoringProfileEditor")
-        self.system_template_banner = QLabel(
-            "這是內建系統模板, 為確保可重現性不可直接修改; 請先複製後再調整。"
-        )
+        self.system_template_banner = QLabel("系統模板唯讀;請先複製再調整。")
         self.system_template_banner.setObjectName("ScoringSystemTemplateBanner")
         self.system_template_banner.setWordWrap(True)
         self.system_template_banner.setProperty("notice", True)

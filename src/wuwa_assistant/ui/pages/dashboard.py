@@ -16,6 +16,8 @@ from PySide6.QtWidgets import (
     QWidget,
 )
 
+from wuwa_assistant.ui.widgets.expandable_note import ExpandableNote
+
 from ..navigation import PageId
 
 
@@ -63,7 +65,7 @@ class DashboardPage(QWidget):
 
         title = QLabel("總覽")
         title.setObjectName("PageTitle")
-        subtitle = QLabel("今天的養成狀態與下一步集中顯示在這裡。")
+        subtitle = QLabel("今日進度與下一步")
         subtitle.setObjectName("PageDescription")
 
         safety_card = QFrame()
@@ -71,8 +73,9 @@ class DashboardPage(QWidget):
         safety_layout = QVBoxLayout(safety_card)
         safety_title = QLabel("安全模式待命中")
         safety_title.setObjectName("SafetyTitle")
-        safety_text = QLabel(
-            "目前未擷取畫面。只有在聲骸強化頁手動按下「開始辨識」後,工具才會被動讀取指定顯示器。"
+        safety_text = ExpandableNote(
+            "手動開始後才會讀取畫面",
+            ("目前未擷取畫面。只有在聲骸強化頁手動按下「開始辨識」後,工具才會被動讀取指定顯示器。"),
         )
         safety_text.setWordWrap(True)
         safety_layout.addWidget(safety_title)
@@ -82,10 +85,13 @@ class DashboardPage(QWidget):
         self.quick_start_card.setObjectName("DashboardQuickStartCard")
         quick_title = QLabel("先完成第一次聲骸辨識")
         quick_title.setObjectName("DashboardQuickStartTitle")
-        quick_steps = QLabel(
-            "1. 在遊戲中打開任一顆聲骸的強化頁\n"
-            "2. 回到本工具確認遊戲所在的左側/右側螢幕\n"
-            "3. 按下「開始聲骸辨識」, 之後照常在遊戲內操作"
+        quick_steps = ExpandableNote(
+            "開啟聲骸清單 → 選擇螢幕 → 開始辨識",
+            (
+                "1. 在遊戲中打開任一顆聲骸的強化頁\n"
+                "2. 回到本工具確認遊戲所在的左側/右側螢幕\n"
+                "3. 按下「開始聲骸辨識」, 之後照常在遊戲內操作"
+            ),
         )
         quick_steps.setObjectName("DashboardQuickStartSteps")
         quick_steps.setWordWrap(True)

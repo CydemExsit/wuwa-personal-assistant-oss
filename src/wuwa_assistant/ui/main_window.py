@@ -118,6 +118,9 @@ class MainWindow(QMainWindow):
         self.page_stack.setObjectName("PageStack")
         self.page_stack.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
 
+        from .character_portraits import configure_local_portraits
+
+        configure_local_portraits(Path(data_root) / "portraits" if data_root is not None else None)
         self.dashboard_page = DashboardPage(dashboard_snapshot)
         self.today_plan_page = TodayPlanPage()
         self.characters_page = CharactersPage()

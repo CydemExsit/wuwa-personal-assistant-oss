@@ -47,6 +47,7 @@ from wuwa_assistant.models.names import character_name_key
 from wuwa_assistant.ui.panel_model import EchoPanelSnapshot
 from wuwa_assistant.ui.score_colors import apply_score_color, score_span
 from wuwa_assistant.ui.widgets.choice_selector import ChoiceSelector as QComboBox
+from wuwa_assistant.ui.widgets.expandable_note import ExpandableNote
 
 
 @dataclass(frozen=True, slots=True)
@@ -160,6 +161,7 @@ class RecommendationView:
     combat_summary: str = ""
     save_advice: str = "等待評分"
     upgrade_advice: str = ""
+    target_condition: str = ""
 
     def __post_init__(self) -> None:
         if not self.conclusion.strip():
@@ -353,7 +355,7 @@ class EchoLivePage(QWidget):
 
         title = QLabel("聲骸強化")
         title.setObjectName("PageTitle")
-        subtitle = QLabel("僅在手動啟用期間被動辨識指定顯示器; 本頁不會操作遊戲。")
+        subtitle = QLabel("手動開始 · 本機辨識")
         subtitle.setObjectName("PageDescription")
 
         controls = self._build_capture_controls(monitors, characters, scoring_profiles)
@@ -524,11 +526,13 @@ class EchoLivePage(QWidget):
         grid.addWidget(self.start_button, 0, 1)
         grid.addWidget(self.stop_button, 0, 2)
         grid.addWidget(self.recheck_button, 0, 3)
-        grid.addWidget(self.capture_status_label, 0, 4)
-        grid.addWidget(self.confidence_label, 0, 5)
-        grid.addWidget(self.advanced_toggle, 0, 6)
-        grid.addWidget(self.advanced_widget, 1, 0, 1, 7)
-        grid.setColumnStretch(4, 1)
+        self.capture_status_label.setWordWrap(True)
+        self.confidence_label.setWordWrap(True)
+        grid.addWidget(self.capture_status_label, 1, 0, 1, 2)
+        grid.addWidget(self.confidence_label, 1, 2)
+        grid.addWidget(self.advanced_toggle, 1, 3)
+        grid.addWidget(self.advanced_widget, 2, 0, 1, 4)
+        grid.setColumnStretch(0, 1)
         return group
 
     @property
@@ -665,12 +669,15 @@ class EchoLivePage(QWidget):
         panel.setObjectName("EchoIdleCard")
         self.idle_title_label = QLabel("準備第一次聲骸辨識")
         self.idle_title_label.setObjectName("EchoIdleTitle")
-        self.idle_steps_label = QLabel(
-            "1. 在遊戲中打開聲骸清單, 選取要辨識的聲骸\n"
-            "2. 上方選擇遊戲所在的左側/右側螢幕\n"
-            "3. 按下「開始辨識」; 培養後返回清單, 即會重新讀取\n\n"
-            "若一直沒有結果: 設定 → 一般設定 → 本機資料與備份 → "
-            "預覽診斷包 (不含畫面)。"
+        self.idle_steps_label = ExpandableNote(
+            "開啟聲骸清單, 選好螢幕後開始辨識",
+            (
+                "1. 在遊戲中打開聲骸清單, 選取要辨識的聲骸\n"
+                "2. 上方選擇遊戲所在的左側/右側螢幕\n"
+                "3. 按下「開始辨識」; 培養後返回清單, 即會重新讀取\n\n"
+                "若一直沒有結果: 設定 → 一般設定 → 本機資料與備份 → "
+                "預覽診斷包 (不含畫面)。"
+            ),
         )
         self.idle_steps_label.setObjectName("EchoIdleSteps")
         self.idle_steps_label.setWordWrap(True)
@@ -738,6 +745,16 @@ class EchoLivePage(QWidget):
         layout.addWidget(self.main_stats_table)
         layout.addWidget(QLabel("副詞條"))
         layout.addWidget(self.sub_stats_table)
+        for prefix, table in (
+            ("main_stats", self.main_stats_table),
+            ("sub_stats", self.sub_stats_table),
+        ):
+            table.setToolTip("雙擊名稱或數值, 直接核對該欄位。")
+            table.doubleClicked.connect(
+                lambda index, group=prefix: self._open_correction_dialog(
+                    f"/{group}/{index.row()}/{'name' if index.column() == 0 else 'value'}"
+                )
+            )
         correction_row = QHBoxLayout()
         correction_row.addWidget(self.confirmation_label, 1)
         correction_row.addWidget(self.correction_button)
@@ -783,6 +800,10 @@ class EchoLivePage(QWidget):
         self.upgrade_advice_label = QLabel()
         self.upgrade_advice_label.setObjectName("EchoUpgradeAdvice")
         self.upgrade_advice_label.setWordWrap(True)
+        self.target_condition_label = QLabel()
+        self.target_condition_label.setObjectName("EchoTargetCondition")
+        self.target_condition_label.setWordWrap(True)
+        self.target_condition_label.hide()
         self.breakdown_label = QLabel()
         self.breakdown_label.setObjectName("EchoScoreBreakdown")
         self.breakdown_label.setWordWrap(True)
@@ -802,6 +823,7 @@ class EchoLivePage(QWidget):
         layout.addWidget(self.score_delta_label)
         layout.addWidget(self.save_advice_label)
         layout.addWidget(self.upgrade_advice_label)
+        layout.addWidget(self.target_condition_label)
         layout.addWidget(self.breakdown_button)
         layout.addWidget(self.reason_label)
         layout.addWidget(self.combat_summary_label)
@@ -957,9 +979,11 @@ class EchoLivePage(QWidget):
                         if self.manual_mode
                         else "僅辨識聲骸清單。培養期間暫停讀取, 返回清單後自動恢復。\n"
                     )
-                    + "如果數秒後仍沒有偵測結果, 請確認是否選到正確的左側/右側螢幕。\n"
-                    "診斷紀錄: 設定 → 一般設定 → 本機資料與備份 → "
-                    "預覽診斷包 (不含畫面)。"
+                    + (
+                        "如果數秒後仍沒有偵測結果, 請確認是否選到正確的左側/右側螢幕。\n"
+                        "診斷紀錄: 設定 → 一般設定 → 本機資料與備份 → "
+                        "預覽診斷包 (不含畫面)。"
+                    )
                 )
             elif status.state is CaptureState.WAITING_FOR_REQUEST:
                 self.idle_title_label.setText("等待手動辨識")
@@ -1020,7 +1044,7 @@ class EchoLivePage(QWidget):
         )
         if self.manual_mode:
             guidance = (
-                "僅讀取本次要求的聲骸; 下次換聲骸或培養返回清單後, 再按「辨識目前畫面」。"
+                ("僅讀取本次要求的聲骸; 下次換聲骸或培養返回清單後, 再按「辨識目前畫面」。")
                 if normalized == "echo_selection"
                 else "只辨識聲骸清單; 請返回清單, 再按「辨識目前畫面」。"
             )
@@ -1142,6 +1166,8 @@ class EchoLivePage(QWidget):
     def clear_observation(self) -> None:
         self._panel_result_current = False
         self._last_recommendation = RecommendationView()
+        self.target_condition_label.clear()
+        self.target_condition_label.hide()
         self.presentation_changed.emit()
         self.set_analysis_pending(False)
         self._observation = None
@@ -1295,10 +1321,16 @@ class EchoLivePage(QWidget):
         if not isinstance(recommendation, RecommendationView):
             raise TypeError("recommendation must be RecommendationView")
         self._last_recommendation = recommendation
+        self.target_condition_label.setText(recommendation.target_condition)
+        self.target_condition_label.setVisible(bool(recommendation.target_condition))
         self.presentation_changed.emit()
         self.save_advice_label.setText("保存建議: " + recommendation.save_advice)
         self.upgrade_advice_label.setText(
             "升級建議: " + (recommendation.upgrade_advice or recommendation.conclusion)
+        )
+        self.upgrade_advice_label.setVisible(
+            bool(recommendation.upgrade_advice)
+            and recommendation.upgrade_advice != recommendation.conclusion
         )
         self.conclusion_label.setText(recommendation.conclusion)
         self._recommendation_basis = recommendation.scoring_basis
@@ -1600,14 +1632,25 @@ class EchoLivePage(QWidget):
         self.result_character_combo.setCurrentIndex(self.result_character_combo.findData(suggested))
         self._suggested_character_id = suggested
 
-    def _open_correction_dialog(self) -> None:
-        if self._observation is None or not self._field_values:
+    def _open_correction_dialog(self, field_path: str | None = None) -> None:
+        if self._observation is None or not self._field_values or self._analysis_pending:
             return
-        dialog = CorrectionDialog(
-            self._field_values, parent=self, issues=self._observation.review_issues
-        )
+        observation = self._observation
+        values = dict(self._field_values)
+        dialog = CorrectionDialog(values, parent=self, issues=observation.review_issues)
+        index = dialog.field_combo.findData(field_path)
+        if index >= 0:
+            dialog.field_combo.setCurrentIndex(index)
         if dialog.exec() == QDialog.DialogCode.Accepted:
-            self.submit_correction(dialog.field_path, dialog.corrected_value)
+            self.correction_requested.emit(
+                CorrectionRequest(
+                    session_id=observation.session_id,
+                    observation_id=observation.observation_id,
+                    field_path=dialog.field_path,
+                    previous_value=values[dialog.field_path],
+                    corrected_value=dialog.corrected_value,
+                )
+            )
 
     def _toggle_breakdown(self, checked: bool) -> None:
         self.reason_label.setVisible(checked)
@@ -1635,6 +1678,7 @@ class CorrectionDialog(QDialog):
         self.setObjectName("EchoCorrectionDialog")
         self.setWindowTitle("修正 OCR 辨識結果")
         self.setModal(True)
+        self.setMinimumWidth(420)
         self.field_combo = QComboBox()
         self.field_combo.setObjectName("EchoCorrectionField")
         self._issues = {
@@ -1651,6 +1695,7 @@ class CorrectionDialog(QDialog):
         self.issue_label.setWordWrap(True)
         self.previous_value_label = QLabel()
         self.previous_value_label.setObjectName("EchoCorrectionPreviousValue")
+        self.previous_value_label.setWordWrap(True)
         self.corrected_value_edit = QLineEdit()
         self.corrected_value_edit.setObjectName("EchoCorrectionNewValue")
 
@@ -1674,10 +1719,15 @@ class CorrectionDialog(QDialog):
         buttons.rejected.connect(self.reject)
 
         layout = QVBoxLayout(self)
+        pending = QLabel(f"待核對 {len(issues)} 項 · 每次確認一個欄位")
+        pending.setWordWrap(True)
+        layout.addWidget(pending)
         layout.addLayout(form)
         layout.addWidget(warning)
         layout.addWidget(buttons)
         self._fields = dict(fields)
+        self._drafts = dict(fields)
+        self._previous_path: str | None = None
         self.field_combo.currentIndexChanged.connect(self._load_current_value)
         self._load_current_value()
 
@@ -1690,12 +1740,15 @@ class CorrectionDialog(QDialog):
         return self.corrected_value_edit.text().strip()
 
     def _load_current_value(self) -> None:
+        if self._previous_path is not None:
+            self._drafts[self._previous_path] = self.corrected_value_edit.text()
+        self._previous_path = self.field_path
         current = self._fields[self.field_path]
         self.issue_label.setText(
             self._issues[self.field_path] or "此欄位未標記問題, 仍可手動修正。"
         )
         self.previous_value_label.setText(current or "<空值>")
-        self.corrected_value_edit.setText(current)
+        self.corrected_value_edit.setText(self._drafts[self.field_path])
         self.corrected_value_edit.selectAll()
 
     def _accept_if_valid(self) -> None:

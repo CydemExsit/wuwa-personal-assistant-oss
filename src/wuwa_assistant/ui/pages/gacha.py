@@ -428,7 +428,7 @@ class GachaPage(QWidget):
 
         title = QLabel("卡池倒數")
         title.setObjectName("PageTitle")
-        description = QLabel("當期角色與結束倒數、下一期角色與開啟倒數。時間依 Asia 伺服器顯示。")
+        description = QLabel("當期/下期卡池 · Asia 時間")
         description.setObjectName("PageDescription")
         description.setWordWrap(True)
 

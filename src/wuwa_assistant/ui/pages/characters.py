@@ -672,10 +672,9 @@ class CharactersPage(QWidget):
 
         empty = QWidget()
         empty_layout = QVBoxLayout(empty)
-        self.empty_state_label = QLabel(
-            "掃描已裝備的聲骸後, 辨識到的角色會自動加入。\n新角色的攻略與評分設定可再請助理更新。"
-        )
+        self.empty_state_label = QLabel("掃描已裝備聲骸, 即可加入角色。")
         self.empty_state_label.setObjectName("CharacterEmptyState")
+        self.empty_state_label.setToolTip("新角色的攻略與評分設定可另行更新。")
         self.empty_state_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.empty_state_label.setWordWrap(True)
         empty_layout.addStretch(1)

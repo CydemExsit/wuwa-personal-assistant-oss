@@ -45,6 +45,7 @@ from PySide6.QtWidgets import (
 
 from wuwa_assistant.application.farming import TodayFarmingSnapshot
 from wuwa_assistant.application.tacet_stock import TacetStockEditRequest
+from wuwa_assistant.ui.widgets.expandable_note import ExpandableNote
 from wuwa_assistant.ui.widgets.farming_reasons import FarmingReasonsButton
 
 _INVALID_INDEX = QModelIndex()
@@ -711,9 +712,12 @@ class TodayPlanPage(QWidget):
         self.zone_summary_label.setWordWrap(True)
         self.zone_model = FarmingTableModel(("無音區", "套裝", "受益", "庫存"), self)
         self.zone_table = _table("TodayPlanZoneTable", self.zone_model)
-        self.stock_hint = QLabel(
-            "只要需要的其中一種已用完, 就選「已用完」; "
-            "需要的都還有得練, 才選「還有可培養」。點狀態即可切換並儲存。"
+        self.stock_hint = ExpandableNote(
+            "任一需要的種類用完, 就標記整區已用完",
+            (
+                "只要需要的其中一種已用完, 就選「已用完」; "
+                "需要的都還有得練, 才選「還有可培養」。點狀態即可切換並儲存。"
+            ),
         )
         self.stock_hint.setWordWrap(True)
         self.stock_all_available = QPushButton("全部還有可培養")
@@ -812,7 +816,7 @@ class TodayPlanPage(QWidget):
         self.activity_label.setText(
             "\n".join(notices)
             if notices
-            else "目前沒有已查核的加倍活動; 即使沒有技能缺口, 仍可依活動獎勵選擇刷取。"
+            else ("目前沒有已查核的加倍活動; 即使沒有技能缺口, 仍可依活動獎勵選擇刷取。")
         )
 
     def set_farming(self, snapshot: TodayFarmingSnapshot) -> None:
@@ -903,7 +907,7 @@ class TodayPlanPage(QWidget):
                 else "有一種套裝可受益。"
             )
             if needing_farm
-            else "有改善需求的無音區都還有可培養庫存, 先練現有聲骸; 需要的用完後點狀態改回來。"
+            else ("有改善需求的無音區都還有可培養庫存, 先練現有聲骸; 需要的用完後點狀態改回來。")
             if positive
             else "目前沒有已確認的無音區替換缺口; 加倍時可從下列套裝儲備備選選擇。"
         )
