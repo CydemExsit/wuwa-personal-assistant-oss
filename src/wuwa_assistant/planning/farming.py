@@ -6,11 +6,13 @@ efficiency. Unknown observations are never converted into a zero Echo score.
 
 from __future__ import annotations
 
+from collections.abc import Mapping
 from dataclasses import dataclass, replace
 from enum import StrEnum
 from math import fsum, sqrt
 
 POLICY_VERSION = "tacet-priority.v2"
+ACQUISITION_POLICY_VERSION = "echo-acquisition.v1"
 
 
 class FarmRole(StrEnum):
@@ -58,6 +60,8 @@ class FarmZone:
     region: str
     sets: tuple[str, ...]
     source_note: str = ""
+    costs: tuple[int, ...] = (1, 3)
+    kind: str = "無音區"
 
 
 @dataclass(frozen=True, slots=True)
@@ -74,6 +78,7 @@ class FarmBenefit:
     piece_multiplier: float = 1.0
     importance_reason: str = ""
     role: str = ""
+    cost: int | None = None
 
 
 @dataclass(frozen=True, slots=True)
@@ -145,7 +150,11 @@ def _priority_weights(priorities: set[int], *, spread: float) -> dict[int, float
 
 
 def _rank_zone(zone: FarmZone, benefits: list[FarmBenefit]) -> ZoneRecommendation:
-    matched = tuple(benefit for benefit in benefits if benefit.set_name in zone.sets)
+    matched = tuple(
+        benefit
+        for benefit in benefits
+        if benefit.set_name in zone.sets and (benefit.cost is None or benefit.cost in zone.costs)
+    )
     by_character: dict[str, dict[int, float]] = {}
     needs: dict[str, list[float]] = {}
     for benefit in matched:
@@ -201,6 +210,7 @@ def recommend_zones(
     zones: tuple[FarmZone, ...],
     *,
     stocked_field_ids: frozenset[str] = frozenset(),
+    requested_slots: Mapping[tuple[str, int], int] | None = None,
 ) -> FarmingPlan:
     """Rank both sets using known needs, importance and useful coverage.
 
@@ -230,10 +240,10 @@ def recommend_zones(
         importance = priority_weights[character.priority] * team_weight
         if character.role is FarmRole.UNKNOWN:
             notices.append(f"{character.name}: 定位待確認, 暫不推測副詞條刷取收益。")
-        if not character.sets:
+        if not character.sets and requested_slots is None:
             notices.append(f"{character.name}: 尚無已查核套裝目標, 請先在角色頁確認配裝。")
             continue
-        for name in character.sets:
+        for name in character.sets if requested_slots is None else ():
             if name not in available_sets:
                 notices.append(f"{character.name}: {name} 尚無已查核無音區來源, 不列入刷取收益。")
         energy_gap = (
@@ -258,6 +268,7 @@ def recommend_zones(
             key=lambda combo: sum(
                 max(0, required - counts.get(name, 0)) for name, required in combo
             ),
+            default=(),
         )
         deficient = (
             {name for name, required in best if counts.get(name, 0) < required}
@@ -284,6 +295,13 @@ def recommend_zones(
             if echo.slot_index in seen_slots:
                 continue
             seen_slots.add(echo.slot_index)
+            requested_cost = (
+                None
+                if requested_slots is None
+                else requested_slots.get((character.identifier, echo.slot_index))
+            )
+            if requested_slots is not None and requested_cost is None:
+                continue
             label = f"{character.name} 第 {echo.slot_index} 件"
             combination_gap = echo.slot_index in surplus_slots
             if echo.target_sets:
@@ -294,11 +312,26 @@ def recommend_zones(
                 targets = (echo.set_name,)
             else:
                 targets = character.sets
-            targets = tuple(dict.fromkeys(name for name in targets if name in available_sets))
+            if requested_cost is not None:
+                known_targets = tuple(dict.fromkeys(targets))
+                targets = tuple(
+                    name
+                    for name in known_targets
+                    if any(name in zone.sets and requested_cost in zone.costs for zone in zones)
+                )
+                missing = tuple(name for name in known_targets if name not in targets)
+                if missing or not known_targets:
+                    route = "首領或副本" if requested_cost == 4 else "野外或夢魘聚落"
+                    notices.append(
+                        f"{label} · COST {requested_cost} · {'、'.join(missing) or '套裝待確認'}"
+                        f": 確切地點待查。可在遊戲資料塢依套裝及 COST 核對, 再追蹤{route}。"
+                    )
+            else:
+                targets = tuple(dict.fromkeys(name for name in targets if name in available_sets))
             fit_wrong = echo.set_valid is False or echo.main_valid is False or combination_gap
             points = 0.0
             reasons: list[str] = []
-            if echo.cost not in (1, 3):
+            if requested_cost is None and echo.cost not in (1, 3):
                 if (
                     fit_wrong
                     or not echo.equipped
@@ -310,7 +343,17 @@ def recommend_zones(
                         else f"{label}: COST 或裝備位置待確認, 未計入無音區收益。"
                     )
                 continue
-            if not echo.equipped or fit_wrong:
+            if requested_cost is not None:
+                points = 1.0 + (1.0 if not echo.equipped or fit_wrong else 0.0)
+                reasons.append(f"COST {requested_cost} 可培養聲骸已用完")
+                if echo.level == 25 and echo.score is not None:
+                    gap = max(0.0, character.passing_score - echo.score)
+                    points += gap / max(1.0, character.passing_score)
+                    if gap:
+                        reasons.append(f"目前 {echo.score:g} 分, 距門檻 {gap:g} 分")
+                if fit_wrong and echo.fit_reason:
+                    reasons.append(echo.fit_reason)
+            elif not echo.equipped or fit_wrong:
                 points = 3.0 if character.role is FarmRole.MAIN else 2.0
                 if not echo.equipped:
                     reasons.append("補齊空位")
@@ -359,6 +402,7 @@ def recommend_zones(
                         points * importance / len(targets),
                         f"{character.role} · 第 {echo.slot_index} 件: {'; '.join(reasons)}",
                         role=str(character.role),
+                        cost=requested_cost,
                         slot_index=echo.slot_index,
                         current_score=echo.score,
                         need_points=points / len(targets),
@@ -382,6 +426,8 @@ def recommend_zones(
     # Availability is a field-level gate: any wanted type exhausted means the
     # entire field keeps its original priority. Other plentiful drops do not
     # dilute it. Existing quality/coverage points remain unchanged and auditable.
+    if requested_slots is not None:
+        recommendations = [row for row in recommendations if row.points > 0]
     recommendations.sort(
         key=lambda row: (
             row.points <= 0,
@@ -391,4 +437,8 @@ def recommend_zones(
             row.zone.identifier,
         )
     )
-    return FarmingPlan(tuple(recommendations), tuple(dict.fromkeys(notices)))
+    return FarmingPlan(
+        tuple(recommendations),
+        tuple(dict.fromkeys(notices)),
+        POLICY_VERSION if requested_slots is None else ACQUISITION_POLICY_VERSION,
+    )

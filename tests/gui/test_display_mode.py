@@ -149,6 +149,7 @@ def test_mode_switch_stops_one_session_and_keeps_sqlite_records(qtbot, tmp_path,
     qtbot.addWidget(page)
     qtbot.addWidget(settings_page)
     presenter = EchoWorkspacePresenter(
+        preview_only=False,
         live_controller=live,
         history_service=history,
         echo_page=page,
@@ -204,6 +205,7 @@ def test_manual_confirmation_recomputes_real_score_in_both_views(
     qtbot.addWidget(page)
     qtbot.addWidget(settings_page)
     presenter = EchoWorkspacePresenter(
+        preview_only=False,
         live_controller=live,
         history_service=history,
         echo_page=page,

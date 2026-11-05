@@ -100,6 +100,7 @@ def workspace(tmp_path, qtbot):
     qtbot.addWidget(page)
     qtbot.addWidget(history_page)
     presenter = EchoWorkspacePresenter(
+        preview_only=False,
         live_controller=_FakeLiveController(),
         history_service=history,
         echo_page=page,

@@ -10,7 +10,6 @@ from __future__ import annotations
 from collections.abc import Sequence
 from dataclasses import dataclass
 from datetime import date
-from functools import partial
 from math import isfinite
 
 from PySide6.QtCore import (
@@ -45,7 +44,6 @@ from PySide6.QtWidgets import (
 
 from wuwa_assistant.application.farming import TodayFarmingSnapshot
 from wuwa_assistant.application.tacet_stock import TacetStockEditRequest
-from wuwa_assistant.ui.widgets.expandable_note import ExpandableNote
 from wuwa_assistant.ui.widgets.farming_reasons import FarmingReasonsButton
 
 _INVALID_INDEX = QModelIndex()
@@ -586,7 +584,6 @@ class TodayPlanPage(QWidget):
 
     plan_requested = Signal(object)
     inventory_edit_requested = Signal(object)
-    tacet_stock_edit_requested = Signal(object)
     manage_data_requested = Signal()
     complete_plan_requested = Signal(str)
 
@@ -595,11 +592,10 @@ class TodayPlanPage(QWidget):
         self.setObjectName("TodayPlanPage")
         self._loading = False
         self._plan_generation_id: str | None = None
-        self._field_ids: tuple[str, ...] = ()
 
         title = QLabel("養成規劃")
         title.setObjectName("PageTitle")
-        subtitle = QLabel("技能看還差哪些等級; 聲骸看哪個無音區能同時改善兩種套裝。")
+        subtitle = QLabel("查看待升級技能、配裝位置所需的聲骸與取得地點。")
         subtitle.setObjectName("PageDescription")
         subtitle.setWordWrap(True)
 
@@ -707,36 +703,16 @@ class TodayPlanPage(QWidget):
         skill_layout = QVBoxLayout(self.skill_group)
         skill_layout.addWidget(self.skill_summary_label)
         skill_layout.addWidget(self.skill_table, 1)
-        self.zone_group = QGroupBox("無音區推薦")
+        self.zone_group = QGroupBox("聲骸刷取需求")
         self.zone_summary_label = QLabel("正在等待角色配裝資料。")
         self.zone_summary_label.setWordWrap(True)
-        self.zone_model = FarmingTableModel(("無音區", "套裝", "受益", "庫存"), self)
+        self.zone_model = FarmingTableModel(("來源", "套裝", "受益位置", "類型"), self)
         self.zone_table = _table("TodayPlanZoneTable", self.zone_model)
-        self.stock_hint = ExpandableNote(
-            "任一需要的種類用完, 就標記整區已用完",
-            (
-                "只要需要的其中一種已用完, 就選「已用完」; "
-                "需要的都還有得練, 才選「還有可培養」。點狀態即可切換並儲存。"
-            ),
-        )
-        self.stock_hint.setWordWrap(True)
-        self.stock_all_available = QPushButton("全部還有可培養")
-        self.stock_all_available.setObjectName("TodayPlanStockAllAvailable")
-        self.stock_all_depleted = QPushButton("全部已用完")
-        self.stock_all_depleted.setObjectName("TodayPlanStockAllDepleted")
-        self.stock_all_available.clicked.connect(lambda: self._edit_all_stock(True))
-        self.stock_all_depleted.clicked.connect(lambda: self._edit_all_stock(False))
-        stock_actions = QHBoxLayout()
-        stock_actions.addWidget(self.stock_all_available)
-        stock_actions.addWidget(self.stock_all_depleted)
-        stock_actions.addStretch()
         self.zone_details = FarmingReasonsButton("查看推薦理由與資料待確認項目", self.zone_group)
         self.catalog_label = QLabel("")
         self.catalog_label.setWordWrap(True)
         zone_layout = QVBoxLayout(self.zone_group)
         zone_layout.addWidget(self.zone_summary_label)
-        zone_layout.addWidget(self.stock_hint)
-        zone_layout.addLayout(stock_actions)
         zone_layout.addWidget(self.zone_table, 1)
         zone_layout.addWidget(self.zone_details)
         zone_layout.addWidget(self.catalog_label)
@@ -804,7 +780,7 @@ class TodayPlanPage(QWidget):
             self.status_label.setText(
                 f"已載入 {snapshot.plan_date.isoformat()} 的本機規劃 · {state}。"
                 if snapshot.farming is None or snapshot.plan_generation_id is not None
-                else "已更新技能與無音區建議。"
+                else "已更新技能與聲骸刷取建議。"
             )
         else:
             self.status_label.setText("目前沒有可規劃的養成項目。")
@@ -838,19 +814,11 @@ class TodayPlanPage(QWidget):
             else "請先建立角色, 並在角色頁記錄目前與目標技能等級。"
         )
         recommendations = snapshot.farming.recommendations
-        positive = tuple(row for row in recommendations if row.points > 0)
-        needing_farm = tuple(row for row in positive if not row.has_unleveled_stock)
         shown = recommendations
-        self._field_ids = tuple(row.zone.identifier for row in shown)
         details = tuple(
-            f"{row.zone.region} · {row.zone.name}\n"
+            f"{row.zone.region} · {row.zone.name}\n來源: {row.zone.source_note}\n"
             f"掉落: {'、'.join(row.zone.sets)}\n"
             f"受益 {row.character_count} 位角色 / {row.echo_count} 件聲骸\n"
-            + (
-                "庫存: 還有可培養, 先練現有庫存, 刷取順位後移。\n"
-                if row.has_unleveled_stock
-                else "庫存: 需要的至少一種已用完, 保留完整刷取需求。\n"
-            )
             + f"養成排序點 {row.points:.3f} = 加權需求 {row.weighted_base_points:.3f}"
             f" x 角色覆蓋 {row.coverage_multiplier:.3f}"
             f" x 雙套裝利用 {row.dual_set_multiplier:.3f}\n"
@@ -870,58 +838,33 @@ class TodayPlanPage(QWidget):
         self.zone_model.set_rows(
             tuple(
                 (
-                    f"{index + 1}. {row.zone.name}",
+                    f"{index + 1}. {row.zone.name}\n{row.zone.region}",
                     "\n".join(row.zone.sets),
                     (
                         f"{row.character_count} 人 / {row.echo_count} 件\n"
-                        + "、".join(dict.fromkeys(b.character_name for b in row.benefits))
+                        + "、".join(
+                            dict.fromkeys(
+                                f"{b.character_name} 第{b.slot_index}件" for b in row.benefits
+                            )
+                        )
                         if row.benefits
                         else "儲備備選"
                     ),
-                    "還有可培養" if row.has_unleveled_stock else "需要的已用完",
+                    row.zone.kind,
                 )
                 for index, row in enumerate(shown)
             ),
             details,
         )
-        for index, row in enumerate(shown):
-            button = QPushButton("還有\n可培養" if row.has_unleveled_stock else "需要的\n已用完")
-            button.setObjectName(f"TodayPlanStock_{row.zone.identifier}")
-            button.setAccessibleName(
-                f"{row.zone.name}: "
-                f"{'還有可培養' if row.has_unleveled_stock else '需要的已用完'}, 點此切換"
-            )
-            button.setToolTip(self.stock_hint.text())
-            button.setStyleSheet("QPushButton { padding: 4px; }")
-            button.setMinimumHeight(48)
-            button.clicked.connect(
-                partial(self._edit_stock, row.zone.identifier, not row.has_unleveled_stock)
-            )
-            self.zone_table.setIndexWidget(self.zone_model.index(index, 3), button)
         self.zone_summary_label.setText(
-            f"優先 {needing_farm[0].zone.name} · "
-            f"{needing_farm[0].character_count} 位角色 / {needing_farm[0].echo_count} 件受益 · "
-            + (
-                "兩種套裝皆可受益。"
-                if len(needing_farm[0].useful_sets) > 1
-                else "有一種套裝可受益。"
-            )
-            if needing_farm
-            else ("有改善需求的無音區都還有可培養庫存, 先練現有聲骸; 需要的用完後點狀態改回來。")
-            if positive
-            else "目前沒有已確認的無音區替換缺口; 加倍時可從下列套裝儲備備選選擇。"
+            f"優先 {shown[0].zone.name} · {shown[0].character_count} 位角色 / "
+            f"{shown[0].echo_count} 件受益。"
+            if shown
+            else "尚無可列出的刷取來源。可在聲骸配裝標記位置, 並查看待確認項目。"
         )
-        rules = (
-            "排序為可解釋的養成優先度, 不代表實際傷害或掉落機率。\n"
-            "庫存只影響刷取順位, 不改品質分數; "
-            "需要的任一種類已用完即保留整區需求, 其他庫存不抵銷。\n"
-            "使用各件現有分數、角色優先級 (越小越優先)、最優先隊伍、受益角色/件數與雙套裝利用。\n"
-            "同角色多件需求遞減; 已達標的微幅改善只計少量覆蓋, 替代套裝與跨隊角色不重複計件。\n"
-            "主輸出持續提升並遞減收益; 副輸出達標後降權; 治療以套裝、主詞條及必要效率為先。\n"
-            "未知分數不視為零分; 未開滿先看強化潛力; COST 4 另找實際取得來源。"
-        )
+        rules = "依已標記的位置、角色優先順序和配裝缺口安排。貢獻點是養成優先度。"
         self.zone_details.set_details(
-            "無音區推薦理由",
+            "聲骸刷取理由",
             "\n\n".join((rules, *details, *snapshot.farming.notices)),
         )
         self.zone_details.set_recommendations(recommendations)
@@ -931,15 +874,6 @@ class TodayPlanPage(QWidget):
         for index in range(len(shown)):
             self.zone_table.setRowHeight(index, max(52, self.zone_table.rowHeight(index)))
 
-    def _edit_all_stock(self, has_stock: bool) -> None:
-        if self._field_ids and not self._loading:
-            self.tacet_stock_edit_requested.emit(TacetStockEditRequest(self._field_ids, has_stock))
-
-    def _edit_stock(self, field_id: str, has_stock: bool, _checked: bool = False) -> None:
-        if not self._loading:
-            self.tacet_stock_edit_requested.emit(TacetStockEditRequest((field_id,), has_stock))
-
-    @Slot(bool, str)
     def set_loading(self, loading: bool, message: str = "正在計算養成建議…") -> None:
         self._loading = loading
         self._set_controls_enabled(not loading)
@@ -1001,8 +935,6 @@ class TodayPlanPage(QWidget):
         self.complete_plan_button.setEnabled(enabled and self._plan_generation_id is not None)
         self.inventory_table.setEnabled(enabled)
         self.zone_table.setEnabled(enabled)
-        self.stock_all_available.setEnabled(enabled and bool(self._field_ids))
-        self.stock_all_depleted.setEnabled(enabled and bool(self._field_ids))
 
 
 def _table(object_name: str, model: QAbstractTableModel, *, editable: bool = False) -> QTableView:

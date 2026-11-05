@@ -11,6 +11,7 @@ from wuwa_assistant.application.characters import (
     CharacterCultivationService,
     CreateCharacter,
 )
+from wuwa_assistant.application.echo_demand import EchoDemandService
 from wuwa_assistant.application.planning import (
     CultivationPlanningService,
     CultivationTargetDefinition,
@@ -238,7 +239,10 @@ def test_default_presenter_updates_both_sections_without_material_inventory_quer
             session.flush()
             dataset_id = dataset.id
         characters = CharacterCultivationService(database.session_factory)
-        characters.create_character(data_set_id=dataset_id, command=CreateCharacter("維里奈"))
+        character = characters.create_character(
+            data_set_id=dataset_id, command=CreateCharacter("維里奈")
+        )
+        EchoDemandService(database.settings, dataset_id).set(character.summary.id, 3, 3)
         profiles = ScoringProfileService(database.session_factory)
         profiles.ensure_system_templates(load_template_seed_definitions())
         planning = CultivationPlanningService(database.session_factory)

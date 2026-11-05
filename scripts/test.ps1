@@ -27,16 +27,17 @@ if (-not (Test-Path -LiteralPath $venvPython -PathType Leaf)) {
 
 Push-Location $repoRoot
 try {
-    # Keep top-level QApplication startup checks in their own native process.  On
-    # Windows, reusing a Qt runtime after hundreds of offscreen widget teardown
-    # cycles can crash inside the platform style plugin before pytest can report.
-    # Both invocations together still execute the complete suite.
+    # Isolate native Qt startup and widget lifetimes from the headless suite.
     Invoke-CheckedNative $venvPython @(
-        "-B", "-m", "pytest", "-q", "-p", "no:cacheprovider", "tests\test_app_startup.py"
+        "-B", "-m", "pytest", "-o", "addopts=", "-q", "-p", "no:cacheprovider",
+        "tests/test_app_startup.py"
     )
     Invoke-CheckedNative $venvPython @(
-        "-B", "-m", "pytest", "-q", "-p", "no:cacheprovider", "tests",
-        "--ignore=tests/test_app_startup.py"
+        "-B", "-m", "pytest", "-o", "addopts=", "-q", "-p", "no:cacheprovider", "tests/gui"
+    )
+    Invoke-CheckedNative $venvPython @(
+        "-B", "-m", "pytest", "-o", "addopts=", "-q", "-p", "no:cacheprovider", "tests",
+        "--ignore=tests/test_app_startup.py", "--ignore=tests/gui"
     )
     Invoke-CheckedNative $venvPython @("-B", "-m", "ruff", "check", ".")
     Invoke-CheckedNative $venvPython @("-B", "-m", "ruff", "format", "--check", ".")

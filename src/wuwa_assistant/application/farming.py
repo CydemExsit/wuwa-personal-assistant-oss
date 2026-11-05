@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from collections.abc import Mapping
 from dataclasses import dataclass
 from datetime import date
 from pathlib import Path
@@ -20,6 +21,7 @@ from wuwa_assistant.scoring.character_guides import guide_for_character
 
 from .character_scoring import character_context, character_profile
 from .characters import CharacterCultivationService, CharacterDetail
+from .echo_sources import OTHER_ECHO_SOURCES
 from .equipment_alerts import equipment_fit_alert
 from .equipment_overview import CharacterEquipmentOverview
 from .scoring_profiles import ScoringProfileService, ScoringProfileSnapshot
@@ -142,9 +144,17 @@ def build_today_farming(
     tacet_cache_directory: Path | None = None,
     as_of: date | None = None,
     stocked_field_ids: frozenset[str] = frozenset(),
+    requested_slots: Mapping[tuple[str, int], int] | None = None,
 ) -> TodayFarmingSnapshot:
     """Use the same automatic per-character score/fit as the Echo overview."""
-    details = characters.list_character_details(data_set_id=data_set_id, candidates_only=True)
+    requested_characters = {character_id for character_id, _ in requested_slots or {}}
+    details = tuple(
+        detail
+        for detail in characters.list_character_details(
+            data_set_id=data_set_id, candidates_only=not requested_characters
+        )
+        if detail.summary.is_candidate or detail.summary.id in requested_characters
+    )
     skills = tuple(
         SkillGap(
             detail.summary.id,
@@ -156,6 +166,7 @@ def build_today_farming(
             skill.is_core,
         )
         for detail in sorted(details, key=lambda row: (row.summary.priority, row.summary.name))
+        if detail.summary.is_candidate
         for skill in sorted(
             detail.skills,
             key=lambda row: (
@@ -192,11 +203,20 @@ def build_today_farming(
         for detail in details
         if detail.summary.id in by_id
     )
-    plan = recommend_zones(farm_characters, zones, stocked_field_ids=stocked_field_ids)
+    if requested_slots is not None:
+        zones = (*zones, *OTHER_ECHO_SOURCES)
+    plan = recommend_zones(
+        farm_characters,
+        zones,
+        stocked_field_ids=stocked_field_ids,
+        requested_slots=requested_slots,
+    )
     role_notes = tuple(f"{row.name}: {row.role_reason}" for row in farm_characters)
     return TodayFarmingSnapshot(
         skills,
         FarmingPlan(plan.recommendations, (*plan.notices, *role_notes), plan.policy_version),
-        catalog.coverage_note,
+        catalog.coverage_note
+        if requested_slots is None
+        else ("刷取表只列有來源對應的需求。其餘請展開資料待確認項目。"),
         len(details),
     )

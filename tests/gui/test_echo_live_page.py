@@ -370,7 +370,7 @@ def test_live_page_renders_observation_recommendation_and_timeline(
     assert page.game_equipped_label.property("equippedState") == "equipped"
     assert page.result_slot_combo.currentData() == 3
     assert page.result_character_combo.currentData() == "character-1"
-    assert "已自動保存" in page.result_status_label.text()
+    assert page.result_status_label.text() == "等待聲骸辨識結果。"
     assert page.main_stats_table.model().rowCount() == 2
     assert page.sub_stats_table.model().rowCount() == 3
     assert page.confirmation_label.property("needsConfirmation") is True

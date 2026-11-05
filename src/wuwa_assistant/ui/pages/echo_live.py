@@ -326,7 +326,6 @@ class EchoLivePage(QWidget):
     character_link_requested = Signal(str, str, int)
     session_navigation_requested = Signal(int)
     training_clear_requested = Signal()
-    tacet_stock_requested = Signal()
     presentation_changed = Signal()
 
     def __init__(
@@ -425,9 +424,6 @@ class EchoLivePage(QWidget):
         layout.setSpacing(6)
         heading = QHBoxLayout()
         heading.addWidget(title)
-        self.tacet_stock_button = QPushButton("無音區庫存")
-        self.tacet_stock_button.clicked.connect(self.tacet_stock_requested.emit)
-        heading.addWidget(self.tacet_stock_button)
         heading.addStretch(1)
         layout.addLayout(heading)
         title.setToolTip(subtitle.text())
@@ -879,9 +875,8 @@ class EchoLivePage(QWidget):
         self.link_character_button.setObjectName("EchoLinkCharacterButton")
         self.link_character_button.clicked.connect(self._request_character_link)
         self.link_character_button.setToolTip("套用至角色頁; 該位置原有的聲骸會保留在清單中。")
-        self.result_status_label = QLabel(
-            "已自動保存, 不用按任何按鈕; 可直接在遊戲切到下一顆。下列整理動作皆為可選。"
-        )
+        self._result_status_default = "等待聲骸辨識結果。"
+        self.result_status_label = QLabel(self._result_status_default)
         self.result_status_label.setObjectName("EchoResultStatus")
         self.result_status_label.setWordWrap(True)
 
@@ -1101,8 +1096,6 @@ class EchoLivePage(QWidget):
                 equipped_label += f" · 已同步位置 {observation.assigned_slot_index}"
             elif observation.equipped_slot_index is not None:
                 equipped_label += f" · 已辨識位置 {observation.equipped_slot_index}, 尚未保存位置"
-            else:
-                equipped_label += " · 位置待確認"
         self.game_equipped_label.setText(equipped_label)
         self.game_equipped_label.setProperty(
             "equippedState",
@@ -1197,12 +1190,18 @@ class EchoLivePage(QWidget):
         self.keep_button.setEnabled(False)
         self.discard_button.setEnabled(False)
         self.link_character_button.setEnabled(False)
-        self.result_status_label.setText(
-            "已自動保存, 不用按任何按鈕; 可直接在遊戲切到下一顆。下列整理動作皆為可選。"
-        )
+        self.result_status_label.setText(self._result_status_default)
         self.result_status_label.setProperty("disposition", ResultDisposition.UNDECIDED.value)
         self.timeline_model.set_entries(())
         self.result_slot_combo.setCurrentIndex(0)
+
+    def use_preview_results(self) -> None:
+        self.keep_button.hide()
+        self.discard_button.hide()
+        self.organize_toggle.setText("套用到角色配裝")
+        self.timeline_toggle.hide()
+        self._result_status_default = "即時分析。可選擇將核對完成的聲骸套用到角色位置。"
+        self.result_status_label.setText(self._result_status_default)
 
     @Slot(str)
     def begin_capture_run(self, label: str) -> None:
@@ -1580,11 +1579,9 @@ class EchoLivePage(QWidget):
         character_id = str(self.result_character_combo.currentData() or "")
         slot_index = int(self.result_slot_combo.currentData() or 0)
         if not character_id or not 1 <= slot_index <= 5:
-            self.result_status_label.setText(
-                "請先選擇角色與位置 1-5; 沒有資料時可先按「保留這顆」。"
-            )
+            self.result_status_label.setText("請先選擇角色與位置 1-5。")
             return
-        self.result_status_label.setText("正在關聯角色…")
+        self.result_status_label.setText("正在套用至角色配裝…")
         self.character_link_requested.emit(self._observation.session_id, character_id, slot_index)
 
     def _update_character_link_enabled(self, _index: int | None = None) -> None:

@@ -12,11 +12,13 @@ import json
 import logging
 from collections.abc import Callable, Mapping
 from concurrent.futures import Future
+from copy import deepcopy
 from dataclasses import dataclass, replace
 from datetime import UTC, datetime
 from enum import StrEnum
 from threading import RLock
 from typing import Any, TypeVar, cast
+from uuid import uuid4
 from zoneinfo import ZoneInfo
 
 from PySide6.QtCore import QObject, Qt, Signal, Slot
@@ -30,6 +32,12 @@ from wuwa_assistant.application import (
     ObservationSnapshot,
     ScoringEvaluation,
     ScoringWorkflowService,
+)
+from wuwa_assistant.application.echo_history import (
+    CaptureSessionSnapshot,
+    _apply_correction,
+    _parse_correction_pointer,
+    _validate_effective_observation,
 )
 from wuwa_assistant.application.observation_review import (
     confirmed_fields,
@@ -127,6 +135,7 @@ class _Operation(StrEnum):
     STOP = "stop"
     CORRECT = "correct"
     DISPOSITION = "disposition"
+    SAVE_EQUIPMENT = "save_equipment"
     HISTORY_LIST = "history_list"
     HISTORY_DETAIL = "history_detail"
     SCORE = "score"
@@ -188,6 +197,7 @@ class EchoWorkspacePresenter(QObject):
     def __init__(
         self,
         *,
+        preview_only: bool = True,
         live_controller: LiveCaptureController,
         history_service: EchoHistoryService,
         echo_page: EchoLivePage,
@@ -204,6 +214,11 @@ class EchoWorkspacePresenter(QObject):
         parent: QObject | None = None,
     ) -> None:
         super().__init__(parent)
+        self._preview_only = preview_only
+        self._preview_capture: CaptureSessionSnapshot | None = None
+        self._saving_equipment = False
+        self._saved_preview: tuple[str, str, int, str] | None = None
+        self._saved_observation_id: str | None = None
         self._live = live_controller
         self._history = history_service
         self._echo_page = echo_page
@@ -254,6 +269,8 @@ class EchoWorkspacePresenter(QObject):
             self._handle_job_result,
             Qt.ConnectionType.QueuedConnection,
         )
+        if self._preview_only:
+            echo_page.use_preview_results()
         self._connect_pages()
         self._connect_live_controller()
 
@@ -324,7 +341,7 @@ class EchoWorkspacePresenter(QObject):
         live_stopped = self._live.shutdown(timeout=timeout)
         self._executor.shutdown()
         capture_id = self._active_capture_id
-        if capture_id is not None:
+        if capture_id is not None and not self._preview_only:
             try:
                 self._history.stop_capture(capture_id, status="stopped")
                 self._logger.info(
@@ -419,6 +436,29 @@ class EchoWorkspacePresenter(QObject):
             PageCaptureStatusView(CaptureState.TRANSITIONING, "正在建立本機 Capture Session…")
         )
 
+        if self._preview_only:
+            capture = CaptureSessionSnapshot(
+                uuid4().hex,
+                self._data_set_id or "",
+                "preview",
+                monitor.index,
+                live_settings.sample_hz,
+                round(live_settings.stable_duration_seconds * 1000),
+                "active",
+                datetime.now(UTC).isoformat(),
+                None,
+                character_id or None,
+                profile_id or None,
+                None,
+            )
+            self._preview_capture = capture
+            self._saved_preview = None
+            self._saved_observation_id = None
+            self._capture_started(
+                capture, _StartJobContext(self._capture_generation, live_settings)
+            )
+            return
+
         def create_capture() -> object:
             return self._history.start_capture(
                 backend_kind="mss-monitor",
@@ -479,7 +519,7 @@ class EchoWorkspacePresenter(QObject):
             capture_id is not None,
             capture_id or "none",
         )
-        if capture_id is not None:
+        if capture_id is not None and not self._preview_only:
             self._submit(
                 _Operation.STOP,
                 lambda: self._history.stop_capture(capture_id, status="stopped"),
@@ -496,6 +536,38 @@ class EchoWorkspacePresenter(QObject):
             self._show_error(f"修正值無效: {exc}")
             return
 
+        if self._preview_only:
+            history = self._current_history
+            if history is None or not history.observations:
+                return
+            latest = history.observations[-1]
+            if (
+                latest.id != request.observation_id
+                or history.session.local_session_id != request.session_id
+            ):
+                return
+            payload = deepcopy(latest.effective_payload)
+            try:
+                _apply_correction(payload, _parse_correction_pointer(request.field_path), value)
+                _validate_effective_observation(payload)
+            except ValueError as exc:
+                self._show_error(str(exc))
+                return
+            confirmed = set(confirmed_fields(payload))
+            confirmed.add(request.field_path)
+            payload["manual_confirmed_fields"] = sorted(confirmed)
+            revised = replace(
+                latest,
+                effective_payload=payload,
+                requires_review=bool(observation_review_issues(payload)),
+            )
+            self._apply_history(
+                replace(history, observations=(*history.observations[:-1], revised)),
+                update_live=True,
+                evaluate_score=True,
+                persist_score=False,
+            )
+            return
         session_id = self._session_db_by_local.get(request.session_id)
         if session_id is None:
             self._show_error("找不到這顆聲骸的本機紀錄, 請重新辨識。")
@@ -519,6 +591,8 @@ class EchoWorkspacePresenter(QObject):
 
     @Slot(str, str)
     def set_disposition(self, local_session_id: str, disposition: str) -> None:
+        if self._preview_only:
+            return
         session_id = self._session_db_by_local.get(local_session_id)
         if session_id is None:
             self._show_error("尚未完成 Session 保存, 請稍後再試。")
@@ -552,6 +626,52 @@ class EchoWorkspacePresenter(QObject):
         slot_index: int,
     ) -> None:
         """Link a recognized echo to an explicitly selected local character."""
+        if self._preview_only:
+            history = self._current_history
+            if (
+                self._closing
+                or self._saving_equipment
+                or history is None
+                or history.session.local_session_id != local_session_id
+                or not history.observations
+                or not character_id
+                or not 1 <= slot_index <= 5
+                or self._latest_live_sequence != self._applied_live_sequence
+            ):
+                return
+            latest = history.observations[-1]
+            if latest.effective_payload.get("page_type") not in (
+                "echo_selection",
+                "echo_enhancement",
+            ):
+                self._show_error("請從聲骸選擇或強化畫面核對目前配裝。")
+                return
+            if latest.requires_review or observation_review_issues(latest.effective_payload):
+                self._show_error("請先完成聲骸資料核對。")
+                return
+            previous = self._saved_preview
+            prior_id = (
+                previous[3]
+                if previous is not None
+                and previous[:3] == (local_session_id, character_id, slot_index)
+                else None
+            )
+            if prior_id is not None and latest.id == self._saved_observation_id:
+                self._apply_current_history_details()
+                return
+            self._saving_equipment = True
+            self._submit(
+                _Operation.SAVE_EQUIPMENT,
+                lambda: self._history.save_equipment_preview(
+                    history.capture,
+                    latest.effective_payload,
+                    character_id,
+                    slot_index,
+                    prior_id,
+                ),
+                context=(history.capture.id, local_session_id, character_id, slot_index, latest.id),
+            )
+            return
 
         session_id = self._session_db_by_local.get(local_session_id)
         if session_id is None:
@@ -727,7 +847,7 @@ class EchoWorkspacePresenter(QObject):
             value.error_type,
             value.code.value,
         )
-        if capture_id is not None:
+        if capture_id is not None and not self._preview_only:
             self._submit(
                 _Operation.STOP,
                 lambda: self._history.stop_capture(
@@ -811,7 +931,77 @@ class EchoWorkspacePresenter(QObject):
                 _allowlisted_log_token(value.page_type, _LOG_PAGE_TYPES),
             )
             return
-        self._persist_recognition(value)
+        if self._preview_only:
+            self._preview_recognition(value)
+        else:
+            self._persist_recognition(value)
+
+    def _preview_recognition(self, value: RecognitionPayload) -> None:
+        capture = self._preview_capture
+        if capture is None or (
+            self._latest_live_sequence is not None
+            and value.source_sequence <= self._latest_live_sequence
+        ):
+            return
+        raw = value.observation
+        summary = raw.get("current_session")
+        if not isinstance(summary, dict) or not isinstance(summary.get("local_session_id"), str):
+            return
+        local_id = str(summary["local_session_id"])
+        payload = deepcopy({k: v for k, v in raw.items() if k not in ("events", "current_session")})
+        previous = self._current_history
+        if (
+            previous is not None
+            and previous.session.local_session_id == local_id
+            and not payload.get("set_name")
+        ):
+            payload["set_name"] = _last_known_set(previous.observations)
+        issues = bool(
+            observation_review_issues(
+                payload, minimum_confidence=self._settings.confidence_threshold
+            )
+        )
+        identifier = uuid4().hex
+        observation = ObservationSnapshot(
+            identifier,
+            value.source_sequence,
+            value.captured_at,
+            issues,
+            payload,
+            payload,
+        )
+        saved = self._saved_preview
+        is_saved = saved is not None and saved[0] == local_id
+        session = EchoSessionSummary(
+            id=local_id,
+            capture_session_id=capture.id,
+            local_session_id=local_id,
+            current_state="active",
+            is_discarded=False,
+            was_consumed=False,
+            consumed_into_session_id=None,
+            started_at=value.captured_at,
+            ended_at=None,
+            echo_id=saved[3] if saved and is_saved else None,
+            name=_optional_str(payload.get("name")),
+            level=_optional_int(payload.get("level")),
+            cost=_optional_int(payload.get("cost")),
+            final_status="equipped" if is_saved else "undecided",
+            score=None,
+            character_id=saved[1] if saved and is_saved else None,
+            slot_index=saved[2] if saved and is_saved else None,
+            observation_count=1,
+            latest_observation_id=identifier,
+            requires_review=issues,
+        )
+        self._latest_live_sequence = self._applied_live_sequence = value.source_sequence
+        self._echo_page.mark_analysis_stale()
+        self._apply_history(
+            EchoHistory(session, capture, (observation,), (), ()),
+            update_live=True,
+            evaluate_score=True,
+            persist_score=False,
+        )
 
     def _persist_recognition(self, value: RecognitionPayload) -> None:
         capture_id = self._active_capture_id
@@ -907,6 +1097,23 @@ class EchoWorkspacePresenter(QObject):
             value.operation is _Operation.TRAINING_TARGET
             and value.context != self._training_generation
         ):
+            return
+        if value.operation is _Operation.SAVE_EQUIPMENT:
+            self._saving_equipment = False
+            if value.error is not None:
+                self._show_error(value.error)
+                return
+            self.characters_changed.emit()
+            self.refresh_history()
+            if (
+                isinstance(value.value, str)
+                and isinstance(value.context, tuple)
+                and self._preview_capture is not None
+                and value.context[0] == self._preview_capture.id
+            ):
+                self._saved_preview = (*value.context[1:4], value.value)
+                self._saved_observation_id = value.context[4]
+                self._apply_current_history_details()
             return
         if value.operation is _Operation.SCORE:
             self._finish_score_job(value)
@@ -1082,6 +1289,8 @@ class EchoWorkspacePresenter(QObject):
         if not self._live.start(settings):
             capture_id = value.id
             self._active_capture_id = None
+            if self._preview_only:
+                return
             self._submit(
                 _Operation.STOP,
                 lambda: self._history.stop_capture(
@@ -1144,11 +1353,13 @@ class EchoWorkspacePresenter(QObject):
         persist_score: bool,
     ) -> None:
         summary = history.session
-        self._history_page.set_detail(_history_detail(history))
+        if not self._preview_only or history.capture.backend_kind != "preview":
+            self._history_page.set_detail(_history_detail(history))
         if not update_live or not history.observations:
             return
         self._current_history = history
-        self._session_db_by_local[summary.local_session_id] = summary.id
+        if not self._preview_only:
+            self._session_db_by_local[summary.local_session_id] = summary.id
         self._current_local_session_id = summary.local_session_id
         self._current_db_session_id = summary.id
         self._history_navigation_id = None
@@ -1195,6 +1406,13 @@ class EchoWorkspacePresenter(QObject):
     def _apply_current_history_details(self) -> None:
         history = self._current_history
         if history is None:
+            return
+        if self._preview_only:
+            self._echo_page.result_status_label.setText(
+                "已套用至角色配裝。"
+                if history.observations[-1].id == self._saved_observation_id
+                else "即時分析。可選擇將核對完成的聲骸套用到角色位置。"
+            )
             return
         self._echo_page.apply_disposition(history.session.final_status)
         revisit_notice = _revisit_notice(history)
@@ -1307,7 +1525,7 @@ class EchoWorkspacePresenter(QObject):
                 echo_session_id=history.session.id,
                 observation_id=latest.id,
                 requires_review=latest.requires_review,
-                persist=persist,
+                persist=persist and not self._preview_only,
                 character_mode=not (profile_id or history.capture.scoring_profile_id),
             )
             if replacement is not None and not (profile_id or history.capture.scoring_profile_id):

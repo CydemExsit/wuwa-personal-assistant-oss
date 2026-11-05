@@ -90,12 +90,12 @@ class FarmingReasonsButton(TextDetailsButton):
         dialog = QDialog(self)
         dialog.setAttribute(Qt.WidgetAttribute.WA_DeleteOnClose)
         dialog.setObjectName("FarmingReasonsDialog")
-        dialog.setWindowTitle("無音區推薦理由")
+        dialog.setWindowTitle("聲骸刷取理由")
         available = dialog.screen().availableGeometry()
         dialog.resize(min(1000, available.width() - 60), min(680, available.height() - 80))
         layout = QVBoxLayout(dialog)
         hint = QLabel(
-            "貢獻點為各需求的份額合計; 無音區最終排序另含覆蓋與雙套裝倍率。展開可查看其他區域。"
+            "貢獻點為各需求的份額合計; 來源最終排序另含覆蓋與雙套裝倍率。展開可查看其他區域。"
         )
         hint.setWordWrap(True)
         layout.addWidget(hint)
@@ -116,15 +116,16 @@ class FarmingReasonsButton(TextDetailsButton):
         for zone in self._recommendations:
             if zone.points <= 0:
                 continue
-            status = "先培養現有庫存" if zone.has_unleveled_stock else "需要刷取"
-            group = QTreeWidgetItem(tree, [f"{zone.zone.name} · {status}"])
+            group = QTreeWidgetItem(
+                tree, [f"{zone.zone.kind} · {zone.zone.region} · {zone.zone.name}"]
+            )
             group.setFirstColumnSpanned(True)
             for values in reason_rows(zone):
                 QTreeWidgetItem(group, list(values))
             group.setExpanded(count == 0)
             count += 1
         if not count:
-            layout.addWidget(QLabel("目前沒有已確認的刷取缺口; 資料待確認項目可查看計算細節。"))
+            layout.addWidget(QLabel("目前沒有已確認的刷取來源; 資料待確認項目可查看計算細節。"))
         layout.addWidget(tree, 1)
         diagnostics = TextDetailsButton("計算細節與資料待確認項目", dialog)
         diagnostics.set_details("計算細節", self._details_text)

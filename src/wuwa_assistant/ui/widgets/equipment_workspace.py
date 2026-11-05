@@ -2,9 +2,9 @@
 
 from __future__ import annotations
 
-from PySide6.QtCore import Qt, Signal
+from PySide6.QtCore import Qt
 from PySide6.QtGui import QResizeEvent, QShowEvent
-from PySide6.QtWidgets import QHBoxLayout, QPushButton, QSplitter, QVBoxLayout, QWidget
+from PySide6.QtWidgets import QSplitter, QVBoxLayout, QWidget
 
 from wuwa_assistant.ui.pages.equipment_detail import EquipmentDetailPage
 from wuwa_assistant.ui.pages.equipment_overview import EquipmentOverviewPage
@@ -12,8 +12,6 @@ from wuwa_assistant.ui.pages.equipment_overview import EquipmentOverviewPage
 
 class EquipmentWorkspace(QWidget):
     """Keep both views mounted; a compact window shows the current route only."""
-
-    tacet_stock_requested = Signal()
 
     def __init__(
         self,
@@ -37,12 +35,6 @@ class EquipmentWorkspace(QWidget):
         self.splitter.setStretchFactor(1, 2)
         layout = QVBoxLayout(self)
         layout.setContentsMargins(0, 0, 0, 0)
-        tools = QHBoxLayout()
-        tools.addStretch()
-        self.tacet_stock_button = QPushButton("無音區庫存")
-        self.tacet_stock_button.clicked.connect(self.tacet_stock_requested.emit)
-        tools.addWidget(self.tacet_stock_button)
-        layout.addLayout(tools)
         layout.addWidget(self.splitter)
         self._arrange()
 

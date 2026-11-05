@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from collections.abc import Callable
 from dataclasses import dataclass
 
 from PySide6.QtCore import Qt, Signal
@@ -10,8 +11,10 @@ from PySide6.QtWidgets import (
     QFrame,
     QGridLayout,
     QHBoxLayout,
+    QInputDialog,
     QLabel,
     QLayout,
+    QMessageBox,
     QPushButton,
     QScrollArea,
     QVBoxLayout,
@@ -81,6 +84,9 @@ class EquipmentDetailPage(QWidget):
 
     def __init__(self, parent: QWidget | None = None) -> None:
         super().__init__(parent)
+        self._read_demands: Callable[[], dict[tuple[str, int], int]] | None = None
+        self._save_demand: Callable[[str, int, int | None], None] | None = None
+        self._demands: dict[tuple[str, int], int] = {}
         self._detail: GearCharacterDetailView | None = None
         self._focused_slot: int | None = None
         self.cards: dict[int, QFrame] = {}
@@ -110,6 +116,14 @@ class EquipmentDetailPage(QWidget):
         self.scroll_area.setWidget(QLabel("從聲骸總覽選擇角色或低分聲骸, 查看完整配裝。"))
         layout.addWidget(self.scroll_area)
 
+    def configure_farming(
+        self,
+        read: Callable[[], dict[tuple[str, int], int]],
+        save: Callable[[str, int, int | None], None],
+    ) -> None:
+        self._read_demands = read
+        self._save_demand = save
+
     def set_compact_inspector(self, compact: bool) -> None:
         if compact == self._compact_inspector:
             return
@@ -129,6 +143,7 @@ class EquipmentDetailPage(QWidget):
         if self._detail is None or self._detail.identifier != detail.identifier:
             self._focused_slot = None
         self._detail = detail
+        self._demands = self._read_demands() if self._read_demands else {}
         self.cards = {}
         self.slot_buttons = {}
         old = self.scroll_area.widget()
@@ -190,15 +205,6 @@ class EquipmentDetailPage(QWidget):
             sets.setObjectName("PageDescription")
             sets.setWordWrap(True)
             layout.addWidget(sets)
-        if detail.pending_echoes:
-            pending = QLabel(
-                "另有已登記、位置待確認的聲骸 (不計入五件均分):\n"
-                + "、".join(detail.pending_echoes)
-                + "\n可在遊戲左側五個裝備圓格逐一點選再掃描; 或到角色資料調整位置。"
-            )
-            pending.setWordWrap(True)
-            pending.setObjectName("EquipmentPendingPositions")
-            layout.addWidget(pending)
         self.slot_selector = QWidget(body)
         self.slot_selector.setObjectName("EquipmentSlotSelector")
         slots_layout = QVBoxLayout(self.slot_selector)
@@ -287,6 +293,12 @@ class EquipmentDetailPage(QWidget):
         )
         meta.setWordWrap(True)
         layout.addWidget(meta)
+        if self._save_demand is not None:
+            key = character_id, piece.position
+            button = QPushButton("取消補充需求" if key in self._demands else "這個位置需要補充")
+            button.setObjectName(f"EchoDemandSlot{piece.position}")
+            button.clicked.connect(lambda: self._toggle_demand(key, piece.cost, button))
+            layout.addWidget(button)
         mains = QLabel("主詞條: " + (" + ".join(piece.main_stats) or "尚未辨識"))
         mains.setWordWrap(True)
         layout.addWidget(mains)
@@ -340,3 +352,34 @@ class EquipmentDetailPage(QWidget):
         actions.addWidget(train)
         layout.addLayout(actions)
         return card
+
+    def _toggle_demand(
+        self,
+        key: tuple[str, int],
+        existing_cost: int | None,
+        button: QPushButton,
+    ) -> None:
+        if self._save_demand is None:
+            return
+        cost = None if key in self._demands else existing_cost
+        if key not in self._demands and cost not in (1, 3, 4):
+            choice, accepted = QInputDialog.getItem(
+                self,
+                "補充聲骸",
+                "這個位置要刷哪種 COST?",
+                ("1", "3", "4"),
+                editable=False,
+            )
+            if not accepted:
+                return
+            cost = int(choice)
+        try:
+            self._save_demand(*key, cost)
+        except Exception as exc:
+            QMessageBox.warning(self, "無法更新刷取需求", str(exc))
+            return
+        if cost is None:
+            self._demands.pop(key, None)
+        else:
+            self._demands[key] = cost
+        button.setText("取消補充需求" if cost is not None else "這個位置需要補充")

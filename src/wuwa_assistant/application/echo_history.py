@@ -418,6 +418,103 @@ class EchoHistoryService:
             session.flush()
             return _capture_snapshot(record)
 
+    def save_equipment_preview(
+        self,
+        capture: CaptureSessionSnapshot,
+        payload: Mapping[str, object],
+        character_id: str,
+        slot: int,
+        echo_id: str | None,
+    ) -> str:
+        """Persist only the explicitly selected equipment snapshot, atomically."""
+        data = _json_object(payload, label="equipment snapshot", reject_images=True)
+        _validate_effective_observation(data)
+        if observation_review_issues(data):
+            raise ValueError("請先完成聲骸資料核對。")
+        when = utc_now()
+        with self._session_factory.begin() as session:
+            target = _require_record(session, CharacterRecord, character_id, "character")
+            if target.archived_at is not None or target.data_set_id != capture.data_set_id:
+                raise ValueError("角色已封存或不屬於此資料集。")
+            previous = session.get(EchoRecord, echo_id) if echo_id else None
+            if echo_id is not None and previous is None:
+                raise ValueError("原配裝已變更, 請重新辨識後再套用。")
+            source = CaptureSessionRecord(
+                data_set_id=capture.data_set_id,
+                backend_kind="manual-equipment",
+                monitor_index=capture.monitor_index,
+                sampling_hz=capture.sampling_hz,
+                stable_wait_ms=capture.stable_wait_ms,
+                started_at=when,
+                stopped_at=when,
+                status="stopped",
+                app_version="manual-equipment",
+            )
+            session.add(source)
+            session.flush()
+            if previous is not None:
+                if (
+                    previous.data_set_id != capture.data_set_id
+                    or previous.character_id != character_id
+                    or previous.slot_index != slot
+                ):
+                    raise ValueError("原配裝已變更, 請重新辨識後再套用。")
+                record = EchoSessionRecord(
+                    capture_session_id=source.id,
+                    echo_id=previous.id,
+                    local_session_id="manual-equipment",
+                    started_at=when,
+                )
+                session.add(record)
+                session.flush()
+            else:
+                record = _upsert_echo_session(
+                    session, source, {"local_session_id": "manual-equipment"}, data, when
+                )
+            observation = _add_observation(
+                session,
+                record,
+                _page_type(data.get("page_type")),
+                data,
+                source_sequence=None,
+                observed_at=when,
+                confidence_threshold=0.85,
+            )
+            observation.requires_review = False
+            _update_echo_from_payload(session, record, data, preserve_confirmed=False)
+            saved_echo_id = record.echo_id
+            if saved_echo_id is None:
+                raise RuntimeError("未能建立配裝聲骸。")
+            assign_echo_record(
+                session,
+                character_id,
+                slot,
+                saved_echo_id,
+                data_set_id=capture.data_set_id,
+                replace=True,
+            )
+            confidence = data.get("confidence")
+            if (
+                data.get("is_equipped") is True
+                and data.get("equipped_character_name") == target.name
+                and data.get("equipped_slot_index") == slot
+                and isinstance(confidence, dict)
+                and all(
+                    (_optional_confidence(confidence.get(field), "confidence") or 0) >= 0.90
+                    for field in ("equipped_character_name", "equipped_slot_index")
+                )
+            ):
+                record_equipment_read(
+                    session,
+                    character_id=character_id,
+                    slot=slot,
+                    capture_id=capture.id,
+                    payload=data,
+                    when=when,
+                    requires_review=False,
+                )
+            return saved_echo_id
+
     def ingest_live_result(
         self,
         capture_session_id: str,

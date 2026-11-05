@@ -144,6 +144,7 @@ def test_replacement_target_loads_offline_and_clear_rejects_late_result(
     page = EchoLivePage()
     qtbot.addWidget(page)
     presenter = EchoWorkspacePresenter(
+        preview_only=False,
         live_controller=live,
         history_service=history,
         echo_page=page,
@@ -201,6 +202,7 @@ def test_training_comparison_does_not_write_decisions_or_assign_candidate(
     page = EchoLivePage()
     qtbot.addWidget(page)
     presenter = EchoWorkspacePresenter(
+        preview_only=False,
         live_controller=_FakeLiveController(),
         history_service=history,
         echo_page=page,
@@ -278,6 +280,7 @@ def test_event_only_revisit_refreshes_score_without_persisting_decision(
     assert initial.echo_session_id is not None
     history = service.get_history(initial.echo_session_id)
     presenter = EchoWorkspacePresenter(
+        preview_only=False,
         live_controller=_FakeLiveController(),  # type: ignore[arg-type]
         history_service=service,
         echo_page=EchoLivePage(),
@@ -346,6 +349,7 @@ def test_live_same_echo_values_recalculate_panel_and_preserve_draft(
     for widget in (page, echo_page, history_page):
         qtbot.addWidget(widget)
     echo = EchoWorkspacePresenter(
+        preview_only=False,
         live_controller=live,
         history_service=history,
         echo_page=echo_page,
@@ -596,6 +600,7 @@ def test_history_folds_by_default_and_checkbox_restores_every_scan(
     dataset = _seed_grouped_history(service)
     history_page = EchoHistoryPage()
     presenter = EchoWorkspacePresenter(
+        preview_only=False,
         live_controller=_FakeLiveController(),  # type: ignore[arg-type]
         history_service=service,
         echo_page=EchoLivePage(),
@@ -637,6 +642,7 @@ def test_stale_history_result_cannot_overwrite_the_current_grouping_mode(
     dataset = _seed_grouped_history(service)
     history_page = EchoHistoryPage()
     presenter = EchoWorkspacePresenter(
+        preview_only=False,
         live_controller=_FakeLiveController(),  # type: ignore[arg-type]
         history_service=service,
         echo_page=EchoLivePage(),
@@ -677,6 +683,7 @@ def test_history_navigation_resolves_a_live_member_to_its_adjacent_group(
     _database, service = history_storage
     dataset = _seed_grouped_history(service)
     presenter = EchoWorkspacePresenter(
+        preview_only=False,
         live_controller=_FakeLiveController(),  # type: ignore[arg-type]
         history_service=service,
         echo_page=EchoLivePage(),
@@ -723,6 +730,7 @@ def test_history_reads_one_snapshot_without_silently_truncating_scans(
 
     monkeypatch.setattr(service, "list_history_snapshot", list_snapshot)
     presenter = EchoWorkspacePresenter(
+        preview_only=False,
         live_controller=_FakeLiveController(),  # type: ignore[arg-type]
         history_service=service,
         echo_page=EchoLivePage(),
@@ -746,6 +754,7 @@ def test_repeated_history_navigation_advances_without_changing_live_item(
     _database, service = history_storage
     dataset = _seed_grouped_history(service)
     presenter = EchoWorkspacePresenter(
+        preview_only=False,
         live_controller=_FakeLiveController(),  # type: ignore[arg-type]
         history_service=service,
         echo_page=EchoLivePage(),
@@ -839,6 +848,7 @@ def test_new_owner_and_keep_slot_flow_updates_character_page_without_reselecting
         qtbot.addWidget(page)
     live = _FakeLiveController()
     presenter = EchoWorkspacePresenter(
+        preview_only=False,
         live_controller=live,  # type: ignore[arg-type]
         history_service=history_service,
         echo_page=echo_page,
@@ -902,8 +912,6 @@ def test_new_owner_and_keep_slot_flow_updates_character_page_without_reselecting
         assert echo_page.set_label.text() == "雪落無聲之願"
         assert echo_page.result_slot_combo.currentData() == (recognized_slot or 0)
         if recognized_slot is None:
-            assert "冠頂械隼" in characters_page.unpositioned_echoes_label.text()
-            assert not characters_page.unpositioned_echoes_label.isHidden()
             # Unknown slots remain visible; a manual choice promotes this record.
             echo_page.result_slot_combo.setCurrentIndex(echo_page.result_slot_combo.findData(3))
             assert echo_page.keep_button.text() == "保留並套用位置"
@@ -915,7 +923,6 @@ def test_new_owner_and_keep_slot_flow_updates_character_page_without_reselecting
         assert detail.echo_slots[2].final_status == "equipped"
         assert detail.echo_slots[2].set_name == "雪落無聲之願"
         assert detail.unpositioned_echoes == ()
-        assert characters_page.unpositioned_echoes_label.isHidden()
         assert all(
             slot.echo_id is None for index, slot in enumerate(detail.echo_slots) if index != 2
         )
@@ -974,6 +981,7 @@ def test_presenter_persists_live_result_correction_and_stop_without_ui_database_
     history_page = EchoHistoryPage()
     scoring_page = ScoringProfilesPage()
     presenter = EchoWorkspacePresenter(
+        preview_only=False,
         live_controller=live,  # type: ignore[arg-type]
         history_service=service,
         echo_page=echo_page,
@@ -1153,6 +1161,7 @@ def test_presenter_rejects_incompatible_monitor_before_capture(
     live = _FakeLiveController()
     echo_page = EchoLivePage()
     presenter = EchoWorkspacePresenter(
+        preview_only=False,
         live_controller=live,  # type: ignore[arg-type]
         history_service=service,
         echo_page=echo_page,
@@ -1187,6 +1196,7 @@ def test_presenter_applies_persisted_monitor_after_async_discovery(
     live = _FakeLiveController()
     echo_page = EchoLivePage()
     presenter = EchoWorkspacePresenter(
+        preview_only=False,
         live_controller=live,  # type: ignore[arg-type]
         history_service=service,
         echo_page=echo_page,
@@ -1213,6 +1223,7 @@ def test_runtime_error_stops_capture_and_allows_a_clean_restart(
     live = _FakeLiveController()
     echo_page = EchoLivePage()
     presenter = EchoWorkspacePresenter(
+        preview_only=False,
         live_controller=live,  # type: ignore[arg-type]
         history_service=service,
         echo_page=echo_page,
@@ -1258,6 +1269,7 @@ def test_switching_mode_cancels_old_capture_without_starting_new_one(
     _database, service = history_storage
     live, page = _FakeLiveController(), EchoLivePage()
     presenter = EchoWorkspacePresenter(
+        preview_only=False,
         live_controller=live,
         history_service=service,
         echo_page=page,
@@ -1316,6 +1328,7 @@ def test_stop_failure_releases_presenter_gate_without_recursive_stop(
 
     live, page = PendingStopController(), EchoLivePage()
     presenter = EchoWorkspacePresenter(
+        preview_only=False,
         live_controller=live,
         history_service=service,
         echo_page=page,

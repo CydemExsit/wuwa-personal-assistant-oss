@@ -1217,13 +1217,6 @@ def _detail_view(
         weakest_position=f"位置 {result.weakest_echo_slot}",
         next_suggestion=next_action,
         archived=summary.archived_at is not None,
-        unpositioned_echoes=tuple(
-            f"{echo.name or '名稱待確認'} · "
-            f"{('+' + str(echo.level)) if echo.level is not None else '等級待確認'} · "
-            f"COST {echo.cost if echo.cost is not None else '—'} · "
-            f"{echo.set_name or '套裝待辨識'}"
-            for echo in detail.unpositioned_echoes
-        ),
     )
 
 
@@ -1387,11 +1380,6 @@ def _gear_detail(item: CharacterEquipmentOverview) -> GearCharacterDetailView:
         ),
         context_note="; ".join(item.scoring_notes),
         pieces=tuple(pieces),
-        pending_echoes=tuple(
-            f"{p.name or '聲骸'} +{p.level if p.level is not None else '?'}"
-            + (f" ({p.score:.1f} 分)" if p.score is not None else "")
-            for p in item.pending_echoes
-        ),
     )
 
 
@@ -1441,13 +1429,6 @@ def _with_equipment_scores(
                 if lowest is not None
                 else "先補齊裝備與詞條資料。"
             )
-        ),
-        unpositioned_echoes=tuple(
-            f"{piece.name or '名稱待確認'} · +{piece.level if piece.level is not None else '?'} · "
-            f"{piece.set_name or '套裝待辨識'} · "
-            f"{f'{piece.score:.1f} 分' if piece.score is not None else '待評分'}"
-            + (f" (重複掃描 {piece.rescan_count + 1} 次)" if piece.rescan_count else "")
-            for piece in item.pending_echoes
         ),
     )
 

@@ -834,16 +834,8 @@ class CharactersPage(QWidget):
         self.settings_layout.setColumnStretch(1, 0 if setting_columns == 1 else 1)
         for card in self.echo_cards:
             self.echo_grid.removeWidget(card)
-        self.echo_grid.removeWidget(self.unpositioned_echoes_label)
         for index, card in enumerate(self.echo_cards):
             self.echo_grid.addWidget(card, index // echo_columns, index % echo_columns)
-        self.echo_grid.addWidget(
-            self.unpositioned_echoes_label,
-            (len(self.echo_cards) - 1) // echo_columns + 1,
-            0,
-            1,
-            echo_columns,
-        )
         for column in range(3):
             self.echo_grid.setColumnStretch(column, 1 if column < echo_columns else 0)
 
@@ -1183,7 +1175,7 @@ class CharactersPage(QWidget):
         layout.addLayout(grid)
         self.panel_details_button = TextDetailsButton("屬性與來源明細", group)
         self.panel_details_button.setObjectName("CharacterPanelDetails")
-        self.equipment_check_label = QLabel("最近核對 0/5;請逐格讀取聲骸。")
+        self.equipment_check_label = QLabel("最近核對 0/5 · 可逐格辨識後套用至角色配裝。")
         self.equipment_check_label.setObjectName("CharacterEquipmentCheck")
         self.equipment_check_label.setWordWrap(True)
         layout.addWidget(self.equipment_check_label)
@@ -1231,7 +1223,7 @@ class CharactersPage(QWidget):
         self.equipment_check_label.setText(
             f"最近核對 {equipment.matched}/5　" + "・".join(equipment.labels)
             if equipment
-            else "最近核對 0/5;請逐格讀取聲骸。"
+            else "最近核對 0/5 · 可逐格辨識後套用至角色配裝。"
         )
         self.equipment_check_details.set_details(
             "聲骸逐格核對", equipment.details if equipment else ""
@@ -1276,11 +1268,6 @@ class CharactersPage(QWidget):
         self.echo_cards: list[_EchoSlotCard] = []
         grid = QGridLayout(group)
         self.echo_grid = grid
-        self.unpositioned_echoes_label = QLabel()
-        self.unpositioned_echoes_label.setObjectName("CharacterRecognizedUnpositionedEchoes")
-        self.unpositioned_echoes_label.setWordWrap(True)
-        self.unpositioned_echoes_label.setVisible(False)
-        grid.addWidget(self.unpositioned_echoes_label, 2, 0, 1, 3)
         for position in range(1, 6):
             card = _EchoSlotCard(position, partial(self._request_echo_slot_edit, position))
             self.echo_cards.append(card)
@@ -1510,7 +1497,6 @@ class CharactersPage(QWidget):
         self._detail = detail
         self.team_label.setText(detail.team_name or "尚未設定")
         self._apply_calculated_panel(detail)
-        self._apply_unpositioned_echoes(detail)
         self._update_progress_summary()
         self.passing_echoes_label.setText(f"{detail.passing_echoes} / 5")
         self.weakest_position_label.setText(detail.weakest_position or "尚未評估")
@@ -1525,7 +1511,6 @@ class CharactersPage(QWidget):
         self._apply_calculated_panel(detail)
         self.edit_mode_button.setChecked(False)
         self.character_portrait.set_character_name(detail.name)
-        self._apply_unpositioned_echoes(detail)
         self._apply_element(detail.element)
         self.name_edit.setText(detail.name)
         self.role_edit.setText(detail.role)
@@ -1581,14 +1566,6 @@ class CharactersPage(QWidget):
         self.empty_state_label.setText(message)
         self.detail_stack.setCurrentIndex(0)
         self._set_detail_enabled(False)
-
-    def _apply_unpositioned_echoes(self, detail: CharacterDetailView) -> None:
-        self.unpositioned_echoes_label.setVisible(bool(detail.unpositioned_echoes))
-        self.unpositioned_echoes_label.setText(
-            f"已登記裝備 ({len(detail.unpositioned_echoes)} 筆, 位置待確認)\n"
-            + "\n".join(f"• {label}" for label in detail.unpositioned_echoes)
-            + "\n這些紀錄已登記所屬角色, 但未能確認位置。新辨識到的位置會自動顯示於上方欄位。"
-        )
 
     @Slot(bool)
     @Slot(bool, str)
