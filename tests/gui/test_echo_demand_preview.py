@@ -12,7 +12,7 @@ from wuwa_assistant.application import (
 )
 from wuwa_assistant.application.characters import CharacterCultivationService, CreateCharacter
 from wuwa_assistant.application.echo_demand import EchoDemandService
-from wuwa_assistant.application.echo_sources import OTHER_ECHO_SOURCES
+from wuwa_assistant.application.echo_sources import load_echo_sources
 from wuwa_assistant.application.planning import CultivationPlanningService
 from wuwa_assistant.planning.farming import FarmCharacter, FarmEcho, FarmRole, recommend_zones
 from wuwa_assistant.scoring import load_template_seed_definitions
@@ -208,6 +208,8 @@ def test_curated_acquisition_matches_exact_cost_and_sonata(cost, set_name, kind)
         (set_name,),
         (FarmEcho(3, None, None, None, None, None, None, equipped=False),),
     )
-    plan = recommend_zones((character,), OTHER_ECHO_SOURCES, requested_slots={("c", 3): cost})
-    assert {row.zone.kind for row in plan.recommendations} == {kind}
+    plan = recommend_zones(
+        (character,), load_echo_sources().routes, requested_slots={("c", 3): cost}
+    )
+    assert any(row.zone.kind == kind for row in plan.recommendations)
     assert all(row.echo_count == 1 and row.benefits[0].cost == cost for row in plan.recommendations)

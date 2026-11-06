@@ -8,16 +8,19 @@
 
 ## 取得來源和資料範圍
 
-無音區使用已核對的既有目錄，僅配對 COST 1／3。非無音區條目各自紀錄區域、合鳴套裝、COST 與來源。新來源可沿用同一組欄位加入。刷取排序點表示養成優先度。不同玩法的體力、時間和掉落率尚未納入比較。
+國際服 3.7.8 的 37 個合鳴套裝共有 109 種已存在的套裝與 COST 組合，每種至少有一條已核對的刷取路線。目錄涵蓋既有 21 個無音區，以及首領、戰歌重奏、夢魘與殘象聚落和具名野外追蹤。無音區和聚落依照掉落範圍配對。野外每種組合最多挑選一條新增代表路線，部分敵人可同時涵蓋多組。排序點表示養成優先度。遊戲解鎖條件、當期掉落與個人進度以遊戲為準。
 
-- 夢魘·輝螢軍勢，貝奧海域，COST 4，高天共奏之曲或凌冽決斷之心。[官方 2.2 更新](https://wutheringwaves.kurogames.com/en/main/news/detail/2381)、[聲骸資料](https://wuthering.gg/echos/nightmare-lampylumen-myriad)
-- 輝螢軍勢，虎口礦場，COST 4，凝夜白霜。[聲骸資料](https://zilliongamer.com/wuthering-waves/c/echeos/lampylumen-myriad)、[位置](https://nintendosmash.com/wuthering-waves-how-to-get-to-lampylumen-myriad-boss-location/)
-- 無常凶鷺，荒石高地，COST 4，輕雲出月。[聲骸與位置](https://theriagames.com/guide/wuthering-waves-impermanence-heron/)
-- 雪鬃狼，乘霄山，COST 3，凝夜白霜或輕雲出月。可用資料塢追蹤。[1.1 新增聲骸](https://wutheringwaves.gg/version-1-1-thaw-of-eons/)、[地圖資料](https://wuthering.gg/map)
-- 無妄者，北落野的無冠巨像之心週本，COST 4，沉日劫明。前往副本吸收聲骸。[聲骸資料](https://zilliongamer.com/wuthering-waves/c/echeos/dreamless)、[副本位置](https://primagames.com/gaming/how-to-get-and-use-dreamless-echo-skill-and-what-it-does-in-wuthering-waves)
-- 千歿沉島夢魘聚落，隱海實驗場，COST 1／3，失序彼岸之夢。可在遊戲指南追蹤夢魘祓除。[官方 2.5 更新](https://wutheringwaves.kurogames.com/en/main/news/detail/2908)、[套裝與 COST 對照](https://wutheringwaves.fandom.com/wiki/Dream_of_the_Lost)
+- 夢魘·凱爾匹，COST 4，願戴榮光之旅或流雲逝盡之空。前往七丘哀慟谷，在夢魘祓除追蹤。 [官方 2.4 更新](https://wutheringwaves.kurogames.com/en/main/news/detail/2801) · [位置](https://3g.ali213.net/gl/html/1666657.html) · [聲骸資料](https://wuthering.gg/zh-Hant/echos/nightmare-kelpie)
+- 共鳴迴響·天演溯心，COST 4。銜夢照世之心可由夢州夢玄溪山的戰歌重奏「定序諸理之律」取得。 [官方 3.7 更新](https://wutheringwaves.kurogames.com/zh-tw/main/news/detail/5562) · [官方攻略站配裝](https://wuwaguide.kurogames.com/zh-Hant/?role_id=1311&strategy_id=11096) · [副本位置](https://gamewith.jp/wutheringwaves/578962) · [掉落方式](https://game8.jp/meicho/820400)
+- 設有位置套裝目標時優先使用該目標。沒有配裝判定且已辨識出目前套裝時，已標記的位置可依目前套裝查路線。未知或不存在的組合仍列入待確認項目。
 
-來源只涵蓋已核對的對應。若尚無指定套裝與 COST 的地點，規劃會列出原需求，並提示在遊戲資料塢核對與追蹤。遊戲內解鎖條件與當期掉落以遊戲顯示為準。
+來源資料取自既有無音區目錄採用的國際服正式版快照。建置腳本依聲骸、合鳴組、敵跡探尋、地圖標記和副本入口的識別碼關聯資料。少數敵人與掉落聲骸名稱不同，腳本記錄核對後的識別碼對應。輸出只收錄名稱、路線、套裝、COST 和來源，並附來源檔 SHA-256。 [固定資料版本](https://github.com/Arikatsu/WutheringWaves_Data/tree/9218d612ad815e398e064e577e42aaf878899968)
+
+維護時以固定版本的公開資料目錄執行下列指令，確認所有套裝與 COST 組合的回歸測試通過後再更新兩版。應用程式使用隨附目錄。
+
+```powershell
+python scripts/build_echo_source_catalog.py <正式版資料目錄> src/wuwa_assistant/data/planning/echo-sources.v1.json
+```
 
 ## 推送前預檢
 

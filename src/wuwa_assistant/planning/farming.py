@@ -62,6 +62,12 @@ class FarmZone:
     source_note: str = ""
     costs: tuple[int, ...] = (1, 3)
     kind: str = "無音區"
+    set_costs: tuple[tuple[str, int], ...] = ()
+
+    def supports(self, set_name: str, cost: int | None) -> bool:
+        if cost is not None and self.set_costs:
+            return (set_name, cost) in self.set_costs
+        return set_name in self.sets and (cost is None or cost in self.costs)
 
 
 @dataclass(frozen=True, slots=True)
@@ -151,9 +157,7 @@ def _priority_weights(priorities: set[int], *, spread: float) -> dict[int, float
 
 def _rank_zone(zone: FarmZone, benefits: list[FarmBenefit]) -> ZoneRecommendation:
     matched = tuple(
-        benefit
-        for benefit in benefits
-        if benefit.set_name in zone.sets and (benefit.cost is None or benefit.cost in zone.costs)
+        benefit for benefit in benefits if zone.supports(benefit.set_name, benefit.cost)
     )
     by_character: dict[str, dict[int, float]] = {}
     needs: dict[str, list[float]] = {}
@@ -308,7 +312,9 @@ def recommend_zones(
                 targets = echo.target_sets
             elif combination_gap:
                 targets = tuple(name for name in character.sets if name in deficient)
-            elif echo.set_valid is True and echo.set_name is not None:
+            elif echo.set_name is not None and (
+                echo.set_valid is True or (requested_cost is not None and echo.set_valid is None)
+            ):
                 targets = (echo.set_name,)
             else:
                 targets = character.sets
@@ -317,7 +323,7 @@ def recommend_zones(
                 targets = tuple(
                     name
                     for name in known_targets
-                    if any(name in zone.sets and requested_cost in zone.costs for zone in zones)
+                    if any(zone.supports(name, requested_cost) for zone in zones)
                 )
                 missing = tuple(name for name in known_targets if name not in targets)
                 if missing or not known_targets:

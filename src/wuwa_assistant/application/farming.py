@@ -21,7 +21,7 @@ from wuwa_assistant.scoring.character_guides import guide_for_character
 
 from .character_scoring import character_context, character_profile
 from .characters import CharacterCultivationService, CharacterDetail
-from .echo_sources import OTHER_ECHO_SOURCES
+from .echo_sources import load_echo_sources
 from .equipment_alerts import equipment_fit_alert
 from .equipment_overview import CharacterEquipmentOverview
 from .scoring_profiles import ScoringProfileService, ScoringProfileSnapshot
@@ -203,8 +203,9 @@ def build_today_farming(
         for detail in details
         if detail.summary.id in by_id
     )
-    if requested_slots is not None:
-        zones = (*zones, *OTHER_ECHO_SOURCES)
+    sources = load_echo_sources() if requested_slots is not None else None
+    if sources is not None:
+        zones = (*zones, *sources.routes)
     plan = recommend_zones(
         farm_characters,
         zones,
@@ -216,7 +217,7 @@ def build_today_farming(
         skills,
         FarmingPlan(plan.recommendations, (*plan.notices, *role_notes), plan.policy_version),
         catalog.coverage_note
-        if requested_slots is None
-        else ("刷取表只列有來源對應的需求。其餘請展開資料待確認項目。"),
+        if sources is None
+        else f"刷取來源依國際服 {sources.game_version} 資料查核。未知組合可展開待確認項目。",
         len(details),
     )
