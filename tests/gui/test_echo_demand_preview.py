@@ -197,7 +197,7 @@ def test_slot_toggle_refreshes_planning_and_filters_sources_by_cost(qtbot, tmp_p
 
 @pytest.mark.parametrize(
     ("cost", "set_name", "kind"),
-    ((4, "沉日劫明", "週本"), (3, "失序彼岸之夢", "夢魘聚落"), (3, "輕雲出月", "野外吸收")),
+    ((4, "沉日劫明", "週本"), (3, "失序彼岸之夢", "夢魘聚落"), (3, "銜夢照世之心", "殘象聚落")),
 )
 def test_curated_acquisition_matches_exact_cost_and_sonata(cost, set_name, kind):
     character = FarmCharacter(

@@ -46,7 +46,6 @@ LOCATIONS = {
     340000020: "瑝瓏 · 雲陵谷",
     340000330: "夢州 · 夢玄溪山",
 }
-SNOW_WOLF_NAME = "雪鬃狼"
 
 
 def compile_catalog(root: Path) -> dict[str, Any]:
@@ -117,7 +116,6 @@ def compile_catalog(root: Path) -> dict[str, Any]:
         )
 
     nest_drops: dict[int, set[tuple[int, int]]] = defaultdict(set)
-    wild_choices = []
     for enemy in tables["enemies"]:
         identifier = enemy["Id"]
         name = text.get(enemy["Name"])
@@ -160,13 +158,6 @@ def compile_catalog(root: Path) -> dict[str, Any]:
                 available,
                 BASE_URL + TABLES["dungeons" if dungeon else "enemies"],
             )
-        elif (
-            enemy["TypeDescription2"] in (16, 20)
-            and mark_id > 0
-            and all(cost in (1, 3) for _, cost in available)
-        ):
-            # The in-game Echo Gallery follows the named, ordinary enemy.
-            wild_choices.append((identifier, name, available))
 
     for area in tables["activities"]:
         kind = area["Secondary"]
@@ -191,24 +182,6 @@ def compile_catalog(root: Path) -> dict[str, Any]:
             available,
             BASE_URL + TABLES["activities"],
         )
-
-    # Cover each trackable wild pair with one route, avoiding dozens of
-    # interchangeable listings. Prefer a named location, then narrow pools.
-    wild_covered: set[tuple[int, int]] = set()
-    for identifier, name, available in sorted(
-        wild_choices, key=lambda x: (x[1] != SNOW_WOLF_NAME, len(x[2]), x[0])
-    ):
-        if not available or not available - wild_covered:
-            continue
-        add(
-            f"wild:{identifier}",
-            name,
-            "乘霄山 · 資料塢追蹤" if name == SNOW_WOLF_NAME else "資料塢 → 聲骸圖鑑 → 追蹤",
-            "野外吸收",
-            available,
-            BASE_URL + TABLES["enemies"],
-        )
-        wild_covered.update(available)
 
     return {
         "schema_version": 1,

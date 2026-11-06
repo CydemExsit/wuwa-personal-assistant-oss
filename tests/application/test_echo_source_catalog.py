@@ -28,16 +28,18 @@ def test_pinned_release_every_existing_sonata_cost_has_a_trackable_route():
     assert {zone.kind for zone in catalog.routes} == {
         "首領",
         "週本",
-        "野外吸收",
         "夢魘聚落",
         "殘象聚落",
     }
-    assert {pair for zone in catalog.routes for pair in zone.set_costs} == catalog.pairs
+    zones = (
+        *catalog.routes,
+        *(FarmZone(f.field_id, f.name, f.region, f.set_names) for f in tacet.fields),
+    )
     for set_name, cost in catalog.pairs:
         echo = FarmEcho(2, cost, 25, 50.0, set_name, None, None)
         plan = recommend_zones(
             (_character(echo),),
-            catalog.routes,
+            zones,
             requested_slots={("c", 2): cost},
         )
         assert plan.recommendations, (set_name, cost)

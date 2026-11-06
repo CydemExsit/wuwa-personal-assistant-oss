@@ -327,7 +327,7 @@ def recommend_zones(
                 )
                 missing = tuple(name for name in known_targets if name not in targets)
                 if missing or not known_targets:
-                    route = "首領或副本" if requested_cost == 4 else "野外或夢魘聚落"
+                    route = "首領或副本" if requested_cost == 4 else "無音區或聚落"
                     notices.append(
                         f"{label} · COST {requested_cost} · {'、'.join(missing) or '套裝待確認'}"
                         f": 確切地點待查。可在遊戲資料塢依套裝及 COST 核對, 再追蹤{route}。"
