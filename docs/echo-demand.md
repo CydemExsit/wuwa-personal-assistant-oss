@@ -8,7 +8,7 @@
 
 ## 取得來源和資料範圍
 
-國際服 3.7.8 的 37 個合鳴套裝共有 109 種已存在的套裝與 COST 組合，每種至少有一條已核對的刷取路線。目錄涵蓋既有 21 個無音區，以及首領、戰歌重奏、夢魘與殘象聚落。無音區和聚落依照掉落範圍配對。刷取建議排除野外吸收。排序點表示養成優先度。遊戲解鎖條件、當期掉落與個人進度以遊戲為準。
+國際服 3.7.8 的 37 個合鳴套裝共有 109 種已存在的套裝與 COST 組合，每種至少有一條已核對的刷取路線。目錄涵蓋既有 21 個無音區，以及首領、戰歌重奏、夢魘與殘象聚落和具名野外追蹤。無音區和聚落依照掉落範圍配對。只有同一套裝與 COST 組合缺少其他已核對的刷取路線時，才顯示野外吸收。3.7.8 的 109 種組合目前均有其他路線。排序點表示養成優先度。遊戲解鎖條件、當期掉落與個人進度以遊戲為準。
 
 - 夢魘·凱爾匹，COST 4，願戴榮光之旅或流雲逝盡之空。前往七丘哀慟谷，在夢魘祓除追蹤。 [官方 2.4 更新](https://wutheringwaves.kurogames.com/en/main/news/detail/2801) · [位置](https://3g.ali213.net/gl/html/1666657.html) · [聲骸資料](https://wuthering.gg/zh-Hant/echos/nightmare-kelpie)
 - 共鳴迴響·天演溯心，COST 4。銜夢照世之心可由夢州夢玄溪山的戰歌重奏「定序諸理之律」取得。 [官方 3.7 更新](https://wutheringwaves.kurogames.com/zh-tw/main/news/detail/5562) · [官方攻略站配裝](https://wuwaguide.kurogames.com/zh-Hant/?role_id=1311&strategy_id=11096) · [副本位置](https://gamewith.jp/wutheringwaves/578962) · [掉落方式](https://game8.jp/meicho/820400)

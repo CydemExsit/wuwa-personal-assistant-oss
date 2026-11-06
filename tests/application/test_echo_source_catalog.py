@@ -28,9 +28,11 @@ def test_pinned_release_every_existing_sonata_cost_has_a_trackable_route():
     assert {zone.kind for zone in catalog.routes} == {
         "首領",
         "週本",
+        "野外吸收",
         "夢魘聚落",
         "殘象聚落",
     }
+    assert {pair for zone in catalog.routes for pair in zone.set_costs} == catalog.pairs
     zones = (
         *catalog.routes,
         *(FarmZone(f.field_id, f.name, f.region, f.set_names) for f in tacet.fields),
@@ -43,6 +45,7 @@ def test_pinned_release_every_existing_sonata_cost_has_a_trackable_route():
             requested_slots={("c", 2): cost},
         )
         assert plan.recommendations, (set_name, cost)
+        assert all(row.zone.kind != "野外吸收" for row in plan.recommendations)
         assert all(
             row.zone.supports(set_name, cost) and row.zone.region for row in plan.recommendations
         )
@@ -78,3 +81,22 @@ def test_cost_and_sonata_must_be_verified_as_one_pair_and_explicit_target_wins()
     plan = recommend_zones((_character(echo),), (route,), requested_slots={("c", 2): 4})
     assert not plan.recommendations
     assert any("COST 4" in notice and "確切地點待查" in notice for notice in plan.notices)
+
+
+def test_wild_only_fills_uncovered_pairs_even_when_the_enemy_drops_multiple_sets():
+    normal = FarmZone("fixed", "無音區", "測試", ("A",), costs=(1,))
+    wild = FarmZone(
+        "wild",
+        "殘象",
+        "資料塢",
+        ("A", "B"),
+        costs=(1, 3),
+        kind="野外吸收",
+        set_costs=(("A", 1), ("A", 3), ("B", 1)),
+    )
+    for name, cost, expected in (("A", 1, "fixed"), ("A", 3, "wild"), ("B", 1, "wild")):
+        echo = FarmEcho(2, cost, 25, 50.0, name, None, None)
+        plan = recommend_zones(
+            (_character(echo),), (normal, wild), requested_slots={("c", 2): cost}
+        )
+        assert [row.zone.identifier for row in plan.recommendations] == [expected]

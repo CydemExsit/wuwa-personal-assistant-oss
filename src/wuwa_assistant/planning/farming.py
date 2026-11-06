@@ -155,6 +155,37 @@ def _priority_weights(priorities: set[int], *, spread: float) -> dict[int, float
     }
 
 
+def _prefer_non_wild_sources(zones: tuple[FarmZone, ...]) -> tuple[FarmZone, ...]:
+    covered = {
+        (name, cost)
+        for zone in zones
+        if zone.kind != "野外吸收"
+        for name in zone.sets
+        for cost in zone.costs
+        if zone.supports(name, cost)
+    }
+    result = []
+    for zone in zones:
+        if zone.kind != "野外吸收":
+            result.append(zone)
+            continue
+        remaining = tuple(
+            (name, cost)
+            for name in zone.sets
+            for cost in zone.costs
+            if zone.supports(name, cost) and (name, cost) not in covered
+        )
+        if remaining:
+            result.append(
+                replace(
+                    zone,
+                    sets=tuple(dict.fromkeys(name for name, _ in remaining)),
+                    set_costs=remaining,
+                )
+            )
+    return tuple(result)
+
+
 def _rank_zone(zone: FarmZone, benefits: list[FarmBenefit]) -> ZoneRecommendation:
     matched = tuple(
         benefit for benefit in benefits if zone.supports(benefit.set_name, benefit.cost)
@@ -226,6 +257,8 @@ def recommend_zones(
     benefits: list[FarmBenefit] = []
     notices: list[str] = []
     seen: set[str] = set()
+    if requested_slots is not None:
+        zones = _prefer_non_wild_sources(zones)
     available_sets = {name for zone in zones for name in zone.sets}
     priority_weights = _priority_weights({row.priority for row in characters}, spread=0.6)
     team_weights = _priority_weights(

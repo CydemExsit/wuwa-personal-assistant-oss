@@ -1442,6 +1442,921 @@
         ]
       ],
       "evidence": "https://github.com/Arikatsu/WutheringWaves_Data/blob/9218d612ad815e398e064e577e42aaf878899968/BinData/adventure_detect/silentareadetection.json"
+    },
+    {
+      "id": "wild:320000190",
+      "name": "雪鬃狼",
+      "location": "乘霄山 · 資料塢追蹤",
+      "kind": "野外吸收",
+      "pairs": [
+        [
+          "凝夜白霜",
+          3
+        ],
+        [
+          "輕雲出月",
+          3
+        ]
+      ],
+      "evidence": "https://github.com/Arikatsu/WutheringWaves_Data/blob/9218d612ad815e398e064e577e42aaf878899968/BinData/adventure_detect/monsterdetection.json"
+    },
+    {
+      "id": "wild:310000900",
+      "name": "融軀戰士",
+      "location": "資料塢 → 聲骸圖鑑 → 追蹤",
+      "kind": "野外吸收",
+      "pairs": [
+        [
+          "羽落空塵之歌",
+          1
+        ]
+      ],
+      "evidence": "https://github.com/Arikatsu/WutheringWaves_Data/blob/9218d612ad815e398e064e577e42aaf878899968/BinData/adventure_detect/monsterdetection.json"
+    },
+    {
+      "id": "wild:310001030",
+      "name": "玉冥蛇",
+      "location": "資料塢 → 聲骸圖鑑 → 追蹤",
+      "kind": "野外吸收",
+      "pairs": [
+        [
+          "銜夢照世之心",
+          1
+        ]
+      ],
+      "evidence": "https://github.com/Arikatsu/WutheringWaves_Data/blob/9218d612ad815e398e064e577e42aaf878899968/BinData/adventure_detect/monsterdetection.json"
+    },
+    {
+      "id": "wild:320000210",
+      "name": "踏光獸",
+      "location": "資料塢 → 聲骸圖鑑 → 追蹤",
+      "kind": "野外吸收",
+      "pairs": [
+        [
+          "浮星祛暗",
+          3
+        ]
+      ],
+      "evidence": "https://github.com/Arikatsu/WutheringWaves_Data/blob/9218d612ad815e398e064e577e42aaf878899968/BinData/adventure_detect/monsterdetection.json"
+    },
+    {
+      "id": "wild:320000660",
+      "name": "迷朧幻蛾",
+      "location": "資料塢 → 聲骸圖鑑 → 追蹤",
+      "kind": "野外吸收",
+      "pairs": [
+        [
+          "剪心輯夢之影",
+          3
+        ]
+      ],
+      "evidence": "https://github.com/Arikatsu/WutheringWaves_Data/blob/9218d612ad815e398e064e577e42aaf878899968/BinData/adventure_detect/monsterdetection.json"
+    },
+    {
+      "id": "wild:310000030",
+      "name": "驚蟄獵手",
+      "location": "資料塢 → 聲骸圖鑑 → 追蹤",
+      "kind": "野外吸收",
+      "pairs": [
+        [
+          "熔山裂谷",
+          1
+        ],
+        [
+          "徹空冥雷",
+          1
+        ]
+      ],
+      "evidence": "https://github.com/Arikatsu/WutheringWaves_Data/blob/9218d612ad815e398e064e577e42aaf878899968/BinData/adventure_detect/monsterdetection.json"
+    },
+    {
+      "id": "wild:310000040",
+      "name": "破霜獵手",
+      "location": "資料塢 → 聲骸圖鑑 → 追蹤",
+      "kind": "野外吸收",
+      "pairs": [
+        [
+          "凝夜白霜",
+          1
+        ],
+        [
+          "浮星祛暗",
+          1
+        ]
+      ],
+      "evidence": "https://github.com/Arikatsu/WutheringWaves_Data/blob/9218d612ad815e398e064e577e42aaf878899968/BinData/adventure_detect/monsterdetection.json"
+    },
+    {
+      "id": "wild:310000050",
+      "name": "巡徊獵手",
+      "location": "資料塢 → 聲骸圖鑑 → 追蹤",
+      "kind": "野外吸收",
+      "pairs": [
+        [
+          "徹空冥雷",
+          1
+        ],
+        [
+          "嘯谷長風",
+          1
+        ]
+      ],
+      "evidence": "https://github.com/Arikatsu/WutheringWaves_Data/blob/9218d612ad815e398e064e577e42aaf878899968/BinData/adventure_detect/monsterdetection.json"
+    },
+    {
+      "id": "wild:310000070",
+      "name": "審判戰士",
+      "location": "資料塢 → 聲骸圖鑑 → 追蹤",
+      "kind": "野外吸收",
+      "pairs": [
+        [
+          "浮星祛暗",
+          1
+        ],
+        [
+          "沉日劫明",
+          1
+        ]
+      ],
+      "evidence": "https://github.com/Arikatsu/WutheringWaves_Data/blob/9218d612ad815e398e064e577e42aaf878899968/BinData/adventure_detect/monsterdetection.json"
+    },
+    {
+      "id": "wild:310000260",
+      "name": "晶螯蠍",
+      "location": "資料塢 → 聲骸圖鑑 → 追蹤",
+      "kind": "野外吸收",
+      "pairs": [
+        [
+          "輕雲出月",
+          1
+        ],
+        [
+          "不絕餘音",
+          1
+        ]
+      ],
+      "evidence": "https://github.com/Arikatsu/WutheringWaves_Data/blob/9218d612ad815e398e064e577e42aaf878899968/BinData/adventure_detect/monsterdetection.json"
+    },
+    {
+      "id": "wild:310000280",
+      "name": "火鬃狼",
+      "location": "資料塢 → 聲骸圖鑑 → 追蹤",
+      "kind": "野外吸收",
+      "pairs": [
+        [
+          "熔山裂谷",
+          1
+        ],
+        [
+          "隱世回光",
+          1
+        ]
+      ],
+      "evidence": "https://github.com/Arikatsu/WutheringWaves_Data/blob/9218d612ad815e398e064e577e42aaf878899968/BinData/adventure_detect/monsterdetection.json"
+    },
+    {
+      "id": "wild:310000370",
+      "name": "風鬃狼",
+      "location": "資料塢 → 聲骸圖鑑 → 追蹤",
+      "kind": "野外吸收",
+      "pairs": [
+        [
+          "凌冽決斷之心",
+          1
+        ],
+        [
+          "高天共奏之曲",
+          1
+        ]
+      ],
+      "evidence": "https://github.com/Arikatsu/WutheringWaves_Data/blob/9218d612ad815e398e064e577e42aaf878899968/BinData/adventure_detect/monsterdetection.json"
+    },
+    {
+      "id": "wild:310000380",
+      "name": "雷鬃狼",
+      "location": "資料塢 → 聲骸圖鑑 → 追蹤",
+      "kind": "野外吸收",
+      "pairs": [
+        [
+          "幽夜隱匿之帷",
+          1
+        ],
+        [
+          "高天共奏之曲",
+          1
+        ]
+      ],
+      "evidence": "https://github.com/Arikatsu/WutheringWaves_Data/blob/9218d612ad815e398e064e577e42aaf878899968/BinData/adventure_detect/monsterdetection.json"
+    },
+    {
+      "id": "wild:310000390",
+      "name": "霜鬃狼",
+      "location": "資料塢 → 聲骸圖鑑 → 追蹤",
+      "kind": "野外吸收",
+      "pairs": [
+        [
+          "此間永駐之光",
+          1
+        ],
+        [
+          "幽夜隱匿之帷",
+          1
+        ]
+      ],
+      "evidence": "https://github.com/Arikatsu/WutheringWaves_Data/blob/9218d612ad815e398e064e577e42aaf878899968/BinData/adventure_detect/monsterdetection.json"
+    },
+    {
+      "id": "wild:310000400",
+      "name": "浮靈偶・海德",
+      "location": "資料塢 → 聲骸圖鑑 → 追蹤",
+      "kind": "野外吸收",
+      "pairs": [
+        [
+          "此間永駐之光",
+          1
+        ],
+        [
+          "無懼浪濤之勇",
+          1
+        ]
+      ],
+      "evidence": "https://github.com/Arikatsu/WutheringWaves_Data/blob/9218d612ad815e398e064e577e42aaf878899968/BinData/adventure_detect/monsterdetection.json"
+    },
+    {
+      "id": "wild:310000540",
+      "name": "慈悲節使",
+      "location": "資料塢 → 聲骸圖鑑 → 追蹤",
+      "kind": "野外吸收",
+      "pairs": [
+        [
+          "流雲逝盡之空",
+          1
+        ],
+        [
+          "願戴榮光之旅",
+          1
+        ]
+      ],
+      "evidence": "https://github.com/Arikatsu/WutheringWaves_Data/blob/9218d612ad815e398e064e577e42aaf878899968/BinData/adventure_detect/monsterdetection.json"
+    },
+    {
+      "id": "wild:310000580",
+      "name": "小翼龍·熱熔",
+      "location": "資料塢 → 聲骸圖鑑 → 追蹤",
+      "kind": "野外吸收",
+      "pairs": [
+        [
+          "願戴榮光之旅",
+          1
+        ],
+        [
+          "奔狼燎原之焰",
+          1
+        ]
+      ],
+      "evidence": "https://github.com/Arikatsu/WutheringWaves_Data/blob/9218d612ad815e398e064e577e42aaf878899968/BinData/adventure_detect/monsterdetection.json"
+    },
+    {
+      "id": "wild:310000910",
+      "name": "瓷庭候",
+      "location": "資料塢 → 聲骸圖鑑 → 追蹤",
+      "kind": "野外吸收",
+      "pairs": [
+        [
+          "冥途夜行之燈",
+          1
+        ],
+        [
+          "鏡影流電之瞬",
+          1
+        ]
+      ],
+      "evidence": "https://github.com/Arikatsu/WutheringWaves_Data/blob/9218d612ad815e398e064e577e42aaf878899968/BinData/adventure_detect/monsterdetection.json"
+    },
+    {
+      "id": "wild:310000930",
+      "name": "金庭候",
+      "location": "資料塢 → 聲骸圖鑑 → 追蹤",
+      "kind": "野外吸收",
+      "pairs": [
+        [
+          "清邪蕩煞之心",
+          1
+        ],
+        [
+          "鏡影流電之瞬",
+          1
+        ]
+      ],
+      "evidence": "https://github.com/Arikatsu/WutheringWaves_Data/blob/9218d612ad815e398e064e577e42aaf878899968/BinData/adventure_detect/monsterdetection.json"
+    },
+    {
+      "id": "wild:310000950",
+      "name": "心傀·怒",
+      "location": "資料塢 → 聲骸圖鑑 → 追蹤",
+      "kind": "野外吸收",
+      "pairs": [
+        [
+          "清邪蕩煞之心",
+          1
+        ],
+        [
+          "茜染懷想之花",
+          1
+        ]
+      ],
+      "evidence": "https://github.com/Arikatsu/WutheringWaves_Data/blob/9218d612ad815e398e064e577e42aaf878899968/BinData/adventure_detect/monsterdetection.json"
+    },
+    {
+      "id": "wild:320000010",
+      "name": "堅岩鬥士",
+      "location": "資料塢 → 聲骸圖鑑 → 追蹤",
+      "kind": "野外吸收",
+      "pairs": [
+        [
+          "隱世回光",
+          3
+        ],
+        [
+          "輕雲出月",
+          3
+        ]
+      ],
+      "evidence": "https://github.com/Arikatsu/WutheringWaves_Data/blob/9218d612ad815e398e064e577e42aaf878899968/BinData/adventure_detect/monsterdetection.json"
+    },
+    {
+      "id": "wild:320000020",
+      "name": "紫羽鷺",
+      "location": "資料塢 → 聲骸圖鑑 → 追蹤",
+      "kind": "野外吸收",
+      "pairs": [
+        [
+          "熔山裂谷",
+          3
+        ],
+        [
+          "徹空冥雷",
+          3
+        ]
+      ],
+      "evidence": "https://github.com/Arikatsu/WutheringWaves_Data/blob/9218d612ad815e398e064e577e42aaf878899968/BinData/adventure_detect/monsterdetection.json"
+    },
+    {
+      "id": "wild:320000030",
+      "name": "青羽鷺",
+      "location": "資料塢 → 聲骸圖鑑 → 追蹤",
+      "kind": "野外吸收",
+      "pairs": [
+        [
+          "嘯谷長風",
+          3
+        ],
+        [
+          "浮星祛暗",
+          3
+        ]
+      ],
+      "evidence": "https://github.com/Arikatsu/WutheringWaves_Data/blob/9218d612ad815e398e064e577e42aaf878899968/BinData/adventure_detect/monsterdetection.json"
+    },
+    {
+      "id": "wild:320000040",
+      "name": "奏諭樂師",
+      "location": "資料塢 → 聲骸圖鑑 → 追蹤",
+      "kind": "野外吸收",
+      "pairs": [
+        [
+          "徹空冥雷",
+          3
+        ],
+        [
+          "不絕餘音",
+          3
+        ]
+      ],
+      "evidence": "https://github.com/Arikatsu/WutheringWaves_Data/blob/9218d612ad815e398e064e577e42aaf878899968/BinData/adventure_detect/monsterdetection.json"
+    },
+    {
+      "id": "wild:320000050",
+      "name": "振鐸樂師",
+      "location": "資料塢 → 聲骸圖鑑 → 追蹤",
+      "kind": "野外吸收",
+      "pairs": [
+        [
+          "凝夜白霜",
+          3
+        ],
+        [
+          "沉日劫明",
+          3
+        ]
+      ],
+      "evidence": "https://github.com/Arikatsu/WutheringWaves_Data/blob/9218d612ad815e398e064e577e42aaf878899968/BinData/adventure_detect/monsterdetection.json"
+    },
+    {
+      "id": "wild:320000220",
+      "name": "巡遊騎士",
+      "location": "資料塢 → 聲骸圖鑑 → 追蹤",
+      "kind": "野外吸收",
+      "pairs": [
+        [
+          "凌冽決斷之心",
+          3
+        ],
+        [
+          "幽夜隱匿之帷",
+          3
+        ]
+      ],
+      "evidence": "https://github.com/Arikatsu/WutheringWaves_Data/blob/9218d612ad815e398e064e577e42aaf878899968/BinData/adventure_detect/monsterdetection.json"
+    },
+    {
+      "id": "wild:320000230",
+      "name": "幻晝騎士",
+      "location": "資料塢 → 聲骸圖鑑 → 追蹤",
+      "kind": "野外吸收",
+      "pairs": [
+        [
+          "此間永駐之光",
+          3
+        ],
+        [
+          "無懼浪濤之勇",
+          3
+        ]
+      ],
+      "evidence": "https://github.com/Arikatsu/WutheringWaves_Data/blob/9218d612ad815e398e064e577e42aaf878899968/BinData/adventure_detect/monsterdetection.json"
+    },
+    {
+      "id": "wild:320000240",
+      "name": "暗夜騎士",
+      "location": "資料塢 → 聲骸圖鑑 → 追蹤",
+      "kind": "野外吸收",
+      "pairs": [
+        [
+          "幽夜隱匿之帷",
+          3
+        ],
+        [
+          "高天共奏之曲",
+          3
+        ]
+      ],
+      "evidence": "https://github.com/Arikatsu/WutheringWaves_Data/blob/9218d612ad815e398e064e577e42aaf878899968/BinData/adventure_detect/monsterdetection.json"
+    },
+    {
+      "id": "wild:320000350",
+      "name": "傳道者的遺形",
+      "location": "資料塢 → 聲骸圖鑑 → 追蹤",
+      "kind": "野外吸收",
+      "pairs": [
+        [
+          "願戴榮光之旅",
+          3
+        ],
+        [
+          "奔狼燎原之焰",
+          3
+        ]
+      ],
+      "evidence": "https://github.com/Arikatsu/WutheringWaves_Data/blob/9218d612ad815e398e064e577e42aaf878899968/BinData/adventure_detect/monsterdetection.json"
+    },
+    {
+      "id": "wild:320000440",
+      "name": "蝕脊龍",
+      "location": "資料塢 → 聲骸圖鑑 → 追蹤",
+      "kind": "野外吸收",
+      "pairs": [
+        [
+          "奔狼燎原之焰",
+          3
+        ],
+        [
+          "焚羽獵魔之影",
+          3
+        ]
+      ],
+      "evidence": "https://github.com/Arikatsu/WutheringWaves_Data/blob/9218d612ad815e398e064e577e42aaf878899968/BinData/adventure_detect/monsterdetection.json"
+    },
+    {
+      "id": "wild:320000490",
+      "name": "雙極·星升輝銃",
+      "location": "資料塢 → 聲骸圖鑑 → 追蹤",
+      "kind": "野外吸收",
+      "pairs": [
+        [
+          "流金溯真之式",
+          3
+        ],
+        [
+          "斑駁粉飾之沫",
+          3
+        ]
+      ],
+      "evidence": "https://github.com/Arikatsu/WutheringWaves_Data/blob/9218d612ad815e398e064e577e42aaf878899968/BinData/adventure_detect/monsterdetection.json"
+    },
+    {
+      "id": "wild:320000520",
+      "name": "礦岩機麋",
+      "location": "資料塢 → 聲骸圖鑑 → 追蹤",
+      "kind": "野外吸收",
+      "pairs": [
+        [
+          "逆光躍彩之約",
+          3
+        ],
+        [
+          "剪心輯夢之影",
+          3
+        ]
+      ],
+      "evidence": "https://github.com/Arikatsu/WutheringWaves_Data/blob/9218d612ad815e398e064e577e42aaf878899968/BinData/adventure_detect/monsterdetection.json"
+    },
+    {
+      "id": "wild:320000570",
+      "name": "霜鱗蜃甲",
+      "location": "資料塢 → 聲骸圖鑑 → 追蹤",
+      "kind": "野外吸收",
+      "pairs": [
+        [
+          "星構尋輝之環",
+          3
+        ],
+        [
+          "雪落無聲之願",
+          3
+        ]
+      ],
+      "evidence": "https://github.com/Arikatsu/WutheringWaves_Data/blob/9218d612ad815e398e064e577e42aaf878899968/BinData/adventure_detect/monsterdetection.json"
+    },
+    {
+      "id": "wild:320000590",
+      "name": "冠頂械隼",
+      "location": "資料塢 → 聲骸圖鑑 → 追蹤",
+      "kind": "野外吸收",
+      "pairs": [
+        [
+          "長路啟航之星",
+          3
+        ],
+        [
+          "斑駁粉飾之沫",
+          3
+        ]
+      ],
+      "evidence": "https://github.com/Arikatsu/WutheringWaves_Data/blob/9218d612ad815e398e064e577e42aaf878899968/BinData/adventure_detect/monsterdetection.json"
+    },
+    {
+      "id": "wild:320000690",
+      "name": "巡霄槍衛",
+      "location": "資料塢 → 聲骸圖鑑 → 追蹤",
+      "kind": "野外吸收",
+      "pairs": [
+        [
+          "鏡影流電之瞬",
+          3
+        ],
+        [
+          "茜染懷想之花",
+          3
+        ]
+      ],
+      "evidence": "https://github.com/Arikatsu/WutheringWaves_Data/blob/9218d612ad815e398e064e577e42aaf878899968/BinData/adventure_detect/monsterdetection.json"
+    },
+    {
+      "id": "wild:320000700",
+      "name": "解形煞",
+      "location": "資料塢 → 聲骸圖鑑 → 追蹤",
+      "kind": "野外吸收",
+      "pairs": [
+        [
+          "銜夢照世之心",
+          3
+        ],
+        [
+          "茜染懷想之花",
+          3
+        ]
+      ],
+      "evidence": "https://github.com/Arikatsu/WutheringWaves_Data/blob/9218d612ad815e398e064e577e42aaf878899968/BinData/adventure_detect/monsterdetection.json"
+    },
+    {
+      "id": "wild:310000430",
+      "name": "幽翎火",
+      "location": "資料塢 → 聲骸圖鑑 → 追蹤",
+      "kind": "野外吸收",
+      "pairs": [
+        [
+          "此間永駐之光",
+          1
+        ],
+        [
+          "幽夜隱匿之帷",
+          1
+        ],
+        [
+          "失序彼岸之夢",
+          1
+        ]
+      ],
+      "evidence": "https://github.com/Arikatsu/WutheringWaves_Data/blob/9218d612ad815e398e064e577e42aaf878899968/BinData/adventure_detect/monsterdetection.json"
+    },
+    {
+      "id": "wild:310000440",
+      "name": "雲海妖精",
+      "location": "資料塢 → 聲骸圖鑑 → 追蹤",
+      "kind": "野外吸收",
+      "pairs": [
+        [
+          "幽夜隱匿之帷",
+          1
+        ],
+        [
+          "高天共奏之曲",
+          1
+        ],
+        [
+          "焚羽獵魔之影",
+          1
+        ]
+      ],
+      "evidence": "https://github.com/Arikatsu/WutheringWaves_Data/blob/9218d612ad815e398e064e577e42aaf878899968/BinData/adventure_detect/monsterdetection.json"
+    },
+    {
+      "id": "wild:310000490",
+      "name": "愚金幼岩",
+      "location": "資料塢 → 聲骸圖鑑 → 追蹤",
+      "kind": "野外吸收",
+      "pairs": [
+        [
+          "凌冽決斷之心",
+          1
+        ],
+        [
+          "此間永駐之光",
+          1
+        ],
+        [
+          "息界同調之律",
+          1
+        ]
+      ],
+      "evidence": "https://github.com/Arikatsu/WutheringWaves_Data/blob/9218d612ad815e398e064e577e42aaf878899968/BinData/adventure_detect/monsterdetection.json"
+    },
+    {
+      "id": "wild:310000500",
+      "name": "釉變幼岩",
+      "location": "資料塢 → 聲骸圖鑑 → 追蹤",
+      "kind": "野外吸收",
+      "pairs": [
+        [
+          "高天共奏之曲",
+          1
+        ],
+        [
+          "無懼浪濤之勇",
+          1
+        ],
+        [
+          "榮鬥鑄鋒之冠",
+          1
+        ]
+      ],
+      "evidence": "https://github.com/Arikatsu/WutheringWaves_Data/blob/9218d612ad815e398e064e577e42aaf878899968/BinData/adventure_detect/monsterdetection.json"
+    },
+    {
+      "id": "wild:310000600",
+      "name": "小翼龍·湮滅",
+      "location": "資料塢 → 聲骸圖鑑 → 追蹤",
+      "kind": "野外吸收",
+      "pairs": [
+        [
+          "願戴榮光之旅",
+          1
+        ],
+        [
+          "奔狼燎原之焰",
+          1
+        ],
+        [
+          "命理崩毀之弦",
+          1
+        ]
+      ],
+      "evidence": "https://github.com/Arikatsu/WutheringWaves_Data/blob/9218d612ad815e398e064e577e42aaf878899968/BinData/adventure_detect/monsterdetection.json"
+    },
+    {
+      "id": "wild:310000740",
+      "name": "顫慄戰士",
+      "location": "資料塢 → 聲骸圖鑑 → 追蹤",
+      "kind": "野外吸收",
+      "pairs": [
+        [
+          "星構尋輝之環",
+          1
+        ],
+        [
+          "斑駁粉飾之沫",
+          1
+        ],
+        [
+          "雪落無聲之願",
+          1
+        ]
+      ],
+      "evidence": "https://github.com/Arikatsu/WutheringWaves_Data/blob/9218d612ad815e398e064e577e42aaf878899968/BinData/adventure_detect/monsterdetection.json"
+    },
+    {
+      "id": "wild:310000790",
+      "name": "岩蛛S4型",
+      "location": "資料塢 → 聲骸圖鑑 → 追蹤",
+      "kind": "野外吸收",
+      "pairs": [
+        [
+          "逆光躍彩之約",
+          1
+        ],
+        [
+          "星構尋輝之環",
+          1
+        ],
+        [
+          "長路啟航之星",
+          1
+        ]
+      ],
+      "evidence": "https://github.com/Arikatsu/WutheringWaves_Data/blob/9218d612ad815e398e064e577e42aaf878899968/BinData/adventure_detect/monsterdetection.json"
+    },
+    {
+      "id": "wild:310000830",
+      "name": "冰盈舞者",
+      "location": "資料塢 → 聲骸圖鑑 → 追蹤",
+      "kind": "野外吸收",
+      "pairs": [
+        [
+          "長路啟航之星",
+          1
+        ],
+        [
+          "雪落無聲之願",
+          1
+        ],
+        [
+          "剪心輯夢之影",
+          1
+        ]
+      ],
+      "evidence": "https://github.com/Arikatsu/WutheringWaves_Data/blob/9218d612ad815e398e064e577e42aaf878899968/BinData/adventure_detect/monsterdetection.json"
+    },
+    {
+      "id": "wild:320000260",
+      "name": "持刃貴族",
+      "location": "資料塢 → 聲骸圖鑑 → 追蹤",
+      "kind": "野外吸收",
+      "pairs": [
+        [
+          "幽夜隱匿之帷",
+          3
+        ],
+        [
+          "無懼浪濤之勇",
+          3
+        ],
+        [
+          "命理崩毀之弦",
+          3
+        ]
+      ],
+      "evidence": "https://github.com/Arikatsu/WutheringWaves_Data/blob/9218d612ad815e398e064e577e42aaf878899968/BinData/adventure_detect/monsterdetection.json"
+    },
+    {
+      "id": "wild:320000280",
+      "name": "浮靈偶",
+      "location": "資料塢 → 聲骸圖鑑 → 追蹤",
+      "kind": "野外吸收",
+      "pairs": [
+        [
+          "高天共奏之曲",
+          3
+        ],
+        [
+          "無懼浪濤之勇",
+          3
+        ],
+        [
+          "失序彼岸之夢",
+          3
+        ]
+      ],
+      "evidence": "https://github.com/Arikatsu/WutheringWaves_Data/blob/9218d612ad815e398e064e577e42aaf878899968/BinData/adventure_detect/monsterdetection.json"
+    },
+    {
+      "id": "wild:320000310",
+      "name": "重塑雕像的拳礫",
+      "location": "資料塢 → 聲骸圖鑑 → 追蹤",
+      "kind": "野外吸收",
+      "pairs": [
+        [
+          "此間永駐之光",
+          3
+        ],
+        [
+          "流雲逝盡之空",
+          3
+        ],
+        [
+          "息界同調之律",
+          3
+        ]
+      ],
+      "evidence": "https://github.com/Arikatsu/WutheringWaves_Data/blob/9218d612ad815e398e064e577e42aaf878899968/BinData/adventure_detect/monsterdetection.json"
+    },
+    {
+      "id": "wild:320000320",
+      "name": "颶力熊",
+      "location": "資料塢 → 聲骸圖鑑 → 追蹤",
+      "kind": "野外吸收",
+      "pairs": [
+        [
+          "無懼浪濤之勇",
+          3
+        ],
+        [
+          "流雲逝盡之空",
+          3
+        ],
+        [
+          "榮鬥鑄鋒之冠",
+          3
+        ]
+      ],
+      "evidence": "https://github.com/Arikatsu/WutheringWaves_Data/blob/9218d612ad815e398e064e577e42aaf878899968/BinData/adventure_detect/monsterdetection.json"
+    },
+    {
+      "id": "wild:320000500",
+      "name": "雙極·淵隕重鋒",
+      "location": "資料塢 → 聲骸圖鑑 → 追蹤",
+      "kind": "野外吸收",
+      "pairs": [
+        [
+          "流金溯真之式",
+          3
+        ],
+        [
+          "長路啟航之星",
+          3
+        ],
+        [
+          "聽喚語義之願",
+          3
+        ]
+      ],
+      "evidence": "https://github.com/Arikatsu/WutheringWaves_Data/blob/9218d612ad815e398e064e577e42aaf878899968/BinData/adventure_detect/monsterdetection.json"
+    },
+    {
+      "id": "wild:320000670",
+      "name": "霽息獸尊",
+      "location": "資料塢 → 聲骸圖鑑 → 追蹤",
+      "kind": "野外吸收",
+      "pairs": [
+        [
+          "羽落空塵之歌",
+          3
+        ],
+        [
+          "清邪蕩煞之心",
+          3
+        ],
+        [
+          "冥途夜行之燈",
+          3
+        ]
+      ],
+      "evidence": "https://github.com/Arikatsu/WutheringWaves_Data/blob/9218d612ad815e398e064e577e42aaf878899968/BinData/adventure_detect/monsterdetection.json"
+    },
+    {
+      "id": "wild:310000770",
+      "name": "蒔植熊蜂",
+      "location": "資料塢 → 聲骸圖鑑 → 追蹤",
+      "kind": "野外吸收",
+      "pairs": [
+        [
+          "逆光躍彩之約",
+          1
+        ],
+        [
+          "流金溯真之式",
+          1
+        ],
+        [
+          "聽喚語義之願",
+          1
+        ],
+        [
+          "剪心輯夢之影",
+          1
+        ]
+      ],
+      "evidence": "https://github.com/Arikatsu/WutheringWaves_Data/blob/9218d612ad815e398e064e577e42aaf878899968/BinData/adventure_detect/monsterdetection.json"
     }
   ]
 }
