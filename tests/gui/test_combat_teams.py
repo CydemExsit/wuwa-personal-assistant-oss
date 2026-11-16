@@ -4,6 +4,7 @@ import pytest
 from PySide6.QtCore import Qt
 
 from tests.application.test_character_stats import panel_fixture
+from tests.application.test_lily import lily_fixture
 from tests.gui.test_characters_presenter import character_workspace as workspace_fixture
 from wuwa_assistant.application.combat_build import CombatTeam, team_to_json, teams_from_goal
 from wuwa_assistant.ui.dialogs.combat_teams import CombatTeamsDialog
@@ -12,6 +13,18 @@ from wuwa_assistant.ui.dialogs.combat_teams import CombatTeamsDialog
 @pytest.fixture
 def character_workspace(tmp_path):
     yield from workspace_fixture.__wrapped__(tmp_path)
+
+
+def test_lily_windows_can_be_selected_without_bundled_game_art(qtbot):
+    detail = lily_fixture()
+    dialog = CombatTeamsDialog(detail, {detail.summary.id: detail})
+    qtbot.addWidget(dialog)
+    assert dialog.damage_combo.currentData() == "heavy_finisher"
+    for window in ("heavy_finisher", "intro_skill", "echo"):
+        index = dialog.damage_combo.findData(window)
+        assert index >= 0
+        dialog.damage_combo.setCurrentIndex(index)
+        assert dialog._read().damage_type == window
 
 
 def test_two_teams_primary_modes_and_shared_teammate_are_editable_without_long_prose(qtbot):

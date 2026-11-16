@@ -66,6 +66,20 @@ DEFAULT_SKILLS: tuple[SkillDefinition, ...] = (
 )
 
 
+def _default_skills(name: str) -> tuple[SkillDefinition, ...]:
+    if canonical_character_name(name) == "莉莉":
+        # User-selected damage-first cultivation. Existing saved skills and
+        # explicit creation definitions remain authoritative.
+        return (
+            SkillDefinition("intro_skill", "變奏技能", "intro_skill", True),
+            SkillDefinition("forte_circuit", "共鳴迴路", "forte_circuit", True),
+            SkillDefinition("resonance_liberation", "共鳴解放", "resonance_liberation", False),
+            SkillDefinition("resonance_skill", "共鳴技能", "resonance_skill", False),
+            SkillDefinition("normal_attack", "常態攻擊", "normal_attack", False),
+        )
+    return DEFAULT_SKILLS
+
+
 @dataclass(frozen=True, slots=True)
 class CreateCharacter:
     name: str
@@ -1022,7 +1036,7 @@ def _create_character_record(
                 is_completed=_skill_target(definition) <= 1,
                 display_order=index,
             )
-            for index, definition in enumerate(command.skills or DEFAULT_SKILLS)
+            for index, definition in enumerate(command.skills or _default_skills(command.name))
         ]
     )
     session.flush()
@@ -1122,7 +1136,7 @@ def _apply_skill_updates(
 def _normalize_create_character(command: CreateCharacter) -> CreateCharacter:
     if not isinstance(command, CreateCharacter):
         raise ValueError("command must be CreateCharacter")
-    skills = DEFAULT_SKILLS if command.skills is None else command.skills
+    skills = _default_skills(command.name) if command.skills is None else command.skills
     normalized_skills = _normalize_skill_definitions(skills)
     return CreateCharacter(
         name=_required_text(command.name, "character name", 120),

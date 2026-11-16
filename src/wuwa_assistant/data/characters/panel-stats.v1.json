@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "version": "2026.10.21.1",
+  "version": "2026.11.17.1",
   "state": "non_combat_no_temporary_buffs",
   "precision_model": {
     "kind": "empirical_source_specific",
@@ -4833,6 +4833,314 @@
           "note": "常態效果已核對；限時及技能專屬效果由戰鬥配裝模型依情境處理。"
         }
       ]
+    },
+    "鎖暝": {
+      "base": [
+        824.0,
+        37.0,
+        91.0
+      ],
+      "weapon_type": "迅刀",
+      "nodes": [
+        {
+          "label": "常態攻擊・暴擊 +1.2%",
+          "effects": {
+            "crit_rate": 1.2
+          },
+          "kind": "attribute"
+        },
+        {
+          "label": "常態攻擊・暴擊 +2.8%",
+          "effects": {
+            "crit_rate": 2.8
+          },
+          "kind": "attribute"
+        },
+        {
+          "label": "共鳴技能・攻擊 +1.8%",
+          "effects": {
+            "attack_pct": 1.8
+          },
+          "kind": "attribute"
+        },
+        {
+          "label": "共鳴技能・攻擊 +4.2%",
+          "effects": {
+            "attack_pct": 4.2
+          },
+          "kind": "attribute"
+        },
+        {
+          "label": "雨浸舊契",
+          "effects": {},
+          "kind": "inherent"
+        },
+        {
+          "label": "沉契凝鎖",
+          "effects": {},
+          "kind": "inherent"
+        },
+        {
+          "label": "共鳴解放・攻擊 +1.8%",
+          "effects": {
+            "attack_pct": 1.8
+          },
+          "kind": "attribute"
+        },
+        {
+          "label": "共鳴解放・攻擊 +4.2%",
+          "effects": {
+            "attack_pct": 4.2
+          },
+          "kind": "attribute"
+        },
+        {
+          "label": "變奏技能・暴擊 +1.2%",
+          "effects": {
+            "crit_rate": 1.2
+          },
+          "kind": "attribute"
+        },
+        {
+          "label": "變奏技能・暴擊 +2.8%",
+          "effects": {
+            "crit_rate": 2.8
+          },
+          "kind": "attribute"
+        }
+      ],
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1543075487722901504",
+        "accessed_at": "2026-10-29",
+        "updated_at": "2026-10-22",
+        "content_sha256": "465f6de4051e84175583f0e287093f27111a3905fc73cc300301201afc4fdbd6"
+      },
+      "aliases": [
+        "Suoming",
+        "锁暝"
+      ],
+      "initial_properties": {
+        "crit_rate": 5.0,
+        "crit_damage": 150.0,
+        "energy_regen": 100.0,
+        "tune_break_boost": 0.0,
+        "tune_strain_accumulation": 100.0
+      },
+      "initial_properties_source": {
+        "url": "https://github.com/Arikatsu/WutheringWaves_Data/blob/9218d612ad815e398e064e577e42aaf878899968/BinData/property/baseproperty.json",
+        "role_info_url": "https://github.com/Arikatsu/WutheringWaves_Data/blob/9218d612ad815e398e064e577e42aaf878899968/BinData/role/roleinfo.json",
+        "candidate_role_ids": [
+          1312
+        ],
+        "notes": "依公開初始三圍、屬性、武器類型交叉核對；候選列的初始屬性一致。",
+        "sha256": "6bfedeb74243217b73d90928884c413226dda8c9768c3bc22dbec77d5413d9a3"
+      },
+      "chain_source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1543075487722901504",
+        "accessed_at": "2026-10-29",
+        "updated_at": "2026-10-22",
+        "content_sha256": "465f6de4051e84175583f0e287093f27111a3905fc73cc300301201afc4fdbd6"
+      },
+      "resonance_chains": [
+        {
+          "level": 1,
+          "label": "身入凄雨",
+          "panel_effects": {},
+          "conditional_effects": {},
+          "note": "常駐效果依公開詞條核對；同奏副輸出的條件增益由戰鬥配裝模型處理，倍率及最終傷害增益不混入常態面板。"
+        },
+        {
+          "level": 2,
+          "label": "破雷斩恶",
+          "panel_effects": {
+            "crit_damage": 40
+          },
+          "conditional_effects": {},
+          "note": "常駐效果依公開詞條核對；同奏副輸出的條件增益由戰鬥配裝模型處理，倍率及最終傷害增益不混入常態面板。"
+        },
+        {
+          "level": 3,
+          "label": "孤伞独行",
+          "panel_effects": {},
+          "conditional_effects": {},
+          "note": "常駐效果依公開詞條核對；同奏副輸出的條件增益由戰鬥配裝模型處理，倍率及最終傷害增益不混入常態面板。"
+        },
+        {
+          "level": 4,
+          "label": "承印于心",
+          "panel_effects": {
+            "attack_pct": 20
+          },
+          "conditional_effects": {},
+          "note": "常駐效果依公開詞條核對；同奏副輸出的條件增益由戰鬥配裝模型處理，倍率及最終傷害增益不混入常態面板。"
+        },
+        {
+          "level": 5,
+          "label": "契深未忘",
+          "panel_effects": {},
+          "conditional_effects": {},
+          "note": "常駐效果依公開詞條核對；同奏副輸出的條件增益由戰鬥配裝模型處理，倍率及最終傷害增益不混入常態面板。"
+        },
+        {
+          "level": 6,
+          "label": "九影相随",
+          "panel_effects": {},
+          "conditional_effects": {},
+          "note": "常駐效果依公開詞條核對；同奏副輸出的條件增益由戰鬥配裝模型處理，倍率及最終傷害增益不混入常態面板。"
+        }
+      ]
+    },
+    "莉莉": {
+      "base": [
+        1337.0,
+        23.0,
+        90.0
+      ],
+      "weapon_type": "佩槍",
+      "nodes": [
+        {
+          "label": "常態攻擊・治療效果 +1.8%",
+          "effects": {
+            "healing_bonus": 1.8
+          },
+          "kind": "attribute"
+        },
+        {
+          "label": "常態攻擊・治療效果 +4.2%",
+          "effects": {
+            "healing_bonus": 4.2
+          },
+          "kind": "attribute"
+        },
+        {
+          "label": "共鳴技能・生命 +1.8%",
+          "effects": {
+            "hp_pct": 1.8
+          },
+          "kind": "attribute"
+        },
+        {
+          "label": "共鳴技能・生命 +4.2%",
+          "effects": {
+            "hp_pct": 4.2
+          },
+          "kind": "attribute"
+        },
+        {
+          "label": "織夢的芬芳",
+          "effects": {},
+          "kind": "inherent"
+        },
+        {
+          "label": "獻花予你",
+          "effects": {},
+          "kind": "inherent"
+        },
+        {
+          "label": "共鳴解放・生命 +1.8%",
+          "effects": {
+            "hp_pct": 1.8
+          },
+          "kind": "attribute"
+        },
+        {
+          "label": "共鳴解放・生命 +4.2%",
+          "effects": {
+            "hp_pct": 4.2
+          },
+          "kind": "attribute"
+        },
+        {
+          "label": "變奏技能・治療效果 +1.8%",
+          "effects": {
+            "healing_bonus": 1.8
+          },
+          "kind": "attribute"
+        },
+        {
+          "label": "變奏技能・治療效果 +4.2%",
+          "effects": {
+            "healing_bonus": 4.2
+          },
+          "kind": "attribute"
+        }
+      ],
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1559521973715369984",
+        "accessed_at": "2026-11-16",
+        "updated_at": "2026-11-12",
+        "content_sha256": "7a1a62451c8e4927830b6ab657b294600fc0dcfb095dc1f8fc15117d98f45280"
+      },
+      "aliases": [
+        "Lily",
+        "Lili"
+      ],
+      "initial_properties": {
+        "crit_rate": 5.0,
+        "crit_damage": 150.0,
+        "energy_regen": 100.0,
+        "tune_break_boost": 0.0,
+        "tune_strain_accumulation": 100.0
+      },
+      "initial_properties_source": {
+        "url": "https://github.com/Arikatsu/WutheringWaves_Data/blob/a96f6c6e87717d528a340de37374d9fc5a5ba563/BinData/property/baseproperty.json",
+        "role_info_url": "https://github.com/Arikatsu/WutheringWaves_Data/blob/a96f6c6e87717d528a340de37374d9fc5a5ba563/BinData/role/roleinfo.json",
+        "candidate_role_ids": [
+          1512
+        ],
+        "notes": "Global Release 3.8.0 / resource3.8.9；角色ID、初始三圍、武器及屬性與正式官方攻略交叉核對。",
+        "sha256": "9bd373192122301e7622fe72a6a43bee10259d80aed4c7d93b099ec915dd9796"
+      },
+      "chain_source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1559521973715369984",
+        "accessed_at": "2026-11-16",
+        "updated_at": "2026-11-12",
+        "content_sha256": "7a1a62451c8e4927830b6ab657b294600fc0dcfb095dc1f8fc15117d98f45280"
+      },
+      "resonance_chains": [
+        {
+          "level": 1,
+          "label": "看啊，那夢的廢墟生出的白花",
+          "panel_effects": {},
+          "conditional_effects": {},
+          "note": "莉莉施放重擊·編織的夢之童話、重擊·編織的夢之魘影、重擊·夢之童話的落幕和重擊·夢之魘影的終結期間免疫打斷。\n【搖籃的安魂語】持續期間，當隊伍中除莉莉以外的角色施放變奏技能時，獲取【夢芳】的層數提升至2層。 本效果有條件；不混入常態面板，技能專屬倍率不當作全傷害。"
+        },
+        {
+          "level": 2,
+          "label": "聽啊，那夢搖籃頌唱的安魂曲",
+          "panel_effects": {},
+          "conditional_effects": {},
+          "note": "【搖籃的安魂語】持續期間，當隊伍中除莉莉以外的角色施放變奏技能時，每層【夢芳】額外提升2%暴擊和6%暴擊傷害。 本效果有條件；不混入常態面板，技能專屬倍率不當作全傷害。"
+        },
+        {
+          "level": 3,
+          "label": "願您的靈魂不再迷惘",
+          "panel_effects": {},
+          "conditional_effects": {},
+          "note": "莉莉進入戰鬥狀態時，額外獲得170點【綺夢香息】，該效果每12秒可觸發一次。莉莉施放變奏技能·永綻後，額外獲得170點【綺夢香息】。\n莉莉施放共鳴解放·墜於幻夢搖籃時，額外回復10點協奏能量。\n莉莉施放重擊·夢之童話的落幕和重擊·夢之魘影的終結造成傷害時，額外回復10點共鳴能量。\n重擊·編織的夢之童話和重擊·編織的夢之魘影持續期間，夢鈴的禱聲獲取效率提升。 本效果有條件；不混入常態面板，技能專屬倍率不當作全傷害。"
+        },
+        {
+          "level": 4,
+          "label": "願您的過往沉入靜港",
+          "panel_effects": {},
+          "conditional_effects": {},
+          "note": "夢鄉提供的治療量提升30%。 本效果有條件；不混入常態面板，技能專屬倍率不當作全傷害。"
+        },
+        {
+          "level": 5,
+          "label": "願您安息於無垠輝光",
+          "panel_effects": {},
+          "conditional_effects": {},
+          "note": "莉莉進入夢鄉期間，隊伍中除莉莉以外的角色施放變奏技能時，牽引目標的範圍擴大50%。 本效果有條件；不混入常態面板，技能專屬倍率不當作全傷害。"
+        },
+        {
+          "level": 6,
+          "label": "願我的美夢永不落幕",
+          "panel_effects": {},
+          "conditional_effects": {},
+          "note": "重擊·夢之童話的落幕、重擊·夢之魘影的終結造成的衍射傷害提升100%，變奏技能·永綻造成的衍射傷害提升700%。 本效果有條件；不混入常態面板，技能專屬倍率不當作全傷害。"
+        }
+      ]
     }
   },
   "weapons": {
@@ -5245,6 +5553,61 @@
         "value": 0.04050000011920929,
         "is_ratio": true
       }
+    },
+    "沉冥": {
+      "base_attack": 47.0,
+      "weapon_type": "迅刀",
+      "secondary": {
+        "crit_rate": 5.4
+      },
+      "permanent_passive": {
+        "attack_pct": [
+          12,
+          15,
+          18,
+          21,
+          24
+        ]
+      },
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1561782555841314816",
+        "accessed_at": "2026-10-29",
+        "updated_at": "2026-10-21",
+        "content_sha256": "a0077e58cab96fda2ba8c4b1730f4766d632c8f495b430bbdca4bb772192028c"
+      },
+      "aliases": []
+    },
+    "安魂": {
+      "base_attack": 33,
+      "weapon_type": "佩槍",
+      "secondary": {
+        "energy_regen": 17.12
+      },
+      "permanent_passive": {
+        "hp_pct": [
+          12,
+          15,
+          18,
+          21,
+          24
+        ]
+      },
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1569476457330941952",
+        "accessed_at": "2026-11-16",
+        "updated_at": "2026-11-11",
+        "content_sha256": "a8d706aecaa6aeeb12de700240b84b78d27c4385bd4b83033f7e468b9929b71e"
+      },
+      "aliases": [
+        "Requiem"
+      ],
+      "raw_property_source": {
+        "url": "https://github.com/Arikatsu/WutheringWaves_Data/blob/a96f6c6e87717d528a340de37374d9fc5a5ba563/BinData/weapon/weaponconf.json",
+        "item_id": 21030076,
+        "value": 1712,
+        "is_ratio": false,
+        "sha256": "6c7f72625fe9d58bfb7d47332f643c1b730622e7ac344ccf5cc229c55c2a2897"
+      }
     }
   },
   "sets": {
@@ -5576,6 +5939,44 @@
         "content_sha256": "cfa67436fdbecd3231818a5b22a74ceec3fdf82d62237dc561a9177a148a8365"
       },
       "aliases": []
+    },
+    "輕雲出月": {
+      "rules": [
+        {
+          "count": 2,
+          "effects": {
+            "energy_regen": 10
+          }
+        }
+      ],
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1233505120063127552",
+        "accessed_at": "2026-10-29",
+        "updated_at": "2026-03-03",
+        "content_sha256": "72480be0e52d4a2c10c63e28818262193d7a205026d10afd642ef397fbff41ed"
+      },
+      "aliases": [
+        "轻云出月"
+      ]
+    },
+    "茜染懷想之花": {
+      "rules": [
+        {
+          "count": 2,
+          "effects": {
+            "healing_bonus": 10
+          }
+        }
+      ],
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1553889998205132800",
+        "accessed_at": "2026-11-16",
+        "updated_at": "2026-09-29",
+        "content_sha256": "53fafb0bc91ee69e69b676108ad866cf1a2bacb4bbb685c1cda89bc213ba23a3"
+      },
+      "aliases": [
+        "茜染怀想之花"
+      ]
     }
   },
   "main_echoes": {
@@ -5846,6 +6247,44 @@
       "aliases": [
         "共鳴迴響·天演溯心"
       ]
+    },
+    "絕息魄": {
+      "effects": {},
+      "by_character": {},
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1553883351712563200",
+        "accessed_at": "2026-10-29",
+        "updated_at": "2026-10-03",
+        "content_sha256": "5830a84f10fedc0a3f091c1955141b39f31ef60864671a082fd1c5585c53a757"
+      },
+      "aliases": []
+    },
+    "無常凶鷺": {
+      "effects": {},
+      "by_character": {},
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1226647016656945152",
+        "accessed_at": "2026-10-29",
+        "updated_at": "2026-01-17",
+        "content_sha256": "ebf0486df65ef1145f8f0225eca57baf83ee07e164260b75ae983d1e27eddba6"
+      },
+      "aliases": []
+    },
+    "解形煞": {
+      "effects": {
+        "energy_regen": 10
+      },
+      "by_character": {},
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1553880813395279872",
+        "accessed_at": "2026-11-16",
+        "updated_at": "2026-10-03",
+        "content_sha256": "a350c6bf01a628116e160a366758a4c0a53cc8f062b8c31946afcd36990b4e66"
+      },
+      "aliases": [
+        "Formrender"
+      ],
+      "in_panel": true
     }
   },
   "source_anomalies": [

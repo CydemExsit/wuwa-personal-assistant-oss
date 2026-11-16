@@ -28,7 +28,25 @@ from .character_stats import (
 from .characters import CharacterDetail, EchoSlotSnapshot
 
 MODEL_VERSION = "combat-build.v1"
-DAMAGE_TYPES = ("basic_attack", "heavy_attack", "resonance_skill", "resonance_liberation")
+DAMAGE_TYPES = (
+    "basic_attack",
+    "heavy_attack",
+    "resonance_skill",
+    "resonance_liberation",
+    "heavy_finisher",
+    "intro_skill",
+    "echo",
+)
+
+
+def damage_stat(damage_type: str) -> str:
+    return "heavy_attack_damage" if damage_type == "heavy_finisher" else damage_type + "_damage"
+
+
+def scope_matches(scope: str, damage_type: str) -> bool:
+    return scope in {"all", damage_type, damage_stat(damage_type).removesuffix("_damage")}
+
+
 ELEMENT_KEYS = {
     "氣動": "aero_damage",
     "熱熔": "fusion_damage",
@@ -179,6 +197,7 @@ class CombatBuild:
     primary_id: str | None
     panel: CharacterPanel
     weights: tuple[tuple[str, float], ...] = ()
+    index_note: str = ""
 
     @property
     def primary(self) -> TeamBuild | None:
@@ -210,6 +229,8 @@ class CombatBuild:
 
     def details(self) -> str:
         lines = ["理想輪轉配裝指標, 並非實際傷害百分比。", f"模型 {MODEL_VERSION}"]
+        if self.index_note:
+            lines.append(self.index_note)
         for row in self.teams:
             values = dict(row.totals)
             effective_rate = (
@@ -271,6 +292,10 @@ def build_index(
     bonus = element + totals.get("all_element_damage", 0) + totals.get("selected_damage", 0)
     result += log(max(0.01, 1 + bonus / 100))
     result += log(max(0.01, 1 + totals.get("deepen", 0) / 100))
+    if detail.summary.name == "莉莉":
+        # Support utility, not a forecast of actual healing or team damage.
+        # Both HP and healing mains have measurable value in the same model.
+        result += log(max(0.01, 1 + totals.get("healing_bonus", 0) / 100))
     return result
 
 
@@ -293,9 +318,27 @@ def _mode(actor: CharacterDetail, team: CombatTeam) -> str:
 def _actor_tags(actor: CharacterDetail, team: CombatTeam) -> set[str]:
     tags = set(load_combat_catalog().get("triggers", {}).get(actor.summary.name, []))
     mode = _mode(actor, team)
-    if actor.summary.name in {"愛彌斯", "心", "達妮婭", "洛瑟菈"}:
+    if actor.summary.name in {"愛彌斯", "心", "達妮婭", "洛瑟菈", "鎖暝"}:
         tags.intersection_update({mode})
     return tags
+
+
+def _ensemble_layers(
+    actors: Sequence[CharacterDetail], team: CombatTeam, recipient: CharacterDetail
+) -> int:
+    """Recurring response stacks, never inferred from an unrelated team member."""
+    if "同奏" not in _actor_tags(recipient, team):
+        return 0
+    responders = [actor for actor in actors if "同奏" in _actor_tags(actor, team)]
+    if len(responders) < 2:
+        # Third-chain Suoming can supply her own one stack through Intro.
+        return int(
+            any(a.summary.name == "鎖暝" and a.summary.resonance_chain >= 3 for a in responders)
+        )
+    hsin = next((a for a in responders if a.summary.name == "心"), None)
+    inherent = int(hsin is not None and hsin.small_stat_nodes[5])
+    sixth_chain = int(hsin is not None and hsin.summary.resonance_chain >= 6)
+    return min(2, len(responders)) + inherent + sixth_chain
 
 
 def available_effects(
@@ -342,13 +385,22 @@ def available_effects(
                 continue
             self_actor = actor.summary.id == detail.summary.id
             recipient = rule.get("recipient", "self")
+            if recipient == "others" and self_actor:
+                continue
             if (recipient == "self" and not self_actor) or (recipient == "next" and self_actor):
                 continue
             if recipient == "next" and actor.summary.id != team.outro_id:
                 continue
-            if rule.get("scope", "all") not in {"all", team.damage_type}:
+            recipient_trigger = rule.get("recipient_trigger")
+            if recipient_trigger and recipient_trigger not in _actor_tags(detail, team):
                 continue
-            if rule.get("scopes") and team.damage_type not in rule["scopes"]:
+            if rule.get("requires_ensemble") and not _ensemble_layers(actors, team, detail):
+                continue
+            if not scope_matches(rule.get("scope", "all"), team.damage_type):
+                continue
+            if rule.get("scopes") and not any(
+                scope_matches(scope, team.damage_type) for scope in rule["scopes"]
+            ):
                 continue
             identifier = f"{actor.summary.id}:{rule['id']}"
             values = {}
@@ -358,6 +410,13 @@ def available_effects(
                         continue
                     value = value[actor.weapon.resonance_rank - 1]
                 values[key] = float(value)
+            ensemble = rule.get("ensemble")
+            if ensemble:
+                amount = ensemble["base"] + min(
+                    ensemble["cap"],
+                    _ensemble_layers(actors, team, detail) * ensemble["per_layer"],
+                )
+                values = {key: float(amount) for key in values}
             stack = rule.get("stacks")
             if stack:
                 count = sum(stack["tag"] in _actor_tags(member, team) for member in actors)
@@ -412,7 +471,7 @@ def _panel_totals(panel: CharacterPanel, *, damage_type: str) -> dict[str, float
             totals[key] += bases[key] * float(c.value) / 100
         else:
             totals[c.stat] = totals.get(c.stat, 0) + float(c.value)
-    totals["selected_damage"] = totals.get(damage_type + "_damage", 0)
+    totals["selected_damage"] = totals.get(damage_stat(damage_type), 0)
     return totals
 
 
@@ -499,7 +558,8 @@ def evaluate_build(
                 else:
                     totals[output] = totals.get(output, 0) + increment
         # Typed and elemental deepen only affect the selected output window.
-        totals["deepen"] = totals.get("deepen", 0) + adds.get(team.damage_type + "_deepen", 0)
+        typed_deepen = damage_stat(team.damage_type).removesuffix("_damage") + "_deepen"
+        totals["deepen"] = totals.get("deepen", 0) + adds.get(typed_deepen, 0)
         element = ELEMENT_KEYS.get(detail.summary.element or "", "")
         totals["deepen"] += adds.get(element + "_deepen", 0)
         target = team.energy_target
@@ -528,15 +588,29 @@ def evaluate_build(
             for rule in conversion["rules"]:
                 if actor.summary.resonance_chain < rule.get("chain", 0):
                     continue
-                if rule.get("scope", "all") not in {"all", team.damage_type}:
+                if not scope_matches(rule.get("scope", "all"), team.damage_type):
                     continue
                 if rule.get("recipient", "team") == "self" and not self_actor:
+                    continue
+                if rule.get("recipient") == "others" and self_actor:
+                    continue
+                recipient_trigger = rule.get("recipient_trigger")
+                if recipient_trigger and recipient_trigger not in _actor_tags(detail, team):
                     continue
                 if rule.get("mode") and _mode(actor, team) != rule["mode"]:
                     continue
                 value = min(rule["cap"], max(0, energy - rule["offset"]) * rule["factor"])
+                if rule.get("ensemble"):
+                    value *= min(
+                        4,
+                        _ensemble_layers(
+                            [detail, *(roster[i] for i in team.member_ids if i in roster)],
+                            team,
+                            detail,
+                        ),
+                    )
                 key = rule["stat"]
-                identifier = f"{actor.summary.id}:conversion-{rule['stat']}"
+                identifier = conversion_identifier(actor.summary.id, rule)
                 effect = CombatEffect(
                     identifier,
                     f"{actor.summary.name}・充能轉換",
@@ -551,9 +625,9 @@ def evaluate_build(
                         totals["attack"] += float(dict(panel.bases).get("attack", 0)) * value / 100
                     else:
                         totals[key] = totals.get(key, 0) + value
-        totals["selected_damage"] += totals.get(team.damage_type + "_damage", 0) - dict(
+        totals["selected_damage"] += totals.get(damage_stat(team.damage_type), 0) - dict(
             _panel_totals(panel, damage_type=team.damage_type)
-        ).get(team.damage_type + "_damage", 0)
+        ).get(damage_stat(team.damage_type), 0)
         if target is None:
             missing.append("隊伍充能目標待確認")
         results.append(
@@ -567,8 +641,23 @@ def evaluate_build(
             )
         )
     return CombatBuild(
-        tuple(results), str(primary) if primary is not None else None, panel, tuple(weights.items())
+        tuple(results),
+        str(primary) if primary is not None else None,
+        panel,
+        tuple(weights.items()),
+        "莉莉綜合指標同時計入生命與治療加成; 不是實際治療量或隊伍總傷害。"
+        if detail.summary.name == "莉莉"
+        else "",
     )
+
+
+def conversion_identifier(actor_id: str, rule: Mapping[str, Any]) -> str:
+    suffix = (
+        f"-{rule['scope']}"
+        if rule.get("scope") in {"heavy_finisher", "intro_skill", "echo"}
+        else ""
+    )
+    return f"{actor_id}:conversion-{rule['stat']}{suffix}"
 
 
 def with_candidate(

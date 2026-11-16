@@ -43,6 +43,9 @@ _DAMAGE_LABELS = {
     "heavy_attack": "重擊",
     "resonance_skill": "共鳴技能",
     "resonance_liberation": "共鳴解放",
+    "heavy_finisher": "重擊終結窗口",
+    "intro_skill": "強化變奏窗口",
+    "echo": "聲骸技能",
 }
 
 
@@ -321,7 +324,7 @@ class CombatTeamsDialog(QDialog):
             self.error.setText(str(exc))
             return
         guide = guide_for_character(self._detail.summary.name)
-        damage = "resonance_liberation"
+        damage = "heavy_finisher" if self._detail.summary.name == "莉莉" else "resonance_liberation"
         if guide:
             tiers = [str(key) for tier in guide.tiers for key in tier]
             damage = next(

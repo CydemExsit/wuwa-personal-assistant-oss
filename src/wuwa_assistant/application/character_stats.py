@@ -581,7 +581,12 @@ def calculate_character_panel(detail: CharacterDetail) -> CharacterPanel:
                 missing.append(f"首位聲骸 {slot.name or '未知'} 的常駐效果尚未校對")
             else:
                 key, entry = main
-                add(f"首位聲骸・{key}", entry["effects"], entry["source"]["url"], off_panel=True)
+                add(
+                    f"首位聲骸・{key}",
+                    entry["effects"],
+                    entry["source"]["url"],
+                    off_panel=not entry.get("in_panel", False),
+                )
                 add(
                     f"首位聲骸・{key}・{name}專屬",
                     entry["by_character"].get(name, {}),

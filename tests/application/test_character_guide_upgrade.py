@@ -161,7 +161,7 @@ def test_nineteen_guide_upgrade_preserves_user_copies_and_explicit_selections(
 
         upgraded = {row.template_kind: row for row in profiles.ensure_system_templates(incoming)}
         assert set(upgraded) == {row["template_kind"] for row in incoming}
-        assert len(upgraded) == 20
+        assert len(upgraded) == 22
         assert all(row.version == 4 for row in upgraded.values())
         assert all(upgraded[kind].id == old.id for kind, old in previous.items())
         assert upgraded["character_guide_1508"].id not in {p.id for p in previous.values()}

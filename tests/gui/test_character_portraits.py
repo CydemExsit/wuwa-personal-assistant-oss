@@ -42,6 +42,8 @@ def test_oss_distribution_omits_game_art_and_renders_known_names_as_initials() -
         "維里奈",
         "千咲",
         "心",
+        "莉莉",
+        "鎖暝",
     }:
         assert not has_character_portrait(name)
         assert not character_portrait(name).isNull()

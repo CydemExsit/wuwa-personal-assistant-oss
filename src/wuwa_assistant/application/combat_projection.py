@@ -17,7 +17,14 @@ from wuwa_assistant.scoring.engine import canonical_stat_key
 
 from .character_stats import _echo_substat_percent
 from .characters import CharacterDetail
-from .combat_build import ELEMENT_KEYS, CombatBuild, load_combat_catalog
+from .combat_build import (
+    ELEMENT_KEYS,
+    CombatBuild,
+    conversion_identifier,
+    damage_stat,
+    load_combat_catalog,
+    scope_matches,
+)
 
 
 @dataclass(frozen=True, slots=True)
@@ -125,10 +132,14 @@ def project_combat_substats(
             for rule in conversion["rules"]:
                 if anchored.summary.resonance_chain < rule.get("chain", 0):
                     continue
-                if rule.get("scope", "all") not in {"all", team.team.damage_type}:
+                if not scope_matches(rule.get("scope", "all"), team.team.damage_type):
                     continue
                 key = rule["stat"]
-                excluded = f"{anchored.summary.id}:conversion-{key}" in team.team.excluded_effects
+                if rule.get("recipient") == "others":
+                    continue
+                excluded = (
+                    conversion_identifier(anchored.summary.id, rule) in team.team.excluded_effects
+                )
                 if excluded:
                     continue
                 old = min(
@@ -158,7 +169,8 @@ def project_combat_substats(
         )
         index += crit_weight * np.log(crit)
         element = current.get(ELEMENT_KEYS.get(anchored.summary.element or "", ""), 0)
-        extra = delta[:, columns.index(team.team.damage_type + "_damage")]
+        selected_stat = damage_stat(team.team.damage_type)
+        extra = delta[:, columns.index(selected_stat)] if selected_stat in columns else 0
         bonus = (
             element
             + current.get("all_element_damage", 0)
@@ -167,6 +179,8 @@ def project_combat_substats(
         )
         index += np.log(np.maximum(0.01, 1 + bonus / 100))
         index += np.log(np.maximum(0.01, 1 + deepen / 100))
+        if anchored.summary.name == "莉莉":
+            index += np.log(max(0.01, 1 + current.get("healing_bonus", 0) / 100))
         if team.team.identifier == candidate.primary_id:
             primary_delta = index - original.primary.index
     if primary_delta is None:

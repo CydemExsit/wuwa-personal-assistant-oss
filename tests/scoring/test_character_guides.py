@@ -12,8 +12,8 @@ from wuwa_assistant.scoring.character_guides import (
 
 def test_guides_are_sourced_offline_priorities_not_official_coefficients() -> None:
     guides = load_character_guides()
-    assert len(guides) == 20
-    assert len(load_character_seed_definitions()) == 20
+    assert len(guides) == 22
+    assert len(load_character_seed_definitions()) == 22
     for guide in guides:
         assert len(guide.sources) == 2
         assert all(

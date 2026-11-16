@@ -9,6 +9,14 @@ on:
         description: Store verified packages and reports for one day
         type: boolean
         default: false
+      upload_release:
+        description: Store verified release downloads and reports, without duplicate application/source caches
+        type: boolean
+        default: false
+      upgrade_from:
+        description: Optional full main ancestor SHA for cross-version installer verification
+        type: string
+        default: ""
 
 permissions:
   contents: read
@@ -78,13 +86,41 @@ jobs:
         run: ./scripts/setup.ps1
       - name: Build, legal/source audit and smoke checks
         run: ./scripts/build.ps1 -SkipQualityChecks -OutputDirectory dist/ci
+      - name: Verify upgrade from the previous installed version
+        if: github.event_name == 'workflow_dispatch' && inputs.upgrade_from != ''
+        shell: pwsh
+        env:
+          PREVIOUS_COMMIT: ${{ inputs.upgrade_from }}
+        run: |
+          if ($env:PREVIOUS_COMMIT -cnotmatch '^[0-9a-f]{40}$' -or
+              $env:PREVIOUS_COMMIT -eq $env:GITHUB_SHA) {
+            throw "Expected a full previous commit SHA."
+          }
+          git fetch --unshallow --no-tags origin main
+          if ($LASTEXITCODE -ne 0) { throw "Could not fetch main history." }
+          git merge-base --is-ancestor $env:PREVIOUS_COMMIT HEAD
+          if ($LASTEXITCODE -ne 0) { throw "The previous commit is not an ancestor." }
+          $previousRoot = Join-Path $env:RUNNER_TEMP "wuwa-previous"
+          git worktree add --detach $previousRoot $env:PREVIOUS_COMMIT
+          if ($LASTEXITCODE -ne 0) { throw "Could not check out the previous commit." }
+          Push-Location $previousRoot
+          try {
+            ./scripts/setup.ps1
+            ./scripts/build.ps1 -SkipQualityChecks -OutputDirectory dist/previous
+            $previous = (Get-Item dist/previous/*-Setup.exe).FullName
+          } finally {
+            Pop-Location
+          }
+          ./scripts/verify-installer.ps1 -Installer (Get-Item dist/ci/*-Setup.exe).FullName -PackageRoot (Resolve-Path dist/ci/WuwaDisplayAssistant).Path -PreviousInstaller $previous
+          ./.venv/Scripts/python.exe scripts/release_assets.py --output-directory dist/ci
+          if ($LASTEXITCODE -ne 0) { throw "Could not refresh verified release reports." }
       - name: Record packaging verification
         shell: pwsh
         run: |
           "Windows packaging and smoke checks passed for $env:GITHUB_SHA." >> $env:GITHUB_STEP_SUMMARY
 
       - name: Preserve package verification
-        if: github.event_name == 'workflow_dispatch' && inputs.upload_packages
+        if: github.event_name == 'workflow_dispatch' && (inputs.upload_packages || inputs.upload_release)
         uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
         with:
           name: windows-package-reports-${{ github.sha }}
@@ -111,7 +147,7 @@ jobs:
           retention-days: 1
 
       - name: Preserve installer and portable downloads
-        if: github.event_name == 'workflow_dispatch' && inputs.upload_packages
+        if: github.event_name == 'workflow_dispatch' && (inputs.upload_packages || inputs.upload_release)
         uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
         with:
           name: release-downloads-${{ github.sha }}
@@ -120,5 +156,6 @@ jobs:
             dist/ci/*-windows-x64.zip
             dist/ci/VerificationReports-*.zip
             dist/ci/SHA256SUMS.txt
+            dist/ci/certifi-*.tar.gz
           if-no-files-found: error
           retention-days: 1

@@ -1,12 +1,13 @@
 {
   "schema_version": 1,
-  "version": "2026.10.21.1",
+  "version": "2026.11.17.1",
   "policy": "ideal-recurring-output-window",
   "default_modes": {
     "愛彌斯": "震諧",
     "心": "同奏",
     "達妮婭": "聚爆",
-    "洛瑟菈": "霜漸"
+    "洛瑟菈": "霜漸",
+    "鎖暝": "同奏"
   },
   "modes": {
     "愛彌斯": [
@@ -24,6 +25,9 @@
     "洛瑟菈": [
       "霜漸",
       "聲骸"
+    ],
+    "鎖暝": [
+      "同奏"
     ]
   },
   "effects": [
@@ -2316,6 +2320,418 @@
       },
       "chain": 6,
       "scope": "resonance_liberation"
+    },
+    {
+      "id": "suoming-rain",
+      "kind": "character",
+      "owner": "鎖暝",
+      "label": "雨浸舊契",
+      "values": {
+        "electro_damage": 50
+      },
+      "recipient": "self",
+      "condition": "變奏入場後15秒內；離場結束，不套用站場主輸出的暴傷增益",
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1543075487722901504",
+        "accessed_at": "2026-10-29",
+        "updated_at": "2026-10-22",
+        "content_sha256": "465f6de4051e84175583f0e287093f27111a3905fc73cc300301201afc4fdbd6"
+      },
+      "node": 4,
+      "mode": "同奏"
+    },
+    {
+      "id": "suoming-outro",
+      "kind": "character",
+      "owner": "鎖暝",
+      "label": "延奏・導電",
+      "values": {
+        "electro_damage_deepen": 20
+      },
+      "recipient": "next",
+      "condition": "延奏後下一位角色8秒窗口，換人結束",
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1543075487722901504",
+        "accessed_at": "2026-10-29",
+        "updated_at": "2026-10-22",
+        "content_sha256": "465f6de4051e84175583f0e287093f27111a3905fc73cc300301201afc4fdbd6"
+      },
+      "mode": "同奏"
+    },
+    {
+      "id": "suoming-outro-skill",
+      "kind": "character",
+      "owner": "鎖暝",
+      "label": "延奏・同奏技能",
+      "values": {
+        "resonance_skill_deepen": 25
+      },
+      "recipient": "next",
+      "condition": "下一位具有同奏增益的角色，延奏後8秒窗口，換人結束",
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1543075487722901504",
+        "accessed_at": "2026-10-29",
+        "updated_at": "2026-10-22",
+        "content_sha256": "465f6de4051e84175583f0e287093f27111a3905fc73cc300301201afc4fdbd6"
+      },
+      "mode": "同奏",
+      "recipient_trigger": "同奏",
+      "requires_ensemble": true,
+      "ensemble_sources": [
+        {
+          "url": "https://wiki.kurobbs.com/mc/item/1543050481616060416",
+          "accessed_at": "2026-10-29",
+          "updated_at": "2026-10-22",
+          "content_sha256": "cc8616e2bfac72508ce246d2d28243c63a3cc1ccb513c9eb4420ac693bc933a9"
+        }
+      ]
+    },
+    {
+      "id": "suoming-pact",
+      "kind": "character",
+      "owner": "鎖暝",
+      "label": "沉契凝鎖・導電",
+      "values": {
+        "electro_damage": 0
+      },
+      "recipient": "next",
+      "condition": "持有協契；解放或終結普攻後8秒內延奏，下一位8秒窗口；30%加每層20%（額外最多40%）",
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1543075487722901504",
+        "accessed_at": "2026-10-29",
+        "updated_at": "2026-10-22",
+        "content_sha256": "465f6de4051e84175583f0e287093f27111a3905fc73cc300301201afc4fdbd6"
+      },
+      "node": 5,
+      "mode": "同奏",
+      "ensemble": {
+        "base": 30,
+        "per_layer": 20,
+        "cap": 40
+      },
+      "ensemble_sources": [
+        {
+          "url": "https://wiki.kurobbs.com/mc/item/1543050481616060416",
+          "accessed_at": "2026-10-29",
+          "updated_at": "2026-10-22",
+          "content_sha256": "cc8616e2bfac72508ce246d2d28243c63a3cc1ccb513c9eb4420ac693bc933a9"
+        }
+      ]
+    },
+    {
+      "id": "suoming-chain2",
+      "kind": "character",
+      "owner": "鎖暝",
+      "label": "二鏈・延奏暴傷",
+      "values": {
+        "crit_damage": 0
+      },
+      "recipient": "next",
+      "condition": "延奏後30秒，換人結束；10%加每層同奏增益6%（額外最多24%）",
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1543075487722901504",
+        "accessed_at": "2026-10-29",
+        "updated_at": "2026-10-22",
+        "content_sha256": "465f6de4051e84175583f0e287093f27111a3905fc73cc300301201afc4fdbd6"
+      },
+      "chain": 2,
+      "mode": "同奏",
+      "ensemble": {
+        "base": 10,
+        "per_layer": 6,
+        "cap": 24
+      },
+      "ensemble_sources": [
+        {
+          "url": "https://wiki.kurobbs.com/mc/item/1543050481616060416",
+          "accessed_at": "2026-10-29",
+          "updated_at": "2026-10-22",
+          "content_sha256": "cc8616e2bfac72508ce246d2d28243c63a3cc1ccb513c9eb4420ac693bc933a9"
+        }
+      ]
+    },
+    {
+      "id": "suoming-chain3",
+      "kind": "character",
+      "owner": "鎖暝",
+      "label": "三鏈・普攻",
+      "values": {
+        "basic_attack_deepen": 30
+      },
+      "recipient": "self",
+      "condition": "施放共鳴解放後25秒的普攻窗口",
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1543075487722901504",
+        "accessed_at": "2026-10-29",
+        "updated_at": "2026-10-22",
+        "content_sha256": "465f6de4051e84175583f0e287093f27111a3905fc73cc300301201afc4fdbd6"
+      },
+      "chain": 3,
+      "mode": "同奏"
+    },
+    {
+      "id": "suoming-weapon-self",
+      "kind": "weapon",
+      "owner": "沉冥",
+      "label": "同奏・自身導電",
+      "values": {
+        "electro_damage": [
+          30,
+          37.5,
+          45,
+          52.5,
+          60
+        ]
+      },
+      "recipient": "self",
+      "condition": "未持有並獲得同奏後30秒；本次採同奏副輸出，不消耗同奏轉為主輸出",
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1561782555841314816",
+        "accessed_at": "2026-10-29",
+        "updated_at": "2026-10-21",
+        "content_sha256": "a0077e58cab96fda2ba8c4b1730f4766d632c8f495b430bbdca4bb772192028c"
+      },
+      "trigger": "同奏"
+    },
+    {
+      "id": "suoming-weapon-team",
+      "kind": "weapon",
+      "owner": "沉冥",
+      "label": "羈念・全隊導電",
+      "values": {
+        "electro_damage": [
+          24,
+          30,
+          36,
+          42,
+          48
+        ]
+      },
+      "recipient": "team",
+      "condition": "未持有並獲得同奏後30秒，同名羈念不疊加；需保持同奏副輸出循環",
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1561782555841314816",
+        "accessed_at": "2026-10-29",
+        "updated_at": "2026-10-21",
+        "content_sha256": "a0077e58cab96fda2ba8c4b1730f4766d632c8f495b430bbdca4bb772192028c"
+      },
+      "trigger": "同奏"
+    },
+    {
+      "id": "suoming-moonlit",
+      "kind": "set",
+      "owner": "輕雲出月",
+      "label": "延奏・隊友攻擊",
+      "values": {
+        "attack_pct": 22.5
+      },
+      "recipient": "next",
+      "condition": "延奏後下一位角色15秒窗口",
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1233505120063127552",
+        "accessed_at": "2026-10-29",
+        "updated_at": "2026-03-03",
+        "content_sha256": "72480be0e52d4a2c10c63e28818262193d7a205026d10afd642ef397fbff41ed"
+      },
+      "count": 5
+    },
+    {
+      "id": "suoming-phantom",
+      "kind": "echo",
+      "owner": "絕息魄",
+      "label": "首位聲骸・導電",
+      "values": {
+        "electro_damage": 12
+      },
+      "recipient": "next",
+      "condition": "聲骸技能後15秒內延奏；下一位變奏登場角色15秒窗口",
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1553883351712563200",
+        "accessed_at": "2026-10-29",
+        "updated_at": "2026-10-03",
+        "content_sha256": "5830a84f10fedc0a3f091c1955141b39f31ef60864671a082fd1c5585c53a757"
+      }
+    },
+    {
+      "id": "suoming-heron",
+      "kind": "echo",
+      "owner": "無常凶鷺",
+      "label": "首位聲骸・隊友傷害",
+      "values": {
+        "all_element_damage": 12
+      },
+      "recipient": "next",
+      "condition": "聲骸幻形首次命中後15秒內延奏；下一位變奏登場角色15秒窗口。回能不換算為面板效率",
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1226647016656945152",
+        "accessed_at": "2026-10-29",
+        "updated_at": "2026-01-17",
+        "content_sha256": "ebf0486df65ef1145f8f0225eca57baf83ee07e164260b75ae983d1e27eddba6"
+      }
+    },
+    {
+      "id": "lily-outro",
+      "kind": "character",
+      "owner": "莉莉",
+      "label": "薰香綻放・全傷害加深",
+      "values": {
+        "deepen": 25
+      },
+      "recipient": "team",
+      "condition": "莉莉已完成延奏；全隊25%全傷害加深持續30秒",
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1559521973715369984",
+        "accessed_at": "2026-11-16",
+        "updated_at": "2026-11-12",
+        "content_sha256": "7a1a62451c8e4927830b6ab657b294600fc0dcfb095dc1f8fc15117d98f45280"
+      }
+    },
+    {
+      "id": "lily-dream-atk",
+      "kind": "character",
+      "owner": "莉莉",
+      "label": "搖籃的安魂語・夢芳4層",
+      "values": {
+        "attack_pct": 0
+      },
+      "recipient": "others",
+      "condition": "莉莉施放解放後退場，其他角色變奏累積4層夢芳；一鏈每次2層，零鏈每次1層；25秒內且莉莉未重新登場。未滿層請排除此項。",
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1559521973715369984",
+        "accessed_at": "2026-11-16",
+        "updated_at": "2026-11-12",
+        "content_sha256": "7a1a62451c8e4927830b6ab657b294600fc0dcfb095dc1f8fc15117d98f45280"
+      },
+      "variable": {
+        "stat": "energy_regen",
+        "offset": 190,
+        "factor": 0.4,
+        "cap": 28
+      }
+    },
+    {
+      "id": "lily-chain2-cr",
+      "kind": "character",
+      "owner": "莉莉",
+      "label": "二鏈・夢芳4層暴擊",
+      "values": {
+        "crit_rate": 8
+      },
+      "recipient": "others",
+      "condition": "莉莉解放後退場，其他角色變奏累積4層夢芳，莉莉未重新登場；未滿層請排除此項。",
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1559521973715369984",
+        "accessed_at": "2026-11-16",
+        "updated_at": "2026-11-12",
+        "content_sha256": "7a1a62451c8e4927830b6ab657b294600fc0dcfb095dc1f8fc15117d98f45280"
+      },
+      "chain": 2
+    },
+    {
+      "id": "lily-chain2-cd",
+      "kind": "character",
+      "owner": "莉莉",
+      "label": "二鏈・夢芳4層暴傷",
+      "values": {
+        "crit_damage": 24
+      },
+      "recipient": "others",
+      "condition": "莉莉解放後退場，其他角色變奏累積4層夢芳，莉莉未重新登場；未滿層請排除此項。",
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1559521973715369984",
+        "accessed_at": "2026-11-16",
+        "updated_at": "2026-11-12",
+        "content_sha256": "7a1a62451c8e4927830b6ab657b294600fc0dcfb095dc1f8fc15117d98f45280"
+      },
+      "chain": 2
+    },
+    {
+      "id": "lily-weapon-atk",
+      "kind": "weapon",
+      "owner": "安魂",
+      "label": "落夢歸魂・同奏攻擊",
+      "values": {
+        "attack_pct": [
+          16,
+          20,
+          24,
+          28,
+          32
+        ]
+      },
+      "recipient": "team",
+      "condition": "已確認正常輪轉並完成重擊治療；30秒增益期間，可手動排除未觸發效果",
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1569476457330941952",
+        "accessed_at": "2026-11-16",
+        "updated_at": "2026-11-11",
+        "content_sha256": "a8d706aecaa6aeeb12de700240b84b78d27c4385bd4b83033f7e468b9929b71e"
+      },
+      "recipient_trigger": "同奏",
+      "requires_ensemble": true
+    },
+    {
+      "id": "lily-weapon-echo",
+      "kind": "weapon",
+      "owner": "安魂",
+      "label": "重擊治療・聲骸傷害",
+      "values": {
+        "echo_damage": [
+          24,
+          30,
+          36,
+          42,
+          48
+        ]
+      },
+      "recipient": "team",
+      "condition": "已確認正常輪轉並完成重擊治療；30秒增益期間，可手動排除未觸發效果",
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1569476457330941952",
+        "accessed_at": "2026-11-16",
+        "updated_at": "2026-11-11",
+        "content_sha256": "a8d706aecaa6aeeb12de700240b84b78d27c4385bd4b83033f7e468b9929b71e"
+      }
+    },
+    {
+      "id": "lily-flower-atk",
+      "kind": "set",
+      "owner": "茜染懷想之花",
+      "label": "治療後全隊攻擊",
+      "values": {
+        "attack_pct": 10
+      },
+      "recipient": "team",
+      "condition": "已確認正常輪轉並完成重擊治療；30秒增益期間，可手動排除未觸發效果",
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1553889998205132800",
+        "accessed_at": "2026-11-16",
+        "updated_at": "2026-09-29",
+        "content_sha256": "53fafb0bc91ee69e69b676108ad866cf1a2bacb4bbb685c1cda89bc213ba23a3"
+      },
+      "count": 5,
+      "trigger": "治療"
+    },
+    {
+      "id": "lily-flower-ensemble",
+      "kind": "set",
+      "owner": "茜染懷想之花",
+      "label": "同奏額外攻擊",
+      "values": {
+        "attack_pct": 15
+      },
+      "recipient": "team",
+      "condition": "已確認正常輪轉並完成重擊治療；30秒增益期間，可手動排除未觸發效果",
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1553889998205132800",
+        "accessed_at": "2026-11-16",
+        "updated_at": "2026-09-29",
+        "content_sha256": "53fafb0bc91ee69e69b676108ad866cf1a2bacb4bbb685c1cda89bc213ba23a3"
+      },
+      "count": 5,
+      "trigger": "治療",
+      "recipient_trigger": "同奏",
+      "requires_ensemble": true
     }
   ],
   "conversions": {
@@ -2412,6 +2828,79 @@
         "updated_at": "2026-08-10",
         "content_sha256": "566aefb52aa5068d61f37c571bb855b1f3a31147402ef804e4475ce3aeb13801"
       }
+    },
+    "莉莉": {
+      "target": 260,
+      "rules": [
+        {
+          "stat": "crit_rate",
+          "offset": 100,
+          "factor": 0.5,
+          "cap": 80,
+          "recipient": "self",
+          "scope": "heavy_finisher",
+          "condition": "僅重擊終結／解放後強化變奏永綻窗口；不適用一般變奏、蓄力多段與其他傷害。"
+        },
+        {
+          "stat": "crit_damage",
+          "offset": 100,
+          "factor": 1,
+          "cap": 160,
+          "recipient": "self",
+          "scope": "heavy_finisher",
+          "condition": "僅重擊終結／解放後強化變奏永綻窗口；不適用一般變奏、蓄力多段與其他傷害。"
+        },
+        {
+          "stat": "crit_rate",
+          "offset": 100,
+          "factor": 0.5,
+          "cap": 80,
+          "recipient": "self",
+          "scope": "intro_skill",
+          "condition": "僅重擊終結／解放後強化變奏永綻窗口；不適用一般變奏、蓄力多段與其他傷害。"
+        },
+        {
+          "stat": "crit_damage",
+          "offset": 100,
+          "factor": 1,
+          "cap": 160,
+          "recipient": "self",
+          "scope": "intro_skill",
+          "condition": "僅重擊終結／解放後強化變奏永綻窗口；不適用一般變奏、蓄力多段與其他傷害。"
+        },
+        {
+          "stat": "attack_pct",
+          "offset": 190,
+          "factor": 0.1,
+          "cap": 7,
+          "recipient": "others",
+          "recipient_trigger": "同奏",
+          "ensemble": true,
+          "condition": "施放重擊終結後6秒內延奏，斑白眠夢30秒期間，登場角色可響應同奏；每層上限7%、最多4層。"
+        },
+        {
+          "stat": "crit_rate",
+          "offset": 190,
+          "factor": 0.14285714285714285,
+          "cap": 10,
+          "scope": "echo",
+          "condition": "重擊終結後6秒內延奏，斑白眠夢30秒期間，僅登場角色聲骸技能傷害。"
+        },
+        {
+          "stat": "crit_damage",
+          "offset": 190,
+          "factor": 0.2857142857142857,
+          "cap": 20,
+          "scope": "echo",
+          "condition": "重擊終結後6秒內延奏，斑白眠夢30秒期間，僅登場角色聲骸技能傷害。"
+        }
+      ],
+      "source": {
+        "url": "https://wiki.kurobbs.com/mc/item/1559521973715369984",
+        "accessed_at": "2026-11-16",
+        "updated_at": "2026-11-12",
+        "content_sha256": "7a1a62451c8e4927830b6ab657b294600fc0dcfb095dc1f8fc15117d98f45280"
+      }
     }
   },
   "reviewed_characters": [
@@ -2434,12 +2923,16 @@
     "蕾貝卡",
     "達妮婭",
     "露帕",
-    "露西"
+    "露西",
+    "鎖暝",
+    "莉莉"
   ],
   "notes": [
     "數值事實來自公開詞條；庫街區WIKI由玩家編輯。",
     "倍率、抗性、防禦忽略與固定暴擊的獨立傷害不等於面板增益，不混算。",
-    "技能專屬效果按主要傷害窗口供確認，未採用的效果可排除。"
+    "技能專屬效果按主要傷害窗口供確認，未採用的效果可排除。",
+    "鎖暝僅建模同奏副輸出。每層同奏的最終傷害、技能倍率及防禦忽略不混入面板或聲骸品質分；未模擬整隊傷害。",
+    "莉莉：一般變奏與強化變奏、蓄力重擊與重擊終結分開；夢芳4層僅退場窗口。C4限定夢鄉治療+30%、C6限定技能傷害提升均不當作常駐全傷害。莉莉本身不算可響應同奏角色。"
   ],
   "triggers": {
     "千咲": [
@@ -2483,6 +2976,12 @@
     ],
     "莫寧": [
       "震諧"
+    ],
+    "鎖暝": [
+      "同奏"
+    ],
+    "莉莉": [
+      "治療"
     ]
   }
 }

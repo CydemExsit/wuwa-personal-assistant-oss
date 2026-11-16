@@ -55,10 +55,10 @@ def test_ten_supplied_references_preserve_observations_and_absence(
         assert all(f"{value:.1f}%" in html for value in substats if value is not None)
 
 
-def test_roster_catalog_and_named_sets_cover_all_twenty() -> None:
+def test_roster_catalog_and_named_sets_cover_all_twenty_two() -> None:
     catalog = {entry.name for entry in load_bundled_character_catalog().entries}
     guides = load_character_guides()
-    assert len(guides) == 20
+    assert len(guides) == 22
     assert {guide.name for guide in guides} <= catalog
     for guide in guides:
         assert guide.usage is not None

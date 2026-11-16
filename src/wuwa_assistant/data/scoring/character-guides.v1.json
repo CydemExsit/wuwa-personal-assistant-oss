@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "data_version": "character-guides-2026.10.08-v7",
+  "data_version": "character-guides-2026.11.17-oss-v9",
   "retrieved_on": "2026-09-28",
   "weight_policy": "guide-and-game-reference-priority-tiers-v3",
   "tier_weights": [
@@ -2822,6 +2822,253 @@
             "sha256": "12003da4e2cb1637fca7acca53b2cca5a160d48a12d810beadc6a8576e9b2b4f"
           }
         }
+      }
+    },
+    {
+      "role_id": "1312",
+      "name": "鎖暝",
+      "aliases": [
+        "Suoming",
+        "锁暝"
+      ],
+      "role": "同奏副輸出",
+      "priority_tiers": [
+        [
+          "crit_rate",
+          "crit_damage"
+        ],
+        [
+          "energy_regen"
+        ],
+        [
+          "attack_pct"
+        ],
+        [
+          "basic_attack_damage"
+        ],
+        [
+          "flat_attack"
+        ]
+      ],
+      "energy_target": 120,
+      "main_stats": "4C 暴擊傷害／暴擊；3C 導電傷害加成／攻擊%；1C 攻擊%",
+      "sets": "銜夢照世之心5件（自身輸出）或輕雲出月5件（隊友增益）",
+      "caveat": "限定同奏副輸出參考：絕息魄可增益下一位導電隊友；輕雲出月可搭配無常凶鷺。截圖中的共鳴迴響·天演溯心使用率照錄，並非所有同奏隊伍的唯一推薦。兩篇攻略以約120%共鳴效率為循環參考，巡游天国FM建議高於120%；實際需求依隊伍與循環確認。變奏入場開啟解放後先同奏切換隊友，避免立即施放普通共鳴技能消耗同奏。暴擊／暴傷依完整面板與套裝調整，不推測溢出。",
+      "sources": [
+        {
+          "url": "https://mcguide.kurogames.com/zh-Hans/?role_id=1312&strategy_id=10233",
+          "author": "巡游天国FM",
+          "title": "锁暝建议玩法+养成攻略【巡游天国FM】",
+          "updated_on": null,
+          "response_sha256": "fa9cff5794c6e0d919993d77f30809351e814cf65c5408a9c923d438fc4ab147",
+          "retrieved_on": "2026-10-29"
+        },
+        {
+          "url": "https://mcguide.kurogames.com/zh-Hant/?role_id=1312&strategy_id=11097",
+          "author": "Kin",
+          "title": "【鎖暝】心同奏隊伍專輔！技能組有主C玩法？配隊該如何搭配？培養、連招輕鬆看清！",
+          "updated_on": null,
+          "response_sha256": "1af7a10a5577f0b87811775d27023a1f0d2712f403b111a9f4b5f01d7cdbdc4d",
+          "retrieved_on": "2026-10-29"
+        }
+      ],
+      "profile_version": 4,
+      "retrieved_on": "2026-10-29",
+      "weight_rationale": "雙暴1、未達循環需求的效率0.8、攻擊%0.6、普攻傷害0.4、固定攻擊0.25。巡游天国FM先滿足效率，Kin將雙暴排於效率之前；工具保留效率條件及雙暴優先的折衷估值，不把使用率直接換算成收益權重。",
+      "equipment_reference": {
+        "element": "導電",
+        "allowed_sets": [
+          "銜夢照世之心",
+          "輕雲出月"
+        ],
+        "set_combinations": [
+          {
+            "銜夢照世之心": 5
+          },
+          {
+            "輕雲出月": 5
+          }
+        ],
+        "set_aliases": {
+          "衔梦照世之心": "銜夢照世之心",
+          "轻云出月": "輕雲出月"
+        },
+        "main_stats_by_cost": {
+          "4": [
+            "crit_damage",
+            "crit_rate"
+          ],
+          "3": [
+            "electro_damage",
+            "attack_pct"
+          ],
+          "1": [
+            "attack_pct"
+          ]
+        },
+        "verified_on": "2026-10-29",
+        "source_url": "https://mcguide.kurogames.com/zh-Hant/?role_id=1312&strategy_id=11097",
+        "snapshot_sha256": "1af7a10a5577f0b87811775d27023a1f0d2712f403b111a9f4b5f01d7cdbdc4d"
+      },
+      "usage_reference": {
+        "source": "使用者提供的兩張遊戲內聲骸推薦使用率截圖",
+        "provided_on": "2026-10-29",
+        "screenshot_index": 1,
+        "reference_kind": "usage",
+        "substats_percent": {
+          "crit_rate": 75.3,
+          "crit_damage": 72.4,
+          "energy_regen": 46.6,
+          "basic_attack_damage": 42.7,
+          "attack_pct": 42.6
+        },
+        "main_stats_percent": {
+          "4": {
+            "crit_damage": 77.4
+          },
+          "3": {
+            "electro_damage": 78.7
+          },
+          "1": {
+            "attack_pct": 99.5
+          }
+        },
+        "main_echo_percent": {
+          "絕息魄": 55.2,
+          "共鳴迴響·天演溯心": 44.2
+        },
+        "set_icons": [
+          {
+            "label": "銜夢照世之心 5件",
+            "percent": null
+          }
+        ],
+        "notes": "兩張截圖為同一份推薦的上下段，第二張補全攻擊百分比42.6%。頂部圖示已與官方攻略平台36號銜夢照世之心核對；未顯示套裝使用率，保持缺失。攻略另列輕雲出月、4C暴擊及3C攻擊備選，無常凶鷺亦為攻略備選，皆不冒充截圖內容。首位COST3絕息魄不改變43311裝備總COST與4C主詞條規則。",
+        "set_icon_verification": {
+          "verified_on": "2026-10-29",
+          "method": "官方攻略平台36號圖示、繁中名稱及5件效果對照使用者截圖。",
+          "primary_icon": {
+            "id": "36",
+            "name": "銜夢照世之心",
+            "url": "https://guide-res.aki-game.com/introduction/material/30580a7ee894ca6362b35b4548e40ef3/bf3f4bcaaae68f8f30591b653e55e5c4.png",
+            "response_sha256": "1af7a10a5577f0b87811775d27023a1f0d2712f403b111a9f4b5f01d7cdbdc4d",
+            "sha256": "12003da4e2cb1637fca7acca53b2cca5a160d48a12d810beadc6a8576e9b2b4f"
+          }
+        }
+      }
+    },
+    {
+      "role_id": "1512",
+      "name": "莉莉",
+      "aliases": [
+        "Lily",
+        "Lili"
+      ],
+      "role": "同奏／聲骸治療輔助",
+      "priority_tiers": [
+        [
+          "energy_regen"
+        ],
+        [
+          "hp_pct"
+        ],
+        [
+          "flat_hp"
+        ]
+      ],
+      "energy_target": 260,
+      "main_stats": "43311：4C 生命%／治療效果加成；3C 共鳴效率／衍射傷害加成；1C 生命%",
+      "sets": "同奏隊：茜染懷想之花5件、首位3C解形煞；非同奏隊：隱世回光5件、首位無歸的謬誤",
+      "caveat": "依使用者提供的同奏隊攻略：效率260%，副詞條效率＞生命%＞固定生命。4C生命與治療兩者均可比較、預測，不互斥。技能採傷害優先：變奏技能與共鳴迴路先升；共鳴解放次之。首位3C仍使用43311；解形煞常駐10%效率已計入面板，不重複加。260%是已核對的轉換上限參考；隊伍可提高循環需求。強化重擊終結與強化變奏的雙暴不適用整套重擊或一般變奏。",
+      "sources": [
+        {
+          "url": "https://mcguide.kurogames.com/zh-Hant/?role_id=1512&strategy_id=11098",
+          "author": "Kin",
+          "title": "【莉莉】同奏/聲骸隊特化奶媽！聲骸有什麼要注意？培養、配隊、連招輕鬆看清！",
+          "updated_on": null,
+          "response_sha256": "78aeccb0be432902b2d4ec26845996cf40127664f057616a1fc4a4dd1a5c5933",
+          "retrieved_on": "2026-11-16"
+        },
+        {
+          "url": "https://mcguide.kurogames.com/zh-Hans/?role_id=1512&strategy_id=10238",
+          "author": "巡游天国FM",
+          "title": "莉莉建议玩法+养成攻略【巡游天国FM】",
+          "updated_on": null,
+          "response_sha256": "58d1a312c989d716a63a28161811fe90213053e015fd790244bee3f03b3a9fef",
+          "retrieved_on": "2026-11-16"
+        }
+      ],
+      "profile_version": 4,
+      "retrieved_on": "2026-11-16",
+      "weight_rationale": "遵照使用者提供的攻略，未達標效率1、生命%0.8、固定生命0.6，其餘0為工具評分權重，不是傷害係數。生命與治療主詞條均保留；配裝綜合指標另計治療加成，並非實際傷害或治療量。",
+      "equipment_reference": {
+        "element": "衍射",
+        "allowed_sets": [
+          "茜染懷想之花",
+          "隱世回光"
+        ],
+        "set_combinations": [
+          {
+            "茜染懷想之花": 5
+          },
+          {
+            "隱世回光": 5
+          }
+        ],
+        "set_aliases": {
+          "茜染怀想之花": "茜染懷想之花",
+          "隐世回光": "隱世回光"
+        },
+        "main_stats_by_cost": {
+          "4": [
+            "hp_pct",
+            "healing_bonus"
+          ],
+          "3": [
+            "energy_regen",
+            "spectro_damage"
+          ],
+          "1": [
+            "hp_pct"
+          ]
+        },
+        "verified_on": "2026-11-16",
+        "source_url": "https://mcguide.kurogames.com/zh-Hant/?role_id=1512&strategy_id=11098",
+        "snapshot_sha256": "78aeccb0be432902b2d4ec26845996cf40127664f057616a1fc4a4dd1a5c5933"
+      },
+      "usage_reference": {
+        "source": "使用者提供的叫我棉被莉莉同奏隊配裝攻略截圖",
+        "provided_on": "2026-11-16",
+        "screenshot_index": 1,
+        "reference_kind": "creator",
+        "substats_percent": {
+          "energy_regen": null,
+          "hp_pct": null,
+          "flat_hp": null
+        },
+        "main_stats_percent": {
+          "4": {
+            "hp_pct": null,
+            "healing_bonus": null
+          },
+          "3": {
+            "energy_regen": null,
+            "spectro_damage": null
+          },
+          "1": {
+            "hp_pct": null
+          }
+        },
+        "main_echo_percent": {
+          "解形煞": null
+        },
+        "set_icons": [
+          {
+            "label": "茜染懷想之花 5件",
+            "percent": null
+          }
+        ],
+        "notes": "來源為創作者攻略圖，並非遊戲內使用率；260%效率是攻略推薦值。另一張技能圖依使用者選擇採傷害較高的變奏與迴路方案。沒有提供精確先後順序或使用率，不補造。"
       }
     }
   ],

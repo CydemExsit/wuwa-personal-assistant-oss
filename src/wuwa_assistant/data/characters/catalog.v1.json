@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "catalog_version": "2026.10.04-v3",
-  "as_of_date": "2026-10-04",
+  "catalog_version": "2026.11.17-oss-v5",
+  "as_of_date": "2026-11-17",
   "locale": "zh-TW",
   "source_status": "mixed_official_and_public_name_index",
   "disclaimer": "此目錄只協助建立本機角色清單，不代表帳號擁有、角色強度、Tier 或目前卡池。只有來源可直接確認的欄位才有值。",
@@ -33,6 +33,20 @@
       "kind": "official",
       "status": "hsin_name_element_rarity_and_weapon_type_cross_checked",
       "accessed_at": "2026-10-04"
+    },
+    {
+      "title": "官方角色頁與官方攻略平台：鎖暝",
+      "url": "https://mcguide.kurogames.com/zh-Hant/?role_id=1312&strategy_id=11097",
+      "kind": "official",
+      "status": "suoming_name_element_rarity_and_weapon_type_cross_checked",
+      "accessed_at": "2026-10-29"
+    },
+    {
+      "title": "官方攻略平台：莉莉",
+      "url": "https://mcguide.kurogames.com/zh-Hant/?role_id=1512&strategy_id=11098",
+      "kind": "official",
+      "status": "lily_name_element_rarity_and_weapon_type_cross_checked",
+      "accessed_at": "2026-11-16"
     }
   ],
   "entries": [
@@ -511,6 +525,24 @@
       "rarity": 5,
       "source_status": "official_current_character",
       "verified_on": "2026-10-04"
+    },
+    {
+      "id": "suoming",
+      "name": "鎖暝",
+      "element": "導電",
+      "weapon_type": "迅刀",
+      "rarity": 5,
+      "source_status": "official_current_character",
+      "verified_on": "2026-10-29"
+    },
+    {
+      "id": "lily",
+      "name": "莉莉",
+      "element": "衍射",
+      "weapon_type": "佩槍",
+      "rarity": 5,
+      "source_status": "official_current_character",
+      "verified_on": "2026-11-16"
     }
   ]
 }

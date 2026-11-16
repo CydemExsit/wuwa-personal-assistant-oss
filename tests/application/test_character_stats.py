@@ -379,9 +379,9 @@ def test_partial_legacy_nodes_need_named_layout_confirmation() -> None:
 
 def test_source_coverage_and_anomalies_are_explicit() -> None:
     data = load_panel_catalog()
-    assert len(data["characters"]) == 20
-    assert len(data["weapons"]) == 17
-    assert len(data["sets"]) == 20
+    assert len(data["characters"]) == 22
+    assert len(data["weapons"]) == 19
+    assert len(data["sets"]) == 22
     for kind in ("characters", "weapons", "sets", "main_echoes"):
         for item in data[kind].values():
             assert item["source"]["url"].startswith("https://wiki.kurobbs.com/mc/item/")

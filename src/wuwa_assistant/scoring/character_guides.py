@@ -68,9 +68,10 @@ class UsageReference:
 
     @property
     def summary(self) -> str:
-        if self.reference_kind == "preset":
+        if self.reference_kind in {"preset", "creator"}:
+            source_label = "攻略推薦" if self.reference_kind == "creator" else "遊戲內預設推薦"
             return (
-                f"使用者提供的遊戲內預設推薦({self.provided_on},圖 {self.screenshot_index}):"
+                f"使用者提供的{source_label}({self.provided_on},圖 {self.screenshot_index}):"
                 + "、".join(STAT_LABELS[stat] for stat, _ in self.substats)
                 + "。畫面未提供使用率,不補成 0% 或估造百分比;排列不等於精確收益順序。"
             )
@@ -83,7 +84,9 @@ class UsageReference:
         )
 
     def html(self, weights: tuple[StatWeight, ...]) -> str:
-        label = "遊戲內預設推薦" if self.reference_kind == "preset" else "遊戲內使用率"
+        label = {"preset": "遊戲內預設推薦", "creator": "攻略推薦"}.get(
+            self.reference_kind, "遊戲內使用率"
+        )
         by_stat = {weight.stat: weight.weight for weight in weights}
         rows = "".join(
             f"<tr><td>{escape(STAT_LABELS[stat])}</td><td>{_reference_rate(percent)}</td>"
@@ -120,15 +123,17 @@ def _usage_reference(row: dict[str, Any]) -> UsageReference | None:
     if raw is None:
         return None
     kind = raw.get("reference_kind", "usage")
-    if kind not in ("usage", "preset"):
+    if kind not in ("usage", "preset", "creator"):
         raise ValueError("invalid game recommendation kind")
 
     def rate(value: object) -> float | None:
-        if kind == "preset":
+        if kind in {"preset", "creator"}:
             if value is not None:
                 raise ValueError("preset recommendation cannot claim usage percentages")
             return None
-        return _usage_percent(value)
+        # A screenshot may show rates for some categories and omit others.
+        # Keep an explicit unknown distinct from an observed zero percent.
+        return None if value is None else _usage_percent(value)
 
     substats = tuple((StatKey(key), rate(value)) for key, value in raw["substats_percent"].items())
     mains = tuple(
